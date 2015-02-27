@@ -107,11 +107,13 @@ if ($enlace && $enlaceBlade1) {
 				'í',
 				'ó',
 				'ú',
+				'ñ',
 				'Á',
 				'É',
 				'Í',
 				'Ó',
-				'Ú' 
+				'Ú',
+				'Ñ'			
 		);
 		$sinAcento = array (
 				'a',
@@ -119,11 +121,13 @@ if ($enlace && $enlaceBlade1) {
 				'i',
 				'o',
 				'u',
+				'n',
 				'A',
 				'E',
 				'I',
 				'O',
-				'U' 
+				'U',
+				'N' 
 		);
 		//se reempĺaza en cada registo el caracter de acento por el sencillo ej: á=>a
 		foreach ( $registro as $key => $value ) {
