@@ -94,6 +94,76 @@ if($enlace && $enlaceBlade1)
         //$cadena_sql.=" AND ROWNUM <=78";
         //echo $cadena_sql;exit;
 	$registro=ejecutar_admin_inscrito($cadena_sql,$acceso_db);
+	
+	
+	// estos arreglos se utilizan para quitar los acentos debido a que el SNIES central no acepta caracteres con acento, si acepta la ñ y la Ñ
+	$acento = array (
+			'á',
+			'é',
+			'í',
+			'ó',
+			'ú',
+			'ñ',
+			'Á',
+			'É',
+			'Í',
+			'Ó',
+			'Ú',
+			'Ñ'
+	);
+	$sinAcento = array (
+			'a',
+			'e',
+			'i',
+			'o',
+			'u',
+			'n',
+			'A',
+			'E',
+			'I',
+			'O',
+			'U',
+			'N'
+	);
+	
+	
+	//se reempĺaza en cada registo el caracter de acento por el sencillo ej: á=>a
+	foreach ( $registro as $key => $value ) {
+		
+		/**
+		 echo '<br>1 ' . $registro [$key] [1];
+		 echo '<br>2 ' . $registro [$key] [2];
+		 echo '<br>3 ' . $registro [$key] [3];
+		 echo '<br>4 ' . $registro [$key] [4];
+		 echo '<br>5 ' . $registro [$key] [5];
+		 echo '<br>6 ' . $registro [$key] [6];
+		 echo '<br>7 ' . $registro [$key] [7];
+		 echo '<br>8 ' . $registro [$key] [8];
+		 echo '<br>9 ' . $registro [$key] [9];
+		 echo '<br>10 ' . $registro [$key] [10];
+		 echo '<br>11 ' . $registro [$key] [11];
+		 echo '<br>12 ' . $registro [$key] [12];
+		 echo '<br>13 ' . $registro [$key] [13];
+		 echo '<br>14 ' . $registro [$key] [14];
+		 echo '<br>15 ' . $registro [$key] [15];
+		 echo '<br>16 ' . $registro [$key] [16];
+		 echo '<br>17 ' . $registro [$key] [17];
+		 */
+			
+		$registro [$key] ['5'] = str_replace ( $acento, $sinAcento, $registro [$key] ['5'] );//SEGUNDO_APELLIDO
+		$registro [$key] ['9'] = str_replace ( $acento, $sinAcento, $registro [$key] ['9'] );//PRIMER_NOMBRE
+		$registro [$key] ['10'] = str_replace ( $acento, $sinAcento, $registro [$key] ['10'] );//SEGUNDO_NOMBRE
+		$registro [$key] ['11'] = str_replace ( $acento, $sinAcento, $registro [$key] ['11'] );//PRIMER_APELLIDO
+		$registro [$key] ['15'] = str_replace ( $acento, $sinAcento, $registro [$key] ['15'] );//PROG
+		$registro [$key] ['PRIMER_NOMBRE'] = str_replace ( $acento, $sinAcento, $registro [$key] ['PRIMER_NOMBRE'] );
+		$registro [$key] ['SEGUNDO_NOMBRE'] = str_replace ( $acento, $sinAcento, $registro [$key] ['SEGUNDO_NOMBRE'] );
+		$registro [$key] ['PRIMER_APELLIDO'] = str_replace ( $acento, $sinAcento, $registro [$key] ['PRIMER_APELLIDO'] );
+		$registro [$key] ['SEGUNDO_APELLIDO'] = str_replace ( $acento, $sinAcento, $registro [$key] ['SEGUNDO_APELLIDO'] );
+		$registro [$key] ['PROG'] = str_replace ( $acento, $sinAcento, $registro [$key] ['PROG'] );
+
+	}
+			
+	
 	$inscrito=0;
         $sindatos=0;
         $reg_sindatos=array();
