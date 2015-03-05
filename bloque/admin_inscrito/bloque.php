@@ -98,34 +98,37 @@ if($enlace && $enlaceBlade1)
 	
 	// estos arreglos se utilizan para quitar los acentos debido a que el SNIES central no acepta caracteres con acento, si acepta la ñ y la Ñ
 	$acento = array (
-			'á',
-			'é',
-			'í',
-			'ó',
-			'ú',
-			'ñ',
-			'Á',
-			'É',
-			'Í',
-			'Ó',
-			'Ú',
-			'Ñ'
-	);
-	$sinAcento = array (
-			'a',
-			'e',
-			'i',
-			'o',
-			'u',
-			'n',
-			'A',
-			'E',
-			'I',
-			'O',
-			'U',
-			'N'
-	);
-	
+				'á',
+				'é',
+				'í',
+				'ó',
+				'ú',
+				'ü',
+				'ñ',
+				'Á',
+				'É',
+				'Í',
+				'Ó',
+				'Ú',
+				'Ü',
+				'Ñ'			
+		);
+		$sinAcento = array (
+				'a',
+				'e',
+				'i',
+				'o',
+				'u',
+				'u',
+				'n',
+				'A',
+				'E',
+				'I',
+				'O',
+				'U',
+				'U',
+				'N' 
+		);
 	
 	//se reempĺaza en cada registo el caracter de acento por el sencillo ej: á=>a
 	foreach ( $registro as $key => $value ) {

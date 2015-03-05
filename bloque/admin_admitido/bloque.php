@@ -107,12 +107,14 @@ if ($enlace && $enlaceBlade1) {
 				'í',
 				'ó',
 				'ú',
+				'ü',
 				'ñ',
 				'Á',
 				'É',
 				'Í',
 				'Ó',
 				'Ú',
+				'Ü',
 				'Ñ'			
 		);
 		$sinAcento = array (
@@ -121,11 +123,13 @@ if ($enlace && $enlaceBlade1) {
 				'i',
 				'o',
 				'u',
+				'u',
 				'n',
 				'A',
 				'E',
 				'I',
 				'O',
+				'U',
 				'U',
 				'N' 
 		);
