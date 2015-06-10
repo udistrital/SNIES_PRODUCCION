@@ -773,7 +773,7 @@ function cadena_busqueda_admitido($configuracion, $acceso_db, $valor, $opcion = 
 			$cadena_sql .= "AND SUBSTR(est_cod,5,1)=DECODE(mat_per,1,'1',3,'2',mat_per) ";
 			$cadena_sql .= "AND tra_nivel IN ('DOCTORADO','MAESTRIA','POSGRADO') ";
 			
-			// echo $cadena_sql;
+			 echo $cadena_sql;
 			// exit;
 			
 			break;

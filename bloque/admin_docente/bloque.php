@@ -155,6 +155,7 @@ if(isset($_REQUEST["annio"]) and isset($_REQUEST["periodo"]))
 					$cadena_sql=cadena_busqueda_docente($configuracion, $acceso_db, $valor,"participanteAcademica");
 					//echo "<br>part_acad<br>".$cadena_sql;exit;
 					$registroDatosParticipante=ejecutar_admin_docente($cadena_sql,$acceso_db);
+					echo 'en este registro se deben reemplazar los acentos';exit;
 					
                                                         //si no se obtiene un arreglo de la base de datos académica se debe saltar el registro
 							if(!is_array($registroDatosParticipante))
@@ -185,7 +186,7 @@ if(isset($_REQUEST["annio"]) and isset($_REQUEST["periodo"]))
 										
 								//insertar los datos del graduado en la tabla participante del SNIES					
 								$cadena_sql=cadena_busqueda_docente($configuracion, $accesoSnies, $registroDatosParticipante,"insertarParticipante");
-								//echo $cadena_sql;exit;
+								echo $cadena_sql;exit;
 								@$resultadoParticipante=ejecutar_admin_docente($cadena_sql,$accesoSnies,"insertar");
 								if($resultadoParticipante==false)
 								{
