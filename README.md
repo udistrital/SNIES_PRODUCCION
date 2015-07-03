@@ -1,2 +1,0 @@
-# snies
-SNIES_SPADIES
