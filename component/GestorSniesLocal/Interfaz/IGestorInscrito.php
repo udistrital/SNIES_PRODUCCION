@@ -7,6 +7,7 @@ interface IGestorInscrito {
 	function insertarInscrito();
 	function borrarInscrito();
 	function actualizarInscrito();
+	function consultarInscritoAcademica($periodo);
 }
 
 ?>

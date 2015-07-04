@@ -29,7 +29,6 @@ class GestorInscrito implements IGestorInscrito {
  	$conexion = "sniesLocal";
  	$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
  	
- 	$ano=2015;
  	$cadenaSql = $this->miSql->cadena_sql ( 'contarInscritos', $periodo );
  
  	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' ); 	
@@ -49,6 +48,28 @@ class GestorInscrito implements IGestorInscrito {
     }
     function actualizarInscrito() {
     	
+    }
+    
+    function consultarInscritoAcademica($periodo) {
+    
+    	$this->miSql = new Sql();
+ 
+    	$this->miConfigurador = \Configurador::singleton ();
+    	// configuracion es el nombre de la conexión principal de SARA - se crea de forma automática tomando los
+    	// datos de config.inc.php
+    	$conexion = "academica";
+    	
+    	$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+  		var_dump($esteRecursoDB);exit;
+        
+    	$cadenaSql = $this->miSql->cadena_sql ( 'consultarInscritoAcademica', $periodo );
+    
+    	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+    
+    	return $resultado[0][0];
+    
+    
+    	 
     }
     
 }

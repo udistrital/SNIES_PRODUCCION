@@ -37,10 +37,12 @@ class Formulario {
 		$periodo ['annio'] = $annio;
 		$periodo ['semestre'] = $semestre;
 		
-		$totalInscritos = $this->miComponente->contarInscritos ( $periodo );
-		$totalAdmitidos = $this->miComponente->contarAdmitidos ( $periodo );
-		$totalMatriculadosPrimerCurso = $this->miComponente->contarMatriculadosPrimerCurso ( $periodo );
-		$totalMatriculados = $this->miComponente->contarMatriculados($periodo);
+		//$totalInscritos = $this->miComponente->contarInscritos ( $periodo );
+		//$totalAdmitidos = $this->miComponente->contarAdmitidos ( $periodo );
+		//$totalMatriculadosPrimerCurso = $this->miComponente->contarMatriculadosPrimerCurso ( $periodo );
+		//$totalMatriculados = $this->miComponente->contarMatriculados($periodo);
+		$inscritoAcademica=$this->miComponente->consultarInscritoAcademica($periodo);
+		var_dump($inscritoAcademica);exit;
 		
 		
 		$variables = array (

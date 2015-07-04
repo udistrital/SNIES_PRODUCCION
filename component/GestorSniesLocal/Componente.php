@@ -48,6 +48,10 @@ class Componente extends Component implements IGestorInscrito, IGestorAdmitido, 
     function actualizarInscrito() {
     	return $this->miGestorInscrito->actualizarInscrito();
     }
+    function consultarInscritoAcademica($periodo) {
+    	return $this->miGestorInscrito->consultarInscritoAcademica($periodo);
+    }
+    
     
     //funciones admitidos
     
