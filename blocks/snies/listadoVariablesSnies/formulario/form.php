@@ -25,6 +25,8 @@ class Formulario {
 		
 		$this->site = $this->miConfigurador->getVariableConfiguracion ( "site" );
 		
+		$this->esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
+		
 		$this->urlImagenes = $this->miConfigurador->getVariableConfiguracion ( "rutaUrlBloque" );
 	}
 	function formulario() {
@@ -168,7 +170,10 @@ class Formulario {
 		return true;
 	}
 	function enlaceActializarVariable($pagina) {
-		$valorCodificado = "&pagina=$pagina";
+		$valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
+		$valorCodificado .= "&action=" . $this->esteBloque ["nombre"];
+		$valorCodificado .= '&bloqueGrupo='.$this->esteBloque ['grupo'];
+		$valorCodificado .= "&opcion=actualizarParticipante"; // va a frontera
 		$valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
 		
 		// Rescatar el parámetro enlace desde los datos de configuraión en la base de datos

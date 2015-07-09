@@ -30,9 +30,9 @@ class Funcion {
     
     
     
-    function procesarFormulario() {
+    function actualizarParticipante() {
     
-        include_once ($this->ruta . "funcion/formProcessor.php");
+        include_once ($this->ruta . "funcion/actualizarParticipante.php");
     
         return $resultado;
     }
@@ -54,10 +54,19 @@ class Funcion {
         
         if (isset ( $_REQUEST ['procesarAjax'] )) {
             $this->procesarAjax ();
-        } else{
-            
-            $resultado = $this->procesarFormulario ();
-        }
+        }  elseif (isset ( $_REQUEST ['opcion'] )) {
+			switch ($_REQUEST ['opcion']) {
+				
+				case 'actualizarParticipante' :					
+					$resultado = $this->actualizarParticipante ();
+					break;
+				
+				
+				default :
+					return false;
+					exit ();
+			}
+		}
         
         return $resultado;
     
