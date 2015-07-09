@@ -60,13 +60,14 @@ class GestorInscrito implements IGestorInscrito {
     	$conexion = "academica";
     	
     	$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-  		var_dump($esteRecursoDB);exit;
-        
-    	$cadenaSql = $this->miSql->cadena_sql ( 'consultarInscritoAcademica', $periodo );
+  		
+        $cadenaSql = $this->miSql->cadena_sql ( 'consultarInscritoAcademica', $periodo );
     
     	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+    	
+    	var_dump($resultado);exit;
     
-    	return $resultado[0][0];
+    	return true;//$resultado[0][0];
     
     
     	 
