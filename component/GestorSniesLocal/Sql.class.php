@@ -69,7 +69,7 @@ class Sql extends \Sql {
 				$cadenaSql = "SELECT UNIQUE ";
 				$cadenaSql .= "TO_CHAR('1301') ies_code, ";
 				$cadenaSql .= "asp_ape_ano ins_annio, ";
-				$cadenaSql .= "DECODE(asp_ape_per,1,'01',3,'02', asp_ape_per) ins_per, ";
+				$cadenaSql .= "DECODE(asp_ape_per,1,'01',3,'02', asp_ape_per) ins_semestre, ";
 				$cadenaSql .= "DECODE(asp_tip_doc,'',DECODE(length(asp_nro_iden),11,'TI',12,'TI','CC'),'C', 'CC', '1', 'CC', 'c', 'CC', 'T', 'TI', '2', 'TI', 't', 'TI', 'E', 'CE', 'P', 'PS', 'CC') tipo_ident_code, ";
 				$cadenaSql .= "asp_nro_iden documento, ";
 				$cadenaSql .= "case
@@ -77,7 +77,7 @@ class Sql extends \Sql {
                                         then ' '
                                         else SUBSTR(trim(asp_apellido),instr(trim(asp_apellido),' ',-1,1),length(trim(asp_apellido)))
                                         end segundo_apellido, ";
-				$cadenaSql .= "as_cra_cod_snies prog_prim_opcion, ";
+				$cadenaSql .= "as_cra_cod_snies prog_prim_opc, ";
 				$cadenaSql .= "TO_CHAR(DECODE(asp_snp,'','N/A',NULL,'N/A',replace(asp_snp,' ',''))) snp,";
 				$cadenaSql .= "TO_CHAR(DECODE(asp_sexo,'M','01','F','02','01')) genero, ";
 				$cadenaSql .= "case
@@ -113,7 +113,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "SELECT UNIQUE ";
 				$cadenaSql .= "TO_CHAR('1301') ies_code, ";
 				$cadenaSql .= "mat_ano ins_annio, ";
-				$cadenaSql .= "DECODE(mat_per,1,'01',3,'02', mat_per) ins_per, ";
+				$cadenaSql .= "DECODE(mat_per,1,'01',3,'02', mat_per) ins_semestre, ";
 				$cadenaSql .= "DECODE(est_tipo_iden,'',DECODE(length(est_nro_iden),11,'TI',12,'TI','CC'),'C', 'CC', '1', 'CC', 'c', 'CC', 'T', 'TI', '2', 'TI', 't', 'TI', 'E', 'CE', 'P', 'PS', 'CC') tipo_ident_code, ";
 				$cadenaSql .= "est_nro_iden  documento, ";
 				$cadenaSql .= "(case when INSTR(trim(est_nombre),' ',1,4)>'0' AND INSTR(trim(est_nombre),' ',1,2)=INSTR(trim(est_nombre),' ',1,1)+1 
@@ -122,7 +122,7 @@ class Sql extends \Sql {
                                       then trim(SUBSTR(trim(est_nombre),instr(trim(est_nombre),' ',1,1)+1,length(trim(est_nombre)) - instr(trim(est_nombre),' ',1,3)))
                                       else trim(SUBSTR(trim(est_nombre),INSTR(trim(est_nombre),' ',1,1) +1 ,INSTR(trim(est_nombre),' ',1,2) - INSTR(trim(est_nombre),' ',1,1)))
                                       end) segundo_apellido, ";
-				$cadenaSql .= "as_cra_cod_snies prog_prim_opcion,  ";
+				$cadenaSql .= "as_cra_cod_snies prog_prim_opc,  ";
 				$cadenaSql .= "TO_CHAR(DECODE(eot_nro_snp,'','N/A',NULL,'N/A',replace(eot_nro_snp,' ',''))) snp,";
 				$cadenaSql .= "TO_CHAR(DECODE(est_sexo,'M','01','F','02','01')) genero, ";
 				$cadenaSql .= "(case when INSTR(trim(est_nombre),' ',1,3)='0' AND INSTR(trim(est_nombre),' ',1,2)='0' 
@@ -168,6 +168,58 @@ class Sql extends \Sql {
 				$cadenaSql .= "AND SUBSTR(est_cod,0,4)=mat_ano ";
 				$cadenaSql .= "AND SUBSTR(est_cod,5,1)=DECODE(mat_per,1,'1',3,'2',mat_per) ";
 				$cadenaSql .= "AND tra_nivel IN ('DOCTORADO','MAESTRIA','POSGRADO') ";
+				
+				break;
+			
+			case "borrarInscritos" :
+				$cadenaSql = "DELETE FROM";
+				$cadenaSql .= " inscrito ";
+				$cadenaSql .= " WHERE ins_annio=" . $variable ['annio'];
+				$cadenaSql .= " AND ins_semestre='" . $variable ['semestre'] . "'";
+				
+				break;
+			
+			case "insertarInscrito" :
+				$cadenaSql = "INSERT INTO ";
+				$cadenaSql .= "inscrito ";
+				$cadenaSql .= "(";
+				$cadenaSql .= "ies_code, "; // [0]
+				$cadenaSql .= "ins_annio, ";
+				$cadenaSql .= "ins_semestre,";
+				$cadenaSql .= "tipo_ident_code,";
+				$cadenaSql .= "documento, ";
+				$cadenaSql .= "segundo_apellido, "; // [5]
+				$cadenaSql .= "prog_prim_opc, ";
+				$cadenaSql .= "snp, ";
+				$cadenaSql .= "genero, ";
+				$cadenaSql .= "primer_nombre, ";
+				$cadenaSql .= "segundo_nombre, ";
+				$cadenaSql .= "primer_apellido, "; // [13]
+				$cadenaSql .= "codigo_ent_aula, ";
+				$cadenaSql .= "municipio, ";
+				$cadenaSql .= "departamento ";
+				$cadenaSql .= ") ";
+				$cadenaSql .= "VALUES ";
+				$cadenaSql .= "(";
+				$cadenaSql .= "'" . $variable ['IES_CODE'] . "', ";
+				$cadenaSql .= "'" . $variable ['INS_ANNIO'] . "', ";
+				$cadenaSql .= "'" . $variable ['INS_SEMESTRE'] . "', ";
+				$cadenaSql .= "'" . $variable ['TIPO_IDENT_CODE'] . "', ";
+				$cadenaSql .= "'" . $variable ['DOCUMENTO'] . "', ";
+				$cadenaSql .= "replace('" . $variable ['SEGUNDO_APELLIDO'] . "','?','') ,";
+				$cadenaSql .= "'" . $variable ['PROG_PRIM_OPC'] . "', ";
+				$cadenaSql .= "'" . $variable ['SNP'] . "', ";
+				$cadenaSql .= "'" . $variable ['GENERO'] . "', ";
+				$cadenaSql .= "replace('" . $variable ['PRIMER_NOMBRE'] . "','?','') ,";
+				$cadenaSql .= "replace('" . $variable ['SEGUNDO_NOMBRE'] . "','?','') ,";
+				$cadenaSql .= "replace('" . $variable ['PRIMER_APELLIDO'] . "','?','') ,";
+				$cadenaSql .= "'" . $variable ['CODIGO_ENT_AULA'] . "', ";
+				$cadenaSql .= "'" . $variable ['MUNICIPIO'] . "', ";
+				$cadenaSql .= "'" . $variable ['DEPARTAMENTO'] . "' ";
+				$cadenaSql .= "); ";
+				var_dump($variable);
+				echo $cadenaSql;
+				exit ();
 				
 				break;
 		}

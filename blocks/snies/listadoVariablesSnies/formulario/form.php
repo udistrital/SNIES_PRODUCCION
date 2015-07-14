@@ -10,6 +10,8 @@ class Formulario {
 	var $miConfigurador;
 	var $lenguaje;
 	var $miFormulario;
+	var $annio;
+	var $semestre;
 	function __construct($lenguaje, $formulario) {
 		$this->miConfigurador = \Configurador::singleton ();
 		
@@ -33,17 +35,22 @@ class Formulario {
 		
 		// Obtener año y período actual basado en la fecha del sistema
 		$fecha = getdate ();
-		$annio = $fecha ['year'];
+		$this->annio = $fecha ['year'];
 		if ($fecha ['mon'] <= 6) {
-			$semestre = '01';
+			$this->semestre = '01';
 		} else {
-			$semestre = '02';
+			$this->semestre = '02';
 		}
+		
+		/**ESTOS VALORES SE DEBEN BORRAR, SON DE PRUEBAS*/
+		$this->annio='2015';
+		$this->semestre='01';
+		/***/
 		
 		// consultar la variable inscritos de la base de datos del SNIES LOCAL (postgres)
 		
-		$periodo ['annio'] = $annio;
-		$periodo ['semestre'] = $semestre;
+		$periodo ['annio'] = $this->annio;
+		$periodo ['semestre'] = $this->semestre;
 		
 		$totalInscritos = 0;
 		$totalAdmitidos = 0;
@@ -60,7 +67,7 @@ class Formulario {
 				'0' => array (
 						'nombre' => '1. Inscrito',
 						'total' => $totalInscritos,
-						'enlace' => $this->enlaceActializarVariable ('') 
+						'enlace' => $this->enlaceActializarVariable ('reportarInscrito') 
 				),
 				'1' => array (
 						'nombre' => '2. Admitido',
@@ -70,7 +77,7 @@ class Formulario {
 				'2' => array (
 						'nombre' => '3. participante',
 						'total' => $totalMatriculadosPrimerCurso,
-						'enlace' => $this->enlaceActializarVariable ('actualizarParticipante') 
+						'enlace' => $this->enlaceActializarVariable ('') 
 				),
 				'3' => array (
 						'nombre' => '4. Estudiante',
@@ -121,8 +128,8 @@ class Formulario {
 			?>
 		<tr>
 			<td><?php echo $valor['nombre'];?></td>
-			<td align="center"><?php echo $annio?></td>
-			<td align="center"><?php echo $semestre?></td>
+			<td align="center"><?php echo $this->annio?></td>
+			<td align="center"><?php echo $this->semestre?></td>
 			<td align="right"><?php echo $valor['total'];?></td>
 			<td align="right">-</td>
 			<td align="center"><a href="<?php echo $valor['enlace']?>"><img
@@ -169,11 +176,13 @@ class Formulario {
 		
 		return true;
 	}
-	function enlaceActializarVariable($pagina) {
+	function enlaceActializarVariable($opcion) {
 		$valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 		$valorCodificado .= "&action=" . $this->esteBloque ["nombre"];
 		$valorCodificado .= '&bloqueGrupo='.$this->esteBloque ['grupo'];
-		$valorCodificado .= "&opcion=actualizarParticipante"; // va a frontera
+		$valorCodificado .= "&opcion=".$opcion;
+		$valorCodificado .= "&annio=".$this->annio;
+		$valorCodificado .= "&semestre=".$this->semestre;
 		$valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
 		
 		// Rescatar el parámetro enlace desde los datos de configuraión en la base de datos

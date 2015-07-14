@@ -30,9 +30,9 @@ class Funcion {
     
     
     
-    function actualizarParticipante() {
+    function reportarInscrito() {
     
-        include_once ($this->ruta . "funcion/actualizarParticipante.php");
+        include_once ($this->ruta . "funcion/reportarInscrito.php");
     
         return $resultado;
     }
@@ -57,8 +57,8 @@ class Funcion {
         }  elseif (isset ( $_REQUEST ['opcion'] )) {
 			switch ($_REQUEST ['opcion']) {
 				
-				case 'actualizarParticipante' :					
-					$resultado = $this->actualizarParticipante ();
+				case 'reportarInscrito' :					
+					$resultado = $this->reportarInscrito ();
 					break;
 				
 				
