@@ -217,9 +217,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable ['MUNICIPIO'] . "', ";
 				$cadenaSql .= "'" . $variable ['DEPARTAMENTO'] . "' ";
 				$cadenaSql .= "); ";
-				var_dump($variable);
-				echo $cadenaSql;
-				exit ();
+
 				
 				break;
 		}

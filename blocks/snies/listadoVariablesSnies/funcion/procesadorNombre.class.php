@@ -55,4 +55,6 @@ class procesadorNombre {
 		
 		return $arreglo;
 	}
+	
+	
 }

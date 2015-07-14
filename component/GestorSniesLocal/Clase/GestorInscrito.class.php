@@ -31,13 +31,16 @@ class GestorInscrito implements IGestorInscrito {
 	function consultarInscritoSnies() {
 	}
 	function insertarInscritoSnies($inscrito) {
-		
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		$cadenaSql = $this->miSql->cadena_sql ( 'insertarInscrito', $inscrito );
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
 		
-		return true;
+		if ($resultado == true) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	function actualizarInscritoSnies() {
 	}

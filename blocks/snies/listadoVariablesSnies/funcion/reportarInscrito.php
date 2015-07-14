@@ -29,17 +29,18 @@ class FormProcessor {
 		 * 2.Procesar los datos obtenidos, cambiar acentos.
 		 * 3.Registrar errores de la fuente para reportarlos
 		 * 4.Borrar los registros para el año y periodo seleccionado en SNIES LOCAL
-		 * 4.Insertar los registros en el SNIES LOCAL
+		 * 5.Insertar los registros en el SNIES LOCAL
+		 * 6.Redireccionar a lista de variables
 		 */
 		$inscritos = $this->miComponente->consultarInscritoAcademica ( $annio, $semestre );
 		
 		$miProcesadorNombre = new procesadorNombre ();
 		
-		// $inscritos=$miProcesadorNombre->quitarAcento($inscritos, 'PRIMER_NOMBRE');
-		// $inscritos=$miProcesadorNombre->quitarAcento($inscritos, 'SEGUNDO_NOMBRE');
-		// $inscritos=$miProcesadorNombre->quitarAcento($inscritos, 'PRIMER_APELLIDO');
-		// $inscritos=$miProcesadorNombre->quitarAcento($inscritos, 'SEGUNDO_APELLIDO');
-		// $inscritos=$miProcesadorNombre->quitarAcento($inscritos, 'PROG');
+		$inscritos=$miProcesadorNombre->quitarAcento($inscritos, 'PRIMER_NOMBRE');
+		$inscritos=$miProcesadorNombre->quitarAcento($inscritos, 'SEGUNDO_NOMBRE');
+		$inscritos=$miProcesadorNombre->quitarAcento($inscritos, 'PRIMER_APELLIDO');
+		$inscritos=$miProcesadorNombre->quitarAcento($inscritos, 'SEGUNDO_APELLIDO');
+		$inscritos=$miProcesadorNombre->quitarAcento($inscritos, 'PROG');
 		
 		$borrarInscritos = $this->miComponente->borrarInscritoSnies ( $annio, $semestre );
 		
@@ -49,7 +50,21 @@ class FormProcessor {
 						
 		}
 		
-		exit ();
+		$valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
+		//$valorCodificado .= "&action=" . $this->esteBloque ["nombre"];
+		//$valorCodificado .= '&bloqueGrupo='.$this->esteBloque ['grupo'];
+		//$valorCodificado .= "&opcion=".$opcion;
+		//$valorCodificado .= "&annio=".$this->annio;
+		//$valorCodificado .= "&semestre=".$this->semestre;
+		$valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
+		
+		// Rescatar el parámetro enlace desde los datos de configuraión en la base de datos
+		$variable = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+		$miEnlace = $this->host . $this->site . '/index.php?' . $variable . '=' . $valorCodificado;
+		
+		header ("Location:$miEnlace");
+	
+		
 	}
 }
 
