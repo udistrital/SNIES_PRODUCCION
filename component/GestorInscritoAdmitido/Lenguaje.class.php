@@ -1,6 +1,6 @@
 <?php
 
-namespace component\GestorSniesLocal;
+namespace component\GestorInscritoAdmitido;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
     include ("../index.php");

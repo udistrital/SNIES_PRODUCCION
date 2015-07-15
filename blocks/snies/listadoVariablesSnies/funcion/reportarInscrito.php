@@ -1,5 +1,5 @@
 <?php
-include_once ('component/GestorSniesLocal/Componente.php');
+include_once ('component/GestorInscritoAdmitido/Componente.php');
 include_once ('blocks/snies/listadoVariablesSnies/funcion/procesadorNombre.class.php');
 use snies\Componente;
 use bloqueSnies\procesadorNombre;

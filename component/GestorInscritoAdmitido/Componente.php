@@ -5,15 +5,15 @@ namespace snies;
 include_once 'component/Component.class.php';
 use component\Component;
 
-require_once ('component/GestorSniesLocal/Sql.class.php');
-require_once ('component/GestorSniesLocal/Clase/GestorInscrito.class.php');
-require_once ('component/GestorSniesLocal/Interfaz/IGestorInscrito.php');
-require_once ('component/GestorSniesLocal/Clase/GestorAdmitido.class.php');
-require_once ('component/GestorSniesLocal/Interfaz/IGestorAdmitido.php');
-require_once ('component/GestorSniesLocal/Clase/GestorMatriculaPrimerCurso.class.php');
-require_once ('component/GestorSniesLocal/Interfaz/IGestorMatriculaPrimerCurso.php');
-require_once ('component/GestorSniesLocal/Clase/GestorMatriculado.class.php');
-require_once ('component/GestorSniesLocal/Interfaz/IGestorMatriculado.php');
+require_once ('component/GestorInscritoAdmitido/Sql.class.php');
+require_once ('component/GestorInscritoAdmitido/Clase/GestorInscrito.class.php');
+require_once ('component/GestorInscritoAdmitido/Interfaz/IGestorInscrito.php');
+require_once ('component/GestorInscritoAdmitido/Clase/GestorAdmitido.class.php');
+require_once ('component/GestorInscritoAdmitido/Interfaz/IGestorAdmitido.php');
+require_once ('component/GestorInscritoAdmitido/Clase/GestorMatriculaPrimerCurso.class.php');
+require_once ('component/GestorInscritoAdmitido/Interfaz/IGestorMatriculaPrimerCurso.php');
+require_once ('component/GestorInscritoAdmitido/Clase/GestorMatriculado.class.php');
+require_once ('component/GestorInscritoAdmitido/Interfaz/IGestorMatriculado.php');
 class Componente extends Component implements IGestorInscrito, IGestorAdmitido, IGestorMatriculaPrimerCurso, IGestorMatriculado {
 	private $miSql;
 	
@@ -35,7 +35,7 @@ class Componente extends Component implements IGestorInscrito, IGestorAdmitido, 
 		return $this->miGestorInscrito->consultarInscritoSnies ( $periodo );
 	}
 	function insertarInscritoSnies($inscrito) {
-		return $this->miGestorInscrito->insertarInscritoSnies ($inscrito );
+		return $this->miGestorInscrito->insertarInscritoSnies ( $inscrito );
 	}
 	function actualizarInscritoSnies() {
 		return $this->miGestorInscrito->actualizarInscritoSnies ( $periodo );
@@ -43,13 +43,23 @@ class Componente extends Component implements IGestorInscrito, IGestorAdmitido, 
 	function borrarInscritoSnies($annio, $semestre) {
 		return $this->miGestorInscrito->borrarInscritoSnies ( $annio, $semestre );
 	}
-	function contarInscritos( $periodo ) {
+	function contarInscritos($periodo) {
 		return $this->miGestorInscrito->contarInscritos ( $periodo );
 	}
 	
 	// funciones admitidos
+	function consultarAdmitidoAcademica($annio, $semestre) {
+		return $this->miGestorAdmitido->consultarAdmitidoAcademica ( $annio, $semestre );
+	}
 	function contarAdmitidos($periodo) {
 		return $this->miGestorAdmitido->contarAdmitidos ( $periodo );
+	}
+	function borrarAdmitidoSnies($annio, $semestre) {
+		return $this->miGestorAdmitido->borrarAdmitidoSnies ( $annio, $semestre );
+	}
+	
+	function insertarAdmitidoSnies($admitido) {
+		return $this->miGestorAdmitido->insertarAdmitidoSnies ( $admitido );
 	}
 	
 	// funciones matriculados a primer curso

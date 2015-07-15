@@ -3,10 +3,10 @@
 namespace snies;
 
 use snies\Componente;
-use component\GestorSniesLocal\Sql;
+use component\GestorInscritoAdmitido\Sql;
 
-include_once ('component/GestorSniesLocal/Sql.class.php');
-require_once ('component/GestorSniesLocal/Interfaz/IGestorInscrito.php');
+include_once ('component/GestorInscritoAdmitido/Sql.class.php');
+require_once ('component/GestorInscritoAdmitido/Interfaz/IGestorInscrito.php');
 include_once ("core/manager/Configurador.class.php");
 class GestorInscrito implements IGestorInscrito {
 	// private $miGestorInscrito;

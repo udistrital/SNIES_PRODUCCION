@@ -47,7 +47,7 @@ class procesadorNombre {
 				'U' 
 		);
 		
-		// se reempĺaza en cada registo el caracter de acento por el sencillo ej: á=>a
+		// se reemplaza en cada registo el caracter de acento por el sencillo ej: á=>a
 		foreach ( $arreglo as $key => $value ) {
 			
 			$arreglo [$key] [$campo] = str_replace ( $acento, $sinAcento, $arreglo [$key] [$campo] );

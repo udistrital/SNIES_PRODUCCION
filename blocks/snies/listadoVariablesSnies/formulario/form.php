@@ -1,5 +1,5 @@
 <?php
-include_once ('component/GestorSniesLocal/Componente.php');
+include_once ('component/GestorInscritoAdmitido/Componente.php');
 use snies\Componente;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
@@ -72,7 +72,7 @@ class Formulario {
 				'1' => array (
 						'nombre' => '2. Admitido',
 						'total' => $totalAdmitidos,
-						'enlace' => $this->enlaceActializarVariable ('') 
+						'enlace' => $this->enlaceActializarVariable ('reportarAdmitido') 
 				),
 				'2' => array (
 						'nombre' => '3. participante',
