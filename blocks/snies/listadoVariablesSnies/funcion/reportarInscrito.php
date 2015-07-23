@@ -33,6 +33,10 @@ class FormProcessor {
 		 * 6.Redireccionar a lista de variables
 		 */
 		$inscritos = $this->miComponente->consultarInscritoAcademica ( $annio, $semestre );
+		if ($inscritos==false) {
+			echo 'No existen registro de inscritos';
+			exit;
+		}
 		
 		$miProcesadorNombre = new procesadorNombre ();
 		

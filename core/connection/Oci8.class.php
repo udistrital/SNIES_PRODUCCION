@@ -101,13 +101,11 @@ class Oci8 extends ConectorDb {
 	 *        
 	 */
 	function conectar_db() {
+		$this->enlace = oci_connect ( $this->usuario, $this->clave, $this->servidor . ':' . $this->puerto . '/' . $this->db );
 		
-		$this->enlace = oci_connect ( $this->usuario, $this->clave, $this->servidor.':'.$this->puerto.'/'.$this->db );
-						
 		if ($this->enlace) {
 			return $this->enlace;
-			
-		}else{
+		} else {
 			$this->error = oci_error ();
 			return false;
 		}
@@ -191,31 +189,38 @@ class Oci8 extends ConectorDb {
 	// Fin del método registro_db
 	private function procesarResultado($cadenaParser, $numeroRegistros) {
 		unset ( $this->registro );
-		$this->campo = oci_num_fields ( $cadenaParser );
-		$registrosProcesados = 0;
-		$salida = oci_fetch_array ( $cadenaParser );
-		$this->keys = array_keys ( $salida );
-		$i = 0;
-		foreach ( $this->keys as $clave => $valor ) {
-			if (is_string ( $valor )) {
-				$this->claves [$i] = $valor;
-				$i ++;
-			}
+		// echo $cadena_sql.'<br><br>';
+		// $cadenaParser = OCIParse ( $this->enlace, $cadena_sql );
+		$busqueda = OCIExecute ( $cadenaParser );
+		
+		if ($busqueda !== TRUE) {
+			$mensaje = "ERROR EN LA CADENA " . $cadena_sql;
+			error_log ( $mensaje );
 		}
-		$j = 0;
-		do {
-			for($unCampo = 0; $unCampo < $this->campo; $unCampo ++) {
-				$this->registro [$j] [$unCampo] = $salida [$unCampo];
-				$this->registro [$j] [$this->claves [$unCampo]] = $salida [$unCampo];
+		if ($busqueda) {
+			
+			// carga una a una las filas en $this->registro
+			while ( $row = oci_fetch_array ( $cadenaParser, OCI_BOTH ) ) {
+				$this->registro [] = $row;
 			}
-			$j ++;
-			$registrosProcesados ++;
-			if ($numeroRegistros > 0 && $registrosProcesados >= $numeroRegistros) {
-				break;
-			}
-		} while ( $salida = oci_fetch_array ( $cadenaParser ) );
-		$this->conteo = $j;
-		return $this->conteo;
+		
+			//si por lo menos una fila es cargada a $this->registro entonces cuenta
+			if (isset($this->registro)) {
+				
+				// cuenta el numero de registros del arreglo $this->registro
+				$this->conteo = count ( $this->registro );
+	
+				
+			}			
+			@OCIFreeCursor ( $cadenaParser );
+			//en caso de que existan cero (0) registros retorna falso
+			return $this->conteo;
+		} else {
+			$this->error = oci_error ();
+			 echo $this->error();
+			 
+			return 0;
+		}
 	}
 	/**
 	 *

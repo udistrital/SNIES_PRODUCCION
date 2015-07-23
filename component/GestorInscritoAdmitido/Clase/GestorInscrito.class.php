@@ -26,6 +26,9 @@ class GestorInscrito implements IGestorInscrito {
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
 		
+		if ($resultado==false) {
+			return false;
+		}
 		return $resultado;
 	}
 	function consultarInscritoSnies() {
