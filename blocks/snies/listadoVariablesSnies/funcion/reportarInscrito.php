@@ -34,8 +34,14 @@ class FormProcessor {
 		 */
 		$inscritos = $this->miComponente->consultarInscritoAcademica ( $annio, $semestre );
 		if ($inscritos==false) {
-			echo 'No existen registro de inscritos';
-			exit;
+			$valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
+			$valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
+			
+			// Rescatar el parámetro enlace desde los datos de configuraión en la base de datos
+			$variable = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+			$miEnlace = $this->host . $this->site . '/index.php?' . $variable . '=' . $valorCodificado;
+			
+			header ("Location:$miEnlace");
 		}
 		
 		$miProcesadorNombre = new procesadorNombre ();
@@ -55,11 +61,6 @@ class FormProcessor {
 		}
 		
 		$valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
-		//$valorCodificado .= "&action=" . $this->esteBloque ["nombre"];
-		//$valorCodificado .= '&bloqueGrupo='.$this->esteBloque ['grupo'];
-		//$valorCodificado .= "&opcion=".$opcion;
-		//$valorCodificado .= "&annio=".$this->annio;
-		//$valorCodificado .= "&semestre=".$this->semestre;
 		$valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
 		
 		// Rescatar el parámetro enlace desde los datos de configuraión en la base de datos

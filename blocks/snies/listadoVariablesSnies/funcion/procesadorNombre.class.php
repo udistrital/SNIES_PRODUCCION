@@ -56,5 +56,54 @@ class procesadorNombre {
 		return $arreglo;
 	}
 	
-	
+	/**
+	 * Divide nombres completos en las siguientes partes
+	 * Primer Apellido, Segundo Apellido, Primer nombre, Segundo Nombre
+	 * Si tiene mas de cuatro partes estas se unen al segundo nombre
+	 * 
+	 * @param string $nombreCompleto        	
+	 * @return array
+	 */
+	function dividirNombreCompleto($nombreCompleto) {
+		$nombreCompleto = trim ( $nombreCompleto );
+		// dividir el nombre por espacios
+		$arregloNombres = explode ( " ", $nombreCompleto );
+		
+		$numeroPartes = sizeof ( $arregloNombres );
+		echo $numeroPartes;
+		
+		if ($numeroPartes == 6) {
+			$nombre ['primer_apellido'] = $arregloNombres [0];
+			$nombre ['segundo_apellido'] = $arregloNombres [1];
+			$nombre ['primer_nombre'] = $arregloNombres [2];
+			$nombre ['Segundo_nombre'] = $arregloNombres [3] . $arregloNombres [4] . $arregloNombres [5];
+		}
+		
+		if ($numeroPartes == 5) {
+			$nombre ['primer_apellido'] = $arregloNombres [0];
+			$nombre ['segundo_apellido'] = $arregloNombres [1];
+			$nombre ['primer_nombre'] = $arregloNombres [2];
+			$nombre ['Segundo_nombre'] = $arregloNombres [3] . $arregloNombres [4];
+		}
+		if ($numeroPartes == 4) {
+			$nombre ['primer_apellido'] = $arregloNombres [0];
+			$nombre ['segundo_apellido'] = $arregloNombres [1];
+			$nombre ['primer_nombre'] = $arregloNombres [2];
+			$nombre ['Segundo_nombre'] = $arregloNombres [3];
+		}
+		if ($numeroPartes == 3) {
+			$nombre ['primer_apellido'] = $arregloNombres [0];
+			$nombre ['segundo_apellido'] = $arregloNombres [1];
+			$nombre ['primer_nombre'] = $arregloNombres [2];
+			$nombre ['Segundo_nombre'] = '';
+		}
+		if ($numeroPartes == 2) {
+			$nombre ['primer_apellido'] = $arregloNombres [0];
+			$nombre ['segundo_apellido'] = '';
+			$nombre ['primer_nombre'] = $arregloNombres [1];
+			$nombre ['Segundo_nombre'] = '';
+		}
+		
+		return $nombre;
+	}
 }
