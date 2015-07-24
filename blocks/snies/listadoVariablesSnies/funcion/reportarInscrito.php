@@ -32,8 +32,11 @@ class FormProcessor {
 		 * 5.Insertar los registros en el SNIES LOCAL
 		 * 6.Redireccionar a lista de variables
 		 */
-		$inscritos = $this->miComponente->consultarInscritoAcademica ( $annio, $semestre );
-		if ($inscritos==false) {
+		
+		//PARTE DE INSCRITOS DE PREGRADO
+		$inscritosPregrado = $this->miComponente->consultarInscritoPregadoAcademica ( $annio, $semestre );
+
+		if ($inscritosPregrado==false) {
 			$valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 			$valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
 			
@@ -45,16 +48,22 @@ class FormProcessor {
 		}
 		
 		$miProcesadorNombre = new procesadorNombre ();
+				
+		$inscritosPregrado=$miProcesadorNombre->quitarAcento($inscritosPregrado, 'APELLIDO');
+		$inscritosPregrado=$miProcesadorNombre->quitarAcento($inscritosPregrado, 'NOMBRE');
+		$inscritosPregrado=$miProcesadorNombre->quitarAcento($inscritosPregrado, 'PROG');
 		
-		$inscritos=$miProcesadorNombre->quitarAcento($inscritos, 'PRIMER_NOMBRE');
-		$inscritos=$miProcesadorNombre->quitarAcento($inscritos, 'SEGUNDO_NOMBRE');
-		$inscritos=$miProcesadorNombre->quitarAcento($inscritos, 'PRIMER_APELLIDO');
-		$inscritos=$miProcesadorNombre->quitarAcento($inscritos, 'SEGUNDO_APELLIDO');
-		$inscritos=$miProcesadorNombre->quitarAcento($inscritos, 'PROG');
+		
+		var_dump($inscritosPregrado);
+		
+		//PARTE DE INSCRITOS DE POSTGRADO
+		
+		
+		exit;
 		
 		$borrarInscritos = $this->miComponente->borrarInscritoSnies ( $annio, $semestre );
 		
-		foreach ( $inscritos as $inscrito ) {
+		foreach ( $inscritosPregrado as $inscrito ) {
 			
 			$insertarInscrito = $this->miComponente->insertarInscritoSnies ($inscrito);
 						

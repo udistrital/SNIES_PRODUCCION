@@ -65,7 +65,7 @@ class Sql extends \Sql {
 			// CONSULTAS PARA EL CARGUE DE INSCRITOS
 			// BASE DE DATOS ACADEMICA - ORACLE
 			
-			case "consultarInscritoAcademica" :
+			case "consultarInscritoPregradoAcademica" :
 				$prefijo = "mntac.";
 				$cadenaSql = "SELECT UNIQUE ";
 				$cadenaSql .= "TO_CHAR('1301') ies_code, ";
@@ -73,29 +73,11 @@ class Sql extends \Sql {
 				$cadenaSql .= "DECODE(asp_ape_per,1,'01',3,'02', asp_ape_per) ins_semestre, ";
 				$cadenaSql .= "DECODE(asp_tip_doc,'',DECODE(length(asp_nro_iden),11,'TI',12,'TI','CC'),'C', 'CC', '1', 'CC', 'c', 'CC', 'T', 'TI', '2', 'TI', 't', 'TI', 'E', 'CE', 'P', 'PS', 'CC') tipo_ident_code, ";
 				$cadenaSql .= "asp_nro_iden documento, ";
-				$cadenaSql .= "case
-                                        when INSTR(trim(asp_apellido),' ',1,1)='0'
-                                        then ' '
-                                        else SUBSTR(trim(asp_apellido),instr(trim(asp_apellido),' ',-1,1),length(trim(asp_apellido)))
-                                        end segundo_apellido, ";
+				$cadenaSql .= "asp_apellido apellido, ";//en este campo están los apellidos
+				$cadenaSql .= "asp_nombre nombre, ";//en este campo estan los nombres
 				$cadenaSql .= "as_cra_cod_snies prog_prim_opc, ";
 				$cadenaSql .= "TO_CHAR(DECODE(asp_snp,'','N/A',NULL,'N/A',replace(asp_snp,' ',''))) snp,";
 				$cadenaSql .= "TO_CHAR(DECODE(asp_sexo,'M','01','F','02','01')) genero, ";
-				$cadenaSql .= "case
-                                        when INSTR(trim(asp_nombre),' ',1,1)='0'
-                                        then SUBSTR(trim(asp_nombre),instr(trim(asp_nombre),' ',1,1),length(trim(asp_nombre)))
-                                        else SUBSTR(trim(asp_nombre),0,INSTR(trim(asp_nombre),' ',1,1))
-                                        end primer_nombre, ";
-				$cadenaSql .= "case
-                                        when INSTR(trim(asp_nombre),' ',1,1)='0'
-                                        then ' '
-                                        else SUBSTR(trim(asp_nombre),instr(trim(asp_nombre),' ',-1,1),length(trim(asp_nombre)))
-                                        end segundo_nombre, ";
-				$cadenaSql .= "case
-                                        when INSTR(trim(asp_apellido),' ',1,1)='0'
-                                        then SUBSTR(trim(asp_apellido),instr(trim(asp_apellido),' ',1,1),length(trim(asp_apellido)))
-                                        else SUBSTR(trim(asp_apellido),0,INSTR(trim(asp_apellido),' ',1,1))
-                                        end primer_apellido, ";
 				$cadenaSql .= "'1301' codigo_ent_aula, ";
 				$cadenaSql .= "'11001' municipio, ";
 				$cadenaSql .= "'11' departamento, ";
@@ -108,51 +90,22 @@ class Sql extends \Sql {
 				$cadenaSql .= "asp_ape_ano=" . $variable ['annio'];
 				$cadenaSql .= "AND asp_ape_per='" . $variable ['semestre'] . "'";
 				$cadenaSql .= "AND tra_nivel IN ('PREGRADO') ";
+				//$cadenaSql .= "AND asp_nro_iden=1023954699 ";
+
 				
-				$cadenaSql .= "UNION ";
-				
+				break;
+			
+			case "consultarInscritoPostgradoAcademica" :				
 				$cadenaSql .= "SELECT UNIQUE ";
 				$cadenaSql .= "TO_CHAR('1301') ies_code, ";
 				$cadenaSql .= "mat_ano ins_annio, ";
 				$cadenaSql .= "DECODE(mat_per,1,'01',3,'02', mat_per) ins_semestre, ";
 				$cadenaSql .= "DECODE(est_tipo_iden,'',DECODE(length(est_nro_iden),11,'TI',12,'TI','CC'),'C', 'CC', '1', 'CC', 'c', 'CC', 'T', 'TI', '2', 'TI', 't', 'TI', 'E', 'CE', 'P', 'PS', 'CC') tipo_ident_code, ";
 				$cadenaSql .= "est_nro_iden  documento, ";
-				$cadenaSql .= "(case when INSTR(trim(est_nombre),' ',1,4)>'0' AND INSTR(trim(est_nombre),' ',1,2)=INSTR(trim(est_nombre),' ',1,1)+1 
-                                      then trim(SUBSTR(trim(est_nombre),instr(trim(est_nombre),' ',1,1)+1,INSTR(trim(est_nombre),' ',1,3) - INSTR(trim(est_nombre),' ',1,2))) 
-                                      when INSTR(trim(est_nombre),' ',1,4)='0' AND INSTR(trim(est_nombre),' ',1,2)=INSTR(trim(est_nombre),' ',1,1)+1
-                                      then trim(SUBSTR(trim(est_nombre),instr(trim(est_nombre),' ',1,1)+1,length(trim(est_nombre)) - instr(trim(est_nombre),' ',1,3)))
-                                      else trim(SUBSTR(trim(est_nombre),INSTR(trim(est_nombre),' ',1,1) +1 ,INSTR(trim(est_nombre),' ',1,2) - INSTR(trim(est_nombre),' ',1,1)))
-                                      end) segundo_apellido, ";
+				$cadenaSql .= "est_nombre nombre, ";//en este campo estan los nombres y apellidos
 				$cadenaSql .= "as_cra_cod_snies prog_prim_opc,  ";
 				$cadenaSql .= "TO_CHAR(DECODE(eot_nro_snp,'','N/A',NULL,'N/A',replace(eot_nro_snp,' ',''))) snp,";
 				$cadenaSql .= "TO_CHAR(DECODE(est_sexo,'M','01','F','02','01')) genero, ";
-				$cadenaSql .= "(case when INSTR(trim(est_nombre),' ',1,3)='0' AND INSTR(trim(est_nombre),' ',1,2)='0' 
-                                      then trim(SUBSTR(trim(est_nombre),instr(trim(est_nombre),' ',1,1) +1,length(trim(est_nombre)) - instr(trim(est_nombre),' ',1,1))) 
-                                      when INSTR(trim(est_nombre),' ',1,3)='0' AND INSTR(trim(est_nombre),' ',1,2)>'0' 
-                                      then trim(SUBSTR(trim(est_nombre),instr(trim(est_nombre),' ',1,2) +1,length(trim(est_nombre)) - instr(trim(est_nombre),' ',1,2))) 
-                                      when INSTR(trim(est_nombre),' ',1,4)>'0' AND INSTR(trim(est_nombre),' ',1,2)=INSTR(trim(est_nombre),' ',1,1)+1 
-                                      then trim(SUBSTR(trim(est_nombre),instr(trim(est_nombre),' ',1,3),INSTR(trim(est_nombre),' ',1,4) - INSTR(trim(est_nombre),' ',1,3))) 
-                                      when INSTR(trim(est_nombre),' ',1,4)='0' AND INSTR(trim(est_nombre),' ',1,2)=INSTR(trim(est_nombre),' ',1,1)+1
-                                      then trim(SUBSTR(trim(est_nombre),instr(trim(est_nombre),' ',1,3),length(trim(est_nombre)) - instr(trim(est_nombre),' ',1,3)))
-                                      when INSTR(trim(est_nombre),' ',1,4)>'0' AND INSTR(trim(est_nombre),' ',1,3)=INSTR(trim(est_nombre),' ',1,2)+1 
-                                      then trim(SUBSTR(trim(est_nombre),instr(trim(est_nombre),' ',1,2)+1,INSTR(trim(est_nombre),' ',1,4) - INSTR(trim(est_nombre),' ',1,3))) 
-                                      when INSTR(trim(est_nombre),' ',1,4)='0' AND INSTR(trim(est_nombre),' ',1,3)=INSTR(trim(est_nombre),' ',1,2)+1 
-                                      then trim(SUBSTR(trim(est_nombre),instr(trim(est_nombre),' ',1,3),length(est_nombre) - instr(est_nombre,' ',1,3)+1))
-                                      else trim(SUBSTR(trim(est_nombre),INSTR(trim(est_nombre),' ',1,2)+1 ,INSTR(trim(est_nombre),' ',1,3) - INSTR(trim(est_nombre),' ',1,2))) 
-                                      end) primer_nombre, ";
-				$cadenaSql .= "(case when INSTR(trim(est_nombre),' ',1,3)='0'
-                                      then ' ' 
-                                      when INSTR(trim(est_nombre),' ',1,4)='0' AND (INSTR(trim(est_nombre),' ',1,3)=INSTR(trim(est_nombre),' ',1,2)+1 OR INSTR(trim(est_nombre),' ',1,2)=INSTR(trim(est_nombre),' ',1,1)+1)
-                                      then ' '
-                                      when INSTR(trim(est_nombre),' ',1,4)>'0' AND INSTR(trim(est_nombre),' ',1,3)=INSTR(trim(est_nombre),' ',1,2)+1 
-                                      then trim(SUBSTR(trim(est_nombre),instr(trim(est_nombre),' ',1,2)+1,INSTR(trim(est_nombre),' ',1,4) - INSTR(trim(est_nombre),' ',1,3))) 
-                                      when INSTR(trim(est_nombre),' ',1,4)>'0' AND INSTR(trim(est_nombre),' ',1,2)=INSTR(trim(est_nombre),' ',1,1)+1 
-                                      then trim(SUBSTR(trim(est_nombre),instr(trim(est_nombre),' ',1,4),(length(trim(est_nombre))+1) - INSTR(trim(est_nombre),' ',1,4))) 
-                                      when INSTR(trim(est_nombre),' ',1,4)>'0' AND INSTR(trim(est_nombre),' ',1,3)=INSTR(trim(est_nombre),' ',1,2)+1 
-                                      then trim(SUBSTR(trim(est_nombre),instr(trim(est_nombre),' ',1,4),(length(trim(est_nombre))+1) - instr(est_nombre,' ',1,4)+1))
-                                      else trim(SUBSTR(trim(est_nombre),instr(trim(est_nombre),' ',1,3) +1,(length(est_nombre)+1) - instr(est_nombre,' ',1,3))) 
-                                      end) segundo_nombre,  ";
-				$cadenaSql .= "SUBSTR(trim(est_nombre),0,INSTR(trim(est_nombre),' ',1,1)) primer_apellido, ";
 				$cadenaSql .= "'1301' codigo_ent_aula, ";
 				$cadenaSql .= "'11001' municipio, ";
 				$cadenaSql .= "'11' departamento, ";
@@ -275,6 +228,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "AND asp_nro_iden in ('97061809809','96122105609') ";
 				/**
 				 * $cadenaSql .
+				 *
 				 * = "UNION ";
 				 *
 				 * $cadenaSql .= "SELECT UNIQUE ";

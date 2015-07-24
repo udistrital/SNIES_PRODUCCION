@@ -30,7 +30,9 @@ class procesadorNombre {
 				'Í',
 				'Ó',
 				'Ú',
-				'Ü' 
+				'Ü',
+				'?',
+				'¿'		
 		);
 		$sinAcento = array (
 				'a',
@@ -44,7 +46,9 @@ class procesadorNombre {
 				'I',
 				'O',
 				'U',
-				'U' 
+				'U',
+				'Ñ',
+				'Ñ'
 		);
 		
 		// se reemplaza en cada registo el caracter de acento por el sencillo ej: á=>a
@@ -64,7 +68,7 @@ class procesadorNombre {
 	 * @param string $nombreCompleto        	
 	 * @return array
 	 */
-	function dividirNombreCompleto($nombreCompleto) {
+	function dividirNombre($nombreCompleto) {
 		$nombreCompleto = trim ( $nombreCompleto );
 		// dividir el nombre por espacios
 		$arregloNombres = explode ( " ", $nombreCompleto );

@@ -17,14 +17,14 @@ class GestorInscrito implements IGestorInscrito {
 		$this->miSql = new Sql ();
 		$this->miConfigurador = \Configurador::singleton ();
 	}
-	function consultarInscritoAcademica($annio, $semestre) {
+	function consultarInscritoPregadoAcademica($annio, $semestre) {
 		$periodo ['annio'] = $annio;
 		$periodo ['semestre'] = $semestre;
 		$conexion = "academica";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-		$cadenaSql = $this->miSql->cadena_sql ( 'consultarInscritoAcademica', $periodo );
+		$cadenaSql = $this->miSql->cadena_sql ( 'consultarInscritoPregradoAcademica', $periodo );
 		
-		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );	
 		
 		if ($resultado==false) {
 			return false;
