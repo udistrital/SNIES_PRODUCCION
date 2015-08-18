@@ -6,7 +6,7 @@
  * *************************************************************************
  * @name oci8.class.php
  * @author Paulo Cesar Coronado
- * @revision Última revisión 12 de agosto 2008
+ * @Última revisión 12 de agosto 2015
  * ***************************************************************************
  * @subpackage
  * @package clase
@@ -189,8 +189,7 @@ class Oci8 extends ConectorDb {
 	// Fin del método registro_db
 	private function procesarResultado($cadenaParser, $numeroRegistros) {
 		unset ( $this->registro );
-		// echo $cadena_sql.'<br><br>';
-		// $cadenaParser = OCIParse ( $this->enlace, $cadena_sql );
+		
 		$busqueda = OCIExecute ( $cadenaParser );
 		
 		if ($busqueda !== TRUE) {
@@ -203,22 +202,21 @@ class Oci8 extends ConectorDb {
 			while ( $row = oci_fetch_array ( $cadenaParser, OCI_BOTH ) ) {
 				$this->registro [] = $row;
 			}
-		
-			//si por lo menos una fila es cargada a $this->registro entonces cuenta
-			if (isset($this->registro)) {
+			
+			// si por lo menos una fila es cargada a $this->registro entonces cuenta
+			if (isset ( $this->registro )) {
 				
-				// cuenta el numero de registros del arreglo $this->registro
 				$this->conteo = count ( $this->registro );
-	
 				
-			}			
+			}
+			
 			@OCIFreeCursor ( $cadenaParser );
-			//en caso de que existan cero (0) registros retorna falso
+			// en caso de que existan cero (0) registros retorna falso ($this->conteo=false)
 			return $this->conteo;
 		} else {
 			$this->error = oci_error ();
-			 echo $this->error();
-			 
+			echo $this->error ();
+			
 			return 0;
 		}
 	}
