@@ -71,5 +71,9 @@ class Componente extends Component implements IGestorInscrito, IGestorAdmitido, 
 	function contarMatriculados($periodo) {
 		return $this->miGestorMatriculado->contarMatriculados ( $periodo );
 	}
+	function consultarParticipanteEstudiante($annio, $semestre) {
+		return $this->miGestorMatriculado->consultarParticipanteEstudiante ( $annio, $semestre );
+	}
+	
 }
 

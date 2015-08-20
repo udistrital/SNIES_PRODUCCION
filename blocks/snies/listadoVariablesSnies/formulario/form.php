@@ -1,6 +1,8 @@
 <?php
 include_once ('component/GestorInscritoAdmitido/Componente.php');
-use snies\Componente;
+include_once ('component/GestorEstudiante/Componente.php');
+exit;
+use sniesEstudiante\Componente;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("../index.php");
@@ -62,7 +64,7 @@ class Formulario {
 		$totalMatriculadosPrimerCurso = $this->miComponente->contarMatriculadosPrimerCurso ( $periodo );
 		$totalMatriculados = $this->miComponente->contarMatriculados ( $periodo );
 		// $inscritoAcademica=$this->miComponente->consultarInscritoAcademica($periodo);
-		
+		exit;
 		$variables = array (
 				'0' => array (
 						'nombre' => '1. Inscrito',
@@ -77,7 +79,7 @@ class Formulario {
 				'2' => array (
 						'nombre' => '3. participante',
 						'total' => $totalMatriculadosPrimerCurso,
-						'enlace' => $this->enlaceActializarVariable ('') 
+						'enlace' => $this->enlaceActializarVariable ('reportarParticipanteEstudiante') 
 				),
 				'3' => array (
 						'nombre' => '4. Estudiante',
