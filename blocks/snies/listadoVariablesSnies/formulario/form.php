@@ -1,7 +1,7 @@
 <?php
-include_once ('component/GestorInscritoAdmitido/Componente.php');
+//include_once ('component/GestorInscritoAdmitido/Componente.php');
 include_once ('component/GestorEstudiante/Componente.php');
-exit;
+
 use sniesEstudiante\Componente;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
@@ -35,6 +35,7 @@ class Formulario {
 	}
 	function formulario() {
 		
+		
 		// Obtener año y período actual basado en la fecha del sistema
 		$fecha = getdate ();
 		$this->annio = $fecha ['year'];
@@ -59,12 +60,12 @@ class Formulario {
 		$totalMatriculadosPrimerCurso = 0;
 		$totalMatriculados = 0;
 		
-		$totalInscritos = $this->miComponente->contarInscritos ( $periodo );
-		$totalAdmitidos = $this->miComponente->contarAdmitidos ( $periodo );
-		$totalMatriculadosPrimerCurso = $this->miComponente->contarMatriculadosPrimerCurso ( $periodo );
-		$totalMatriculados = $this->miComponente->contarMatriculados ( $periodo );
-		// $inscritoAcademica=$this->miComponente->consultarInscritoAcademica($periodo);
-		exit;
+		//$totalInscritos = $this->miComponente->contarInscritos ( $periodo );
+		//$totalAdmitidos = $this->miComponente->contarAdmitidos ( $periodo );
+		//$totalMatriculadosPrimerCurso = $this->miComponente->contarMatriculadosPrimerCurso ( $periodo );
+		//$totalMatriculados = $this->miComponente->contarMatriculados ( $periodo );
+		//$inscritoAcademica=$this->miComponente->consultarInscritoAcademica($periodo);
+		
 		$variables = array (
 				'0' => array (
 						'nombre' => '1. Inscrito',
@@ -77,7 +78,7 @@ class Formulario {
 						'enlace' => $this->enlaceActializarVariable ('reportarAdmitido') 
 				),
 				'2' => array (
-						'nombre' => '3. participante',
+						'nombre' => '3. Estudiante participante',
 						'total' => $totalMatriculadosPrimerCurso,
 						'enlace' => $this->enlaceActializarVariable ('reportarParticipanteEstudiante') 
 				),

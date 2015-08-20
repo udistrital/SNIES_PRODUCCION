@@ -15,7 +15,6 @@ class GestorAdmitido implements IGestorAdmitido {
 	function __construct() {
 		$this->miConfigurador = \Configurador::singleton ();
 		$this->miSql = new Sql ();
-		$this->miConfigurador = \Configurador::singleton ();
 	}
 	function contarAdmitidos($periodo) {
 		$this->miSql = new Sql ();

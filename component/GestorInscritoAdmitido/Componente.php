@@ -10,11 +10,8 @@ require_once ('component/GestorInscritoAdmitido/Clase/GestorInscrito.class.php')
 require_once ('component/GestorInscritoAdmitido/Interfaz/IGestorInscrito.php');
 require_once ('component/GestorInscritoAdmitido/Clase/GestorAdmitido.class.php');
 require_once ('component/GestorInscritoAdmitido/Interfaz/IGestorAdmitido.php');
-require_once ('component/GestorInscritoAdmitido/Clase/GestorMatriculaPrimerCurso.class.php');
-require_once ('component/GestorInscritoAdmitido/Interfaz/IGestorMatriculaPrimerCurso.php');
-require_once ('component/GestorInscritoAdmitido/Clase/GestorMatriculado.class.php');
-require_once ('component/GestorInscritoAdmitido/Interfaz/IGestorMatriculado.php');
-class Componente extends Component implements IGestorInscrito, IGestorAdmitido, IGestorMatriculaPrimerCurso, IGestorMatriculado {
+
+class Componente extends Component implements IGestorInscrito, IGestorAdmitido {
 	private $miSql;
 	
 	// El componente actua como Fachada
@@ -24,8 +21,6 @@ class Componente extends Component implements IGestorInscrito, IGestorAdmitido, 
 	public function __construct() {
 		$this->miGestorInscrito = new GestorInscrito ();
 		$this->miGestorAdmitido = new GestorAdmitido ();
-		$this->miGestorMatriculaPrimerCurso = new GestorMatriculaPrimerCurso ();
-		$this->miGestorMatriculado = new GestorMatriculado ();
 	}
 	// funciones inscritos
 	function consultarInscritoPregadoAcademica($annio, $semestre) {
@@ -60,19 +55,6 @@ class Componente extends Component implements IGestorInscrito, IGestorAdmitido, 
 	
 	function insertarAdmitidoSnies($admitido) {
 		return $this->miGestorAdmitido->insertarAdmitidoSnies ( $admitido );
-	}
-	
-	// funciones matriculados a primer curso
-	function contarMatriculadosPrimerCurso($periodo) {
-		return $this->miGestorMatriculaPrimerCurso->contarMatriculadosPrimerCurso ( $periodo );
-	}
-	
-	// funciones matriculados
-	function contarMatriculados($periodo) {
-		return $this->miGestorMatriculado->contarMatriculados ( $periodo );
-	}
-	function consultarParticipanteEstudiante($annio, $semestre) {
-		return $this->miGestorMatriculado->consultarParticipanteEstudiante ( $annio, $semestre );
 	}
 	
 }
