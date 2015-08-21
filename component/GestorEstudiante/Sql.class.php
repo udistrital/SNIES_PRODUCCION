@@ -46,6 +46,35 @@ class Sql extends \Sql {
 				
 				break;
 			
+			case "matriculado" :
+				$cadena_sql = "SELECT UNIQUE ";
+				$cadena_sql .= "'1301' ies_code, ";
+				$cadena_sql .= "'" . $valor [0] . "' ano, ";
+				$cadena_sql .= "'" . $valor [1] . "' periodo, ";
+				$cadena_sql .= " est_nro_iden identificacion, ";
+				$cadena_sql .= "DECODE(cra_jornada, 'DIURNA', '01', 'NOCTURNA', '02', '01' ) horario_code, ";
+				$cadena_sql .= "'1301' ceres, ";
+				$cadena_sql .= "'11' departamento, ";
+				$cadena_sql .= "'11001' municipio, ";
+				$cadena_sql .= "as_cra_cod_snies, ";
+				$cadena_sql .= "'01' pago, ";
+				$cadena_sql .= "DECODE(est_tipo_iden,'',DECODE(length(est_nro_iden),11,'TI',12,'TI','CC'),'C', 'CC', '1', 'CC', 'c', 'CC', 'T', 'TI', '2', 'TI', 't', 'TI', 'E', 'CE', 'P', 'PS', 'CC') tipo_doc_unico, ";
+				$cadena_sql .= " est_cod codigo, ";
+				$cadena_sql .= " as_cra_nom ";
+				$cadena_sql .= " FROM mntac.acest";
+				$cadena_sql .= " INNER JOIN mntac.v_tot_matri_ape_per ON est_cod = mat_est_cod";
+				$cadena_sql .= " INNER JOIN mntac.accra ON cra_cod = mat_cra_cod";
+				$cadena_sql .= " INNER JOIN mntac.actipcra ON cra_tip_cra = tra_cod";
+				$cadena_sql .= " INNER JOIN mntac.accra_snies ON as_cra_cod = mat_cra_cod";
+				$cadena_sql .= " WHERE ";
+				$cadena_sql .= " mat_ano=";
+				$cadena_sql .= "'" . $valor [0] . "' ";
+				$cadena_sql .= " AND mat_per=";
+				$cadena_sql .= "'" . $valor [1] . "' ";
+				$cadena_sql .= " AND est_nro_iden <> '101' ";
+				$cadena_sql .= " AND est_estado_est <> 'N' ";
+				break;
+			
 			case "consultarParticipanteEstudiante" :
 				$cadenaSql = " SELECT TO_CHAR('1301') IES_CODE,";
 				$cadenaSql .= " EST_NOMBRE,";
