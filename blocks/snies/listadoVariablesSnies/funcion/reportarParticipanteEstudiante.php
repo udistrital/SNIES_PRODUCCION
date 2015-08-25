@@ -19,8 +19,7 @@ class FormProcessor {
 		$this->site = $this->miConfigurador->getVariableConfiguracion ( "site" );
 		$this->esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 	}
-	function procesarFormulario() {	
-		
+	function procesarFormulario() {
 		$annio = $_REQUEST ['annio'];
 		$semestre = $_REQUEST ['semestre'];
 		
@@ -40,12 +39,10 @@ class FormProcessor {
 		 * EN ESTA CLASE SE ACTUALIZAR LOS ESTUDIANTES ACTIVOS PARA EL PRESENTE PERÍODO
 		 */
 		
-		$estudiante= $this->miComponente->consultarParticipanteEstudiante ( $annio, $semestre );
-		echo count($estudiante);
+		$estudiante = $this->miComponente->consultarParticipanteEstudiante ( $annio, $semestre );
 		
-		exit;
-		
-		if ($inscritosPregrado==false) {
+		// en el caso de que no se haga la consulta redirecciona
+		if ($estudiante == false) {
 			$valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 			$valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
 			
@@ -53,29 +50,32 @@ class FormProcessor {
 			$variable = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 			$miEnlace = $this->host . $this->site . '/index.php?' . $variable . '=' . $valorCodificado;
 			
-			header ("Location:$miEnlace");
+			header ( "Location:$miEnlace" );
 		}
 		
 		$miProcesadorNombre = new procesadorNombre ();
-				
-		$inscritosPregrado=$miProcesadorNombre->quitarAcento($inscritosPregrado, 'APELLIDO');
-		$inscritosPregrado=$miProcesadorNombre->quitarAcento($inscritosPregrado, 'NOMBRE');
-		$inscritosPregrado=$miProcesadorNombre->quitarAcento($inscritosPregrado, 'PROG');
 		
+		// quita acentos del nombre
+		$estudiante = $miProcesadorNombre->quitarAcento ( $estudiante, 'EST_NOMBRE' );
 		
-		var_dump($inscritosPregrado);
+		// descompone nombre completo en sus partes y las aglega al final de cada registro
+		foreach ( $estudiante as $clave => $valor ) {
+			echo $estudiante [$clave] ['CODIGO_UNICO'].'<br>';
+			$nombreCompleto = $miProcesadorNombre->dividirNombre ( $estudiante [$clave] ['EST_NOMBRE'] );
+			$estudiante [$clave] ['PRIMER_APELLIDO'] = $nombreCompleto ['primer_apellido'];
+			$estudiante [$clave] ['SEGUNDO_APELLIDO'] = $nombreCompleto ['segundo_apellido'];
+			$estudiante [$clave] ['PRIMER_NOMBRE'] = $nombreCompleto ['primer_nombre'];
+			$estudiante [$clave] ['SEGUNDO_NOMBRE'] = $nombreCompleto ['segundo_nombre'];
+		}
 		
-		//PARTE DE INSCRITOS DE POSTGRADO
-		
-		
-		exit;
-		
-		$borrarInscritos = $this->miComponente->borrarInscritoSnies ( $annio, $semestre );
-		
-		foreach ( $inscritosPregrado as $inscrito ) {
+		// registra los datos de estudiantes en la tabla PARTICIPANTES del SNIES
+		foreach ( $estudiante as $unEstudiante ) {
+			// var_dump($unEstudiante);
+			$borradoParticipanteEstudiante = $this->miComponente->borrarParticipanteEstudiante ( $unEstudiante );
 			
-			$insertarInscrito = $this->miComponente->insertarInscritoSnies ($inscrito);
-						
+			if ($borradoParticipanteEstudiante == true) {
+				$registroParticipanteEstudiante = $this->miComponente->registrarParticipanteEstudiante ( $unEstudiante );
+			}
 		}
 		
 		$valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
@@ -85,9 +85,7 @@ class FormProcessor {
 		$variable = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 		$miEnlace = $this->host . $this->site . '/index.php?' . $variable . '=' . $valorCodificado;
 		
-		header ("Location:$miEnlace");
-	
-		
+		header ( "Location:$miEnlace" );
 	}
 }
 

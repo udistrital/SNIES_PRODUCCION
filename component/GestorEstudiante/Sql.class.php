@@ -46,34 +46,11 @@ class Sql extends \Sql {
 				
 				break;
 			
-			case "matriculado" :
-				$cadena_sql = "SELECT UNIQUE ";
-				$cadena_sql .= "'1301' ies_code, ";
-				$cadena_sql .= "'" . $valor [0] . "' ano, ";
-				$cadena_sql .= "'" . $valor [1] . "' periodo, ";
-				$cadena_sql .= " est_nro_iden identificacion, ";
-				$cadena_sql .= "DECODE(cra_jornada, 'DIURNA', '01', 'NOCTURNA', '02', '01' ) horario_code, ";
-				$cadena_sql .= "'1301' ceres, ";
-				$cadena_sql .= "'11' departamento, ";
-				$cadena_sql .= "'11001' municipio, ";
-				$cadena_sql .= "as_cra_cod_snies, ";
-				$cadena_sql .= "'01' pago, ";
-				$cadena_sql .= "DECODE(est_tipo_iden,'',DECODE(length(est_nro_iden),11,'TI',12,'TI','CC'),'C', 'CC', '1', 'CC', 'c', 'CC', 'T', 'TI', '2', 'TI', 't', 'TI', 'E', 'CE', 'P', 'PS', 'CC') tipo_doc_unico, ";
-				$cadena_sql .= " est_cod codigo, ";
-				$cadena_sql .= " as_cra_nom ";
-				$cadena_sql .= " FROM mntac.acest";
-				$cadena_sql .= " INNER JOIN mntac.v_tot_matri_ape_per ON est_cod = mat_est_cod";
-				$cadena_sql .= " INNER JOIN mntac.accra ON cra_cod = mat_cra_cod";
-				$cadena_sql .= " INNER JOIN mntac.actipcra ON cra_tip_cra = tra_cod";
-				$cadena_sql .= " INNER JOIN mntac.accra_snies ON as_cra_cod = mat_cra_cod";
-				$cadena_sql .= " WHERE ";
-				$cadena_sql .= " mat_ano=";
-				$cadena_sql .= "'" . $valor [0] . "' ";
-				$cadena_sql .= " AND mat_per=";
-				$cadena_sql .= "'" . $valor [1] . "' ";
-				$cadena_sql .= " AND est_nro_iden <> '101' ";
-				$cadena_sql .= " AND est_estado_est <> 'N' ";
-				break;
+			/**
+			 * CONSULTA BASE DE DATOS INSTITUCIONAL
+			 * Datos necesarios para la tabla participante de estudiantes
+			 * se consulta los estudiantes que pagaron matrícula en un período
+			 */
 			
 			case "consultarParticipanteEstudiante" :
 				$cadenaSql = " SELECT TO_CHAR('1301') IES_CODE,";
@@ -98,6 +75,46 @@ class Sql extends \Sql {
 				$cadenaSql .= " ON est_cod = eot_cod";
 				$cadenaSql .= " INNER JOIN mntge.gemunicipio";
 				$cadenaSql .= " ON MUN_COD=DECODE(EOT_COD_MUN_NAC,0,11001,'',11001,EOT_COD_MUN_NAC)";
+				$cadenaSql .= " INNER JOIN mntac.v_tot_matri_ape_per ON est_cod = mat_est_cod";
+				$cadenaSql .= " WHERE ";
+				$cadenaSql .= " mat_ano=" . $variable ['annio'];
+				$cadenaSql .= " AND mat_per=" . $variable ['semestre']; // el semestre 03 de la universidad es el semestre 02 de SNIES
+				//$cadenaSql .= " AND rownum < 10000"; // solo procesa 5 registros
+				
+				break;
+			
+			case "borrarParticipanteEstudiante" :
+				$cadenaSql = "DELETE FROM";
+				$cadenaSql .= " participante ";
+				$cadenaSql .= " WHERE codigo_unico=" . $variable ['CODIGO_UNICO'];
+				
+				break;
+			
+			case "registrarParticipanteEstudiante" :
+				$cadenaSql = "INSERT INTO ";
+				$cadenaSql .= "participante ";
+				$cadenaSql .= "VALUES ";
+				$cadenaSql .= "( ";
+				$cadenaSql .= "'" . $variable ['IES_CODE'] . "', ";
+				$cadenaSql .= "'" . $variable ['PRIMER_APELLIDO'] . "', ";
+				$cadenaSql .= "'" . $variable ['SEGUNDO_APELLIDO'] . "', ";
+				$cadenaSql .= "'" . $variable ['PRIMER_NOMBRE'] . "', ";
+				$cadenaSql .= "'" . $variable ['SEGUNDO_NOMBRE'] . "', ";
+				$cadenaSql .= "'" . $variable ['FECHA_NACIM'] . "', ";
+				$cadenaSql .= "'" . $variable ['PAIS_LN'] . "', ";
+				$cadenaSql .= "'" . $variable ['DEPARTAMENTO_LN'] . "', ";
+				$cadenaSql .= "'" . $variable ['MUNICIPIO_LN'] . "', ";
+				$cadenaSql .= "'" . $variable ['GENERO_CODE'] . "', ";
+				$cadenaSql .= ($variable ['EMAIL']) ? "'" . $variable ['EMAIL'] . "'" : '';
+				$cadenaSql .= "'" . $variable ['EST_CIVIL_CODE'] . "', ";
+				$cadenaSql .= "'" . $variable ['TIPO_DOC_UNICO'] . "', ";
+				$cadenaSql .= "'" . $variable ['CODIGO_UNICO'] . "', ";
+				$cadenaSql .= "'" . $variable ['TIPO_ID_ANT'] . "', ";
+				$cadenaSql .= "'" . $variable ['CODIGO_ID_ANT'] . "', ";
+				$cadenaSql .= "'" . $variable ['PAIS_TEL'] . "', ";
+				$cadenaSql .= "'" . $variable ['AREA_TEL'] . "', ";
+				$cadenaSql .= ($variable ['NUMERO_TEL']) ? "'" . $variable ['NUMERO_TEL'] . "'" : '';
+				$cadenaSql .= " )";
 				
 				break;
 		}

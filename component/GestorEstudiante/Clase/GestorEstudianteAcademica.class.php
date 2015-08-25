@@ -17,8 +17,6 @@ class estudiante implements IGestorEstudiante {
 		$this->miConfigurador = \Configurador::singleton ();
 	}
 	function contarMatriculados($periodo) {
-		
-		
 		$this->miConfigurador = \Configurador::singleton ();
 		// configuracion es el nombre de la conexión principal de SARA - se crea de forma automática tomando los
 		// datos de config.inc.php
@@ -31,15 +29,40 @@ class estudiante implements IGestorEstudiante {
 		
 		return $resultado [0] [0];
 	}
-	function consultarParticipanteEstudiante($annio, $semestre) {				
-		
+	function consultarParticipanteEstudiante($annio, $semestre) {
 		$conexion = "academica";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-		$periodo['annio']=$annio;
-		$periodo['semestre']=$semestre;		
-		$cadenaSql = $this->miSql->cadena_sql ( 'consultarParticipanteEstudiante', $periodo );
+		// el semestre 03 de la universidad corresponde al semestre 02 de SNIES
+		$periodo ['annio'] = $annio;
+		if ($semestre == 02) {
+			$periodo ['semestre'] = 3;
+			;
+		} else {
+			$periodo ['semestre'] = 1;
+		}
 		
+		$cadenaSql = $this->miSql->cadena_sql ( 'consultarParticipanteEstudiante', $periodo );
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+		
+		return $resultado;
+	}
+	function registrarParticipanteEstudiante($estudiante) {
+		$conexion = "sniesLocal";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		$cadenaSql = $this->miSql->cadena_sql ( 'registrarParticipanteEstudiante', $estudiante );
+		
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
+		
+		return $resultado;
+	}
+	function borrarParticipanteEstudiante($estudiante) {
+		$conexion = "sniesLocal";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		$cadenaSql = $this->miSql->cadena_sql ( 'borrarParticipanteEstudiante', $estudiante );
+
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
 		
 		return $resultado;
 	}
