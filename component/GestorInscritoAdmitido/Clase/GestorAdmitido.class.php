@@ -17,7 +17,6 @@ class GestorAdmitido implements IGestorAdmitido {
 		$this->miSql = new Sql ();
 	}
 	function contarAdmitidos($periodo) {
-		$this->miSql = new Sql ();
 		
 		$this->miConfigurador = \Configurador::singleton ();
 		// configuracion es el nombre de la conexión principal de SARA - se crea de forma automática tomando los

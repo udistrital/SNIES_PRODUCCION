@@ -1,6 +1,7 @@
 <?php
 $indice=0;
 $estilo[$indice++]="estiloBloque.css";
+$estilo[$indice++]="estiloProgressbar.css";
 
 $rutaBloque=$this->miConfigurador->getVariableConfiguracion("host");
 $rutaBloque.=$this->miConfigurador->getVariableConfiguracion("site");

@@ -1,7 +1,8 @@
 <?php
-//include_once ('component/GestorInscritoAdmitido/Componente.php');
+include_once ('component/GestorInscritoAdmitido/Componente.php');
 include_once ('component/GestorEstudiante/Componente.php');
 
+use snies\Componente as InscritoAdmitido;
 use sniesEstudiante\Componente;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
@@ -23,7 +24,7 @@ class Formulario {
 		
 		$this->miFormulario = $formulario;
 		
-		$this->miComponente = new Componente ();
+		$this->miComponente = new InscritoAdmitido ();
 		
 		$this->host = $this->miConfigurador->getVariableConfiguracion ( "host" );
 		
@@ -35,7 +36,6 @@ class Formulario {
 	}
 	function formulario() {
 		
-		
 		// Obtener año y período actual basado en la fecha del sistema
 		$fecha = getdate ();
 		$this->annio = $fecha ['year'];
@@ -45,10 +45,13 @@ class Formulario {
 			$this->semestre = '02';
 		}
 		
-		/**ESTOS VALORES SE DEBEN BORRAR, SON DE PRUEBAS*/
-		$this->annio='2015';
-		$this->semestre='01';
-		/***/
+		/**
+		 * ESTOS VALORES SE DEBEN BORRAR, SON DE PRUEBAS
+		 */
+		$this->annio = '2015';
+		$this->semestre = '01';
+		/**
+		 */
 		
 		// consultar la variable inscritos de la base de datos del SNIES LOCAL (postgres)
 		
@@ -60,52 +63,58 @@ class Formulario {
 		$totalMatriculadosPrimerCurso = 0;
 		$totalMatriculados = 0;
 		
-		//$totalInscritos = $this->miComponente->contarInscritos ( $periodo );
-		//$totalAdmitidos = $this->miComponente->contarAdmitidos ( $periodo );
-		//$totalMatriculadosPrimerCurso = $this->miComponente->contarMatriculadosPrimerCurso ( $periodo );
-		//$totalMatriculados = $this->miComponente->contarMatriculados ( $periodo );
-		//$inscritoAcademica=$this->miComponente->consultarInscritoAcademica($periodo);
+		?>
+<div id="progressbar">
+	<div class="progress-label">Loading...</div>
+</div>
+<?php
+		
+		// $totalInscritos = $this->miComponente->contarInscritos ( $this->annio, $this->semestre);
+		// $totalAdmitidos = $this->miComponente->contarAdmitidos ( $periodo );
+		// $totalMatriculadosPrimerCurso = $this->miComponente->contarMatriculadosPrimerCurso ( $periodo );
+		// $totalMatriculados = $this->miComponente->contarMatriculados ( $periodo );
+		// $inscritoAcademica=$this->miComponente->consultarInscritoAcademica($periodo);
 		
 		$variables = array (
 				'0' => array (
 						'nombre' => '1. Inscrito',
 						'total' => $totalInscritos,
-						'enlace' => $this->enlaceActializarVariable ('reportarInscrito') 
+						'enlace' => $this->enlaceActializarVariable ( 'reportarInscrito' ) 
 				),
 				'1' => array (
 						'nombre' => '2. Admitido',
 						'total' => $totalAdmitidos,
-						'enlace' => $this->enlaceActializarVariable ('reportarAdmitido') 
+						'enlace' => $this->enlaceActializarVariable ( 'reportarAdmitido' ) 
 				),
 				'2' => array (
 						'nombre' => '3. Estudiante participante',
 						'total' => $totalMatriculadosPrimerCurso,
-						'enlace' => $this->enlaceActializarVariable ('reportarParticipanteEstudiante') 
+						'enlace' => $this->enlaceActializarVariable ( 'reportarParticipanteEstudiante' ) 
 				),
 				'3' => array (
 						'nombre' => '4. Estudiante',
 						'total' => $totalMatriculadosPrimerCurso,
-						'enlace' => $this->enlaceActializarVariable ('') 
+						'enlace' => $this->enlaceActializarVariable ( '' ) 
 				),
 				'4' => array (
 						'nombre' => '5. Matrícula Primer Curso',
 						'total' => $totalMatriculadosPrimerCurso,
-						'enlace' => $this->enlaceActializarVariable ('') 
+						'enlace' => $this->enlaceActializarVariable ( '' ) 
 				),
 				'5' => array (
 						'nombre' => '6. Matrículado',
 						'total' => $totalMatriculados,
-						'enlace' => $this->enlaceActializarVariable ('') 
+						'enlace' => $this->enlaceActializarVariable ( '' ) 
 				),
 				'6' => array (
 						'nombre' => '7. Egresado',
 						'total' => $totalMatriculadosPrimerCurso,
-						'enlace' => $this->enlaceActializarVariable ('') 
+						'enlace' => $this->enlaceActializarVariable ( '' ) 
 				),
 				'7' => array (
 						'nombre' => '8. Graduado',
 						'total' => $totalMatriculadosPrimerCurso,
-						'enlace' => $this->enlaceActializarVariable ('') 
+						'enlace' => $this->enlaceActializarVariable ( '' ) 
 				) 
 		);
 		
@@ -135,8 +144,10 @@ class Formulario {
 			<td align="center"><?php echo $this->semestre?></td>
 			<td align="right"><?php echo $valor['total'];?></td>
 			<td align="right">-</td>
-			<td align="center"><a href="<?php echo $valor['enlace']?>"><img
-					src='<? echo $this->urlImagenes?>images/actualizar.png' width='30px'></a></td>
+			<td align="center"><a class=miEnlace
+				href="<?php echo $valor['enlace']?>"><img
+					src='<? echo $this->urlImagenes?>images/actualizar.png'
+					width='30px'></a></td>
 			<td align="center">-</td>
 		</tr>
 		<?php }?>
@@ -182,10 +193,10 @@ class Formulario {
 	function enlaceActializarVariable($opcion) {
 		$valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 		$valorCodificado .= "&action=" . $this->esteBloque ["nombre"];
-		$valorCodificado .= '&bloqueGrupo='.$this->esteBloque ['grupo'];
-		$valorCodificado .= "&opcion=".$opcion;
-		$valorCodificado .= "&annio=".$this->annio;
-		$valorCodificado .= "&semestre=".$this->semestre;
+		$valorCodificado .= '&bloqueGrupo=' . $this->esteBloque ['grupo'];
+		$valorCodificado .= "&opcion=" . $opcion;
+		$valorCodificado .= "&annio=" . $this->annio;
+		$valorCodificado .= "&semestre=" . $this->semestre;
 		$valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
 		
 		// Rescatar el parámetro enlace desde los datos de configuraión en la base de datos

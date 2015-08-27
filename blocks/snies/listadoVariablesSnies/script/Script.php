@@ -6,6 +6,8 @@
 
 $funcion=array();
 $indice=0;
+$funcion[$indice++]="barraProgreso.js";
+
 
 $rutaBloque=$this->miConfigurador->getVariableConfiguracion("host");
 $rutaBloque.=$this->miConfigurador->getVariableConfiguracion("site");

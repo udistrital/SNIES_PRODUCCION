@@ -10,7 +10,6 @@ require_once ('component/GestorInscritoAdmitido/Clase/GestorInscrito.class.php')
 require_once ('component/GestorInscritoAdmitido/Interfaz/IGestorInscrito.php');
 require_once ('component/GestorInscritoAdmitido/Clase/GestorAdmitido.class.php');
 require_once ('component/GestorInscritoAdmitido/Interfaz/IGestorAdmitido.php');
-
 class Componente extends Component implements IGestorInscrito, IGestorAdmitido {
 	private $miSql;
 	
@@ -38,8 +37,8 @@ class Componente extends Component implements IGestorInscrito, IGestorAdmitido {
 	function borrarInscritoSnies($annio, $semestre) {
 		return $this->miGestorInscrito->borrarInscritoSnies ( $annio, $semestre );
 	}
-	function contarInscritos($periodo) {
-		return $this->miGestorInscrito->contarInscritos ( $periodo );
+	function contarInscritos($annio, $semestre) {
+		return $this->miGestorInscrito->contarInscritos ( $annio, $semestre );
 	}
 	
 	// funciones admitidos
@@ -52,10 +51,8 @@ class Componente extends Component implements IGestorInscrito, IGestorAdmitido {
 	function borrarAdmitidoSnies($annio, $semestre) {
 		return $this->miGestorAdmitido->borrarAdmitidoSnies ( $annio, $semestre );
 	}
-	
 	function insertarAdmitidoSnies($admitido) {
 		return $this->miGestorAdmitido->insertarAdmitidoSnies ( $admitido );
 	}
-	
 }
 

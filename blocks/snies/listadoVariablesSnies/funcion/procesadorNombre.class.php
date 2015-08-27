@@ -80,7 +80,7 @@ class procesadorNombre {
 			$nombre ['primer_apellido'] = $arregloNombres [0];
 			$nombre ['segundo_apellido'] = $arregloNombres [1];
 			$nombre ['primer_nombre'] = $arregloNombres [2];
-			$nombre ['segundo_nombre'] = $arregloNombres [3] . $arregloNombres [4] . $arregloNombres [5] . $arregloNombres [6]. $arregloNombres [7];
+			$nombre ['segundo_nombre'] = $arregloNombres [3] . $arregloNombres [4] . $arregloNombres [5] . $arregloNombres [6] . $arregloNombres [7];
 		}
 		
 		if ($numeroPartes == 7) {
@@ -119,6 +119,15 @@ class procesadorNombre {
 			$nombre ['primer_apellido'] = $arregloNombres [0];
 			$nombre ['segundo_apellido'] = '';
 			$nombre ['primer_nombre'] = $arregloNombres [1];
+			$nombre ['segundo_nombre'] = '';
+		}
+		//Error
+		//cuando es una sola palabra, primer_nombre es igual a primer apellido
+		//se debe depurar desde la fuente
+		if ($numeroPartes == 1) {
+			$nombre ['primer_apellido'] = $arregloNombres [0];
+			$nombre ['segundo_apellido'] = '';
+			$nombre ['primer_nombre'] = $arregloNombres [0];
 			$nombre ['segundo_nombre'] = '';
 		}
 		

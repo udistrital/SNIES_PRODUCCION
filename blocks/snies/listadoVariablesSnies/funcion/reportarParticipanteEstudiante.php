@@ -38,7 +38,7 @@ class FormProcessor {
 		 * DE LA UNIVERSIDAD, SIN TENER EN CUENTA EL AÑO O PERIODO,
 		 * EN ESTA CLASE SE ACTUALIZAR LOS ESTUDIANTES ACTIVOS PARA EL PRESENTE PERÍODO
 		 */
-		
+
 		$estudiante = $this->miComponente->consultarParticipanteEstudiante ( $annio, $semestre );
 		
 		// en el caso de que no se haga la consulta redirecciona
@@ -53,6 +53,7 @@ class FormProcessor {
 			header ( "Location:$miEnlace" );
 		}
 		
+
 		$miProcesadorNombre = new procesadorNombre ();
 		
 		// quita acentos del nombre
@@ -60,7 +61,7 @@ class FormProcessor {
 		
 		// descompone nombre completo en sus partes y las aglega al final de cada registro
 		foreach ( $estudiante as $clave => $valor ) {
-			echo $estudiante [$clave] ['CODIGO_UNICO'].'<br>';
+			// echo $estudiante [$clave] ['CODIGO_UNICO'].'<br>';
 			$nombreCompleto = $miProcesadorNombre->dividirNombre ( $estudiante [$clave] ['EST_NOMBRE'] );
 			$estudiante [$clave] ['PRIMER_APELLIDO'] = $nombreCompleto ['primer_apellido'];
 			$estudiante [$clave] ['SEGUNDO_APELLIDO'] = $nombreCompleto ['segundo_apellido'];

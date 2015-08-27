@@ -24,9 +24,9 @@ class GestorInscrito implements IGestorInscrito {
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		$cadenaSql = $this->miSql->cadena_sql ( 'consultarInscritoPregradoAcademica', $periodo );
 		
-		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );	
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
 		
-		if ($resultado==false) {
+		if ($resultado == false) {
 			return false;
 		}
 		return $resultado;
@@ -57,9 +57,11 @@ class GestorInscrito implements IGestorInscrito {
 		
 		return true;
 	}
-	function contarInscritos($periodo) {
+	function contarInscritos($annio, $semestre) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		$periodo ['annio'] = $annio;
+		$periodo ['semestre'] = $semestre;
 		$cadenaSql = $this->miSql->cadena_sql ( 'contarInscritos', $periodo );
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
 		

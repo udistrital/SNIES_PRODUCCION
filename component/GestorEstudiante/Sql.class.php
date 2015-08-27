@@ -79,7 +79,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " WHERE ";
 				$cadenaSql .= " mat_ano=" . $variable ['annio'];
 				$cadenaSql .= " AND mat_per=" . $variable ['semestre']; // el semestre 03 de la universidad es el semestre 02 de SNIES
-				//$cadenaSql .= " AND rownum < 10000"; // solo procesa 5 registros
+				$cadenaSql .= " AND rownum < 1000"; // solo procesa 5 registros
 				
 				break;
 			
@@ -99,13 +99,21 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable ['PRIMER_APELLIDO'] . "', ";
 				$cadenaSql .= "'" . $variable ['SEGUNDO_APELLIDO'] . "', ";
 				$cadenaSql .= "'" . $variable ['PRIMER_NOMBRE'] . "', ";
-				$cadenaSql .= "'" . $variable ['SEGUNDO_NOMBRE'] . "', ";
-				$cadenaSql .= "'" . $variable ['FECHA_NACIM'] . "', ";
+				$cadenaSql .= "'" . $variable ['SEGUNDO_NOMBRE'] . "', ";				
+				if (isset ( $variable ['FECHA_NACIM'] )) {
+					$cadenaSql .= "'" . $variable ['FECHA_NACIM'] . "', ";
+				} else {
+					$cadenaSql .= "'1980-01-01', "; // este el valor por defecto se debe corregir en la base de datos academica
+				}
 				$cadenaSql .= "'" . $variable ['PAIS_LN'] . "', ";
 				$cadenaSql .= "'" . $variable ['DEPARTAMENTO_LN'] . "', ";
 				$cadenaSql .= "'" . $variable ['MUNICIPIO_LN'] . "', ";
 				$cadenaSql .= "'" . $variable ['GENERO_CODE'] . "', ";
-				$cadenaSql .= ($variable ['EMAIL']) ? "'" . $variable ['EMAIL'] . "'" : '';
+				if (isset ( $variable ['EMAIL'] )) {
+					$cadenaSql .= "'" . $variable ['EMAIL'] . "', ";
+				} else {
+					$cadenaSql .= "'', ";
+				}
 				$cadenaSql .= "'" . $variable ['EST_CIVIL_CODE'] . "', ";
 				$cadenaSql .= "'" . $variable ['TIPO_DOC_UNICO'] . "', ";
 				$cadenaSql .= "'" . $variable ['CODIGO_UNICO'] . "', ";
@@ -113,9 +121,13 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable ['CODIGO_ID_ANT'] . "', ";
 				$cadenaSql .= "'" . $variable ['PAIS_TEL'] . "', ";
 				$cadenaSql .= "'" . $variable ['AREA_TEL'] . "', ";
-				$cadenaSql .= ($variable ['NUMERO_TEL']) ? "'" . $variable ['NUMERO_TEL'] . "'" : '';
+				if (isset ( $variable ['NUMERO_TEL'] )) {
+					$cadenaSql .= "'" . $variable ['NUMERO_TEL'] . "'";
+				} else {
+					$cadenaSql .= "''";
+				}
 				$cadenaSql .= " )";
-				
+				//echo $cadenaSql.'<br>';
 				break;
 		}
 		

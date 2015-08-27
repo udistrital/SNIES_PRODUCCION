@@ -53,6 +53,15 @@ class FormProcessor {
 		$inscritosPregrado=$miProcesadorNombre->quitarAcento($inscritosPregrado, 'NOMBRE');
 		$inscritosPregrado=$miProcesadorNombre->quitarAcento($inscritosPregrado, 'PROG');
 		
+		// descompone nombre completo en sus partes y las agrega al final de cada registro
+		foreach ( $inscritosPregrado as $clave => $valor ) {
+			// echo $estudiante [$clave] ['CODIGO_UNICO'].'<br>';
+			$nombreCompleto = $miProcesadorNombre->dividirNombre ( $inscritosPregrado [$clave] ['EST_NOMBRE'] );
+			$inscritosPregrado [$clave] ['PRIMER_APELLIDO'] = $nombreCompleto ['primer_apellido'];
+			$inscritosPregrado [$clave] ['SEGUNDO_APELLIDO'] = $nombreCompleto ['segundo_apellido'];
+			$inscritosPregrado [$clave] ['PRIMER_NOMBRE'] = $nombreCompleto ['primer_nombre'];
+			$inscritosPregrado [$clave] ['SEGUNDO_NOMBRE'] = $nombreCompleto ['segundo_nombre'];
+		}
 		
 		var_dump($inscritosPregrado);
 		
