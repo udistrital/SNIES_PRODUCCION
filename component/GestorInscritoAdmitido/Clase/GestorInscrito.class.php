@@ -31,6 +31,20 @@ class GestorInscrito implements IGestorInscrito {
 		}
 		return $resultado;
 	}
+	function consultarInscritoPostgradoAcademica($annio, $semestre) {
+		$periodo ['annio'] = $annio;
+		$periodo ['semestre'] = $semestre;
+		$conexion = "academica";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		$cadenaSql = $this->miSql->cadena_sql ( 'consultarInscritoPostgradoAcademica', $periodo );
+		
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+		
+		if ($resultado == false) {
+			return false;
+		}
+		return $resultado;
+	}
 	function consultarInscritoSnies() {
 	}
 	function insertarInscritoSnies($inscrito) {

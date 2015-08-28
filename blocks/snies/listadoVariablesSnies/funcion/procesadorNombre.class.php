@@ -68,8 +68,17 @@ class procesadorNombre {
 	 * @param string $nombreCompleto        	
 	 * @return array
 	 */
-	function dividirNombre($nombreCompleto) {
+	function dividirNombreCompleto($nombreCompleto) {
 		$nombreCompleto = trim ( $nombreCompleto );
+		// Reemplaza los espacios dobles, triples y cuatriples por sencillos
+		
+		$espacios = array (
+				"     ", // 5 espacios
+				"    ", // 4 espacios
+				"   ", // 3 espacios
+				"  " 
+		);
+		$nombreCompleto = str_replace ( $espacios, " ", $nombreCompleto );
 		// dividir el nombre por espacios
 		$arregloNombres = explode ( " ", $nombreCompleto );
 		
@@ -121,12 +130,75 @@ class procesadorNombre {
 			$nombre ['primer_nombre'] = $arregloNombres [1];
 			$nombre ['segundo_nombre'] = '';
 		}
-		//Error
-		//cuando es una sola palabra, primer_nombre es igual a primer apellido
-		//se debe depurar desde la fuente
+		// Error
+		// cuando es una sola palabra, primer_nombre es igual a primer apellido
+		// se debe depurar desde la fuente
 		if ($numeroPartes == 1) {
 			$nombre ['primer_apellido'] = $arregloNombres [0];
 			$nombre ['segundo_apellido'] = '';
+			$nombre ['primer_nombre'] = $arregloNombres [0];
+			$nombre ['segundo_nombre'] = '';
+		}
+		//var_dump ( $nombre );
+
+		return $nombre;
+	}
+	function dividirApellidos($apellidos) {
+		$apellidos = trim ( $apellidos );
+		// dividir el nombre por espacios
+		$arregloApellidos = explode ( " ", $apellidos );
+		
+		$numeroPartes = sizeof ( $arregloApellidos );
+		// echo $numeroPartes;
+		
+		if ($numeroPartes == 5) {
+			$nombre ['primer_apellido'] = $arregloApellidos [0];
+			$nombre ['segundo_apellido'] = $arregloApellidos [1] . $arregloApellidos [2] . $arregloApellidos [3] . $arregloApellidos [4];
+		}
+		if ($numeroPartes == 4) {
+			$nombre ['primer_apellido'] = $arregloApellidos [0];
+			$nombre ['segundo_apellido'] = $arregloApellidos [1] . $arregloApellidos [2] . $arregloApellidos [3];
+		}
+		if ($numeroPartes == 3) {
+			$nombre ['primer_apellido'] = $arregloApellidos [0];
+			$nombre ['segundo_apellido'] = $arregloApellidos [1] . $arregloApellidos [2];
+		}
+		if ($numeroPartes == 2) {
+			$nombre ['primer_apellido'] = $arregloApellidos [0];
+			$nombre ['segundo_apellido'] = $arregloApellidos [1];
+		}
+		if ($numeroPartes == 1) {
+			$nombre ['primer_apellido'] = $arregloApellidos [0];
+			$nombre ['segundo_apellido'] = '';
+		}
+		
+		return $nombre;
+	}
+	function dividirNombres($nombres) {
+		$nombres = trim ( $nombres );
+		// dividir el nombre por espacios
+		$arregloNombres = explode ( " ", $nombres );
+		
+		$numeroPartes = sizeof ( $arregloNombres );
+		// echo $numeroPartes;
+		
+		if ($numeroPartes == 5) {
+			$nombre ['primer_nombre'] = $arregloNombres [0];
+			$nombre ['segundo_nombre'] = $arregloNombres [1] . $arregloNombres [2] . $arregloNombres [3] . $arregloNombres [4];
+		}
+		if ($numeroPartes == 4) {
+			$nombre ['primer_nombre'] = $arregloNombres [0];
+			$nombre ['segundo_nombre'] = $arregloNombres [1] . $arregloNombres [2] . $arregloNombres [3];
+		}
+		if ($numeroPartes == 3) {
+			$nombre ['primer_nombre'] = $arregloNombres [0];
+			$nombre ['segundo_nombre'] = $arregloNombres [1] . $arregloNombres [2];
+		}
+		if ($numeroPartes == 2) {
+			$nombre ['primer_nombre'] = $arregloNombres [0];
+			$nombre ['segundo_nombre'] = $arregloNombres [1];
+		}
+		if ($numeroPartes == 1) {
 			$nombre ['primer_nombre'] = $arregloNombres [0];
 			$nombre ['segundo_nombre'] = '';
 		}

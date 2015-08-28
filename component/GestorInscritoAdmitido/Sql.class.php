@@ -73,8 +73,8 @@ class Sql extends \Sql {
 				$cadenaSql .= "DECODE(asp_ape_per,1,'01',3,'02', asp_ape_per) ins_semestre, ";
 				$cadenaSql .= "DECODE(asp_tip_doc,'',DECODE(length(asp_nro_iden),11,'TI',12,'TI','CC'),'C', 'CC', '1', 'CC', 'c', 'CC', 'T', 'TI', '2', 'TI', 't', 'TI', 'E', 'CE', 'P', 'PS', 'CC') tipo_ident_code, ";
 				$cadenaSql .= "asp_nro_iden documento, ";
-				$cadenaSql .= "asp_apellido apellido, ";//en este campo están los apellidos
-				$cadenaSql .= "asp_nombre nombre, ";//en este campo estan los nombres
+				$cadenaSql .= "asp_apellido apellido, "; // en este campo están los apellidos
+				$cadenaSql .= "asp_nombre nombre, "; // en este campo estan los nombres
 				$cadenaSql .= "as_cra_cod_snies prog_prim_opc, ";
 				$cadenaSql .= "TO_CHAR(DECODE(asp_snp,'','N/A',NULL,'N/A',replace(asp_snp,' ',''))) snp,";
 				$cadenaSql .= "TO_CHAR(DECODE(asp_sexo,'M','01','F','02','01')) genero, ";
@@ -88,21 +88,24 @@ class Sql extends \Sql {
 				$cadenaSql .= "INNER JOIN " . $prefijo . "actipcra ON cra_tip_cra = tra_cod ";
 				$cadenaSql .= "WHERE  ";
 				$cadenaSql .= "asp_ape_ano=" . $variable ['annio'];
-				$cadenaSql .= "AND asp_ape_per='" . $variable ['semestre'] . "'";
-				$cadenaSql .= "AND tra_nivel IN ('PREGRADO') ";
-				//$cadenaSql .= "AND asp_nro_iden=1023954699 ";
-
+				if ($variable ['semestre'] == 1) {
+					$cadenaSql .= " AND asp_ape_per='1'";
+				} else {
+					$cadenaSql .= " AND asp_ape_per=3";
+				}
+				$cadenaSql .= " AND tra_nivel IN ('PREGRADO') ";
 				
 				break;
 			
-			case "consultarInscritoPostgradoAcademica" :				
-				$cadenaSql .= "SELECT UNIQUE ";
+			case "consultarInscritoPostgradoAcademica" :
+				$prefijo = "mntac.";
+				$cadenaSql = "SELECT UNIQUE ";
 				$cadenaSql .= "TO_CHAR('1301') ies_code, ";
 				$cadenaSql .= "mat_ano ins_annio, ";
 				$cadenaSql .= "DECODE(mat_per,1,'01',3,'02', mat_per) ins_semestre, ";
 				$cadenaSql .= "DECODE(est_tipo_iden,'',DECODE(length(est_nro_iden),11,'TI',12,'TI','CC'),'C', 'CC', '1', 'CC', 'c', 'CC', 'T', 'TI', '2', 'TI', 't', 'TI', 'E', 'CE', 'P', 'PS', 'CC') tipo_ident_code, ";
 				$cadenaSql .= "est_nro_iden  documento, ";
-				$cadenaSql .= "est_nombre nombre, ";//en este campo estan los nombres y apellidos
+				$cadenaSql .= "est_nombre nombre, "; // en este campo estan los nombres y apellidos
 				$cadenaSql .= "as_cra_cod_snies prog_prim_opc,  ";
 				$cadenaSql .= "TO_CHAR(DECODE(eot_nro_snp,'','N/A',NULL,'N/A',replace(eot_nro_snp,' ',''))) snp,";
 				$cadenaSql .= "TO_CHAR(DECODE(est_sexo,'M','01','F','02','01')) genero, ";
@@ -118,10 +121,15 @@ class Sql extends \Sql {
 				$cadenaSql .= "INNER JOIN " . $prefijo . "accra_snies ON as_cra_cod = mat_cra_cod ";
 				$cadenaSql .= "WHERE  ";
 				$cadenaSql .= "mat_ano=" . $variable ['annio'];
-				$cadenaSql .= "AND mat_per='" . $variable ['semestre'] . "'";
+				if ($variable ['semestre'] == 1) {
+					$cadenaSql .= " AND mat_per='1'";
+				} else {
+					$cadenaSql .= " AND mat_per=3";
+				}
 				$cadenaSql .= "AND SUBSTR(est_cod,0,4)=mat_ano ";
 				$cadenaSql .= "AND SUBSTR(est_cod,5,1)=DECODE(mat_per,1,'1',3,'2',mat_per) ";
 				$cadenaSql .= "AND tra_nivel IN ('DOCTORADO','MAESTRIA','POSGRADO') ";
+				// $cadenaSql .= " AND est_nro_iden=79795395";
 				
 				break;
 			
@@ -140,18 +148,18 @@ class Sql extends \Sql {
 				$cadenaSql = "INSERT INTO ";
 				$cadenaSql .= "inscrito ";
 				$cadenaSql .= "(";
-				$cadenaSql .= "ies_code, "; // [0]
+				$cadenaSql .= "ies_code, ";
 				$cadenaSql .= "ins_annio, ";
 				$cadenaSql .= "ins_semestre,";
 				$cadenaSql .= "tipo_ident_code,";
 				$cadenaSql .= "documento, ";
-				$cadenaSql .= "segundo_apellido, "; // [5]
+				$cadenaSql .= "segundo_apellido, ";
 				$cadenaSql .= "prog_prim_opc, ";
 				$cadenaSql .= "snp, ";
 				$cadenaSql .= "genero, ";
 				$cadenaSql .= "primer_nombre, ";
 				$cadenaSql .= "segundo_nombre, ";
-				$cadenaSql .= "primer_apellido, "; // [13]
+				$cadenaSql .= "primer_apellido, ";
 				$cadenaSql .= "codigo_ent_aula, ";
 				$cadenaSql .= "municipio, ";
 				$cadenaSql .= "departamento ";
@@ -163,13 +171,13 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable ['INS_SEMESTRE'] . "', ";
 				$cadenaSql .= "'" . $variable ['TIPO_IDENT_CODE'] . "', ";
 				$cadenaSql .= "'" . $variable ['DOCUMENTO'] . "', ";
-				$cadenaSql .= "replace('" . $variable ['SEGUNDO_APELLIDO'] . "','?','') ,";
+				$cadenaSql .= "'" . $variable ['SEGUNDO_APELLIDO'] . "', ";
 				$cadenaSql .= "'" . $variable ['PROG_PRIM_OPC'] . "', ";
 				$cadenaSql .= "'" . $variable ['SNP'] . "', ";
 				$cadenaSql .= "'" . $variable ['GENERO'] . "', ";
-				$cadenaSql .= "replace('" . $variable ['PRIMER_NOMBRE'] . "','?','') ,";
-				$cadenaSql .= "replace('" . $variable ['SEGUNDO_NOMBRE'] . "','?','') ,";
-				$cadenaSql .= "replace('" . $variable ['PRIMER_APELLIDO'] . "','?','') ,";
+				$cadenaSql .= "'" . $variable ['PRIMER_NOMBRE'] . "', ";
+				$cadenaSql .= "'" . $variable ['SEGUNDO_NOMBRE'] . "', ";
+				$cadenaSql .= "'" . $variable ['PRIMER_APELLIDO'] . "', ";
 				$cadenaSql .= "'" . $variable ['CODIGO_ENT_AULA'] . "', ";
 				$cadenaSql .= "'" . $variable ['MUNICIPIO'] . "', ";
 				$cadenaSql .= "'" . $variable ['DEPARTAMENTO'] . "' ";
@@ -228,6 +236,15 @@ class Sql extends \Sql {
 				$cadenaSql .= "AND asp_nro_iden in ('97061809809','96122105609') ";
 				/**
 				 * $cadenaSql .
+				 *
+				 *
+				 *
+				 *
+				 *
+				 *
+				 *
+				 *
+				 *
 				 *
 				 * = "UNION ";
 				 *

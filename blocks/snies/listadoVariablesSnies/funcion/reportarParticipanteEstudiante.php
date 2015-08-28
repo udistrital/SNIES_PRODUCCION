@@ -62,7 +62,7 @@ class FormProcessor {
 		// descompone nombre completo en sus partes y las aglega al final de cada registro
 		foreach ( $estudiante as $clave => $valor ) {
 			// echo $estudiante [$clave] ['CODIGO_UNICO'].'<br>';
-			$nombreCompleto = $miProcesadorNombre->dividirNombre ( $estudiante [$clave] ['EST_NOMBRE'] );
+			$nombreCompleto = $miProcesadorNombre->dividirNombreCompleto ( $estudiante [$clave] ['EST_NOMBRE'] );
 			$estudiante [$clave] ['PRIMER_APELLIDO'] = $nombreCompleto ['primer_apellido'];
 			$estudiante [$clave] ['SEGUNDO_APELLIDO'] = $nombreCompleto ['segundo_apellido'];
 			$estudiante [$clave] ['PRIMER_NOMBRE'] = $nombreCompleto ['primer_nombre'];

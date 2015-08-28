@@ -79,7 +79,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " WHERE ";
 				$cadenaSql .= " mat_ano=" . $variable ['annio'];
 				$cadenaSql .= " AND mat_per=" . $variable ['semestre']; // el semestre 03 de la universidad es el semestre 02 de SNIES
-				$cadenaSql .= " AND rownum < 1000"; // solo procesa 5 registros
+				//$cadenaSql .= " AND rownum < 1000";
 				
 				break;
 			

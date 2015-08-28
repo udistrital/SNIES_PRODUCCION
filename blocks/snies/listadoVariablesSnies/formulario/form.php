@@ -43,15 +43,7 @@ class Formulario {
 			$this->semestre = '01';
 		} else {
 			$this->semestre = '02';
-		}
-		
-		/**
-		 * ESTOS VALORES SE DEBEN BORRAR, SON DE PRUEBAS
-		 */
-		$this->annio = '2015';
-		$this->semestre = '01';
-		/**
-		 */
+		}	
 		
 		// consultar la variable inscritos de la base de datos del SNIES LOCAL (postgres)
 		
@@ -63,13 +55,14 @@ class Formulario {
 		$totalMatriculadosPrimerCurso = 0;
 		$totalMatriculados = 0;
 		
-		?>
+/** 		?>
 <div id="progressbar">
 	<div class="progress-label">Loading...</div>
 </div>
-<?php
+<?php*/
 		
-		// $totalInscritos = $this->miComponente->contarInscritos ( $this->annio, $this->semestre);
+		$totalInscritos = $this->miComponente->contarInscritos ( $this->annio, $this->semestre);
+				
 		// $totalAdmitidos = $this->miComponente->contarAdmitidos ( $periodo );
 		// $totalMatriculadosPrimerCurso = $this->miComponente->contarMatriculadosPrimerCurso ( $periodo );
 		// $totalMatriculados = $this->miComponente->contarMatriculados ( $periodo );
