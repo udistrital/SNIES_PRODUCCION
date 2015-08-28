@@ -28,42 +28,13 @@ class Sql extends \Sql {
 		
 		switch ($tipo) {
 			
-			// CONSULTAS BASE DE DATOS SNIES LOCAL - POSTGRES
-			
-			case "contarInscritos" :
-				$cadenaSql = "SELECT COUNT(*) FROM";
-				$cadenaSql .= " inscrito ";
-				$cadenaSql .= " WHERE ins_annio=" . $variable ['annio'];
-				$cadenaSql .= " AND ins_semestre='" . $variable ['semestre'] . "'";
-				
-				break;
-			
-			case "contarAdmitidos" :
-				$cadenaSql = "SELECT COUNT(*) FROM";
-				$cadenaSql .= " admitido ";
-				$cadenaSql .= " WHERE adm_annio=" . $variable ['annio'];
-				$cadenaSql .= " AND adm_semestre='" . $variable ['semestre'] . "'";
-				
-				break;
-			
-			case "contarMatriculadosPrimerCurso" :
-				$cadenaSql = "SELECT COUNT(*) FROM";
-				$cadenaSql .= " estudiante_programa ";
-				$cadenaSql .= " WHERE anio=" . $variable ['annio'];
-				$cadenaSql .= " AND semestre='" . $variable ['semestre'] . "'";
-				
-				break;
-			
-			case "contarMatriculados" :
-				$cadenaSql = "SELECT COUNT(*) FROM";
-				$cadenaSql .= " matriculado ";
-				$cadenaSql .= " WHERE est_annio=" . $variable ['annio'];
-				$cadenaSql .= " AND est_semestre='" . $variable ['semestre'] . "'";
-				
-				break;
-			
-			// CONSULTAS PARA EL CARGUE DE INSCRITOS
-			// BASE DE DATOS ACADEMICA - ORACLE
+			/**
+			 * ***************************
+			 *
+			 * INSCRITOS ACADEMICA
+			 *
+			 * ***************************
+			 */
 			
 			case "consultarInscritoPregradoAcademica" :
 				$prefijo = "mntac.";
@@ -129,12 +100,24 @@ class Sql extends \Sql {
 				$cadenaSql .= "AND SUBSTR(est_cod,0,4)=mat_ano ";
 				$cadenaSql .= "AND SUBSTR(est_cod,5,1)=DECODE(mat_per,1,'1',3,'2',mat_per) ";
 				$cadenaSql .= "AND tra_nivel IN ('DOCTORADO','MAESTRIA','POSGRADO') ";
-				// $cadenaSql .= " AND est_nro_iden=79795395";
 				
 				break;
 			
-			// CONSULTAS PARA EL CARGUE DE INSCRITOS
-			// BASE DE DATOS SNIES LOCAL
+			/**
+			 * ***************************
+			 *
+			 * INSCRITOS SNIES LOCAL
+			 *
+			 * ***************************
+			 */
+			
+			case "contarInscritos" :
+				$cadenaSql = "SELECT COUNT(*) FROM";
+				$cadenaSql .= " inscrito ";
+				$cadenaSql .= " WHERE ins_annio=" . $variable ['annio'];
+				$cadenaSql .= " AND ins_semestre='" . $variable ['semestre'] . "'";
+				
+				break;
 			
 			case "borrarInscritos" :
 				$cadenaSql = "DELETE FROM";
@@ -185,8 +168,13 @@ class Sql extends \Sql {
 				
 				break;
 			
-			// CONSULTAS PARA EL CARGUE DE ADMITIDOS
-			// BASE DE DATOS ACADEMICA - ORACLE
+			/**
+			 * ***************************
+			 *
+			 * ADMITIDOS ACADEMICA
+			 *
+			 * ***************************
+			 */
 			
 			case "consultarAdmitidoPregradoAcademica" :
 				$prefijo = "mntac.";
@@ -227,78 +215,60 @@ class Sql extends \Sql {
 			
 			case "consultarAdmitidoPostgradoAcademica" :
 				$prefijo = "mntac.";
-				$cadenaSql = "SELECT UNIQUE ";
-				$cadenaSql .= "est_nro_iden asp_nro_iden, ";
-				$cadenaSql .= "DECODE(est_tipo_iden,'',DECODE(length(est_nro_iden),11,'TI',12,'TI','CC'),'C', 'CC', '1', 'CC', 'c', 'CC', 'T', 'TI', '2', 'TI', 't', 'TI', 'E', 'CE', 'P', 'PS', 'CC') tipo_identif, ";
-				$cadenaSql .= "est_nro_iden documento, ";
-				$cadenaSql .= "(case when INSTR(trim(est_nombre),' ',1,4)>'0' AND INSTR(trim(est_nombre),' ',1,2)=INSTR(trim(est_nombre),' ',1,1)+1
-				  then trim(SUBSTR(trim(est_nombre),instr(trim(est_nombre),' ',1,1)+1,INSTR(trim(est_nombre),' ',1,3) - INSTR(trim(est_nombre),' ',1,2)))
-				  when INSTR(trim(est_nombre),' ',1,4)='0' AND INSTR(trim(est_nombre),' ',1,2)=INSTR(trim(est_nombre),' ',1,1)+1
-				  then trim(SUBSTR(trim(est_nombre),instr(trim(est_nombre),' ',1,1)+1,length(trim(est_nombre)) - instr(trim(est_nombre),' ',1,3)))
-				  else trim(SUBSTR(trim(est_nombre),INSTR(trim(est_nombre),' ',1,1) +1 ,INSTR(trim(est_nombre),' ',1,2) - INSTR(trim(est_nombre),' ',1,1)))
-				  end) segundo_apellido, ";
-				$cadenaSql .= "as_cra_cod_snies prog_consecutivo, ";
-				$cadenaSql .= "TO_CHAR(DECODE(eot_nro_snp,'','N/A',NULL,'N/A',replace(eot_nro_snp,' ',''))) snp,";
-				$cadenaSql .= "'' fecha_snp, ";
-				$cadenaSql .= "TO_CHAR('1301') ies_code, ";
-				$cadenaSql .= "mat_ano adm_annio, ";
-				$cadenaSql .= "DECODE(mat_per,1,'01',3,'02', mat_per) adm_semestre, ";
-				$cadenaSql .= "'11' departamento, ";
-				$cadenaSql .= "'11001' municipio, ";
-				$cadenaSql .= "(case when INSTR(trim(est_nombre),' ',1,3)='0' AND INSTR(trim(est_nombre),' ',1,2)='0'
-				  then trim(SUBSTR(trim(est_nombre),instr(trim(est_nombre),' ',1,1) +1,length(trim(est_nombre)) - instr(trim(est_nombre),' ',1,1)))
-				  when INSTR(trim(est_nombre),' ',1,3)='0' AND INSTR(trim(est_nombre),' ',1,2)>'0'
-				  then trim(SUBSTR(trim(est_nombre),instr(trim(est_nombre),' ',1,2) +1,length(trim(est_nombre)) - instr(trim(est_nombre),' ',1,2)))
-				  when INSTR(trim(est_nombre),' ',1,4)>'0' AND INSTR(trim(est_nombre),' ',1,2)=INSTR(trim(est_nombre),' ',1,1)+1
-				  then trim(SUBSTR(trim(est_nombre),instr(trim(est_nombre),' ',1,3),INSTR(trim(est_nombre),' ',1,4) - INSTR(trim(est_nombre),' ',1,3)))
-				  when INSTR(trim(est_nombre),' ',1,4)='0' AND INSTR(trim(est_nombre),' ',1,2)=INSTR(trim(est_nombre),' ',1,1)+1
-				  then trim(SUBSTR(trim(est_nombre),instr(trim(est_nombre),' ',1,3),length(trim(est_nombre)) - instr(trim(est_nombre),' ',1,3)))
-				  when INSTR(trim(est_nombre),' ',1,4)>'0' AND INSTR(trim(est_nombre),' ',1,3)=INSTR(trim(est_nombre),' ',1,2)+1
-				  then trim(SUBSTR(trim(est_nombre),instr(trim(est_nombre),' ',1,2)+1,INSTR(trim(est_nombre),' ',1,4) - INSTR(trim(est_nombre),' ',1,3)))
-				  when INSTR(trim(est_nombre),' ',1,4)='0' AND INSTR(trim(est_nombre),' ',1,3)=INSTR(trim(est_nombre),' ',1,2)+1
-				  then trim(SUBSTR(trim(est_nombre),instr(trim(est_nombre),' ',1,3),length(est_nombre) - instr(est_nombre,' ',1,3)+1))
-				  else trim(SUBSTR(trim(est_nombre),INSTR(trim(est_nombre),' ',1,2)+1 ,INSTR(trim(est_nombre),' ',1,3) - INSTR(trim(est_nombre),' ',1,2)))
-				  end) primer_nombre, ";
-				$cadenaSql .= "(case when INSTR(trim(est_nombre),' ',1,3)='0'
-				  then ' '
-				  when INSTR(trim(est_nombre),' ',1,4)='0' AND (INSTR(trim(est_nombre),' ',1,3)=INSTR(trim(est_nombre),' ',1,2)+1 OR INSTR(trim(est_nombre),' ',1,2)=INSTR(trim(est_nombre),' ',1,1)+1)
-				  then ' '
-				  when INSTR(trim(est_nombre),' ',1,4)>'0' AND INSTR(trim(est_nombre),' ',1,3)=INSTR(trim(est_nombre),' ',1,2)+1
-				  then trim(SUBSTR(trim(est_nombre),instr(trim(est_nombre),' ',1,2)+1,INSTR(trim(est_nombre),' ',1,4) - INSTR(trim(est_nombre),' ',1,3)))
-				  when INSTR(trim(est_nombre),' ',1,4)>'0' AND INSTR(trim(est_nombre),' ',1,2)=INSTR(trim(est_nombre),' ',1,1)+1
-				  then trim(SUBSTR(trim(est_nombre),instr(trim(est_nombre),' ',1,4),(length(trim(est_nombre))+1) - INSTR(trim(est_nombre),' ',1,4)))
-				  when INSTR(trim(est_nombre),' ',1,4)>'0' AND INSTR(trim(est_nombre),' ',1,3)=INSTR(trim(est_nombre),' ',1,2)+1
-				  then trim(SUBSTR(trim(est_nombre),instr(trim(est_nombre),' ',1,4),(length(trim(est_nombre))+1) - instr(est_nombre,' ',1,4)+1))
-				  else trim(SUBSTR(trim(est_nombre),instr(trim(est_nombre),' ',1,3) +1,(length(est_nombre)+1) - instr(est_nombre,' ',1,3)))
-				  end) segundo_nombre, ";
-				$cadenaSql .= "SUBSTR(trim(est_nombre),0,INSTR(trim(est_nombre),' ',1,1)) primer_apellido, ";
-				$cadenaSql .= "'1301' codigo_ent_aula, ";
-				$cadenaSql .= "TO_CHAR(DECODE(est_sexo,'M','01','F','02','01')) genero, ";
-				$cadenaSql .= "as_cra_nom prog ";
-				$cadenaSql .= "FROM " . $prefijo . "acest ";
-				$cadenaSql .= "INNER JOIN " . $prefijo . "acestotr ON est_cod = eot_cod ";
-				$cadenaSql .= "INNER JOIN " . $prefijo . "v_tot_matri_ape_per ON est_cod = mat_est_cod ";
-				$cadenaSql .= "INNER JOIN " . $prefijo . "accra ON cra_cod = mat_cra_cod ";
-				$cadenaSql .= "INNER JOIN " . $prefijo . "actipcra ON cra_tip_cra = tra_cod ";
-				$cadenaSql .= "INNER JOIN " . $prefijo . "accra_snies ON as_cra_cod = mat_cra_cod ";
-				$cadenaSql .= "WHERE ";
-				$cadenaSql .= "mat_ano=" . $variable ['annio'] . " ";
+				$cadenaSql = " SELECT UNIQUE ";
+				$cadenaSql .= " est_nro_iden documento, ";
+				$cadenaSql .= " DECODE(est_tipo_iden,'',DECODE(length(est_nro_iden),11,'TI',12,'TI','CC'),'C', 'CC', '1', 'CC', 'c', 'CC', 'T', 'TI', '2', 'TI', 't', 'TI', 'E', 'CE', 'P', 'PS', 'CC') tipo_identif, ";
+				$cadenaSql .= " est_nombre nombre, ";
+				$cadenaSql .= " as_cra_cod_snies prog_consecutivo, ";
+				$cadenaSql .= " TO_CHAR(DECODE(eot_nro_snp,'','N/A',NULL,'N/A',replace(eot_nro_snp,' ',''))) snp,";
+				$cadenaSql .= " '' fecha_snp, "; // se debe buscar
+				$cadenaSql .= " TO_CHAR('1301') ies_code, ";
+				$cadenaSql .= " mat_ano adm_annio, ";
+				$cadenaSql .= " DECODE(mat_per,1,'01',3,'02', mat_per) adm_semestre, ";
+				$cadenaSql .= " '11' departamento, ";
+				$cadenaSql .= " '11001' municipio, ";
+				$cadenaSql .= " '1301' codigo_ent_aula, ";
+				$cadenaSql .= " TO_CHAR(DECODE(est_sexo,'M','01','F','02','01')) genero, ";
+				$cadenaSql .= " as_cra_nom prog ";
+				$cadenaSql .= " FROM " . $prefijo . "acest ";
+				$cadenaSql .= " INNER JOIN " . $prefijo . "acestotr ON est_cod = eot_cod ";
+				$cadenaSql .= " INNER JOIN " . $prefijo . "v_tot_matri_ape_per ON est_cod = mat_est_cod ";
+				$cadenaSql .= " INNER JOIN " . $prefijo . "accra ON cra_cod = mat_cra_cod ";
+				$cadenaSql .= " INNER JOIN " . $prefijo . "actipcra ON cra_tip_cra = tra_cod ";
+				$cadenaSql .= " INNER JOIN " . $prefijo . "accra_snies ON as_cra_cod = mat_cra_cod ";
+				$cadenaSql .= " WHERE ";
+				$cadenaSql .= " mat_ano=" . $variable ['annio'] . " ";
 				if ($variable ['semestre'] == 1) {
 					$cadenaSql .= " AND mat_per='1'";
 				} else {
 					$cadenaSql .= " AND mat_per=3";
 				}
-				$cadenaSql .= "AND SUBSTR(est_cod,0,4)=mat_ano ";
-				$cadenaSql .= "AND SUBSTR(est_cod,5,1)=DECODE(mat_per,1,'1',3,'2',mat_per) ";
-				$cadenaSql .= "AND tra_nivel IN ('DOCTORADO','MAESTRIA','POSGRADO') ";
+				$cadenaSql .= " AND SUBSTR(est_cod,0,4)=mat_ano ";
+				$cadenaSql .= " AND SUBSTR(est_cod,5,1)=DECODE(mat_per,1,'1',3,'2',mat_per) ";
+				$cadenaSql .= " AND tra_nivel IN ('DOCTORADO','MAESTRIA','POSGRADO') ";
 				
-				echo $cadenaSql.'<br>';
+				echo $cadenaSql . '<br>';
 				echo '<br>DEPURAR CONSULTAS DE ADMITIDOS PREGRADO Y PROSTGRADO, LA FECHA SNP SI EXISTE!';
 				exit ();
 				break;
 			
-			// CONSULTAS PARA EL CARGUE DE ADMITIDOS
-			// BASE DE DATOS SNIES LOCAL
+			/**
+			 * ***************************
+			 *
+			 *
+			 * ADMITIDOS SNIES LOCAL
+			 *
+			 *
+			 * ***************************
+			 */
+			
+			case "contarAdmitidos" :
+				$cadenaSql = "SELECT COUNT(*) FROM";
+				$cadenaSql .= " admitido ";
+				$cadenaSql .= " WHERE adm_annio=" . $variable ['annio'];
+				$cadenaSql .= " AND adm_semestre='" . $variable ['semestre'] . "'";
+				
+				break;
 			
 			case "borrarAdmitidosSnies" :
 				$cadenaSql = "DELETE FROM";

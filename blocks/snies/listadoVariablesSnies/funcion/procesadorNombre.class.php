@@ -47,8 +47,8 @@ class procesadorNombre {
 				'O',
 				'U',
 				'U',
-				'Ñ',
-				'Ñ' 
+				'N',
+				'N' 
 		);
 		
 		// se reemplaza en cada registo el caracter de acento por el sencillo ej: á=>a
@@ -81,8 +81,9 @@ class procesadorNombre {
 		$nombreCompleto = str_replace ( $espacios, " ", $nombreCompleto );
 		// dividir el nombre por espacios
 		$arregloNombres = explode ( " ", $nombreCompleto );
-		
+
 		$numeroPartes = sizeof ( $arregloNombres );
+		
 		// echo $numeroPartes;
 		
 		if ($numeroPartes == 8) {
@@ -139,15 +140,22 @@ class procesadorNombre {
 			$nombre ['primer_nombre'] = $arregloNombres [0];
 			$nombre ['segundo_nombre'] = '';
 		}
-		//var_dump ( $nombre );
-
+		// var_dump ( $nombre );
+		
 		return $nombre;
 	}
+	/**
+	 * Divide apellidos compuestos en 
+	 * primer_apellido
+	 * segundo_apellido
+	 * @param unknown $apellidos
+	 * @return string
+	 */
 	function dividirApellidos($apellidos) {
 		$apellidos = trim ( $apellidos );
 		// dividir el nombre por espacios
 		$arregloApellidos = explode ( " ", $apellidos );
-		
+
 		$numeroPartes = sizeof ( $arregloApellidos );
 		// echo $numeroPartes;
 		
@@ -174,13 +182,20 @@ class procesadorNombre {
 		
 		return $nombre;
 	}
+	/**
+	 * Divide nombres compuestos en 
+	 * primer_nombre
+	 * segundo_nombre
+	 * @param string $nombres
+	 * @return array $nombre
+	 */
 	function dividirNombres($nombres) {
 		$nombres = trim ( $nombres );
 		// dividir el nombre por espacios
 		$arregloNombres = explode ( " ", $nombres );
-		
+
 		$numeroPartes = sizeof ( $arregloNombres );
-		// echo $numeroPartes;
+
 		
 		if ($numeroPartes == 5) {
 			$nombre ['primer_nombre'] = $arregloNombres [0];

@@ -79,7 +79,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " WHERE ";
 				$cadenaSql .= " mat_ano=" . $variable ['annio'];
 				$cadenaSql .= " AND mat_per=" . $variable ['semestre']; // el semestre 03 de la universidad es el semestre 02 de SNIES
-				//$cadenaSql .= " AND rownum < 1000";
+				                                                        // $cadenaSql .= " AND rownum < 1000";
 				
 				break;
 			
@@ -99,7 +99,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable ['PRIMER_APELLIDO'] . "', ";
 				$cadenaSql .= "'" . $variable ['SEGUNDO_APELLIDO'] . "', ";
 				$cadenaSql .= "'" . $variable ['PRIMER_NOMBRE'] . "', ";
-				$cadenaSql .= "'" . $variable ['SEGUNDO_NOMBRE'] . "', ";				
+				$cadenaSql .= "'" . $variable ['SEGUNDO_NOMBRE'] . "', ";
 				if (isset ( $variable ['FECHA_NACIM'] )) {
 					$cadenaSql .= "'" . $variable ['FECHA_NACIM'] . "', ";
 				} else {
@@ -127,7 +127,23 @@ class Sql extends \Sql {
 					$cadenaSql .= "''";
 				}
 				$cadenaSql .= " )";
-				//echo $cadenaSql.'<br>';
+				// echo $cadenaSql.'<br>';
+				break;
+			
+// 			case "contarMatriculadosPrimerCurso" :
+// 				$cadenaSql = "SELECT COUNT(*) FROM";
+// 				$cadenaSql .= " estudiante_programa ";
+// 				$cadenaSql .= " WHERE anio=" . $variable ['annio'];
+// 				$cadenaSql .= " AND semestre='" . $variable ['semestre'] . "'";
+				
+// 				break;
+			
+// 			case "contarMatriculados" :
+// 				$cadenaSql = "SELECT COUNT(*) FROM";
+// 				$cadenaSql .= " matriculado ";
+// 				$cadenaSql .= " WHERE est_annio=" . $variable ['annio'];
+// 				$cadenaSql .= " AND est_semestre='" . $variable ['semestre'] . "'";
+				
 				break;
 		}
 		
