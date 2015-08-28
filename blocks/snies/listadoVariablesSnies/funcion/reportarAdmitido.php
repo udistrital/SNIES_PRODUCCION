@@ -32,40 +32,39 @@ class FormProcessor {
 		 * 5.Insertar los registros en el SNIES LOCAL
 		 * 6.Redireccionar a lista de variables
 		 */
-		$admitidos = $this->miComponente->consultarAdmitidoAcademica ( $annio, $semestre );
-		var_dump($admitidos);exit;
+		//$admitidos = $this->miComponente->consultarAdmitidoPregradoAcademica ( $annio, $semestre );
+		$admitidos = $this->miComponente->consultarAdmitidoPostgradoAcademica ( $annio, $semestre );
+		var_dump ( $admitidos );
+		exit ();
 		
-		//$miProcesadorNombre = new procesadorNombre ();
+		// $miProcesadorNombre = new procesadorNombre ();
 		
-		//$admitidos=$miProcesadorNombre->quitarAcento($admitidos, 'PRIMER_NOMBRE');
-		//$admitidos=$miProcesadorNombre->quitarAcento($admitidos, 'SEGUNDO_NOMBRE');
-		//$admitidos=$miProcesadorNombre->quitarAcento($admitidos, 'PRIMER_APELLIDO');
-		//$admitidos=$miProcesadorNombre->quitarAcento($admitidos, 'SEGUNDO_APELLIDO');
-		//$admitidos=$miProcesadorNombre->quitarAcento($admitidos, 'PROG');
+		// $admitidos=$miProcesadorNombre->quitarAcento($admitidos, 'PRIMER_NOMBRE');
+		// $admitidos=$miProcesadorNombre->quitarAcento($admitidos, 'SEGUNDO_NOMBRE');
+		// $admitidos=$miProcesadorNombre->quitarAcento($admitidos, 'PRIMER_APELLIDO');
+		// $admitidos=$miProcesadorNombre->quitarAcento($admitidos, 'SEGUNDO_APELLIDO');
+		// $admitidos=$miProcesadorNombre->quitarAcento($admitidos, 'PROG');
 		
 		$borraradmitidos = $this->miComponente->borrarAdmitidoSnies ( $annio, $semestre );
 		
 		foreach ( $admitidos as $admitido ) {
 			
-			$insertarAdmitido = $this->miComponente->insertarAdmitidoSnies ($admitido);
-						
+			$insertarAdmitido = $this->miComponente->insertarAdmitidoSnies ( $admitido );
 		}
 		
 		$valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
-		//$valorCodificado .= "&action=" . $this->esteBloque ["nombre"];
-		//$valorCodificado .= '&bloqueGrupo='.$this->esteBloque ['grupo'];
-		//$valorCodificado .= "&opcion=".$opcion;
-		//$valorCodificado .= "&annio=".$this->annio;
-		//$valorCodificado .= "&semestre=".$this->semestre;
+		// $valorCodificado .= "&action=" . $this->esteBloque ["nombre"];
+		// $valorCodificado .= '&bloqueGrupo='.$this->esteBloque ['grupo'];
+		// $valorCodificado .= "&opcion=".$opcion;
+		// $valorCodificado .= "&annio=".$this->annio;
+		// $valorCodificado .= "&semestre=".$this->semestre;
 		$valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
 		
 		// Rescatar el parámetro enlace desde los datos de configuraión en la base de datos
 		$variable = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 		$miEnlace = $this->host . $this->site . '/index.php?' . $variable . '=' . $valorCodificado;
 		
-		header ("Location:$miEnlace");
-	
-		
+		header ( "Location:$miEnlace" );
 	}
 }
 

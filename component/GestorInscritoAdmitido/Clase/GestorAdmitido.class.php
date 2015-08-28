@@ -17,7 +17,6 @@ class GestorAdmitido implements IGestorAdmitido {
 		$this->miSql = new Sql ();
 	}
 	function contarAdmitidos($periodo) {
-		
 		$this->miConfigurador = \Configurador::singleton ();
 		// configuracion es el nombre de la conexión principal de SARA - se crea de forma automática tomando los
 		// datos de config.inc.php
@@ -31,12 +30,23 @@ class GestorAdmitido implements IGestorAdmitido {
 		
 		return $resultado [0] [0];
 	}
-	function consultarAdmitidoAcademica($annio, $semestre) {
+	function consultarAdmitidoPregradoAcademica($annio, $semestre) {
 		$periodo ['annio'] = $annio;
 		$periodo ['semestre'] = $semestre;
 		$conexion = "academica";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-		$cadenaSql = $this->miSql->cadena_sql ( 'consultarAdmitidoAcademica', $periodo );
+		$cadenaSql = $this->miSql->cadena_sql ( 'consultarAdmitidoPregradoAcademica', $periodo );
+		
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+		
+		return $resultado;
+	}
+	function consultarAdmitidoPostgradoAcademica($annio, $semestre) {
+		$periodo ['annio'] = $annio;
+		$periodo ['semestre'] = $semestre;
+		$conexion = "academica";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		$cadenaSql = $this->miSql->cadena_sql ( 'consultarAdmitidoPostgradoAcademica', $periodo );
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
 		
