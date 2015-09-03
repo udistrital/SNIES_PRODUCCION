@@ -129,20 +129,20 @@ class Sql extends \Sql {
 				$cadenaSql .= " )";
 				// echo $cadenaSql.'<br>';
 				break;
-			
-// 			case "contarMatriculadosPrimerCurso" :
-// 				$cadenaSql = "SELECT COUNT(*) FROM";
-// 				$cadenaSql .= " estudiante_programa ";
-// 				$cadenaSql .= " WHERE anio=" . $variable ['annio'];
-// 				$cadenaSql .= " AND semestre='" . $variable ['semestre'] . "'";
 				
-// 				break;
-			
-// 			case "contarMatriculados" :
-// 				$cadenaSql = "SELECT COUNT(*) FROM";
-// 				$cadenaSql .= " matriculado ";
-// 				$cadenaSql .= " WHERE est_annio=" . $variable ['annio'];
-// 				$cadenaSql .= " AND est_semestre='" . $variable ['semestre'] . "'";
+				// case "contarMatriculadosPrimerCurso" :
+				// $cadenaSql = "SELECT COUNT(*) FROM";
+				// $cadenaSql .= " estudiante_programa ";
+				// $cadenaSql .= " WHERE anio=" . $variable ['annio'];
+				// $cadenaSql .= " AND semestre='" . $variable ['semestre'] . "'";
+				
+				// break;
+				
+				// case "contarMatriculados" :
+				// $cadenaSql = "SELECT COUNT(*) FROM";
+				// $cadenaSql .= " matriculado ";
+				// $cadenaSql .= " WHERE est_annio=" . $variable ['annio'];
+				// $cadenaSql .= " AND est_semestre='" . $variable ['semestre'] . "'";
 				
 				break;
 		}

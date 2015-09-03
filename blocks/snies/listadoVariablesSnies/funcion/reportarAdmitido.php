@@ -24,33 +24,18 @@ class FormProcessor {
 		$semestre = $_REQUEST ['semestre'];
 		
 		/**
-		 * Esta función realiza las siguientes acciones
-		 * 1.consulta en la académica
-		 * 2.Procesar los datos obtenidos, cambiar acentos.
-		 * 3.Registrar errores de la fuente para reportarlos
-		 * 4.Borrar los registros para el año y periodo seleccionado en SNIES LOCAL
-		 * 5.Insertar los registros en el SNIES LOCAL
-		 * 6.Redireccionar a lista de variables
 		 */
-		//$admitidos = $this->miComponente->consultarAdmitidoPregradoAcademica ( $annio, $semestre );
-		$admitidos = $this->miComponente->consultarAdmitidoPostgradoAcademica ( $annio, $semestre );
-		var_dump ( $admitidos );
-		exit ();
 		
-		// $miProcesadorNombre = new procesadorNombre ();
+		$admitidosPregrado = $this->miComponente->consultarAdmitidoPregradoAcademica ( $annio, $semestre );
+		$admitidosPostgrado = $this->miComponente->consultarAdmitidoPostgradoAcademica ( $annio, $semestre );
 		
-		// $admitidos=$miProcesadorNombre->quitarAcento($admitidos, 'PRIMER_NOMBRE');
-		// $admitidos=$miProcesadorNombre->quitarAcento($admitidos, 'SEGUNDO_NOMBRE');
-		// $admitidos=$miProcesadorNombre->quitarAcento($admitidos, 'PRIMER_APELLIDO');
-		// $admitidos=$miProcesadorNombre->quitarAcento($admitidos, 'SEGUNDO_APELLIDO');
-		// $admitidos=$miProcesadorNombre->quitarAcento($admitidos, 'PROG');
-		
-		$borraradmitidos = $this->miComponente->borrarAdmitidoSnies ( $annio, $semestre );
-		
-		foreach ( $admitidos as $admitido ) {
-			
-			$insertarAdmitido = $this->miComponente->insertarAdmitidoSnies ( $admitido );
+		// borra admitido de pregrado y postgrado para el período indicado
+		if ($admitidosPregrado == true and $admitidosPostgrado == true) {
+			$borrarAdmitidos = $this->miComponente->borrarAdmitidoSnies ( $annio, $semestre );
 		}
+		
+		$this->procesarAdmitidosPregrado ( $admitidosPregrado );
+		$this->procesarAdmitidosPostgrado ( $admitidosPostgrado );
 		
 		$valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 		// $valorCodificado .= "&action=" . $this->esteBloque ["nombre"];
@@ -65,6 +50,81 @@ class FormProcessor {
 		$miEnlace = $this->host . $this->site . '/index.php?' . $variable . '=' . $valorCodificado;
 		
 		header ( "Location:$miEnlace" );
+	}
+	
+	/**
+	 * PROCESAR ADMITIDOS PREGRADO
+	 * Esta función realiza las siguientes acciones
+	 * 1.consulta en la académica
+	 * 2.Procesar los datos obtenidos, cambiar acentos.
+	 * 3.Registrar errores de la fuente para reportarlos
+	 * 4.Borrar los registros para el año y periodo seleccionado en SNIES LOCAL
+	 * 5.Insertar los registros en el SNIES LOCAL
+	 * 6.Redireccionar a lista de variables
+	 */
+	function procesarAdmitidosPregrado($admitidosPregrado) {
+		$miProcesadorNombre = new procesadorNombre ();
+		// Quitar acentos y caracteres especiales
+		$admitidosPregrado = $miProcesadorNombre->quitarAcento ( $admitidosPregrado, 'APELLIDO' );
+		$admitidosPregrado = $miProcesadorNombre->quitarAcento ( $admitidosPregrado, 'NOMBRE' );
+		$admitidosPregrado = $miProcesadorNombre->quitarAcento ( $admitidosPregrado, 'PROG' );
+		
+		// descompone nombre y apellidos en sus partes y las agrega al final de cada registro
+		foreach ( $admitidosPregrado as $clave => $valor ) {
+			// echo $inscritosPregrado [$clave] ['DOCUMENTO'] . '<br>';
+			
+			// divide los apellidos compuestos en primer apellido y segundo apellido
+			$apellido = $miProcesadorNombre->dividirApellidos ( $admitidosPregrado [$clave] ['APELLIDO'] );
+			$admitidosPregrado [$clave] ['PRIMER_APELLIDO'] = $apellido ['primer_apellido'];
+			$admitidosPregrado [$clave] ['SEGUNDO_APELLIDO'] = $apellido ['segundo_apellido'];
+			
+			// divide los nombres compuestos en primer nombre y segundo nombre
+			$nombre = $miProcesadorNombre->dividirNombres ( $admitidosPregrado [$clave] ['NOMBRE'] );
+			
+			$admitidosPregrado [$clave] ['PRIMER_NOMBRE'] = $nombre ['primer_nombre'];
+			$admitidosPregrado [$clave] ['SEGUNDO_NOMBRE'] = $nombre ['segundo_nombre'];
+		}
+		
+		foreach ( $admitidosPregrado as $admitido ) {
+			
+			$insertarAdmitido = $this->miComponente->insertarAdmitido ( $admitido );
+		}
+	}
+	/**
+	 * PROCESAR ADMITIDOS POSTGRADO
+	 * Esta función realiza las siguientes acciones
+	 * 1.consulta en la académica
+	 * 2.Procesar los datos obtenidos, cambiar acentos.
+	 * 3.Registrar errores de la fuente para reportarlos
+	 * 4.Borrar los registros para el año y periodo seleccionado en SNIES LOCAL
+	 * 5.Insertar los registros en el SNIES LOCAL
+	 * 6.Redireccionar a lista de variables
+	 *
+	 * @param unknown $admitidosPregrado        	
+	 */
+	function procesarAdmitidosPostgrado($admitidosPostgrado) {
+		$miProcesadorNombre = new procesadorNombre ();
+		
+		$admitidosPostgrado = $miProcesadorNombre->quitarAcento ( $admitidosPostgrado, 'NOMBRE' );
+		$admitidosPostgrado = $miProcesadorNombre->quitarAcento ( $admitidosPostgrado, 'PROG' );
+		
+		// descompone nombre completo en sus partes y las agrega al final de cada registro
+		foreach ( $admitidosPostgrado as $clave => $valor ) {
+			// echo $admitidosPostgrado [$clave] ['DOCUMENTO'] . '<br>';
+			
+			// divide los apellidos compuestos en primer apellido y segundo apellido
+			$nombreCompleto = $miProcesadorNombre->dividirNombreCompleto ( $admitidosPostgrado [$clave] ['NOMBRE'] );
+			$admitidosPostgrado [$clave] ['PRIMER_APELLIDO'] = $nombreCompleto ['primer_apellido'];
+			$admitidosPostgrado [$clave] ['SEGUNDO_APELLIDO'] = $nombreCompleto ['segundo_apellido'];
+			$admitidosPostgrado [$clave] ['PRIMER_NOMBRE'] = $nombreCompleto ['primer_nombre'];
+			$admitidosPostgrado [$clave] ['SEGUNDO_NOMBRE'] = $nombreCompleto ['segundo_nombre'];
+		}
+		
+		// Inserta uno a uno los registros de admitidos de postgrado consultados en la académica
+		foreach ( $admitidosPostgrado as $admitido ) {
+			// echo $admitidosPostgrado [$clave] ['DOCUMENTO'] . '<br>';
+			$insertarAdmitido = $this->miComponente->insertarAdmitido ( $admitido );
+		}
 	}
 }
 

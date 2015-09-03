@@ -57,8 +57,8 @@ class Componente extends Component implements IGestorInscrito, IGestorAdmitido {
 	function borrarAdmitidoSnies($annio, $semestre) {
 		return $this->miGestorAdmitido->borrarAdmitidoSnies ( $annio, $semestre );
 	}
-	function insertarAdmitidoSnies($admitido) {
-		return $this->miGestorAdmitido->insertarAdmitidoSnies ( $admitido );
+	function insertarAdmitido($admitido) {
+		return $this->miGestorAdmitido->insertarAdmitido ( $admitido );
 	}
 }
 

@@ -62,8 +62,7 @@ class Formulario {
 <?php*/
 		
 		$totalInscritos = $this->miComponente->contarInscritos ( $this->annio, $this->semestre);
-				
-		// $totalAdmitidos = $this->miComponente->contarAdmitidos ( $periodo );
+		$totalAdmitidos = $this->miComponente->contarAdmitidos ( $periodo );
 		// $totalMatriculadosPrimerCurso = $this->miComponente->contarMatriculadosPrimerCurso ( $periodo );
 		// $totalMatriculados = $this->miComponente->contarMatriculados ( $periodo );
 		// $inscritoAcademica=$this->miComponente->consultarInscritoAcademica($periodo);

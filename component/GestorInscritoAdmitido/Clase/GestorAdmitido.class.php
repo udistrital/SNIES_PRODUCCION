@@ -62,7 +62,7 @@ class GestorAdmitido implements IGestorAdmitido {
 		
 		return true;
 	}
-	function insertarAdmitidoSnies($admitido) {
+	function insertarAdmitido($admitido) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		$cadenaSql = $this->miSql->cadena_sql ( 'insertaAdmitidoSnies', $admitido );
