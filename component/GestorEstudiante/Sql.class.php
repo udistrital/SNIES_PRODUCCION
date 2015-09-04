@@ -28,24 +28,6 @@ class Sql extends \Sql {
 		
 		switch ($tipo) {
 			
-			// CONSULTAS BASE DE DATOS SNIES LOCAL - POSTGRES
-			
-			case "contarInscritos" :
-				$cadenaSql = "SELECT COUNT(*) FROM";
-				$cadenaSql .= " inscrito ";
-				$cadenaSql .= " WHERE ins_annio=" . $variable ['annio'];
-				$cadenaSql .= " AND ins_semestre='" . $variable ['semestre'] . "'";
-				
-				break;
-			
-			case "contarAdmitidos" :
-				$cadenaSql = "SELECT COUNT(*) FROM";
-				$cadenaSql .= " admitido ";
-				$cadenaSql .= " WHERE adm_annio=" . $variable ['annio'];
-				$cadenaSql .= " AND adm_semestre='" . $variable ['semestre'] . "'";
-				
-				break;
-			
 			/**
 			 * CONSULTA BASE DE DATOS INSTITUCIONAL
 			 * Datos necesarios para la tabla participante de estudiantes
@@ -128,6 +110,32 @@ class Sql extends \Sql {
 				}
 				$cadenaSql .= " )";
 				// echo $cadenaSql.'<br>';
+				break;
+			
+			case "consultarEstudiante" :
+				$cadenaSql = " SELECT est_nro_iden codigo_unico,";
+				$cadenaSql .= " TO_CHAR(DECODE(est_tipo_iden,'',DECODE(LENGTH(est_nro_iden),11,'TI',12,'TI','CC'),'C', 'CC', '1', 'CC', 'c', 'CC', 'T', 'TI', '2', 'TI', 't', 'TI', 'E', 'CE', 'P', 'PS', 'CC')) tipo_doc_unico";
+				$cadenaSql .= " FROM acest  ";
+				$cadenaSql .= " WHERE est_estado='A'";
+				$cadenaSql .= " AND rownum < 100";
+				
+				break;
+			
+			case "consultarEstudianteSNIES" :
+				$cadenaSql = " SELECT codigo_unico,";
+				$cadenaSql .= " tipo_doc_unico";
+				$cadenaSql .= " FROM estudiante";
+				$cadenaSql .= " WHERE ";
+				$cadenaSql .= " codigo_unico=" . "'$variable ['codigo_unico']'";
+				echo $cadenaSql;
+				
+				break;
+			
+			case "borrarEstudianteSnies" :
+				$cadenaSql = "DELETE FROM";
+				$cadenaSql .= " estudiante ";
+				echo $cadenaSql;
+				exit ();
 				break;
 				
 				// case "contarMatriculadosPrimerCurso" :

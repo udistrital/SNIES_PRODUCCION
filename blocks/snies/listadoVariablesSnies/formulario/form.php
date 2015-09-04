@@ -86,7 +86,7 @@ class Formulario {
 				'3' => array (
 						'nombre' => '4. Estudiante',
 						'total' => $totalMatriculadosPrimerCurso,
-						'enlace' => $this->enlaceActializarVariable ( '' ) 
+						'enlace' => $this->enlaceActializarVariable ( 'reportarEstudiante' ) 
 				),
 				'4' => array (
 						'nombre' => '5. Matrícula Primer Curso',

@@ -38,67 +38,72 @@ class Funcion {
 	}
 	function reportarParticipanteEstudiante() {
 		include_once ($this->ruta . "funcion/reportarParticipanteEstudiante.php");
-	
+		
 		return $resultado;
-	}	
-	
-	
-	
-	
-function procesarAjax() {
-	include_once ($this->ruta . "funcion/procesarAjax.php");
-}
-function action() {
-	$resultado = true;
-	
-	// Aquí se coloca el código que procesará los diferentes formularios que pertenecen al bloque
-	// aunque el código fuente puede ir directamente en este script, para facilitar el mantenimiento
-	// se recomienda que aqui solo sea el punto de entrada para incluir otros scripts que estarán
-	// en la carpeta funcion
-	
-	// Importante: Es adecuado que sea una variable llamada opcion o action la que guie el procesamiento:
-	
-	if (isset ( $_REQUEST ['procesarAjax'] )) {
-		$this->procesarAjax ();
-	} elseif (isset ( $_REQUEST ['opcion'] )) {
-		switch ($_REQUEST ['opcion']) {
+	}
+	function reportarEstudiante() {
+		include_once ($this->ruta . "funcion/reportarEstudiante.php");
+		
+		return $resultado;
+	}
+	function procesarAjax() {
+		include_once ($this->ruta . "funcion/procesarAjax.php");
+	}
+	function action() {
+		$resultado = true;
+		
+		// Aquí se coloca el código que procesará los diferentes formularios que pertenecen al bloque
+		// aunque el código fuente puede ir directamente en este script, para facilitar el mantenimiento
+		// se recomienda que aqui solo sea el punto de entrada para incluir otros scripts que estarán
+		// en la carpeta funcion
+		
+		// Importante: Es adecuado que sea una variable llamada opcion o action la que guie el procesamiento:
+		
+		if (isset ( $_REQUEST ['procesarAjax'] )) {
+			$this->procesarAjax ();
+		} elseif (isset ( $_REQUEST ['opcion'] )) {
+			switch ($_REQUEST ['opcion']) {
+				
+				case 'reportarInscrito' :
+					$resultado = $this->reportarInscrito ();
+					break;
+				
+				case 'reportarAdmitido' :
+					$resultado = $this->reportarAdmitido ();
+					break;
+				
+				case 'reportarParticipanteEstudiante' :
+					$resultado = $this->reportarParticipanteEstudiante ();
+					break;
+				
+				case 'reportarEstudiante' :
+					$resultado = $this->reportarEstudiante ();
+					break;
+				
+				default :
+					return false;
+					exit ();
+			}
+		}
+		
+		return $resultado;
+	}
+	function __construct() {
+		$this->miConfigurador = \Configurador::singleton ();
+		
+		$this->ruta = $this->miConfigurador->getVariableConfiguracion ( "rutaBloque" );
+		
+		$this->miMensaje = \Mensaje::singleton ();
+		
+		$conexion = "aplicativo";
+		$this->miRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		if (! $this->miRecursoDB) {
 			
-			case 'reportarInscrito' :
-				$resultado = $this->reportarInscrito ();
-				break;
-			
-			case 'reportarAdmitido' :
-				$resultado = $this->reportarAdmitido ();
-				break;
-			
-			case 'reportarParticipanteEstudiante' :
-				$resultado = $this->reportarParticipanteEstudiante ();
-				break;
-			
-			default :
-				return false;
-				exit ();
+			$this->miConfigurador->fabricaConexiones->setRecursoDB ( $conexion, "tabla" );
+			$this->miRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		}
 	}
-	
-	return $resultado;
-}
-function __construct() {
-	$this->miConfigurador = \Configurador::singleton ();
-	
-	$this->ruta = $this->miConfigurador->getVariableConfiguracion ( "rutaBloque" );
-	
-	$this->miMensaje = \Mensaje::singleton ();
-	
-	$conexion = "aplicativo";
-	$this->miRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-	
-	if (! $this->miRecursoDB) {
-		
-		$this->miConfigurador->fabricaConexiones->setRecursoDB ( $conexion, "tabla" );
-		$this->miRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-	}
-}
 	public function setRuta($unaRuta) {
 		$this->ruta = $unaRuta;
 	}

@@ -8,7 +8,6 @@ use component\Component;
 require_once ('component/GestorEstudiante/Sql.class.php');
 require_once ('component/GestorEstudiante/Clase/GestorEstudianteAcademica.class.php');
 require_once ('component/GestorEstudiante/Interfaz/IGestorEstudianteAcademica.php');
-
 class Componente extends Component implements IGestorEstudiante {
 	private $miSql;
 	
@@ -16,9 +15,9 @@ class Componente extends Component implements IGestorEstudiante {
 	
 	/**
 	 */
-	public function __construct() {		
+	public function __construct() {
 		$this->miEstudiante = new estudiante ();
-	}	
+	}
 	
 	// funciones matriculados
 	function contarMatriculados($periodo) {
@@ -27,15 +26,21 @@ class Componente extends Component implements IGestorEstudiante {
 	function consultarParticipanteEstudiante($annio, $semestre) {
 		return $this->miEstudiante->consultarParticipanteEstudiante ( $annio, $semestre );
 	}
-	
 	function registrarParticipanteEstudiante($estudiante) {
-		return $this->miEstudiante->registrarParticipanteEstudiante ($estudiante);
+		return $this->miEstudiante->registrarParticipanteEstudiante ( $estudiante );
 	}
-	
 	function borrarParticipanteEstudiante($estudiante) {
-		return $this->miEstudiante->borrarParticipanteEstudiante ($estudiante);
+		return $this->miEstudiante->borrarParticipanteEstudiante ( $estudiante );
+	}
+	function consultarEstudiante() {
+		return $this->miEstudiante->consultarEstudiante ();
+	}
+	function consultarEstudianteSNIES($estudiante) {
+		return $this->miEstudiante->consultarEstudianteSNIES ($estudiante);
 	}
 	
-	
+	function borrarEstudiante() {
+		return $this->miEstudiante->borrarEstudiante ();
+	}
 }
 

@@ -61,7 +61,37 @@ class estudiante implements IGestorEstudiante {
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		$cadenaSql = $this->miSql->cadena_sql ( 'borrarParticipanteEstudiante', $estudiante );
-
+		
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
+		
+		return $resultado;
+	}
+	function consultarEstudiante() {
+		$conexion = "academica";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		$cadenaSql = $this->miSql->cadena_sql ( 'consultarEstudiante', '' );
+		
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+		
+		return $resultado;
+	}
+	function consultarEstudianteSNIES($estudiante) {
+		$conexion = "sniesLocal";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		$cadenaSql = $this->miSql->cadena_sql ( 'consultarEstudianteSNIES', $estudiante );
+		
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
+		
+		return $resultado;
+	}
+	function borrarEstudiante() {
+		$conexion = "sniesLocal";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		$cadenaSql = $this->miSql->cadena_sql ( 'borrarEstudianteSnies', '' );
+		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
 		
 		return $resultado;
