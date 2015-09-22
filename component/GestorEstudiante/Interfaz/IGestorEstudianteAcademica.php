@@ -29,7 +29,7 @@ interface IGestorEstudiante {
 	/**
 	 * Consultar todos los estudiantes de la Universidad tipo documento y número
 	 */
-	function consultarEstudiante();
+	function consultarEstudiante($annio, $semestre);
 	/**
 	 * Borra todos los registros de la tabla ESTUDIANTE del SNIES LOCAL
 	 */

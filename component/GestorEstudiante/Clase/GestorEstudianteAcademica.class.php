@@ -66,11 +66,13 @@ class estudiante implements IGestorEstudiante {
 		
 		return $resultado;
 	}
-	function consultarEstudiante() {
+	function consultarEstudiante($annio, $semestre) {
 		$conexion = "academica";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		$variable['annio']=$annio;
+		$variable['semestre']=$semestre;
 		
-		$cadenaSql = $this->miSql->cadena_sql ( 'consultarEstudiante', '' );
+		$cadenaSql = $this->miSql->cadena_sql ( 'consultarEstudiante', $variable );
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
 		
