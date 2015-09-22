@@ -33,7 +33,7 @@ interface IGestorEstudiante {
 	/**
 	 * Borra todos los registros de la tabla ESTUDIANTE del SNIES LOCAL
 	 */
-	function borrarEstudiante();
+	function borrarEstudiante($unEstudiante);
 	
 	/**
 	 * 

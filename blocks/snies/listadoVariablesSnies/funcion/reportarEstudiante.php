@@ -74,7 +74,31 @@ class FormProcessor {
 			$estudiante [$clave] ['SEGUNDO_NOMBRE'] = $nombreCompleto ['segundo_nombre'];
 		}
 		
-		var_dump($estudiante);
+		// borra el registro anterior y registra el nuevo en la tabla PARTICIPANTES del SNIES
+		foreach ( $estudiante as $unEstudiante ) {
+			// var_dump($unEstudiante);
+			$borradoParticipanteEstudiante = $this->miComponente->borrarParticipanteEstudiante ( $unEstudiante );
+			
+			if ($borradoParticipanteEstudiante == true) {
+				$registroParticipanteEstudiante = $this->miComponente->registrarParticipanteEstudiante ( $unEstudiante );
+			}
+		}
+		
+		
+		echo 'no se deja borrar por que es una fk de estudiante programa QUE HACEMOS';
+		// borra el registro anterior y registra el nuevo en la tabla ESTUDIANTE del SNIES
+		foreach ( $estudiante as $unEstudiante ) {
+			// var_dump($unEstudiante);
+			$borradoEstudiante = $this->miComponente->borrarEstudiante ( $unEstudiante );
+			echo 'borrado';
+			exit;
+			if ($borradoEstudiante == true) {
+				$registroParticipanteEstudiante = $this->miComponente->registrarEstudiante ( $unEstudiante );
+			}
+		}
+		// borra el registro anterior y registra el nuevo en la tabla ESTUDIANTE_PROGRAMA del SNIES
+		
+		// borra el registro anterior y registra el nuevo en la tabla MATRICULADO del SNIES
 		
 		exit ();
 		

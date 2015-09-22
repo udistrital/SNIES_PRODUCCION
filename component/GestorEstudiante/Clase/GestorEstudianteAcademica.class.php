@@ -88,11 +88,11 @@ class estudiante implements IGestorEstudiante {
 		
 		return $resultado;
 	}
-	function borrarEstudiante() {
+	function borrarEstudiante($unEstudiante) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-		$cadenaSql = $this->miSql->cadena_sql ( 'borrarEstudianteSnies', '' );
+		$cadenaSql = $this->miSql->cadena_sql ( 'borrarEstudianteSnies', $unEstudiante);
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
 		
