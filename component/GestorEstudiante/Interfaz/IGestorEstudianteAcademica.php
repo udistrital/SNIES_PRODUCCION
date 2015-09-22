@@ -18,6 +18,8 @@ interface IGestorEstudiante {
 	 */
 	function cosultarParticipante($estudiante);
 	
+	function actualizarParticipante($estudiante);
+	
 	/**
 	 * Registra los datos del estudiantes en la tabla PARTICIPANTE del SNIES
 	 *

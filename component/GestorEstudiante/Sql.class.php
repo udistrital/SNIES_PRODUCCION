@@ -91,50 +91,37 @@ class Sql extends \Sql {
 				
 				break;
 			
-			/**
-			 * case "consultarParticipanteEstudiante" :
-			 * $cadenaSql = " SELECT TO_CHAR('1301') IES_CODE,";
-			 * $cadenaSql .
-			 *
-			 *
-			 *
-			 *
-			 *
-			 * = " EST_NOMBRE,";
-			 * $cadenaSql .= " TO_CHAR(eot_fecha_nac, 'yyyy-mm-dd') fecha_nacim,";
-			 * $cadenaSql .= " TO_CHAR('CO') pais_ln,";
-			 * $cadenaSql .= " TO_CHAR(DECODE (mun_dep_cod,0,11,'',11, mun_dep_cod)) departamento_ln,";
-			 * $cadenaSql .= " TO_CHAR(DECODE (mun_cod,0,11001,'',11001,99999,11001, mun_cod)) municipio_ln,";
-			 * $cadenaSql .= " TO_CHAR(DECODE(est_sexo,'M','01','F','02','01')) genero_code,";
-			 * $cadenaSql .= " eot_email email,";
-			 * $cadenaSql .= " DECODE(eot_estado_civil,1,'01',2,'02',3,'05',4,'03',5,'04', '01') est_civil_code,";
-			 * $cadenaSql .= " TO_CHAR(DECODE(est_tipo_iden,'',DECODE(LENGTH(est_nro_iden),11,'TI',12,'TI','CC'),'C', 'CC', '1', 'CC', 'c', 'CC', 'T', 'TI', '2', 'TI', 't', 'TI', 'E', 'CE', 'P', 'PS', 'CC')) tipo_doc_unico,";
-			 * $cadenaSql .= " TO_CHAR(est_nro_iden) codigo_unico,";
-			 * $cadenaSql .= " TO_CHAR(DECODE(est_tipo_iden_ant,'',DECODE(LENGTH(est_nro_iden_ant),11,'TI',12,'TI','CC'),'C', 'CC', '1', 'CC', 'c', 'CC', 'T', 'TI', '2', 'TI', 't', 'TI', 'E', 'CE', 'P', 'PS', 'CC')) tipo_id_ant,";
-			 * $cadenaSql .= " est_nro_iden_ant codigo_id_ant,";
-			 * $cadenaSql .= " '57' pais_tel,";
-			 * $cadenaSql .= " '1' area_tel,";
-			 * $cadenaSql .= " TO_CHAR(est_telefono) numero_tel,";
-			 * $cadenaSql .= " est_cod codigo";
-			 * $cadenaSql .= " FROM mntac.acest";
-			 * $cadenaSql .= " INNER JOIN mntac.acestotr";
-			 * $cadenaSql .= " ON est_cod = eot_cod";
-			 * $cadenaSql .= " INNER JOIN mntge.gemunicipio";
-			 * $cadenaSql .= " ON MUN_COD=DECODE(EOT_COD_MUN_NAC,0,11001,'',11001,EOT_COD_MUN_NAC)";
-			 * $cadenaSql .= " INNER JOIN mntac.v_tot_matri_ape_per ON est_cod = mat_est_cod";
-			 * $cadenaSql .= " WHERE ";
-			 * $cadenaSql .= " mat_ano=" . $variable ['annio'];
-			 * $cadenaSql .= " AND mat_per=" . $variable ['semestre']; // el semestre 03 de la universidad es el semestre 02 de SNIES
-			 * $cadenaSql .= " AND rownum < 10";
-			 *
-			 * break;
-			 */
-			
 			case "consultarParticipante" :
 				$cadenaSql = "SELECT codigo_unico FROM";
 				$cadenaSql .= " participante ";
 				$cadenaSql .= " WHERE codigo_unico=" . $variable ['CODIGO_UNICO'];
 				
+				break;
+			
+			case "actualizarParticipante" :
+				$cadenaSql = " UPDATE participante";
+				$cadenaSql .= " SET ies_code ='".$variable ['IES_CODE'].",";
+				$cadenaSql .= " primer_apellido ='".$variable ['SEGUNDO_APELLIDO'].",";
+				$cadenaSql .= " segundo_apellido='".$variable ['SEGUNDO_APELLIDO'].",";
+				$cadenaSql .= " primer_nombre ='".$variable ['PRIMER_NOMBRE'].",";
+				$cadenaSql .= " segundo_nombre ='".$variable ['SEGUNDO_NOMBRE'].",";
+				$cadenaSql .= " fecha_nacim ='".$variable ['FECHA_NACIM'].",";
+				$cadenaSql .= " pais_ln ='".$variable ['PAIS_LN'].",";
+				$cadenaSql .= " departamento_ln ='".$variable ['DEPARTAMENTO_LN'].",";
+				$cadenaSql .= " municipio_ln ='".$variable ['MUNICIPIO_LN'].",";
+				$cadenaSql .= " genero_code ='".$variable ['GENERO_CODE'].",";
+				$cadenaSql .= " email ='".$variable ['EMAIL'].",";
+				$cadenaSql .= " est_civil_code ='".$variable ['EST_CIVIL_CODE'].",";
+				$cadenaSql .= " tipo_doc_unico ='".$variable ['TIPO_DOC_UNICO'].",";
+				$cadenaSql .= " codigo_unico ='".$variable ['CODIGO_UNICO'].",";
+				$cadenaSql .= " tipo_id_ant ='".$variable ['TIPO_ID_ANT'].",";
+				$cadenaSql .= " codigo_id_ant ='".$variable ['CODIGO_ID_ANT'].",";
+				$cadenaSql .= " pais_tel ='".$variable ['PAIS_TEL'].",";
+				$cadenaSql .= " area_tel ='".$variable ['AREA_TEL'].",";
+				$cadenaSql .= " numero_tel ='".$variable ['NUMERO_TEL'].",";
+				$cadenaSql .= " WHERE codigo_unico='".$variable ['CODIGO_UNICO'].",";
+				echo $cadenaSql;
+				var_dump($variable);exit;
 				break;
 			
 			case "borrarParticipanteEstudiante" :

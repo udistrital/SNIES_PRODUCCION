@@ -141,7 +141,7 @@ class FormProcessor {
 			
 			$verificarParticipante = $this->miComponente->cosultarParticipante ( $unEstudiante );
 			if (is_array($verificarParticipante)) {
-				echo 'Actualizar';
+				$this->miComponente->actualizarParticipante ( $unEstudiante );
 			} else {
 				echo 'insertar';
 			}
