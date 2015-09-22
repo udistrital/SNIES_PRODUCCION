@@ -13,6 +13,12 @@ interface IGestorEstudiante {
 	function consultarParticipanteEstudiante($annio, $semestre);
 	
 	/**
+	 * Consulta el registro para un codigo_unico de estudiante
+	 * @param unknown $estudiante
+	 */
+	function cosultarParticipante($estudiante);
+	
+	/**
 	 * Registra los datos del estudiantes en la tabla PARTICIPANTE del SNIES
 	 *
 	 * @param array $estudiante        	
@@ -36,8 +42,8 @@ interface IGestorEstudiante {
 	function borrarEstudiante($unEstudiante);
 	
 	/**
-	 * 
-	 * @param unknown $estudiante
+	 *
+	 * @param unknown $estudiante        	
 	 */
 	function consultarEstudianteSNIES($estudiante);
 }

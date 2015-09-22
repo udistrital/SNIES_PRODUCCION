@@ -97,6 +97,9 @@ class Sql extends \Sql {
 			 * $cadenaSql .
 			 *
 			 *
+			 *
+			 *
+			 *
 			 * = " EST_NOMBRE,";
 			 * $cadenaSql .= " TO_CHAR(eot_fecha_nac, 'yyyy-mm-dd') fecha_nacim,";
 			 * $cadenaSql .= " TO_CHAR('CO') pais_ln,";
@@ -126,6 +129,13 @@ class Sql extends \Sql {
 			 *
 			 * break;
 			 */
+			
+			case "consultarParticipante" :
+				$cadenaSql = "SELECT codigo_unico FROM";
+				$cadenaSql .= " participante ";
+				$cadenaSql .= " WHERE codigo_unico=" . $variable ['CODIGO_UNICO'];
+				
+				break;
 			
 			case "borrarParticipanteEstudiante" :
 				$cadenaSql = "DELETE FROM";

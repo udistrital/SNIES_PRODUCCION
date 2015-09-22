@@ -74,16 +74,7 @@ class FormProcessor {
 			$estudiante [$clave] ['SEGUNDO_NOMBRE'] = $nombreCompleto ['segundo_nombre'];
 		}
 		
-		// borra el registro anterior y registra el nuevo en la tabla PARTICIPANTES del SNIES
-		foreach ( $estudiante as $unEstudiante ) {
-			// var_dump($unEstudiante);
-			$borradoParticipanteEstudiante = $this->miComponente->borrarParticipanteEstudiante ( $unEstudiante );
-			
-			if ($borradoParticipanteEstudiante == true) {
-				$registroParticipanteEstudiante = $this->miComponente->registrarParticipanteEstudiante ( $unEstudiante );
-			}
-		}
-		
+		$this->actualizarParticipante ( $estudiante );
 		
 		echo 'no se deja borrar por que es una fk de estudiante programa QUE HACEMOS';
 		// borra el registro anterior y registra el nuevo en la tabla ESTUDIANTE del SNIES
@@ -91,7 +82,7 @@ class FormProcessor {
 			// var_dump($unEstudiante);
 			$borradoEstudiante = $this->miComponente->borrarEstudiante ( $unEstudiante );
 			echo 'borrado';
-			exit;
+			exit ();
 			if ($borradoEstudiante == true) {
 				$registroParticipanteEstudiante = $this->miComponente->registrarEstudiante ( $unEstudiante );
 			}
@@ -144,6 +135,24 @@ class FormProcessor {
 		$miEnlace = $this->host . $this->site . '/index.php?' . $variable . '=' . $valorCodificado;
 		
 		header ( "Location:$miEnlace" );
+	}
+	function actualizarParticipante($estudiante) {
+		foreach ( $estudiante as $unEstudiante ) {
+			
+			$verificarParticipante = $this->miComponente->cosultarParticipante ( $unEstudiante );
+			if (is_array($verificarParticipante)) {
+				echo 'Actualizar';
+			} else {
+				echo 'insertar';
+			}
+			var_dump ( $verificarParticipante );
+			exit ();
+			$borradoParticipanteEstudiante = $this->miComponente->borrarParticipanteEstudiante ( $unEstudiante );
+			
+			if ($borradoParticipanteEstudiante == true) {
+				$registroParticipanteEstudiante = $this->miComponente->registrarParticipanteEstudiante ( $unEstudiante );
+			}
+		}
 	}
 }
 
