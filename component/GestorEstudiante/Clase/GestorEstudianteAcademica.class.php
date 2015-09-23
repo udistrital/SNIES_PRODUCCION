@@ -29,7 +29,7 @@ class estudiante implements IGestorEstudiante {
 		
 		return $resultado [0] [0];
 	}
-	function consultarParticipanteEstudiante($annio, $semestre) {
+	function consultarEstudianteAcademica($annio, $semestre) {
 		$conexion = "academica";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		// el semestre 03 de la universidad corresponde al semestre 02 de SNIES
@@ -41,11 +41,13 @@ class estudiante implements IGestorEstudiante {
 			$periodo ['semestre'] = 1;
 		}
 		
-		$cadenaSql = $this->miSql->cadena_sql ( 'consultarParticipanteEstudiante', $periodo );
+		$cadenaSql = $this->miSql->cadena_sql ( 'consultarEstudianteAcademica', $periodo );
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
 		
 		return $resultado;
 	}
+	
+	// ////PARTICIPANTE SNIES
 	function cosultarParticipante($estudiante) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
@@ -66,11 +68,11 @@ class estudiante implements IGestorEstudiante {
 		
 		return $resultado;
 	}
-	function registrarParticipanteEstudiante($estudiante) {
+	function registrarParticipante($estudiante) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-		$cadenaSql = $this->miSql->cadena_sql ( 'registrarParticipanteEstudiante', $estudiante );
+		$cadenaSql = $this->miSql->cadena_sql ( 'registrarParticipante', $estudiante );
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
 		
@@ -86,33 +88,33 @@ class estudiante implements IGestorEstudiante {
 		
 		return $resultado;
 	}
-	function consultarEstudiante($annio, $semestre) {
-		$conexion = "academica";
+	
+	// ///ESTUDIANTE SNIES
+	function consultarEstudiante($estudiante) {
+		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-		$variable ['annio'] = $annio;
-		$variable ['semestre'] = $semestre;
 		
-		$cadenaSql = $this->miSql->cadena_sql ( 'consultarEstudiante', $variable );
+		$cadenaSql = $this->miSql->cadena_sql ( 'consultarEstudiante', $estudiante );
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
 		
 		return $resultado;
 	}
-	function consultarEstudianteSNIES($estudiante) {
+	function actualizarEstudiante($estudiante) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-		$cadenaSql = $this->miSql->cadena_sql ( 'consultarEstudianteSNIES', $estudiante );
+		$cadenaSql = $this->miSql->cadena_sql ( 'actualizarEstudiante', $estudiante );
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
 		
 		return $resultado;
 	}
-	function borrarEstudiante($unEstudiante) {
+	function registrarEstudiante($estudiante) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-		$cadenaSql = $this->miSql->cadena_sql ( 'borrarEstudianteSnies', $unEstudiante );
+		$cadenaSql = $this->miSql->cadena_sql ( 'registrarEstudiante', $estudiante );
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
 		

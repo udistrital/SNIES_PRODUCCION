@@ -45,7 +45,7 @@ class FormProcessor {
 		 */
 		
 		// estudiante de la académica
-		$estudiante = $this->miComponente->consultarEstudiante ( $annio, $semestre );
+		$estudiante = $this->miComponente->consultarEstudianteAcademica ( $annio, $semestre );
 		
 		// en el caso de que no se haga la consulta redirecciona
 		if ($estudiante == false) {
@@ -74,58 +74,9 @@ class FormProcessor {
 			$estudiante [$clave] ['SEGUNDO_NOMBRE'] = $nombreCompleto ['segundo_nombre'];
 		}
 		
-		$this->actualizarParticipante ( $estudiante );
-		
-		echo 'no se deja borrar por que es una fk de estudiante programa QUE HACEMOS';
-		// borra el registro anterior y registra el nuevo en la tabla ESTUDIANTE del SNIES
-		foreach ( $estudiante as $unEstudiante ) {
-			// var_dump($unEstudiante);
-			$borradoEstudiante = $this->miComponente->borrarEstudiante ( $unEstudiante );
-			echo 'borrado';
-			exit ();
-			if ($borradoEstudiante == true) {
-				$registroParticipanteEstudiante = $this->miComponente->registrarEstudiante ( $unEstudiante );
-			}
-		}
-		// borra el registro anterior y registra el nuevo en la tabla ESTUDIANTE_PROGRAMA del SNIES
-		
-		// borra el registro anterior y registra el nuevo en la tabla MATRICULADO del SNIES
-		
-		exit ();
-		
-		exit ();
-		
-		foreach ( $estudianteAcademica as $estudiante ) {
-			// echo $estudiante['CODIGO_UNICO']." ".$estudiante['TIPO_DOC_UNICO'].'<br>';
-			$resultado = $this->miComponente->consultarEstudianteSNIES ( $estudiante ['CODIGO_UNICO'] );
-		}
-		exit ();
-		// $estudianteSNIES = $this->miComponente->consultarEstudianteSnies ();
-		
-		var_dump ( $estudianteSNIES );
-		
-		exit ();
-		
-		// en el caso de que no se haga la consulta redirecciona
-		if ($estudiante == false) {
-			$valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
-			$valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
-			
-			// Rescatar el parámetro enlace desde los datos de configuraión en la base de datos
-			$variable = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
-			$miEnlace = $this->host . $this->site . '/index.php?' . $variable . '=' . $valorCodificado;
-			
-			header ( "Location:$miEnlace" );
-		}
-		
-		// insertar si no existe o actualizar si existe y es diferente
-		$estudianteSNIES = 
-
-		exit ();
-		
-		// borra todos los registros de la tabla estudiante del SNIES LOCAL
-		$borrarEstudiantes = $this->miComponente->borrarEstudiante ();
-		exit ();
+		// $this->actualizarParticipante ( $estudiante );
+		// $this->actualizarEstudiante ( $estudiante );
+		$this->actualizarEstudiantePrograma ( $estudiante );
 		
 		$valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 		$valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
@@ -136,23 +87,56 @@ class FormProcessor {
 		
 		header ( "Location:$miEnlace" );
 	}
+	
+	/**
+	 * Función que actualiza o registra los datos de la tabla PARTICIPANTE DEL SNIES
+	 * 1.
+	 * consulta si el estudiante existe en la tabla PARTICIPANTE
+	 * Si existe lo actualiza, si no existe lo registra
+	 *
+	 * @param array $estudiante
+	 *        	datos de estudiante
+	 */
 	function actualizarParticipante($estudiante) {
 		foreach ( $estudiante as $unEstudiante ) {
 			
 			$verificarParticipante = $this->miComponente->cosultarParticipante ( $unEstudiante );
-			if (is_array($verificarParticipante)) {
+			if (is_array ( $verificarParticipante )) {
 				$this->miComponente->actualizarParticipante ( $unEstudiante );
-				echo 'agregar las excepciones a la consulta de actualzación';
-				exit;
 			} else {
-				$this->miComponente->insertarParticipante ( $unEstudiante );
+				$this->miComponente->registrarParticipante ( $unEstudiante );
 			}
-			var_dump ( $verificarParticipante );
-			exit ();
-			$borradoParticipanteEstudiante = $this->miComponente->borrarParticipanteEstudiante ( $unEstudiante );
+		}
+	}
+	
+	/**
+	 * Función que actualiza o registra los datos de la tabla ESTUDIANTE DEL SNIES:
+	 * Si no existe el registro en la tabla lo registra
+	 * Si existe el registo lo actualiza
+	 *
+	 * @param unknown $estudiante        	
+	 */
+	function actualizarEstudiante($estudiante) {
+		foreach ( $estudiante as $unEstudiante ) {
 			
-			if ($borradoParticipanteEstudiante == true) {
-				$registroParticipanteEstudiante = $this->miComponente->registrarParticipanteEstudiante ( $unEstudiante );
+			$verificarEstudiante = $this->miComponente->consultarEstudiante ( $unEstudiante );
+			if (is_array ( $verificarEstudiante )) {
+				$this->miComponente->actualizarEstudiante ( $unEstudiante );
+			} else {
+				$this->miComponente->registrarEstudiante ( $unEstudiante );
+			}
+		}
+	}
+	function actualizarEstudiantePrograma($estudiante) {
+		echo 'Realizar el metodo actualizarEstudiantePrograma';
+		exit ();
+		foreach ( $estudiante as $unEstudiante ) {
+			
+			$verificarEstudiante = $this->miComponente->consultarEstudiante ( $unEstudiante );
+			if (is_array ( $verificarEstudiante )) {
+				$this->miComponente->actualizarEstudiante ( $unEstudiante );
+			} else {
+				$this->miComponente->registrarEstudiante ( $unEstudiante );
 			}
 		}
 	}

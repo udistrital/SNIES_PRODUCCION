@@ -4,20 +4,21 @@ namespace sniesEstudiante;
 
 interface IGestorEstudiante {
 	function contarMatriculados($periodo);
+	
 	/**
 	 * Consulta los datos de los estudiantes requeridos en la
 	 * tabla participante de SNIES LOCAL
 	 *
 	 * @param unknown $periodo        	
 	 */
-	function consultarParticipanteEstudiante($annio, $semestre);
+	function consultarEstudianteAcademica($annio, $semestre);
 	
 	/**
 	 * Consulta el registro para un codigo_unico de estudiante
-	 * @param unknown $estudiante
+	 *
+	 * @param unknown $estudiante        	
 	 */
 	function cosultarParticipante($estudiante);
-	
 	function actualizarParticipante($estudiante);
 	
 	/**
@@ -25,7 +26,7 @@ interface IGestorEstudiante {
 	 *
 	 * @param array $estudiante        	
 	 */
-	function registrarParticipanteEstudiante($estudiante);
+	function registrarParticipante($estudiante);
 	
 	/**
 	 * Borra un registro de la tabla PARTICIPANTE del SNIES
@@ -33,21 +34,9 @@ interface IGestorEstudiante {
 	 * @param array $estudiante        	
 	 */
 	function borrarParticipanteEstudiante($estudiante);
-	
-	/**
-	 * Consultar todos los estudiantes de la Universidad tipo documento y número
-	 */
-	function consultarEstudiante($annio, $semestre);
-	/**
-	 * Borra todos los registros de la tabla ESTUDIANTE del SNIES LOCAL
-	 */
-	function borrarEstudiante($unEstudiante);
-	
-	/**
-	 *
-	 * @param unknown $estudiante        	
-	 */
-	function consultarEstudianteSNIES($estudiante);
+	function consultarEstudiante($estudiante);
+	function actualizarEstudiante($estudiante);
+	function registrarEstudiante($estudiante);
 }
 
 ?>
