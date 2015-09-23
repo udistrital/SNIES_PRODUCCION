@@ -127,6 +127,11 @@ class FormProcessor {
 			}
 		}
 	}
+	/**
+	 * 
+	 * Función que actualiza o registra los datos de la tabla ESTUDIANTE_PROGRAMA DEL SNIES (Se refiere a estudiantes de primer semestre):
+	 * @param unknown $estudiante
+	 */
 	function actualizarEstudiantePrograma($estudiante) {
 		echo 'Realizar el metodo actualizarEstudiantePrograma';
 		exit ();
