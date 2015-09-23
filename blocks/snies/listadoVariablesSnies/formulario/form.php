@@ -79,32 +79,27 @@ class Formulario {
 						'enlace' => $this->enlaceActializarVariable ( 'reportarAdmitido' ) 
 				),
 				'2' => array (
-						'nombre' => '3. Estudiante participante',
-						'total' => $totalMatriculadosPrimerCurso,
-						'enlace' => $this->enlaceActializarVariable ( 'reportarParticipanteEstudiante' ) 
-				),
-				'3' => array (
-						'nombre' => '4. Estudiante',
+						'nombre' => '3. Estudiante',
 						'total' => $totalMatriculadosPrimerCurso,
 						'enlace' => $this->enlaceActializarVariable ( 'reportarEstudiante' ) 
 				),
-				'4' => array (
-						'nombre' => '5. Matrícula Primer Curso',
+				'3' => array (
+						'nombre' => '4. Matrícula Primer Curso',
 						'total' => $totalMatriculadosPrimerCurso,
 						'enlace' => $this->enlaceActializarVariable ( '' ) 
 				),
-				'5' => array (
-						'nombre' => '6. Matrículado',
+				'4' => array (
+						'nombre' => '5. Matrículado',
 						'total' => $totalMatriculados,
 						'enlace' => $this->enlaceActializarVariable ( '' ) 
 				),
-				'6' => array (
-						'nombre' => '7. Egresado',
+				'5' => array (
+						'nombre' => '6. Egresado',
 						'total' => $totalMatriculadosPrimerCurso,
 						'enlace' => $this->enlaceActializarVariable ( '' ) 
 				),
-				'7' => array (
-						'nombre' => '8. Graduado',
+				'6' => array (
+						'nombre' => '7. Graduado',
 						'total' => $totalMatriculadosPrimerCurso,
 						'enlace' => $this->enlaceActializarVariable ( '' ) 
 				) 

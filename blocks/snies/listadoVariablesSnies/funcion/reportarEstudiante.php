@@ -142,8 +142,10 @@ class FormProcessor {
 			$verificarParticipante = $this->miComponente->cosultarParticipante ( $unEstudiante );
 			if (is_array($verificarParticipante)) {
 				$this->miComponente->actualizarParticipante ( $unEstudiante );
+				echo 'agregar las excepciones a la consulta de actualzación';
+				exit;
 			} else {
-				echo 'insertar';
+				$this->miComponente->insertarParticipante ( $unEstudiante );
 			}
 			var_dump ( $verificarParticipante );
 			exit ();

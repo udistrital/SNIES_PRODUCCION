@@ -100,28 +100,27 @@ class Sql extends \Sql {
 			
 			case "actualizarParticipante" :
 				$cadenaSql = " UPDATE participante";
-				$cadenaSql .= " SET ies_code ='".$variable ['IES_CODE'].",";
-				$cadenaSql .= " primer_apellido ='".$variable ['SEGUNDO_APELLIDO'].",";
-				$cadenaSql .= " segundo_apellido='".$variable ['SEGUNDO_APELLIDO'].",";
-				$cadenaSql .= " primer_nombre ='".$variable ['PRIMER_NOMBRE'].",";
-				$cadenaSql .= " segundo_nombre ='".$variable ['SEGUNDO_NOMBRE'].",";
-				$cadenaSql .= " fecha_nacim ='".$variable ['FECHA_NACIM'].",";
-				$cadenaSql .= " pais_ln ='".$variable ['PAIS_LN'].",";
-				$cadenaSql .= " departamento_ln ='".$variable ['DEPARTAMENTO_LN'].",";
-				$cadenaSql .= " municipio_ln ='".$variable ['MUNICIPIO_LN'].",";
-				$cadenaSql .= " genero_code ='".$variable ['GENERO_CODE'].",";
-				$cadenaSql .= " email ='".$variable ['EMAIL'].",";
-				$cadenaSql .= " est_civil_code ='".$variable ['EST_CIVIL_CODE'].",";
-				$cadenaSql .= " tipo_doc_unico ='".$variable ['TIPO_DOC_UNICO'].",";
-				$cadenaSql .= " codigo_unico ='".$variable ['CODIGO_UNICO'].",";
-				$cadenaSql .= " tipo_id_ant ='".$variable ['TIPO_ID_ANT'].",";
-				$cadenaSql .= " codigo_id_ant ='".$variable ['CODIGO_ID_ANT'].",";
-				$cadenaSql .= " pais_tel ='".$variable ['PAIS_TEL'].",";
-				$cadenaSql .= " area_tel ='".$variable ['AREA_TEL'].",";
-				$cadenaSql .= " numero_tel ='".$variable ['NUMERO_TEL'].",";
-				$cadenaSql .= " WHERE codigo_unico='".$variable ['CODIGO_UNICO'].",";
-				echo $cadenaSql;
-				var_dump($variable);exit;
+				$cadenaSql .= " SET ies_code ='" . $variable ['IES_CODE'] . "',";
+				$cadenaSql .= " primer_apellido ='" . $variable ['PRIMER_APELLIDO'] . "',";
+				$cadenaSql .= " segundo_apellido='" . $variable ['SEGUNDO_APELLIDO'] . "',";
+				$cadenaSql .= " primer_nombre ='" . $variable ['PRIMER_NOMBRE'] . "',";
+				$cadenaSql .= " segundo_nombre ='" . $variable ['SEGUNDO_NOMBRE'] . "',";
+				$cadenaSql .= " fecha_nacim ='" . $variable ['FECHA_NACIM'] . "',";
+				$cadenaSql .= " pais_ln ='" . $variable ['PAIS_LN'] . "',";
+				$cadenaSql .= " departamento_ln ='" . $variable ['DEPARTAMENTO_LN'] . "',";
+				$cadenaSql .= " municipio_ln ='" . $variable ['MUNICIPIO_LN'] . "',";
+				$cadenaSql .= " genero_code ='" . $variable ['GENERO_CODE'] . "',";
+				$cadenaSql .= " email ='" . $variable ['EMAIL'] . "',";
+				$cadenaSql .= " est_civil_code ='" . $variable ['EST_CIVIL_CODE'] . "',";
+				$cadenaSql .= " tipo_doc_unico ='" . $variable ['TIPO_DOC_UNICO'] . "',";
+				$cadenaSql .= " codigo_unico ='" . $variable ['CODIGO_UNICO'] . "',";
+				$cadenaSql .= " tipo_id_ant ='" . $variable ['TIPO_ID_ANT'] . "',";
+				$cadenaSql .= " codigo_id_ant ='" . $variable ['CODIGO_ID_ANT'] . "',";
+				$cadenaSql .= " pais_tel ='" . $variable ['PAIS_TEL'] . "',";
+				$cadenaSql .= " area_tel ='" . $variable ['AREA_TEL'] . "',";
+				$cadenaSql .= " numero_tel ='" . $variable ['NUMERO_TEL'] . "'";
+				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
+				
 				break;
 			
 			case "borrarParticipanteEstudiante" :
