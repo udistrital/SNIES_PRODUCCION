@@ -114,7 +114,7 @@ class FormProcessor {
 	 * Si no existe el registro en la tabla lo registra
 	 * Si existe el registo lo actualiza
 	 *
-	 * @param unknown $estudiante        	
+	 * @param array $estudiante        	
 	 */
 	function actualizarEstudiante($estudiante) {
 		foreach ( $estudiante as $unEstudiante ) {
@@ -128,20 +128,23 @@ class FormProcessor {
 		}
 	}
 	/**
-	 * 
+	 *
 	 * Función que actualiza o registra los datos de la tabla ESTUDIANTE_PROGRAMA DEL SNIES (Se refiere a estudiantes de primer semestre):
-	 * @param unknown $estudiante
+	 * Si no existe el registro en la tabla lo registra
+	 * Si existe el registo lo actualiza
+	 * 
+	 * @param array $estudiante        	
 	 */
 	function actualizarEstudiantePrograma($estudiante) {
 		echo 'Realizar el metodo actualizarEstudiantePrograma';
 		exit ();
 		foreach ( $estudiante as $unEstudiante ) {
 			
-			$verificarEstudiante = $this->miComponente->consultarEstudiante ( $unEstudiante );
-			if (is_array ( $verificarEstudiante )) {
-				$this->miComponente->actualizarEstudiante ( $unEstudiante );
+			$verificarEstudiantePrograma = $this->miComponente->consultarEstudiantePrograma ( $unEstudiante );
+			if (is_array ( $verificarEstudiantePrograma )) {
+				$this->miComponente->actualizarEstudiantePrograma ( $unEstudiante );
 			} else {
-				$this->miComponente->registrarEstudiante ( $unEstudiante );
+				$this->miComponente->registrarEstudiantePrograma ( $unEstudiante );
 			}
 		}
 	}
