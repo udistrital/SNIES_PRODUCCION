@@ -42,7 +42,7 @@ interface IGestorEstudiante {
 	
 	/////ESTUDIANTE_PROGRAMA SNIES
 	function consultarEstudiantePrograma($estudiante);
-	function actualizarEstudiantePrograma($estudiante);
+	function borrarEstudiantePrograma($annio, $semestre);
 	function registrarEstudiantePrograma($estudiante);
 	
 }

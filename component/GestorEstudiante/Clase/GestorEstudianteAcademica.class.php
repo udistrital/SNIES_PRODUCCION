@@ -133,11 +133,13 @@ class estudiante implements IGestorEstudiante {
 	
 		return $resultado;
 	}
-	function actualizarEstudiantePrograma($estudiante) {
+	function borrarEstudiantePrograma($annio, $semestre) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 	
-		$cadenaSql = $this->miSql->cadena_sql ( 'actualizarEstudiantePrograma', $estudiante );
+		$variable['annio']=$annio;
+		$variable['semestre']=$semestre;
+		$cadenaSql = $this->miSql->cadena_sql ( 'borrarEstudiantePrograma', $variable );
 	
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
 	

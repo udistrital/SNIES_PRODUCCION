@@ -57,8 +57,8 @@ class Componente extends Component implements IGestorEstudiante {
 	function consultarEstudiantePrograma($estudiante) {
 		return $this->miEstudiante->consultarEstudiantePrograma ( $estudiante );
 	}
-	function actualizarEstudiantePrograma($estudiante) {
-		return $this->miEstudiante->actualizarEstudiantePrograma ( $estudiante );
+	function borrarEstudiantePrograma($annio, $semestre) {
+		return $this->miEstudiante->borrarEstudiantePrograma ( $annio, $semestre );
 	}
 	function registrarEstudiantePrograma($estudiante) {
 		return $this->miEstudiante->registrarEstudiantePrograma ( $estudiante );

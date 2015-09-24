@@ -87,7 +87,7 @@ class Sql extends \Sql {
 				} else {
 					$cadenaSql .= " AND mat_per =3 "; // el semestre 03 de la universidad es el semestre 02 de SNIES";
 				}
-				$cadenaSql .= " AND rownum < 10";
+				// $cadenaSql .= " AND rownum < 10";
 				
 				break;
 			
@@ -211,7 +211,6 @@ class Sql extends \Sql {
 				$cadenaSql = " UPDATE estudiante";
 				$cadenaSql .= " SET ";
 				$cadenaSql .= " ies_code ='" . $variable ['IES_CODE'] . "',";
-				// $cadenaSql .= " codigo_unico ='" . $variable ['CODIGO_UNICO'] . "',";
 				$cadenaSql .= " tipo_doc_unico ='" . $variable ['TIPO_DOC_UNICO'] . "'";
 				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
 				
@@ -243,31 +242,37 @@ class Sql extends \Sql {
 				
 				break;
 			
-			case "actualizarEstudiantePrograma" :
-				$cadenaSql = " UPDATE estudiante_programa";
-				$cadenaSql .= " SET ";
-				$cadenaSql .= " ies_code ='" . $variable ['IES_CODE'] . "',";
-				// $cadenaSql .= " codigo_unico ='" . $variable ['CODIGO_UNICO'] . "',";
-				$cadenaSql .= " tipo_doc_unico ='" . $variable ['TIPO_DOC_UNICO'] . "'";
-				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
-				echo 'completar consulta actualizarEstudiantePrograma <br>';
-				echo $cadenaSql;exit;
+			case "borrarEstudiantePrograma" :
+				$cadenaSql = "DELETE FROM";
+				$cadenaSql .= " estudiante_programa ";
+				$cadenaSql .= " WHERE anio='" . $variable ['annio'] . "'";
+				$cadenaSql .= " AND semestre='" . $variable ['semestre'] . "'";
+				
 				break;
 			
 			case "registrarEstudiantePrograma" :
 				$cadenaSql = " INSERT";
 				$cadenaSql .= " INTO estudiante_programa";
 				$cadenaSql .= " (";
+				$cadenaSql .= " pro_consecutivo,";
+				$cadenaSql .= " anio,";
+				$cadenaSql .= " semestre,";
+				$cadenaSql .= " es_transferencia,";
 				$cadenaSql .= " ies_code,";
 				$cadenaSql .= " codigo_unico,";
 				$cadenaSql .= " tipo_doc_unico";
 				$cadenaSql .= " )";
 				$cadenaSql .= " VALUES";
 				$cadenaSql .= " (";
+				$cadenaSql .= "'" . $variable ['PRO_CONSECUTIVO'] . "', ";
+				$cadenaSql .= "'" . $variable ['ANIO'] . "', ";
+				$cadenaSql .= "'" . $variable ['SEMESTRE'] . "', ";
+				$cadenaSql .= "'" . $variable ['ES_TRANSFERENCIA'] . "', ";
 				$cadenaSql .= "'" . $variable ['IES_CODE'] . "', ";
 				$cadenaSql .= "'" . $variable ['CODIGO_UNICO'] . "', ";
 				$cadenaSql .= "'" . $variable ['TIPO_DOC_UNICO'] . "' ";
 				$cadenaSql .= " );";
+				$cadenaSql .= " ";
 				
 				break;
 		}

@@ -9,6 +9,8 @@ class FormProcessor {
 	var $miFormulario;
 	var $miSql;
 	var $conexion;
+	var $annio;
+	var $semestre;
 	function __construct($lenguaje, $sql) {
 		$this->miConfigurador = \Configurador::singleton ();
 		$this->miConfigurador->fabricaConexiones->setRecursoDB ( 'principal' );
@@ -20,8 +22,8 @@ class FormProcessor {
 		$this->esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 	}
 	function procesarFormulario() {
-		$annio = $_REQUEST ['annio'];
-		$semestre = $_REQUEST ['semestre'];
+		$this->annio = $_REQUEST ['annio'];
+		$this->semestre = $_REQUEST ['semestre'];
 		
 		/**
 		 * Esta funcion consulta todos los datos de los estudiantes de un período definido
@@ -45,7 +47,7 @@ class FormProcessor {
 		 */
 		
 		// estudiante de la académica
-		$estudiante = $this->miComponente->consultarEstudianteAcademica ( $annio, $semestre );
+		$estudiante = $this->miComponente->consultarEstudianteAcademica ( $this->annio, $this->semestre );
 		
 		// en el caso de que no se haga la consulta redirecciona
 		if ($estudiante == false) {
@@ -74,9 +76,11 @@ class FormProcessor {
 			$estudiante [$clave] ['SEGUNDO_NOMBRE'] = $nombreCompleto ['segundo_nombre'];
 		}
 		
-		// $this->actualizarParticipante ( $estudiante );
-		// $this->actualizarEstudiante ( $estudiante );
+		$this->actualizarParticipante ( $estudiante );
+		$this->actualizarEstudiante ( $estudiante );
 		$this->actualizarEstudiantePrograma ( $estudiante );
+		echo 'actualizado hasta estudiante_programa';
+		exit ();
 		
 		$valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 		$valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
@@ -132,18 +136,18 @@ class FormProcessor {
 	 * Función que actualiza o registra los datos de la tabla ESTUDIANTE_PROGRAMA DEL SNIES (Se refiere a estudiantes de primer semestre):
 	 * Si no existe el registro en la tabla lo registra
 	 * Si existe el registo lo actualiza
-	 * 
+	 *
 	 * @param array $estudiante        	
 	 */
 	function actualizarEstudiantePrograma($estudiante) {
 		
+		// borrar todos los registros de estudiante_programa para el periodo seleccionado
+		$this->miComponente->borrarEstudiantePrograma ( $this->annio, $this->semestre );
+		
+		// registrar los estudiantes de la cohorte seleccionada, año y período
 		foreach ( $estudiante as $unEstudiante ) {
 			
-			$verificarEstudiantePrograma = $this->miComponente->consultarEstudiantePrograma ( $unEstudiante );
-			
-			if (is_array ( $verificarEstudiantePrograma )) {
-				$this->miComponente->actualizarEstudiantePrograma ( $unEstudiante );
-			} else {
+			if ($unEstudiante ['ANIO'] == $this->annio and $unEstudiante ['SEMESTRE'] == $this->semestre) {
 				$this->miComponente->registrarEstudiantePrograma ( $unEstudiante );
 			}
 		}
