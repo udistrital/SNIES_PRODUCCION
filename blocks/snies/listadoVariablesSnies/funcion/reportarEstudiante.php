@@ -136,11 +136,11 @@ class FormProcessor {
 	 * @param array $estudiante        	
 	 */
 	function actualizarEstudiantePrograma($estudiante) {
-		echo 'Realizar el metodo actualizarEstudiantePrograma';
-		exit ();
+		
 		foreach ( $estudiante as $unEstudiante ) {
 			
 			$verificarEstudiantePrograma = $this->miComponente->consultarEstudiantePrograma ( $unEstudiante );
+			
 			if (is_array ( $verificarEstudiantePrograma )) {
 				$this->miComponente->actualizarEstudiantePrograma ( $unEstudiante );
 			} else {

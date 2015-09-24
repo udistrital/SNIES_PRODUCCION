@@ -120,4 +120,39 @@ class estudiante implements IGestorEstudiante {
 		
 		return $resultado;
 	}
+	
+	/////ESTUDIANTE_PROGRAMA SNIES
+	
+	function consultarEstudiantePrograma($estudiante) {
+		$conexion = "sniesLocal";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+	
+		$cadenaSql = $this->miSql->cadena_sql ( 'consultarEstudiantePrograma', $estudiante );
+	
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+	
+		return $resultado;
+	}
+	function actualizarEstudiantePrograma($estudiante) {
+		$conexion = "sniesLocal";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+	
+		$cadenaSql = $this->miSql->cadena_sql ( 'actualizarEstudiantePrograma', $estudiante );
+	
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
+	
+		return $resultado;
+	}
+	function registrarEstudiantePrograma($estudiante) {
+		$conexion = "sniesLocal";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+	
+		$cadenaSql = $this->miSql->cadena_sql ( 'registrarEstudiantePrograma', $estudiante );
+	
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
+	
+		return $resultado;
+	}
+	
+	
 }

@@ -233,6 +233,43 @@ class Sql extends \Sql {
 				$cadenaSql .= " );";
 				
 				break;
+			
+			// //ESTUDIANTE_PROGRAMA SNIES
+			
+			case "consultarEstudiantePrograma" :
+				$cadenaSql = "SELECT codigo_unico FROM";
+				$cadenaSql .= " estudiante_programa ";
+				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
+				
+				break;
+			
+			case "actualizarEstudiantePrograma" :
+				$cadenaSql = " UPDATE estudiante_programa";
+				$cadenaSql .= " SET ";
+				$cadenaSql .= " ies_code ='" . $variable ['IES_CODE'] . "',";
+				// $cadenaSql .= " codigo_unico ='" . $variable ['CODIGO_UNICO'] . "',";
+				$cadenaSql .= " tipo_doc_unico ='" . $variable ['TIPO_DOC_UNICO'] . "'";
+				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
+				echo 'completar consulta actualizarEstudiantePrograma <br>';
+				echo $cadenaSql;exit;
+				break;
+			
+			case "registrarEstudiantePrograma" :
+				$cadenaSql = " INSERT";
+				$cadenaSql .= " INTO estudiante_programa";
+				$cadenaSql .= " (";
+				$cadenaSql .= " ies_code,";
+				$cadenaSql .= " codigo_unico,";
+				$cadenaSql .= " tipo_doc_unico";
+				$cadenaSql .= " )";
+				$cadenaSql .= " VALUES";
+				$cadenaSql .= " (";
+				$cadenaSql .= "'" . $variable ['IES_CODE'] . "', ";
+				$cadenaSql .= "'" . $variable ['CODIGO_UNICO'] . "', ";
+				$cadenaSql .= "'" . $variable ['TIPO_DOC_UNICO'] . "' ";
+				$cadenaSql .= " );";
+				
+				break;
 		}
 		
 		return $cadenaSql;
