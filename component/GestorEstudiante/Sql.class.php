@@ -137,7 +137,7 @@ class Sql extends \Sql {
 					$cadenaSql .= " numero_tel =''";
 				}
 				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
-				
+				echo $cadenaSql.'<br>';
 				break;
 			
 			case "borrarParticipanteEstudiante" :

@@ -75,6 +75,10 @@ class FormProcessor {
 			$estudiante [$clave] ['PRIMER_NOMBRE'] = $nombreCompleto ['primer_nombre'];
 			$estudiante [$clave] ['SEGUNDO_NOMBRE'] = $nombreCompleto ['segundo_nombre'];
 		}
+		
+		echo 'se debe crear un método que maneje las excepciones del arreglo para no realizarlas en la consulta. Ejemplo: Si el municipio es suba
+				cambiarlo por Bogotá, si no existe el mail ingresar vacio';
+		
 		echo 'proceso 1';
 		$this->actualizarParticipante ( $estudiante );
 		echo 'proceso 2';
