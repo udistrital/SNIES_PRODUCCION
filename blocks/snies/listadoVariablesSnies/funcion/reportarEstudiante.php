@@ -75,9 +75,11 @@ class FormProcessor {
 			$estudiante [$clave] ['PRIMER_NOMBRE'] = $nombreCompleto ['primer_nombre'];
 			$estudiante [$clave] ['SEGUNDO_NOMBRE'] = $nombreCompleto ['segundo_nombre'];
 		}
-		
+		echo 'proceso 1';
 		$this->actualizarParticipante ( $estudiante );
+		echo 'proceso 2';
 		$this->actualizarEstudiante ( $estudiante );
+		echo 'proceso 3';
 		$this->actualizarEstudiantePrograma ( $estudiante );
 		echo 'actualizado hasta estudiante_programa';
 		exit ();
@@ -102,8 +104,10 @@ class FormProcessor {
 	 *        	datos de estudiante
 	 */
 	function actualizarParticipante($estudiante) {
+		$a = 0;
 		foreach ( $estudiante as $unEstudiante ) {
-			
+			$a ++;
+			echo $a . '<br>';
 			$verificarParticipante = $this->miComponente->cosultarParticipante ( $unEstudiante );
 			if (is_array ( $verificarParticipante )) {
 				$this->miComponente->actualizarParticipante ( $unEstudiante );

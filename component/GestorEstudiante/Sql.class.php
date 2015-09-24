@@ -87,7 +87,7 @@ class Sql extends \Sql {
 				} else {
 					$cadenaSql .= " AND mat_per =3 "; // el semestre 03 de la universidad es el semestre 02 de SNIES";
 				}
-				// $cadenaSql .= " AND rownum < 10";
+				// $cadenaSql .= " AND rownum < 1000";
 				
 				break;
 			
@@ -106,10 +106,18 @@ class Sql extends \Sql {
 				$cadenaSql .= " segundo_apellido='" . $variable ['SEGUNDO_APELLIDO'] . "',";
 				$cadenaSql .= " primer_nombre ='" . $variable ['PRIMER_NOMBRE'] . "',";
 				$cadenaSql .= " segundo_nombre ='" . $variable ['SEGUNDO_NOMBRE'] . "',";
-				$cadenaSql .= " fecha_nacim ='" . $variable ['FECHA_NACIM'] . "',";
+				if (isset ( $variable ['FECHA_NACIM'] )) {
+					$cadenaSql .= " fecha_nacim ='" . $variable ['FECHA_NACIM'] . "',"; // para distinguir los que tiene valor nulo
+				} else {
+					$cadenaSql .= " fecha_nacim ='1900-01-01'"; // para distinguir los que tiene valor nulo
+				}
 				$cadenaSql .= " pais_ln ='" . $variable ['PAIS_LN'] . "',";
 				$cadenaSql .= " departamento_ln ='" . $variable ['DEPARTAMENTO_LN'] . "',";
-				$cadenaSql .= " municipio_ln ='" . $variable ['MUNICIPIO_LN'] . "',";
+				if ($variable ['MUNICIPIO_LN'] == '11850') {
+					$cadenaSql .= " municipio_ln ='11001'"; // 11850 = USME es bogota y no esta en la tabla paramética de municipios
+				} else {
+					$cadenaSql .= " municipio_ln ='" . $variable ['MUNICIPIO_LN'] . "',";
+				}
 				$cadenaSql .= " genero_code ='" . $variable ['GENERO_CODE'] . "',";
 				if (isset ( $variable ['EMAIL'] )) {
 					$cadenaSql .= " email ='" . $variable ['EMAIL'] . "',";
@@ -172,10 +180,18 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable ['SEGUNDO_APELLIDO'] . "', ";
 				$cadenaSql .= "'" . $variable ['PRIMER_NOMBRE'] . "', ";
 				$cadenaSql .= "'" . $variable ['SEGUNDO_NOMBRE'] . "', ";
-				$cadenaSql .= "'" . $variable ['FECHA_NACIM'] . "', ";
+				if (isset ( $variable ['FECHA_NACIM'] )) {
+					$cadenaSql .= "'" . $variable ['FECHA_NACIM'] . "', ";
+				} else {
+					$cadenaSql .= "'1900-01-01'";
+				}
 				$cadenaSql .= "'" . $variable ['PAIS_LN'] . "', ";
 				$cadenaSql .= "'" . $variable ['DEPARTAMENTO_LN'] . "', ";
-				$cadenaSql .= "'" . $variable ['MUNICIPIO_LN'] . "', ";
+				if ($variable ['MUNICIPIO_LN'] == '11850') {
+					$cadenaSql .= "'11001'"; // usme es Bogotá
+				} else {
+					$cadenaSql .= "'" . $variable ['MUNICIPIO_LN'] . "', ";
+				}
 				$cadenaSql .= "'" . $variable ['GENERO_CODE'] . "', ";
 				if (isset ( $variable ['EMAIL'] )) {
 					$cadenaSql .= "'" . $variable ['EMAIL'] . "', ";
@@ -195,7 +211,7 @@ class Sql extends \Sql {
 					$cadenaSql .= "''";
 				}
 				$cadenaSql .= " )";
-				// echo $cadenaSql.'<br>';exit;
+				echo $cadenaSql . '<br>';
 				break;
 			
 			// //ESTUDIANTE SNIES
