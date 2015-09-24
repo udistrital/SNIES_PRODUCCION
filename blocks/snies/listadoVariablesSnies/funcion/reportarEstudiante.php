@@ -1,7 +1,9 @@
 <?php
 include_once ('component/GestorEstudiante/Componente.php');
 include_once ('blocks/snies/listadoVariablesSnies/funcion/procesadorNombre.class.php');
+include_once ('blocks/snies/listadoVariablesSnies/funcion/procesadorExcepcion.class.php');
 use sniesEstudiante\Componente;
+use bloqueSnies\procesadorExcepcion;
 use bloqueSnies\procesadorNombre;
 class FormProcessor {
 	var $miConfigurador;
@@ -76,10 +78,11 @@ class FormProcessor {
 			$estudiante [$clave] ['SEGUNDO_NOMBRE'] = $nombreCompleto ['segundo_nombre'];
 		}
 		
-		echo 'se debe crear un método que maneje las excepciones del arreglo para no realizarlas en la consulta. Ejemplo: Si el municipio es suba
-				cambiarlo por Bogotá, si no existe el mail ingresar vacio';
+		$miProcesadorExcepcion = new procesadorExcepcion ();
+		// FORMATEA LOS VALORES NULOS, CODIFICA EXCEPCIONES
+		$estudiante = $miProcesadorExcepcion->procesarExcepcionEstudiante ( $estudiante );
 		
-		echo 'proceso 1';
+		echo 'proceso 1<br>';
 		$this->actualizarParticipante ( $estudiante );
 		echo 'proceso 2';
 		$this->actualizarEstudiante ( $estudiante );
@@ -111,7 +114,12 @@ class FormProcessor {
 		$a = 0;
 		foreach ( $estudiante as $unEstudiante ) {
 			$a ++;
-			echo $a . '<br>';
+			$b = $a % 1000;
+			//se a es multiplo de 10 se muestra
+			if ($b == 0) {
+				echo $a . '<br>';
+			}
+			
 			$verificarParticipante = $this->miComponente->cosultarParticipante ( $unEstudiante );
 			if (is_array ( $verificarParticipante )) {
 				$this->miComponente->actualizarParticipante ( $unEstudiante );

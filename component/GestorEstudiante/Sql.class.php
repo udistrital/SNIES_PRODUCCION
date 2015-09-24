@@ -87,7 +87,7 @@ class Sql extends \Sql {
 				} else {
 					$cadenaSql .= " AND mat_per =3 "; // el semestre 03 de la universidad es el semestre 02 de SNIES";
 				}
-				// $cadenaSql .= " AND rownum < 1000";
+				// $cadenaSql .= " AND rownum < 10";
 				
 				break;
 			
@@ -106,24 +106,12 @@ class Sql extends \Sql {
 				$cadenaSql .= " segundo_apellido='" . $variable ['SEGUNDO_APELLIDO'] . "',";
 				$cadenaSql .= " primer_nombre ='" . $variable ['PRIMER_NOMBRE'] . "',";
 				$cadenaSql .= " segundo_nombre ='" . $variable ['SEGUNDO_NOMBRE'] . "',";
-				if (isset ( $variable ['FECHA_NACIM'] )) {
-					$cadenaSql .= " fecha_nacim ='" . $variable ['FECHA_NACIM'] . "',"; // para distinguir los que tiene valor nulo
-				} else {
-					$cadenaSql .= " fecha_nacim ='1900-01-01'"; // para distinguir los que tiene valor nulo
-				}
+				$cadenaSql .= " fecha_nacim ='" . $variable ['FECHA_NACIM'] . "',";
 				$cadenaSql .= " pais_ln ='" . $variable ['PAIS_LN'] . "',";
 				$cadenaSql .= " departamento_ln ='" . $variable ['DEPARTAMENTO_LN'] . "',";
-				if ($variable ['MUNICIPIO_LN'] == '11850') {
-					$cadenaSql .= " municipio_ln ='11001'"; // 11850 = USME es bogota y no esta en la tabla paramética de municipios
-				} else {
-					$cadenaSql .= " municipio_ln ='" . $variable ['MUNICIPIO_LN'] . "',";
-				}
+				$cadenaSql .= " municipio_ln ='" . $variable ['MUNICIPIO_LN'] . "',";
 				$cadenaSql .= " genero_code ='" . $variable ['GENERO_CODE'] . "',";
-				if (isset ( $variable ['EMAIL'] )) {
-					$cadenaSql .= " email ='" . $variable ['EMAIL'] . "',";
-				} else {
-					$cadenaSql .= " email ='',";
-				}
+				$cadenaSql .= " email ='" . $variable ['EMAIL'] . "',";
 				$cadenaSql .= " est_civil_code ='" . $variable ['EST_CIVIL_CODE'] . "',";
 				$cadenaSql .= " tipo_doc_unico ='" . $variable ['TIPO_DOC_UNICO'] . "',";
 				// $cadenaSql .= " codigo_unico ='" . $variable ['CODIGO_UNICO'] . "',";
@@ -131,13 +119,9 @@ class Sql extends \Sql {
 				$cadenaSql .= " codigo_id_ant ='" . $variable ['CODIGO_ID_ANT'] . "',";
 				$cadenaSql .= " pais_tel ='" . $variable ['PAIS_TEL'] . "',";
 				$cadenaSql .= " area_tel ='" . $variable ['AREA_TEL'] . "',";
-				if (isset ( $variable ['NUMERO_TEL'] )) {
-					$cadenaSql .= " numero_tel ='" . $variable ['NUMERO_TEL'] . "'";
-				} else {
-					$cadenaSql .= " numero_tel =''";
-				}
+				$cadenaSql .= " numero_tel ='" . $variable ['NUMERO_TEL'] . "'";
 				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
-				echo $cadenaSql.'<br>';
+				// echo $cadenaSql.'<br>';
 				break;
 			
 			case "borrarParticipanteEstudiante" :
@@ -180,24 +164,12 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable ['SEGUNDO_APELLIDO'] . "', ";
 				$cadenaSql .= "'" . $variable ['PRIMER_NOMBRE'] . "', ";
 				$cadenaSql .= "'" . $variable ['SEGUNDO_NOMBRE'] . "', ";
-				if (isset ( $variable ['FECHA_NACIM'] )) {
-					$cadenaSql .= "'" . $variable ['FECHA_NACIM'] . "', ";
-				} else {
-					$cadenaSql .= "'1900-01-01'";
-				}
+				$cadenaSql .= "'" . $variable ['FECHA_NACIM'] . "', ";
 				$cadenaSql .= "'" . $variable ['PAIS_LN'] . "', ";
 				$cadenaSql .= "'" . $variable ['DEPARTAMENTO_LN'] . "', ";
-				if ($variable ['MUNICIPIO_LN'] == '11850') {
-					$cadenaSql .= "'11001'"; // usme es Bogotá
-				} else {
-					$cadenaSql .= "'" . $variable ['MUNICIPIO_LN'] . "', ";
-				}
+				$cadenaSql .= "'" . $variable ['MUNICIPIO_LN'] . "', ";
 				$cadenaSql .= "'" . $variable ['GENERO_CODE'] . "', ";
-				if (isset ( $variable ['EMAIL'] )) {
-					$cadenaSql .= "'" . $variable ['EMAIL'] . "', ";
-				} else {
-					$cadenaSql .= "'', ";
-				}
+				$cadenaSql .= "'" . $variable ['EMAIL'] . "', ";
 				$cadenaSql .= "'" . $variable ['EST_CIVIL_CODE'] . "', ";
 				$cadenaSql .= "'" . $variable ['TIPO_DOC_UNICO'] . "', ";
 				$cadenaSql .= "'" . $variable ['CODIGO_UNICO'] . "', ";
@@ -205,11 +177,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable ['CODIGO_ID_ANT'] . "', ";
 				$cadenaSql .= "'" . $variable ['PAIS_TEL'] . "', ";
 				$cadenaSql .= "'" . $variable ['AREA_TEL'] . "', ";
-				if (isset ( $variable ['NUMERO_TEL'] )) {
-					$cadenaSql .= "'" . $variable ['NUMERO_TEL'] . "'";
-				} else {
-					$cadenaSql .= "''";
-				}
+				$cadenaSql .= "'" . $variable ['NUMERO_TEL'] . "'";
 				$cadenaSql .= " )";
 				echo $cadenaSql . '<br>';
 				break;
