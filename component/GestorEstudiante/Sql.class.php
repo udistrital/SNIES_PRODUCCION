@@ -87,7 +87,7 @@ class Sql extends \Sql {
 				} else {
 					$cadenaSql .= " AND mat_per =3 "; // el semestre 03 de la universidad es el semestre 02 de SNIES";
 				}
-				// $cadenaSql .= " AND rownum < 10";
+				//$cadenaSql .= " AND rownum < 10";
 				
 				break;
 			

@@ -28,15 +28,6 @@ class FormProcessor {
 		$this->semestre = $_REQUEST ['semestre'];
 		
 		/**
-		 * Esta funcion consulta todos los datos de los estudiantes de un período definido
-		 * en la BD académica para poblar la tablas de SNIES:
-		 * PARTICIPANTE
-		 * ESTUDIANTE
-		 * ESTUDIANTE_PROGRAMA - primer semestre
-		 * MATRICULADO
-		 */
-		
-		/**
 		 * PROCEDIMIENTO
 		 * 1.
 		 * Consultar los datos de los estudiantes para un período
@@ -80,7 +71,7 @@ class FormProcessor {
 		
 		$miProcesadorExcepcion = new procesadorExcepcion ();
 		// FORMATEA LOS VALORES NULOS, CODIFICA EXCEPCIONES
-		$estudiante = $miProcesadorExcepcion->procesarExcepcionEstudiante ( $estudiante );
+		$estudiante = $miProcesadorExcepcion->procesarExcepcionEstudiante ( $estudiante );		
 		
 		echo 'proceso 1<br>';
 		$this->actualizarParticipante ( $estudiante );
@@ -115,7 +106,7 @@ class FormProcessor {
 		foreach ( $estudiante as $unEstudiante ) {
 			$a ++;
 			$b = $a % 1000;
-			//se a es multiplo de 10 se muestra
+			// se a es multiplo de 10 se muestra
 			if ($b == 0) {
 				echo $a . '<br>';
 			}
