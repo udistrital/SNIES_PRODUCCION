@@ -71,15 +71,17 @@ class FormProcessor {
 		
 		$miProcesadorExcepcion = new procesadorExcepcion ();
 		// FORMATEA LOS VALORES NULOS, CODIFICA EXCEPCIONES
-		$estudiante = $miProcesadorExcepcion->procesarExcepcionEstudiante ( $estudiante );		
+		$estudiante = $miProcesadorExcepcion->procesarExcepcionEstudiante ( $estudiante );
 		
 		echo 'proceso 1<br>';
-		$this->actualizarParticipante ( $estudiante );
-		echo 'proceso 2';
-		$this->actualizarEstudiante ( $estudiante );
-		echo 'proceso 3';
-		$this->actualizarEstudiantePrograma ( $estudiante );
-		echo 'actualizado hasta estudiante_programa';
+		//$this->actualizarParticipante ( $estudiante );
+		echo 'proceso 2<br>';
+		//$this->actualizarEstudiante ( $estudiante );
+		echo 'proceso 3<br>';
+		//$this->actualizarEstudiantePrograma ( $estudiante );
+		echo 'actualizado hasta estudiante_programa<br>';
+		$this->actualizarMatriculado ( $estudiante );
+		echo 'actualizado hasta Matriculado<br>';
 		exit ();
 		
 		$valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
@@ -157,6 +159,28 @@ class FormProcessor {
 			if ($unEstudiante ['ANIO'] == $this->annio and $unEstudiante ['SEMESTRE'] == $this->semestre) {
 				$this->miComponente->registrarEstudiantePrograma ( $unEstudiante );
 			}
+		}
+	}
+	
+	/**
+	 *
+	 * Función que actualiza o registra los datos de la tabla ESTUDIANTE_PROGRAMA DEL SNIES (Se refiere a estudiantes de primer semestre):
+	 * Si no existe el registro en la tabla lo registra
+	 * Si existe el registo lo actualiza
+	 *
+	 * @param array $estudiante        	
+	 */
+	function actualizarMatriculado($estudiante) {
+		
+		// borrar todos los registros de la tabla MATRICULADO para el periodo seleccionado
+		$this->miComponente->borrarMatriculado ( $this->annio, $this->semestre );
+		
+		// registrar los matriculados de un semestre año y período
+		foreach ( $estudiante as $unEstudiante ) {
+			
+			// Registrar todos los registros de la consulta (que son de un período y semestre determinado) en la tabla MATRICULADO
+			//
+			$this->miComponente->registrarMatriculado ( $unEstudiante, $this->annio, $this->semestre );
 		}
 	}
 }

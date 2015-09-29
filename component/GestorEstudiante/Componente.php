@@ -52,8 +52,7 @@ class Componente extends Component implements IGestorEstudiante {
 		return $this->miEstudiante->registrarEstudiante ( $estudiante );
 	}
 	
-	
-	////ESTUDANTE_PROGRAMA SNIES
+	// //ESTUDANTE_PROGRAMA SNIES
 	function consultarEstudiantePrograma($estudiante) {
 		return $this->miEstudiante->consultarEstudiantePrograma ( $estudiante );
 	}
@@ -64,5 +63,12 @@ class Componente extends Component implements IGestorEstudiante {
 		return $this->miEstudiante->registrarEstudiantePrograma ( $estudiante );
 	}
 	
+	// MATRICULADO
+	function borrarMatriculado($annio, $semestre) {
+		return $this->miEstudiante->borrarMatriculado ( $annio, $semestre );
+	}
+	function registrarMatriculado($estudiante, $annio, $semestre) {
+		return $this->miEstudiante->registrarMatriculado ( $estudiante, $annio, $semestre );
+	}
 }
 

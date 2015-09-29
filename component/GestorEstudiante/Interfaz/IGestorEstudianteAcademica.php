@@ -35,16 +35,19 @@ interface IGestorEstudiante {
 	 */
 	function borrarParticipanteEstudiante($estudiante);
 	
-	////ESTUDIANTE SNIES
+	// //ESTUDIANTE SNIES
 	function consultarEstudiante($estudiante);
 	function actualizarEstudiante($estudiante);
 	function registrarEstudiante($estudiante);
 	
-	/////ESTUDIANTE_PROGRAMA SNIES
+	// ///ESTUDIANTE_PROGRAMA SNIES
 	function consultarEstudiantePrograma($estudiante);
 	function borrarEstudiantePrograma($annio, $semestre);
 	function registrarEstudiantePrograma($estudiante);
 	
+	// MATRICULADO
+	function borrarMatriculado($annio, $semestre);
+	function registrarMatriculado($estudiante, $annio, $semestre);
 }
 
 ?>

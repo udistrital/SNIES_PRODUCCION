@@ -87,7 +87,7 @@ class Sql extends \Sql {
 				} else {
 					$cadenaSql .= " AND mat_per =3 "; // el semestre 03 de la universidad es el semestre 02 de SNIES";
 				}
-				//$cadenaSql .= " AND rownum < 10";
+				$cadenaSql .= " AND rownum < 10";
 				
 				break;
 			
@@ -257,6 +257,61 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable ['TIPO_DOC_UNICO'] . "' ";
 				$cadenaSql .= " );";
 				$cadenaSql .= " ";
+				
+				break;
+			
+			// /MATRICULADO
+			
+			case "borrarMatriculado" :
+				$cadenaSql = "DELETE FROM";
+				$cadenaSql .= " matriculado ";
+				$cadenaSql .= " WHERE est_annio='" . $variable ['annio'] . "'";
+				$cadenaSql .= " AND est_semestre='" . $variable ['semestre'] . "'";
+				
+				break;
+			
+			case "registrarMatriculado" :
+				$cadenaSql = " INSERT";
+				$cadenaSql .= " INTO matriculado";
+				$cadenaSql .= " (";
+				$cadenaSql .= " ies_code,";
+				$cadenaSql .= " est_annio,";//PERIODO A ACTUALIZAR, NO ES LA COHORTE DEL ESTUDIANTE 
+				$cadenaSql .= " est_semestre,";//PERIODO A ACTUALIZAR, NO ES LA COHORTE DEL ESTUDIANTE  
+				$cadenaSql .= " codigo_unico,";
+				$cadenaSql .= " horario_code,";
+				$cadenaSql .= " ceres,";
+				$cadenaSql .= " departamento,";
+				$cadenaSql .= " municipio,";
+				$cadenaSql .= " pro_consecutivo,";
+				$cadenaSql .= " pago,";
+				$cadenaSql .= " tipo_doc_unico,";
+				$cadenaSql .= " municipio_le,";
+				$cadenaSql .= " departamento_le,";
+				$cadenaSql .= " ceres_univ,";
+				$cadenaSql .= " estudiante_articulacion,";
+				$cadenaSql .= " grado_que_cursa,";
+				$cadenaSql .= " institucion_bachillerato";
+				$cadenaSql .= " )";
+				$cadenaSql .= " VALUES";
+				$cadenaSql .= " (";
+				$cadenaSql .= "'" . $variable ['IES_CODE'] . "', ";
+				$cadenaSql .= "'" . $variable ['ANNIO_MATRICULA'] . "', ";//URGENTE SE DEBE REEMPLAZAR POR EL VALOR DE ANO Y DE SEMESTRE ACTUAL.
+				$cadenaSql .= "'" . $variable ['SEMESTRE_MATRICULA'] . "', ";
+				$cadenaSql .= "'" . $variable ['CODIGO_UNICO'] . "', ";
+				$cadenaSql .= "'" . $variable ['HORARIO_CODE'] . "', ";
+				$cadenaSql .= " '1301',"; // ceres
+				$cadenaSql .= "'" . $variable ['DEPARTAMENTO_LN'] . "', ";
+				$cadenaSql .= "'" . $variable ['MUNICIPIO_LN'] . "', ";
+				$cadenaSql .= "'" . $variable ['PRO_CONSECUTIVO'] . "', ";
+				$cadenaSql .= " '01',"; // pago
+				$cadenaSql .= "'" . $variable ['TIPO_DOC_UNICO'] . "', ";
+				$cadenaSql .= " '11001',"; // municipio
+				$cadenaSql .= " '11',"; // departamento
+				$cadenaSql .= " '1301',"; // ceres
+				$cadenaSql .= "'02', "; // estudiante_articulacion
+				$cadenaSql .= "'0', ";
+				$cadenaSql .= "'' ";
+				$cadenaSql .= " )";
 				
 				break;
 		}

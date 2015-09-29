@@ -121,40 +121,65 @@ class estudiante implements IGestorEstudiante {
 		return $resultado;
 	}
 	
-	/////ESTUDIANTE_PROGRAMA SNIES
-	
+	// ///ESTUDIANTE_PROGRAMA SNIES
 	function consultarEstudiantePrograma($estudiante) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-	
+		
 		$cadenaSql = $this->miSql->cadena_sql ( 'consultarEstudiantePrograma', $estudiante );
-	
+		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
-	
+		
 		return $resultado;
 	}
 	function borrarEstudiantePrograma($annio, $semestre) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-	
-		$variable['annio']=$annio;
-		$variable['semestre']=$semestre;
+		
+		$variable ['annio'] = $annio;
+		$variable ['semestre'] = $semestre;
 		$cadenaSql = $this->miSql->cadena_sql ( 'borrarEstudiantePrograma', $variable );
-	
+		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
-	
+		
 		return $resultado;
 	}
 	function registrarEstudiantePrograma($estudiante) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-	
+		
 		$cadenaSql = $this->miSql->cadena_sql ( 'registrarEstudiantePrograma', $estudiante );
-	
+		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
-	
+		
 		return $resultado;
 	}
 	
-	
+	// //MATRICULADO
+	function borrarMatriculado($annio, $semestre) {
+		$conexion = "sniesLocal";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		$variable ['annio'] = $annio;
+		$variable ['semestre'] = $semestre;
+		$cadenaSql = $this->miSql->cadena_sql ( 'borrarMatriculado', $variable );
+		
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
+		
+		return $resultado;
+	}
+	function registrarMatriculado($estudiante, $annio, $semestre) {
+		$conexion = "sniesLocal";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		//pasar los valores de annio y semestre de la matrícula del período que se va a reportar
+		$estudiante['ANNIO_MATRICULA']=$annio;
+		$estudiante['SEMESTRE_MATRICULA']=$semestre;	
+		
+		$cadenaSql = $this->miSql->cadena_sql ( 'registrarMatriculado', $estudiante );
+		
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
+		
+		return $resultado;
+	}
 }
