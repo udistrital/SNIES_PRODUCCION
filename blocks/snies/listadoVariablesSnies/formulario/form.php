@@ -45,10 +45,19 @@ class Formulario {
 			$this->semestre = '02';
 		}	
 		
+		
+		
 		// consultar la variable inscritos de la base de datos del SNIES LOCAL (postgres)
 		
 		$periodo ['annio'] = $this->annio;
 		$periodo ['semestre'] = $this->semestre;
+		
+		
+		//PERIDOSO QUEMADOS PARA REPORTAR PERIODOS ANTERIORES
+		/**$periodo ['annio'] = '2015';
+		$periodo ['semestre'] = '02';
+		$this->annio=$periodo ['annio'];
+		$this->semestre=$periodo ['semestre'];*/
 		
 		$totalInscritos = 0;
 		$totalAdmitidos = 0;
