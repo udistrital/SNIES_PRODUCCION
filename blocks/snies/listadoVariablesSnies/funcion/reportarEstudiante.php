@@ -73,15 +73,15 @@ class FormProcessor {
 		// FORMATEA LOS VALORES NULOS, CODIFICA EXCEPCIONES
 		$estudiante = $miProcesadorExcepcion->procesarExcepcionEstudiante ( $estudiante );
 		
-		echo 'proceso 1<br>';
-		//$this->actualizarParticipante ( $estudiante );
-		echo 'proceso 2<br>';
-		//$this->actualizarEstudiante ( $estudiante );
-		echo 'proceso 3<br>';
-		//$this->actualizarEstudiantePrograma ( $estudiante );
-		echo 'actualizado hasta estudiante_programa<br>';
+		echo 'proceso 1 actualizarParticipante...<br>';
+		$this->actualizarParticipante ( $estudiante );
+		echo 'proceso 2 actualizarEstudiante...<br>';
+		$this->actualizarEstudiante ( $estudiante );
+		echo 'proceso 3 actualizarEstudiantePrograma...<br>';
+		$this->actualizarEstudiantePrograma ( $estudiante );
+		echo 'proceso 4 actualizarMatriculado<br>';
 		$this->actualizarMatriculado ( $estudiante );
-		echo 'actualizado hasta Matriculado<br>';
+		echo 'FIN<br>';
 		exit ();
 		
 		$valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
