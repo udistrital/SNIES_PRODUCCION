@@ -84,7 +84,7 @@ class estudiante implements IGestorEstudiante {
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
 		
-			if ($resultado == FALSE) {
+		if ($resultado == FALSE) {
 			$error = $esteRecursoDB->obtener_error ();
 			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';
 			echo $cadenaSql;
@@ -127,6 +127,12 @@ class estudiante implements IGestorEstudiante {
 		$cadenaSql = $this->miSql->cadena_sql ( 'actualizarEstudiante', $estudiante );
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
+		if ($resultado == FALSE) {
+			$error = $esteRecursoDB->obtener_error ();
+			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';
+			echo $cadenaSql;
+			var_dump ( $error );
+		}
 		
 		return $resultado;
 	}
@@ -137,7 +143,29 @@ class estudiante implements IGestorEstudiante {
 		$cadenaSql = $this->miSql->cadena_sql ( 'registrarEstudiante', $estudiante );
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
+		if ($resultado == FALSE) {
+			$error = $esteRecursoDB->obtener_error ();
+			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';
+			echo $cadenaSql;
+			var_dump ( $error );
+		}
 		
+		return $resultado;
+	}
+	
+	function borrarEstudiante($estudiante) {
+		$conexion = "sniesLocal";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+	
+		$cadenaSql = $this->miSql->cadena_sql ( 'borrarEstudiante', $estudiante );
+	
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
+		if ($resultado == FALSE) {
+			$error = $esteRecursoDB->obtener_error ();
+			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';
+			echo $cadenaSql;
+			var_dump ( $error );
+		}
 		return $resultado;
 	}
 	
@@ -171,6 +199,12 @@ class estudiante implements IGestorEstudiante {
 		$cadenaSql = $this->miSql->cadena_sql ( 'registrarEstudiantePrograma', $estudiante );
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
+		if ($resultado == FALSE) {
+			$error = $esteRecursoDB->obtener_error ();
+			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';
+			echo $cadenaSql;
+			var_dump ( $error );
+		}
 		
 		return $resultado;
 	}
@@ -199,6 +233,12 @@ class estudiante implements IGestorEstudiante {
 		$cadenaSql = $this->miSql->cadena_sql ( 'registrarMatriculado', $estudiante );
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
+		if ($resultado == FALSE) {
+			$error = $esteRecursoDB->obtener_error ();
+			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';
+			echo $cadenaSql;
+			var_dump ( $error );
+		}
 		
 		return $resultado;
 	}

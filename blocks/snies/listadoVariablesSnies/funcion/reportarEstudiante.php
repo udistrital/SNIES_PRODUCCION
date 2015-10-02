@@ -126,13 +126,8 @@ class FormProcessor {
 	 */
 	function actualizarEstudiante($estudiante) {
 		foreach ( $estudiante as $unEstudiante ) {
-			
-			$verificarEstudiante = $this->miComponente->consultarEstudiante ( $unEstudiante );
-			if (is_array ( $verificarEstudiante )) {
-				$this->miComponente->actualizarEstudiante ( $unEstudiante );
-			} else {
-				$this->miComponente->registrarEstudiante ( $unEstudiante );
-			}
+			$this->miComponente->borrarEstudiante ( $unEstudiante );
+			$this->miComponente->registrarEstudiante ( $unEstudiante );
 		}
 	}
 	/**

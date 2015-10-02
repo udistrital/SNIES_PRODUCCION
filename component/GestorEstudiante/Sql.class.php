@@ -179,7 +179,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable ['AREA_TEL'] . "', ";
 				$cadenaSql .= "'" . $variable ['NUMERO_TEL'] . "'";
 				$cadenaSql .= " )";
-
+				
 				break;
 			
 			// //ESTUDIANTE SNIES
@@ -214,6 +214,13 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable ['CODIGO_UNICO'] . "', ";
 				$cadenaSql .= "'" . $variable ['TIPO_DOC_UNICO'] . "' ";
 				$cadenaSql .= " );";
+				
+				break;
+			
+			case "borrarEstudiante" :
+				$cadenaSql = "DELETE FROM";
+				$cadenaSql .= " estudiante ";
+				$cadenaSql .= " WHERE codigo_unico=" . $variable ['CODIGO_UNICO'];
 				
 				break;
 			
