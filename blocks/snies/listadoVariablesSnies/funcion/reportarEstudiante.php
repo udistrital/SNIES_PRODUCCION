@@ -103,14 +103,14 @@ class FormProcessor {
 	 *        	datos de estudiante
 	 */
 	function actualizarParticipante($estudiante) {
-		$a = 0;
+		//$a = 0;
 		foreach ( $estudiante as $unEstudiante ) {
-			$a ++;
+			/**$a ++;
 			$b = $a % 1000;
 			// se a es multiplo de 10 se muestra
 			if ($b == 0) {
 				echo $a . '<br>';
-			}
+			}*/
 			
 			$this->miComponente->borrarParticipante ( $unEstudiante );
 			$this->miComponente->registrarParticipante ( $unEstudiante );

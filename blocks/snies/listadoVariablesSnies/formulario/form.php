@@ -54,10 +54,10 @@ class Formulario {
 		
 		
 		//PERIDOSO QUEMADOS PARA REPORTAR PERIODOS ANTERIORES
-		$periodo ['annio'] = '2014';
+		/**$periodo ['annio'] = '2014';
 		$periodo ['semestre'] = '01';
 		$this->annio=$periodo ['annio'];
-		$this->semestre=$periodo ['semestre'];
+		$this->semestre=$periodo ['semestre'];*/
 		
 		$totalInscritos = 0;
 		$totalAdmitidos = 0;
@@ -72,8 +72,8 @@ class Formulario {
 		
 		$totalInscritos = $this->miComponente->contarInscritos ( $this->annio, $this->semestre);
 		$totalAdmitidos = $this->miComponente->contarAdmitidos ( $periodo );
-		$totalMatriculadosPrimerCurso = $this->miComponente->contarMatriculadosPrimerCurso ( $periodo );
-		//$totalMatriculados = $this->miComponente->contarMatriculados ( $periodo );
+		// $totalMatriculadosPrimerCurso = $this->miComponente->contarMatriculadosPrimerCurso ( $periodo );
+		// $totalMatriculados = $this->miComponente->contarMatriculados ( $periodo );
 		// $inscritoAcademica=$this->miComponente->consultarInscritoAcademica($periodo);
 		
 		$variables = array (
