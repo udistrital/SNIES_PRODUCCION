@@ -87,7 +87,7 @@ class Sql extends \Sql {
 				} else {
 					$cadenaSql .= " AND mat_per =3 "; // el semestre 03 de la universidad es el semestre 02 de SNIES";
 				}
-				//$cadenaSql .= " AND rownum < 10";
+				// $cadenaSql .= " AND rownum < 10";
 				
 				break;
 			
@@ -121,10 +121,10 @@ class Sql extends \Sql {
 				$cadenaSql .= " area_tel ='" . $variable ['AREA_TEL'] . "',";
 				$cadenaSql .= " numero_tel ='" . $variable ['NUMERO_TEL'] . "'";
 				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
-				// echo $cadenaSql.'<br>';
+				
 				break;
 			
-			case "borrarParticipanteEstudiante" :
+			case "borrarParticipante" :
 				$cadenaSql = "DELETE FROM";
 				$cadenaSql .= " participante ";
 				$cadenaSql .= " WHERE codigo_unico=" . $variable ['CODIGO_UNICO'];
@@ -179,7 +179,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable ['AREA_TEL'] . "', ";
 				$cadenaSql .= "'" . $variable ['NUMERO_TEL'] . "'";
 				$cadenaSql .= " )";
-				echo $cadenaSql . '<br>';
+
 				break;
 			
 			// //ESTUDIANTE SNIES
@@ -275,8 +275,8 @@ class Sql extends \Sql {
 				$cadenaSql .= " INTO matriculado";
 				$cadenaSql .= " (";
 				$cadenaSql .= " ies_code,";
-				$cadenaSql .= " est_annio,";//PERIODO A ACTUALIZAR, NO ES LA COHORTE DEL ESTUDIANTE 
-				$cadenaSql .= " est_semestre,";//PERIODO A ACTUALIZAR, NO ES LA COHORTE DEL ESTUDIANTE  
+				$cadenaSql .= " est_annio,"; // PERIODO A ACTUALIZAR, NO ES LA COHORTE DEL ESTUDIANTE
+				$cadenaSql .= " est_semestre,"; // PERIODO A ACTUALIZAR, NO ES LA COHORTE DEL ESTUDIANTE
 				$cadenaSql .= " codigo_unico,";
 				$cadenaSql .= " horario_code,";
 				$cadenaSql .= " ceres,";
@@ -295,7 +295,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " VALUES";
 				$cadenaSql .= " (";
 				$cadenaSql .= "'" . $variable ['IES_CODE'] . "', ";
-				$cadenaSql .= "'" . $variable ['ANNIO_MATRICULA'] . "', ";//URGENTE SE DEBE REEMPLAZAR POR EL VALOR DE ANO Y DE SEMESTRE ACTUAL.
+				$cadenaSql .= "'" . $variable ['ANNIO_MATRICULA'] . "', "; // URGENTE SE DEBE REEMPLAZAR POR EL VALOR DE ANO Y DE SEMESTRE ACTUAL.
 				$cadenaSql .= "'" . $variable ['SEMESTRE_MATRICULA'] . "', ";
 				$cadenaSql .= "'" . $variable ['CODIGO_UNICO'] . "', ";
 				$cadenaSql .= "'" . $variable ['HORARIO_CODE'] . "', ";

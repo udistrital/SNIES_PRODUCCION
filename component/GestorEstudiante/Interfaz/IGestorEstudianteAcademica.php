@@ -33,7 +33,7 @@ interface IGestorEstudiante {
 	 *
 	 * @param array $estudiante        	
 	 */
-	function borrarParticipanteEstudiante($estudiante);
+	function borrarParticipante($estudiante);
 	
 	// //ESTUDIANTE SNIES
 	function consultarEstudiante($estudiante);

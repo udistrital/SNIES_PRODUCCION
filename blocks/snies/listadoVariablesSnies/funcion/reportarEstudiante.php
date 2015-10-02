@@ -96,9 +96,8 @@ class FormProcessor {
 	
 	/**
 	 * Función que actualiza o registra los datos de la tabla PARTICIPANTE DEL SNIES
-	 * 1.
-	 * consulta si el estudiante existe en la tabla PARTICIPANTE
-	 * Si existe lo actualiza, si no existe lo registra
+	 * 1.Borra el estudiante de la tabla PARTICIPANTE -Sin importar si existe o no-
+	 * 2.Inserta el registro participante
 	 *
 	 * @param array $estudiante
 	 *        	datos de estudiante
@@ -113,12 +112,8 @@ class FormProcessor {
 				echo $a . '<br>';
 			}
 			
-			$verificarParticipante = $this->miComponente->cosultarParticipante ( $unEstudiante );
-			if (is_array ( $verificarParticipante )) {
-				$this->miComponente->actualizarParticipante ( $unEstudiante );
-			} else {
-				$this->miComponente->registrarParticipante ( $unEstudiante );
-			}
+			$this->miComponente->borrarParticipante ( $unEstudiante );
+			$this->miComponente->registrarParticipante ( $unEstudiante );
 		}
 	}
 	

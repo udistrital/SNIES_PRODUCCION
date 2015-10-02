@@ -66,6 +66,14 @@ class estudiante implements IGestorEstudiante {
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
 		
+		if ($resultado == FALSE) {
+			$error = $esteRecursoDB->obtener_error ();
+			echo '<b>INFORMACION DEL ERROR:</b><br>';
+			echo $cadenaSql;
+			var_dump ( $error );
+			var_dump ( $estudiante );
+		}
+		
 		return $resultado;
 	}
 	function registrarParticipante($estudiante) {
@@ -76,16 +84,28 @@ class estudiante implements IGestorEstudiante {
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
 		
+			if ($resultado == FALSE) {
+			$error = $esteRecursoDB->obtener_error ();
+			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';
+			echo $cadenaSql;
+			var_dump ( $error );
+		}
+		
 		return $resultado;
 	}
-	function borrarParticipanteEstudiante($estudiante) {
+	function borrarParticipante($estudiante) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-		$cadenaSql = $this->miSql->cadena_sql ( 'borrarParticipanteEstudiante', $estudiante );
+		$cadenaSql = $this->miSql->cadena_sql ( 'borrarParticipante', $estudiante );
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
-		
+		if ($resultado == FALSE) {
+			$error = $esteRecursoDB->obtener_error ();
+			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';
+			echo $cadenaSql;
+			var_dump ( $error );
+		}
 		return $resultado;
 	}
 	
@@ -172,9 +192,9 @@ class estudiante implements IGestorEstudiante {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-		//pasar los valores de annio y semestre de la matrícula del período que se va a reportar
-		$estudiante['ANNIO_MATRICULA']=$annio;
-		$estudiante['SEMESTRE_MATRICULA']=$semestre;	
+		// pasar los valores de annio y semestre de la matrícula del período que se va a reportar
+		$estudiante ['ANNIO_MATRICULA'] = $annio;
+		$estudiante ['SEMESTRE_MATRICULA'] = $semestre;
 		
 		$cadenaSql = $this->miSql->cadena_sql ( 'registrarMatriculado', $estudiante );
 		
