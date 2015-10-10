@@ -19,7 +19,7 @@ class procesadorNombre {
 		
 		// estos arreglos se utilizan para quitar los acentos debido a que el SNIES central no acepta caracteres con acento, si acepta la ñ y la Ñ
 		$acento = array (
-				'á',
+				/**'á',
 				'é',
 				'í',
 				'ó',
@@ -29,7 +29,7 @@ class procesadorNombre {
 				'É',
 				'Í',
 				'Ó',
-				'Ú',
+				'Ú',*/
 				'Ü',
 				'?',
 				'¿',
@@ -37,7 +37,7 @@ class procesadorNombre {
 		) // ' 'tabulador por espacio
 ;
 		$sinAcento = array (
-				'a',
+				/**'a',
 				'e',
 				'i',
 				'o',
@@ -47,7 +47,7 @@ class procesadorNombre {
 				'E',
 				'I',
 				'O',
-				'U',
+				'U',*/
 				'U',
 				'N',
 				'N',
@@ -55,6 +55,7 @@ class procesadorNombre {
 		);
 		
 		// se reemplaza en cada registo el caracter de acento por el sencillo ej: á=>a
+		//SNIES ya soporta acentos esta clase solo ajusta los errores
 		foreach ( $arreglo as $key => $value ) {
 			
 			$arreglo [$key] [$campo] = str_replace ( $acento, $sinAcento, $arreglo [$key] [$campo] );

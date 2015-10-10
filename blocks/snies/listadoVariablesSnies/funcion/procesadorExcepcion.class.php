@@ -33,11 +33,21 @@ class procesadorExcepcion {
 	 */
 	function excepcionFechaNacim($unEstudiante) {
 		if (isset ( $unEstudiante ['FECHA_NACIM'] )) {
+			
+			//si la fecha es inferior a 1926 o mayor a 2001 se coloca valor por defecto '1990-01-01'
+			//SNIES valida que la edad esté entre 14 y 90 años
+			$fecha = split ( '-', $unEstudiante ['FECHA_NACIM'] );
+			$ano = $fecha [0];
+			if ($ano < '1926' or $ano > '2001') {
+				$resultado = '1990-01-01';
+			} else {
+				$unEstudiante ['FECHA_NACIM'];
+			}			
 			$resultado = $unEstudiante ['FECHA_NACIM'];
 		} else {
 			$resultado = '1900-01-01'; // para distinguir los que tiene valor nulo
 		}
-		
+	
 		return $resultado;
 	}
 	
@@ -84,7 +94,7 @@ class procesadorExcepcion {
 		if (isset ( $unEstudiante ['TIPO_DOC_UNICO'] ) and ($unEstudiante ['TIPO_DOC_UNICO'] == 'CC' or $unEstudiante ['TIPO_DOC_UNICO'] == 'TI' or $unEstudiante ['TIPO_DOC_UNICO'] == 'PS')) {
 			$resultado = $unEstudiante ['TIPO_DOC_UNICO'];
 		} else {
-			//echo $unEstudiante ['CODIGO_UNICO']."<br>";
+			// echo $unEstudiante ['CODIGO_UNICO']."<br>";
 			$longitudDocumento = strlen ( $unEstudiante ['CODIGO_UNICO'] );
 			if ($longitudDocumento == 11) {
 				$resultado = 'TI';
@@ -96,17 +106,16 @@ class procesadorExcepcion {
 		return $resultado;
 	}
 	
-	
 	/**
 	 * Si el número de identificación anterior o existe se coloca el número actual
-	 * 
+	 *
 	 *
 	 * @param array $unEstudiante        	
 	 */
 	function excepcionCodigoIdAnt($unEstudiante) {
-		if (isset($unEstudiante['CODIGO_ID_ANT'])) {
+		if (isset ( $unEstudiante ['CODIGO_ID_ANT'] )) {
 			$resultado = $unEstudiante ['CODIGO_ID_ANT'];
-		}else{
+		} else {
 			$resultado = $unEstudiante ['CODIGO_UNICO'];
 		}
 		
@@ -122,7 +131,7 @@ class procesadorExcepcion {
 		if (isset ( $unEstudiante ['TIPO_ID_ANT'] ) and ($unEstudiante ['TIPO_ID_ANT'] == 'CC' or $unEstudiante ['TIPO_ID_ANT'] == 'TI' or $unEstudiante ['TIPO_ID_ANT'] == 'PS')) {
 			$resultado = $unEstudiante ['TIPO_ID_ANT'];
 		} else {
-			//echo $unEstudiante ['CODIGO_UNICO']."<br>";
+			// echo $unEstudiante ['CODIGO_UNICO']."<br>";
 			$longitudDocumento = strlen ( $unEstudiante ['CODIGO_ID_ANT'] );
 			if ($longitudDocumento == 11) {
 				$resultado = 'TI';
