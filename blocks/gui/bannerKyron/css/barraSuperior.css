@@ -1,0 +1,47 @@
+  div.formulario {
+  width: 100%;
+  margin: 0px auto 0 auto;
+  float: left;
+  border-collapse: collapse;
+  border-width: 0px;
+  border-style: solid;
+  border-color: #CCCCCC;
+  background-color: #FFFFFF;
+  border-spacing: 0px;
+  padding:0px;
+}
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+#bannerBackground {
+     
+	margin: auto;
+	width: 100%;
+	float: left;
+        
+        background: #aebcbf; /* Old browsers */
+        background: -moz-radial-gradient(center, ellipse cover, #aebcbf 0%, #6e7774 34%, #0a0e0a 79%, #0a0809 100%); /* FF3.6+ */
+        background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#aebcbf), color-stop(34%,#6e7774), color-stop(79%,#0a0e0a), color-stop(100%,#0a0809)); /* Chrome,Safari4+ */
+        background: -webkit-radial-gradient(center, ellipse cover, #aebcbf 0%,#6e7774 34%,#0a0e0a 79%,#0a0809 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-radial-gradient(center, ellipse cover, #aebcbf 0%,#6e7774 34%,#0a0e0a 79%,#0a0809 100%); /* Opera 12+ */
+        background: -ms-radial-gradient(center, ellipse cover, #aebcbf 0%,#6e7774 34%,#0a0e0a 79%,#0a0809 100%); /* IE10+ */
+        background: radial-gradient(ellipse at center, #aebcbf 0%,#6e7774 34%,#0a0e0a 79%,#0a0809 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#aebcbf', endColorstr='#0a0809',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+#bannerImagen{
+		width : 70% ;
+		float: left;	
+}
+
+#bannerDatos{
+		width : 30% ;
+		float: right;
+		margin-top: 1cm;
+		font-size: 100%;
+		color: #FFF;
+		font-weight: bold;
+}
+
