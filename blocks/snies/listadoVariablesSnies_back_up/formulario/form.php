@@ -1,6 +1,6 @@
 <?php
-include_once ('component/GestorInscritoAdmitido/Componente.php');
-include_once ('component/GestorEstudiante/Componente.php');
+require_once ('component/GestorInscritoAdmitido/Componente.php');
+require_once ('component/GestorEstudiante/Componente.php');
 
 use snies\Componente as InscritoAdmitido;
 use sniesEstudiante\Componente;
@@ -15,15 +15,14 @@ class Formulario {
 	var $miFormulario;
 	var $annio;
 	var $semestre;
+	
 	function __construct($lenguaje, $formulario) {
 		$this->miConfigurador = \Configurador::singleton ();
-		
-		$this->miConfigurador->fabricaConexiones->setRecursoDB ( 'principal' );
-		
 		$this->lenguaje = $lenguaje;
 		
 		$this->miFormulario = $formulario;
 		
+
 		$this->miComponente = new InscritoAdmitido ();
 		
 		$this->host = $this->miConfigurador->getVariableConfiguracion ( "host" );
@@ -44,7 +43,6 @@ class Formulario {
 		} else {
 			$this->semestre = '02';
 		}	
-		
 		
 		
 		// consultar la variable inscritos de la base de datos del SNIES LOCAL (postgres)
@@ -69,9 +67,9 @@ class Formulario {
 	<div class="progress-label">Loading...</div>
 </div>
 <?php*/
-		
-		$totalInscritos = $this->miComponente->contarInscritos ( $this->annio, $this->semestre);
-		$totalAdmitidos = $this->miComponente->contarAdmitidos ( $periodo );
+			
+		$totalInscritos = $this->miComponente->contarInscritos($this->annio,$this->semestre);
+// 		$totalAdmitidos = $this->miComponente->contarAdmitidos ( $periodo );
 		// $totalMatriculadosPrimerCurso = $this->miComponente->contarMatriculadosPrimerCurso ( $periodo );
 		// $totalMatriculados = $this->miComponente->contarMatriculados ( $periodo );
 		// $inscritoAcademica=$this->miComponente->consultarInscritoAcademica($periodo);

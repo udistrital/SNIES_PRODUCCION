@@ -21,6 +21,7 @@ class GestorAdmitido implements IGestorAdmitido {
 		// configuracion es el nombre de la conexión principal de SARA - se crea de forma automática tomando los
 		// datos de config.inc.php
 		$conexion = "sniesLocal";
+		
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		$ano = 2015;

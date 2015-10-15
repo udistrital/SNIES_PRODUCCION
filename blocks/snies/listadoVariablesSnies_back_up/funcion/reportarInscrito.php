@@ -11,7 +11,6 @@ class FormProcessor {
 	var $conexion;
 	function __construct($lenguaje, $sql) {
 		$this->miConfigurador = \Configurador::singleton ();
-		$this->miConfigurador->fabricaConexiones->setRecursoDB ( 'principal' );
 		$this->lenguaje = $lenguaje;
 		$this->miSql = $sql;
 		$this->miComponente = new Componente ();

@@ -25,6 +25,8 @@ class FormularioMenu {
 		
 		$this->miSql = $sql;
 	}
+	
+	
 	function formulario() {
 		
 		// Rescatar los datos de este bloque
@@ -87,7 +89,7 @@ class FormularioMenu {
 		$tab = 1;
 		// ---------------- FIN SECCION: de Parámetros Generales del Formulario ----------------------------
 		
-		$conexion = "menu";
+		$conexion = 'menu';
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 		
 		// ----------------INICIAR EL FORMULARIO ------------------------------------------------------------

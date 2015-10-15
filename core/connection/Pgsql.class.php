@@ -135,6 +135,17 @@ class Pgsql extends ConectorDb {
     function conectar_db() {
         
         $this->enlace = pg_connect ( "host=" . $this->servidor . " port=" . $this->puerto . " dbname=" . $this->db . " user=" . $this->usuario . " password=" . $this->clave );
+//         echo 'Servidor: '.$this->servidor.'<br>';
+//         echo 'base datos: '.$this->db.'<br>';
+//         echo 'usuario: '.$this->usuario.'<br>';
+//         echo 'clave: '.$this->clave.'<br>';
+//         echo 'esquema: '.$this->dbesquema.'<br><br>';
+        
+        $this->servidor;
+        $this->db;
+        $this->usuario;
+        $this->clave;
+        $this->dbesquema;
         
         if ($this->enlace) {
             // linea de codificacion de caracteres.
@@ -188,9 +199,10 @@ class Pgsql extends ConectorDb {
         }
         
         $cadena = $this->tratarCadena ( $cadena );
-        
+                
         if ($tipo == "busqueda") {
             $esteRegistro = $this->ejecutar_busqueda ( $cadena, $numeroRegistros );
+            
             if (isset ( $this->configuracion ["debugMode"] ) && $this->configuracion ["debugMode"] == 1 && ! $esteRegistro) {
                 error_log ( "El registro esta vacio!!! " . $cadena );
             }
@@ -231,6 +243,7 @@ class Pgsql extends ConectorDb {
      */
     function registro_db($cadena, $numeroRegistros = 0) {
         
+    	
         if (! is_resource ( $this->enlace )) {
             return FALSE;
         }
@@ -238,7 +251,6 @@ class Pgsql extends ConectorDb {
          * La variable $numeroRegistros determina cuantos registros debe regresar la consulta.
          * Si es 0 indica que debe retornar todos los registros.
          */
-        
         @$busqueda = pg_query ( $this->enlace, $cadena );
         if ($busqueda) {
             return $this->procesarResultado ( $busqueda, $numeroRegistros );

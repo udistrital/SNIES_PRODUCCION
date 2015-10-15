@@ -15,7 +15,7 @@ class GestorInscrito implements IGestorInscrito {
 	function __construct() {
 		$this->miConfigurador = \Configurador::singleton ();
 		$this->miSql = new Sql ();
-		$this->miConfigurador = \Configurador::singleton ();
+				
 	}
 	function consultarInscritoPregadoAcademica($annio, $semestre) {
 		$periodo ['annio'] = $annio;
@@ -72,8 +72,10 @@ class GestorInscrito implements IGestorInscrito {
 		return true;
 	}
 	function contarInscritos($annio, $semestre) {
-		$conexion = "sniesLocal";
+		$conexion = 'sniesLocal';
+		
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
 		$periodo ['annio'] = $annio;
 		$periodo ['semestre'] = $semestre;
 		$cadenaSql = $this->miSql->cadena_sql ( 'contarInscritos', $periodo );

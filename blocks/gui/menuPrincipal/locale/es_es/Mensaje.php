@@ -2,16 +2,25 @@
 $this->idioma ['noDefinido'] = 'No definido';
 
 $this->idioma ['inicio'] = 'Inicio';
-$this->idioma ['hojaVida'] = 'Hoja de Vida';
-$this->idioma ['asignacionPuntajes'] = 'Asignación de Puntajes';
-$this->idioma ['reportesDocencia'] = 'Reportes Docencia';
+$this->idioma ['snies'] = 'SNIES';
+$this->idioma ['spadies'] = 'SPADIES';
+$this->idioma ['directiva_022'] = 'Directiva 022';
+$this->idioma ['registraduria'] = 'Registraduria';
 $this->idioma ['cerrarSesion'] = 'Cerrar Sesión';
 
-//Hoja de Vida///////////////////////////////////
-$this->idioma ['crearDocente'] = 'Crear Docente';
-$this->idioma ['titulosAcademicos'] = 'Títulos Académicos';
-$this->idioma ['sinTitulosAcademicos'] = 'Docentes Sin Títulos Académicos';
-$this->idioma ['consultarActividadDocente'] = 'Consultar Actividad Académica Docente';
+//SNIES///////////////////////////////////
+///INSCRITOS///
+$this->idioma ['tituloinscrito'] = 'inscrito';
+$this->idioma ['actualizarsnieslocal'] = 'Actualizar SNIES LOCAL';
+	
+$this->idioma ['tituloadmitido'] = 'admitido';
+$this->idioma ['tituloestudiante'] = 'estudiante';
+$this->idioma ['titulograduado'] = 'graduado';
+$this->idioma ['titulodocente'] = 'docente';
+$this->idioma ['tituloenlacesnies'] = 'enlaces snies';
+$this->idioma ['reporteinformacion'] = 'Reportar información al SNIES CENTRAL';
+$this->idioma ['paginamesaayuda'] = 'Mesa de Ayuda SNIES';
+$this->idioma ['ticket'] = 'Tickets MEN';
 //Fin Hoja de Vida//////////////////////////////
 
 //Asignación de Puntajes////////////////////////

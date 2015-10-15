@@ -33,7 +33,7 @@ class Formulario {
         <div align="center">       
         <img src="<?php echo $this->urlImagenes."porvenir_ud.jpg";?>" style="width:525px;height:263px;">
         </div>
-        <div align="center">Sistema de Administración del <b>SNIES LOCAL</b></div>
+        <div align="center">SISTEMA DE INTEGRACIÓN SECTORIAL</b></div>
          <div align="center">Universidad Distriral</div>
          <div align="center">Francisco José de Caldas</div>
          

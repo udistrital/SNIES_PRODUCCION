@@ -14,11 +14,9 @@ class Frontera {
 	var $funcion;
 	var $lenguaje;
 	var $miFormulario;
-	var 
-
-	$miConfigurador;
+	var $miConfigurador;
 	function __construct() {
-		$this->miConfigurador = \Configurador::singleton ();
+		$this->miConfigurador = \Configurador::singleton ();	
 	}
 	public function setRuta($unaRuta) {
 		$this->ruta = $unaRuta;

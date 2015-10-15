@@ -89,20 +89,18 @@ class Funcion {
 		return $resultado;
 	}
 	function __construct() {
+
 		$this->miConfigurador = \Configurador::singleton ();
 		
-		$this->ruta = $this->miConfigurador->getVariableConfiguracion ( "rutaBloque" );
 		
+		$this->ruta = $this->miConfigurador->getVariableConfiguracion ( "rutaBloque" );
 		$this->miMensaje = \Mensaje::singleton ();
 		
-		$conexion = "aplicativo";
-		$this->miRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		$conexion = 'aplicativo';
+		$this->miRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ($conexion);
 		
-		if (! $this->miRecursoDB) {
-			
-			$this->miConfigurador->fabricaConexiones->setRecursoDB ( $conexion, "tabla" );
-			$this->miRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-		}
+		
+
 	}
 	public function setRuta($unaRuta) {
 		$this->ruta = $unaRuta;

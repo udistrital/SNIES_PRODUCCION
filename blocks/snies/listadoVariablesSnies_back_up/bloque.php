@@ -43,6 +43,9 @@ if (! class_exists ( '\\bloquesModelo\\bloqueModelo2\\Bloque' )) {
             // El objeto de la clase Configurador debe ser único en toda la aplicación
             $this->miConfigurador = \Configurador::singleton ();
             
+            
+            
+            
             $ruta = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" );
             $rutaURL = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" );
             
@@ -54,10 +57,12 @@ if (! class_exists ( '\\bloquesModelo\\bloqueModelo2\\Bloque' )) {
                 $rutaURL .= "/blocks/" . $esteBloque ["grupo"] . "/" . $esteBloque ["nombre"] . "/";
             }
             
-            $this->miConfigurador->setVariableConfiguracion ( "rutaBloque", $ruta );
+            $this->miConfigurador->setVariableConfiguracion ( "rutaBloque", $ruta );            
             $this->miConfigurador->setVariableConfiguracion ( "rutaUrlBloque", $rutaURL );
             
+            
             $this->miFuncion = new Funcion ();
+            
             $this->miSql = new Sql ();
             $this->miFrontera = new Frontera ();
             $this->miLenguaje = new Lenguaje ();

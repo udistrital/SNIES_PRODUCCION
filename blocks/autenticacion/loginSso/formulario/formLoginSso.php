@@ -43,7 +43,7 @@ class loginSso {
 		else {			
 		
 			//$valorCodificado = "action=loginSso";
-			$valorCodificado= "&pagina=listadoVariablesSnies";
+			$valorCodificado= "&pagina=inicio";
 			//$esteBloque=$this->miConfigurador->getVariableConfiguracion ( 'esteBloque' );
 			//$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 			//$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];

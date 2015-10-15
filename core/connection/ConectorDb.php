@@ -236,7 +236,15 @@ class ConectorDb implements Conector {
      * @access public
      */
     function ejecutarAcceso($cadena, $tipo = "", $numeroRegistros = 0) {
-        
+    	
+//     	ECHO "AISFJAPIDJKSDJAÑKSDJÑ";
+//     	ECHO "<BR>";
+//     	ECHO "<BR>";
+//     	ECHO "CADENA".$CADENA;
+//     	ECHO "TIPO". $TIPO;
+//     	ECHO "NUMREGISTROS". $NUMEROREGISTROS;
+//     	ECHO "<BR>";
+//     	ECHO "<BR>";
         return $cadena . $tipo . $numeroRegistros;
     }
     
