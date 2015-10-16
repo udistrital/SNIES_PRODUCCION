@@ -15,14 +15,12 @@ class Formulario {
 	var $miFormulario;
 	var $annio;
 	var $semestre;
-	
 	function __construct($lenguaje, $formulario) {
 		$this->miConfigurador = \Configurador::singleton ();
 		$this->lenguaje = $lenguaje;
 		
 		$this->miFormulario = $formulario;
 		
-
 		$this->miComponente = new InscritoAdmitido ();
 		
 		$this->host = $this->miConfigurador->getVariableConfiguracion ( "host" );
@@ -37,98 +35,40 @@ class Formulario {
 		
 		// Obtener año y período actual basado en la fecha del sistema
 		$fecha = getdate ();
-		$this->annio = $fecha ['year'];
+		$annioActual = $fecha ['year'];
 		if ($fecha ['mon'] <= 6) {
-			$this->semestre = '01';
+			$semestreActual = '01';
 		} else {
-			$this->semestre = '02';
-		}	
-		/**
-		//crear arreglo desde 1900 -1 hasta periodo actual
-		$periodo=array();
-		for ($i = $this->annio; $i >= 1990; $i--) {
-			$periodo['ano'][]=$i;
-			$periodo['semestre'][]=1;
-			
+			$semestreActual = '02';
 		}
-		var_dump($periodo);
-		exit;
-		*/
 		
-		// consultar la variable inscritos de la base de datos del SNIES LOCAL (postgres)
-		
-		$periodo ['annio'] = $this->annio;
-		$periodo ['semestre'] = $this->semestre;
-		
-		
-		//PERIDOSO QUEMADOS PARA REPORTAR PERIODOS ANTERIORES
-		/**$periodo ['annio'] = '2014';
-		$periodo ['semestre'] = '01';
-		$this->annio=$periodo ['annio'];
-		$this->semestre=$periodo ['semestre'];*/
-		
-		$totalInscritos = 0;
-		$totalAdmitidos = 0;
-		$totalMatriculadosPrimerCurso = 0;
-		$totalMatriculados = 0;
-		
-/** 		?>
-<div id="progressbar">
-	<div class="progress-label">Loading...</div>
-</div>
-<?php*/
+		// crea un arreglo con todos los años y semestres desde 2000-1 hasta el presente semestre
+		// contar la cantidad de registro para cada periodo(año, semestre)
+		$a = 0;
+		for($ano = 2000; $ano <= $annioActual; $ano ++) {
+			$periodo [$a] ['annio'] = $ano;
+			$periodo [$a] ['semestre'] = '01';
+			$periodo [$a] ['total'] = $this->miComponente->contarInscritos ( $ano, '01' );
+			$a ++;
 			
-		$totalInscritos = $this->miComponente->contarInscritos($this->annio,$this->semestre);
-// 		$totalAdmitidos = $this->miComponente->contarAdmitidos ( $periodo );
-		// $totalMatriculadosPrimerCurso = $this->miComponente->contarMatriculadosPrimerCurso ( $periodo );
-		// $totalMatriculados = $this->miComponente->contarMatriculados ( $periodo );
-		// $inscritoAcademica=$this->miComponente->consultarInscritoAcademica($periodo);
-		
-		$variables = array (
-				'0' => array (
-						'nombre' => '1. Inscrito',
-						'total' => $totalInscritos,
-						'enlace' => $this->enlaceActializarVariable ( 'reportarInscrito' ) 
-				),
-				'1' => array (
-						'nombre' => '2. Admitido',
-						'total' => $totalAdmitidos,
-						'enlace' => $this->enlaceActializarVariable ( 'reportarAdmitido' ) 
-				),
-				'2' => array (
-						'nombre' => '3. Estudiante',
-						'total' => $totalMatriculadosPrimerCurso,
-						'enlace' => $this->enlaceActializarVariable ( 'reportarEstudiante' ) 
-				),
-				'3' => array (
-						'nombre' => '4. Matrícula Primer Curso',
-						'total' => $totalMatriculadosPrimerCurso,
-						'enlace' => $this->enlaceActializarVariable ( '' ) 
-				),
-				'4' => array (
-						'nombre' => '5. Matrículado',
-						'total' => $totalMatriculados,
-						'enlace' => $this->enlaceActializarVariable ( '' ) 
-				),
-				'5' => array (
-						'nombre' => '6. Egresado',
-						'total' => $totalMatriculadosPrimerCurso,
-						'enlace' => $this->enlaceActializarVariable ( '' ) 
-				),
-				'6' => array (
-						'nombre' => '7. Graduado',
-						'total' => $totalMatriculadosPrimerCurso,
-						'enlace' => $this->enlaceActializarVariable ( '' ) 
-				) 
-		);
+			if ($annioActual == $ano and $semestreActual == 1) {
+			} else {
+				$periodo [$a] ['annio'] = $ano;
+				$periodo [$a] ['semestre'] = '02';
+				$periodo [$a] ['total'] = $this->miComponente->contarInscritos ( $ano, '02' );
+				$a ++;
+			}
+		}
 		
 		?>
 
-<br><h3>INSCRITOS - ACTUALIZACIÓN SNIES CENTRAL</h3><br>
+<br>
+<h3>INSCRITOS - ACTUALIZACIÓN SNIES CENTRAL</h3>
+<br>
 <table id="example" class="display" cellspacing="0" width="100%">
 	<thead>
 		<tr>
-			<th>variable</th>
+			<th>Variable</th>
 			<th>Año</th>
 			<th>Período</th>
 			<th>Total</th>
@@ -140,16 +80,16 @@ class Formulario {
 
 	<tbody>
 	<?php
-		foreach ( $variables as $valor ) {
+		foreach ( $periodo as $miPeriodo ) {
 			?>
 		<tr>
-			<td><?php echo $valor['nombre'];?></td>
-			<td align="center"><?php echo $this->annio?></td>
-			<td align="center"><?php echo $this->semestre?></td>
-			<td align="right"><?php echo $valor['total'];?></td>
+			<td><?php echo 'Inscrito';?></td>
+			<td align="center"><?php echo $miPeriodo['annio']?></td>
+			<td align="center"><?php echo $miPeriodo['semestre'];?></td>
+			<td align="right"><?php echo $miPeriodo['total'];?></td>
 			<td align="right">-</td>
 			<td align="center"><a class=miEnlace
-				href="<?php echo $valor['enlace']?>"><img
+				href="<?php echo 'enlace';?>"><img
 					src='<? echo $this->urlImagenes?>images/actualizar.png'
 					width='30px'></a></td>
 			<td align="center">-</td>
