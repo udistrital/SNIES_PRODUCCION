@@ -45,7 +45,8 @@ class Formulario {
 		// crea un arreglo con todos los años y semestres desde 2000-1 hasta el presente semestre
 		// contar la cantidad de registro para cada periodo(año, semestre)
 		$a = 0;
-		for($ano = 2000; $ano <= $annioActual; $ano ++) {
+		$anoInicial=$annioActual-4;//presente solamente los últimos 5 años
+		for($ano = $anoInicial; $ano <= $annioActual; $ano ++) {
 			$periodo [$a] ['annio'] = $ano;
 			$periodo [$a] ['semestre'] = '01';
 			$periodo [$a] ['total'] = $this->miComponente->contarInscritos ( $ano, '01' );
