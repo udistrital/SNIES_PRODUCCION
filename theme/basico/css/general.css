@@ -13,27 +13,27 @@ body {
 	display: table;
 }
 
-#seccionAmplia {
+.seccionAmplia {
 	width: 100%;
 	float: left;
 }
 
-#seccionB {
+.seccionB {
 	width: 20%;
 	float: left;
 }
 
-#seccionCentral {
+.seccionCentral {
 	width: 70%;
 	float: left;
 }
 
-#seccionCentralAmpliada {
+.seccionCentralAmpliada {
 	width: 80%;
 	float: left;
 }
 
-#seccionD {
+.seccionD {
 	width: 15%;
 	float: left;
 }

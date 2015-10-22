@@ -25,8 +25,6 @@ class FormularioMenu {
 		
 		$this->miSql = $sql;
 	}
-	
-	
 	function formulario() {
 		
 		// Rescatar los datos de este bloque
@@ -89,7 +87,7 @@ class FormularioMenu {
 		$tab = 1;
 		// ---------------- FIN SECCION: de Parámetros Generales del Formulario ----------------------------
 		
-		$conexion = 'menu';
+		$conexion = "menu";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 		
 		// ----------------INICIAR EL FORMULARIO ------------------------------------------------------------
@@ -100,7 +98,7 @@ class FormularioMenu {
 		// ---------------- SECCION: Controles del Formulario -----------------------------------------------
 						
 		$cadenaSql = $this->miSql->getCadenaSql ( "datosMenu", 0 );
-		$datosMenu = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );	
+		$datosMenu = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		foreach ( $datosMenu as $menu => $item ) {
 			$enlaces [$this->lenguaje->getCadena ($item ['grupo'])]['columna'. $item ['columna']][$item ['tipo_item']][$this->lenguaje->getCadena ($item ['descripcion'])] = array ();

@@ -38,7 +38,9 @@ class RegistradorPagina {
          * Si se utiliza esta técnica es necesario realizar un mezcla entre este arreglo y el específico en cada control:
          * $atributos= array_merge($atributos,$atributosGlobales);
          */
-        $atributosGlobales  = array();
+        $atributosGlobales ['campoSeguro'] = 'true';
+        $_REQUEST ['tiempo'] = time();        
+        
         
         // -------------------------------------------------------------------------------------------------
         
@@ -205,6 +207,8 @@ class RegistradorPagina {
         echo $this->miFormulario->campoCuadroTexto ( $atributos );
         // --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
         
+        // ---------------- FIN SECCION: Controles del Formulario -------------------------------------------
+        
         // ------------------Division para los botones-------------------------
         $atributos ["id"] = "botones";
         $atributos ["estilo"] = "marcoBotones";
@@ -255,6 +259,9 @@ class RegistradorPagina {
         // ------------------Fin Division para los botones-------------------------
         echo $this->miFormulario->division ( "fin" );
         
+        
+        
+        
         // ------------------- SECCION: Paso de variables ------------------------------------------------
         
         /**
@@ -281,10 +288,10 @@ class RegistradorPagina {
          * SARA permite que los nombres de los campos sean dinámicos.
          * Para ello utiliza la hora en que es creado el formulario para
          * codificar el nombre de cada campo. Si se utiliza esta técnica es necesario pasar dicho tiempo como una variable:
-         * (a) invocando a la variable $_REQUEST ['tiempo'] que se ha declarado en ready.php o
+         * (a) invocando a la variable $atributosGlobales ['tiempo'] que se ha declarado en ready.php o
          * (b) asociando el tiempo en que se está creando el formulario
          */
-        $valorCodificado .= "&tiempo=" . time ();
+        $valorCodificado .= "&campoSeguro=" . $_REQUEST ['tiempo'];
         // Paso 2: codificar la cadena resultante
         $valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
         
@@ -300,14 +307,14 @@ class RegistradorPagina {
         
         // ----------------FIN SECCION: Paso de variables -------------------------------------------------
         
-        // ---------------- FIN SECCION: Controles del Formulario -------------------------------------------
+       
         
         // ----------------FINALIZAR EL FORMULARIO ----------------------------------------------------------
         // Se debe declarar el mismo atributo de marco con que se inició el formulario.
         $atributos ['marco'] = true;
         $atributos ['tipoEtiqueta'] = 'fin';
         echo $this->miFormulario->formulario ( $atributos );
-        // return $cadenaHTML;
+
     
     }
     

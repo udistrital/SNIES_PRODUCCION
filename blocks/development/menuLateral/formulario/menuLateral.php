@@ -33,6 +33,13 @@ $enlace = 'pagina=registro';
 $enlace .= '&development=true';
 $items [$item] ['urlCodificada'] = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $enlace, $directorio );
 
+$item = 'plugin';
+$items [$item] ['nombre'] = 'Agregar Plugin';
+$items [$item] ['enlace'] = true; // El <li> es un enlace directo
+$items [$item] ['icono'] = 'ui-icon-circle-triangle-e'; // El <li> es un enlace directo
+$enlace = 'pagina=plugin';
+$enlace .= '&development=true';
+$items [$item] ['urlCodificada'] = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $enlace, $directorio );
 
 $item = 'constructor';
 $items [$item] ['nombre'] = 'Constructor';
@@ -48,6 +55,22 @@ $items [$item] ['nombre'] = 'CRUDer';
 $items [$item] ['enlace'] = true; // El <li> es un enlace directo
 $items [$item] ['icono'] = 'ui-icon-circle-triangle-e'; // El <li> es un enlace directo
 $enlace = 'pagina=cruder';
+$enlace .= '&development=true';
+$items [$item] ['urlCodificada'] = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $enlace, $directorio );
+
+$item = 'saraFormCreator';
+$items [$item] ['nombre'] = 'SARA Form Creator';
+$items [$item] ['enlace'] = true; // El <li> es un enlace directo
+$items [$item] ['icono'] = 'ui-icon-circle-triangle-e'; // El <li> es un enlace directo
+$enlace = 'pagina=saraFormCreator';
+$enlace .= '&development=true';
+$items [$item] ['urlCodificada'] = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $enlace, $directorio );
+
+$item = 'formatearSQL';
+$items [$item] ['nombre'] = 'Formatear SQL';
+$items [$item] ['enlace'] = true; // El <li> es un enlace directo
+$items [$item] ['icono'] = 'ui-icon-circle-triangle-e'; // El <li> es un enlace directo
+$enlace = 'pagina=formatearSQL';
 $enlace .= '&development=true';
 $items [$item] ['urlCodificada'] = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $enlace, $directorio );
 

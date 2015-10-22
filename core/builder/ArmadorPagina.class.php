@@ -2,7 +2,6 @@
 
 require_once ("core/manager/Configurador.class.php");
 require_once ("core/builder/builderSql.class.php");
-require_once ("core/builder/HtmlBase.class.php");
 
 class ArmadorPagina {
 
@@ -135,7 +134,7 @@ class ArmadorPagina {
 
     private function armarSeccionAmplia($seccion) {
         // Este tipo de secciones ocupan el ancho de la página
-        echo "<div id='seccionAmplia'>\n";
+        echo "<div class='seccionAmplia'>\n";
         foreach ($this->bloques as $unBloque) {
             if ($unBloque [self::SECCION] == $seccion) {
                 $this->incluirBloque($unBloque);
@@ -156,14 +155,14 @@ class ArmadorPagina {
         // Si ninguna de las otras secciones están declaradas entonces ocupa el ancho de la página
         if (!in_array('C', $this->seccionesDeclaradas) && !in_array($otraSeccion, $this->seccionesDeclaradas)) {
 
-            echo "<div id='seccionAmplia'>\n";
+            echo "<div class='seccionAmplia'>\n";
         } else {
             // Si la otra sección está declarada pero la sección central no, entonces ocupa la mitad de la página
 
             if (!in_array('C', $this->seccionesDeclaradas) && in_array($otraSeccion, $this->seccionesDeclaradas)) {
-                echo "<div id='seccionMitad'>\n";
+                echo "<div class='seccionMitad'>\n";
             } else {
-                echo "<div id='seccion" . $seccion . "'>\n";
+                echo "<div class='seccion" . $seccion . "'>\n";
             }
         }
 
@@ -181,13 +180,13 @@ class ArmadorPagina {
         // Si las secciones laterales no están definidas entonces la sección central ocupa el ancho de la página
         if (!in_array("B", $this->seccionesDeclaradas, true) && !in_array("D", $this->seccionesDeclaradas, true)) {
 
-            echo "<div id='seccionAmplia'>\n";
+            echo "<div class='seccionAmplia'>\n";
         } else {
 
             if ((in_array("B", $this->seccionesDeclaradas, true) && !in_array("D", $this->seccionesDeclaradas, true)) || (!in_array("B", $this->seccionesDeclaradas, true) && in_array("D", $this->seccionesDeclaradas, true))) {
-                echo "<div id='seccionCentralAmpliada'>\n";
+                echo "<div class='seccionCentralAmpliada'>\n";
             } else {
-                echo "<div id='seccionCentral'>\n";
+                echo "<div class='seccionCentral'>\n";
             }
         }
 

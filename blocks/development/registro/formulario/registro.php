@@ -1,6 +1,6 @@
 <?php
 
-namespace development\registro\formualrio;
+namespace development\registro\formulario;
 
 /**
  * IMPORTANTE: Este formulario está utilizando jquery.

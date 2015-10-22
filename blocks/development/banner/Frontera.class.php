@@ -1,4 +1,4 @@
-<?
+<?php
 include_once ("core/manager/Configurador.class.php");
 
 class Fronterabanner {

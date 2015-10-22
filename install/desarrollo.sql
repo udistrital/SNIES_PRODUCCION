@@ -1,11 +1,12 @@
 -- Páginas
-INSERT INTO <nombre>pagina (id_pagina, nombre, descripcion, modulo, nivel, parametro) VALUES (-1,'development', 'Index módulo de desarrollo.', 'development', 0 ,'jquery=true' );
-INSERT INTO <nombre>pagina (id_pagina, nombre, descripcion, modulo, nivel, parametro) VALUES (-2,'cruder', 'Generador módulos CRUD.', 'development', 0 ,'jquery=true' );
-INSERT INTO <nombre>pagina (id_pagina, nombre, descripcion, modulo, nivel, parametro) VALUES (-3, 'desenlace', 'Analizar enlaces.', 'development', 0 ,'jquery=true' );
-INSERT INTO <nombre>pagina (id_pagina, nombre, descripcion, modulo, nivel, parametro) VALUES (-4, 'codificador', 'Codificar/decodificar cadenas.', 'development', 0 ,'jquery=true' );
-INSERT INTO <nombre>pagina (id_pagina, nombre, descripcion, modulo, nivel, parametro) VALUES (-5, 'registro', 'Registrar páginas o módulos.', 'development', 0 ,'jquery=true' );
-INSERT INTO <nombre>pagina (id_pagina, nombre, descripcion, modulo, nivel, parametro) VALUES (-6, 'constructor', 'Diseñar páginas.', 'development', 0 ,'jquery=true' );
-
+INSERT INTO <nombre>pagina (id_pagina, nombre, descripcion, modulo, nivel, parametro) VALUES (-1,'development', 'Index módulo de desarrollo.', 'development', 0 ,'jquery=true&jquery-ui=true&jquery-validation=true' );
+INSERT INTO <nombre>pagina (id_pagina, nombre, descripcion, modulo, nivel, parametro) VALUES (-2,'cruder', 'Generador módulos CRUD.', 'development', 0 ,'jquery=true&jquery-ui=true&jquery-validation=true' );
+INSERT INTO <nombre>pagina (id_pagina, nombre, descripcion, modulo, nivel, parametro) VALUES (-3, 'desenlace', 'Analizar enlaces.', 'development', 0 ,'jquery=true&jquery-ui=true&jquery-validation=true' );
+INSERT INTO <nombre>pagina (id_pagina, nombre, descripcion, modulo, nivel, parametro) VALUES (-4, 'codificador', 'Codificar/decodificar cadenas.', 'development', 0 ,'jquery=true&jquery-ui=true&jquery-validation=true' );
+INSERT INTO <nombre>pagina (id_pagina, nombre, descripcion, modulo, nivel, parametro) VALUES (-5, 'registro', 'Registrar páginas o módulos.', 'development', 0 ,'jquery=true&jquery-ui=true&jquery-validation=true' );
+INSERT INTO <nombre>pagina (id_pagina, nombre, descripcion, modulo, nivel, parametro) VALUES (-6, 'constructor', 'Diseñar páginas.', 'development', 0 ,'jquery=true&jquery-ui=true&jquery-validation=true' );
+INSERT INTO <nombre>pagina (id_pagina, nombre, descripcion, modulo, nivel, parametro) VALUES (-7, 'plugin', 'Agregar plugin preconfigurados.', 'development', 0 ,'jquery=true&jquery-ui=true&jquery-validation=true' );
+INSERT INTO <nombre>pagina (id_pagina, nombre, descripcion, modulo, nivel, parametro) VALUES (-8, 'saraFormCreator', 'Módulo SARA form creator.', 'development', 0 ,'jquery=true&jquery-ui=true&jquery-validation=true' );
 -- Bloques
 INSERT INTO <nombre>bloque (id_bloque, nombre, descripcion, grupo) VALUES (-1,'menuLateral', 'Menú lateral módulo de desarrollo.', 'development');
 INSERT INTO <nombre>bloque (id_bloque, nombre, descripcion, grupo) VALUES (-2,'pie', 'Pie de página módulo de desarrollo.', 'development');
@@ -16,6 +17,8 @@ INSERT INTO <nombre>bloque (id_bloque, nombre, descripcion, grupo) VALUES (-6,'r
 INSERT INTO <nombre>bloque (id_bloque, nombre, descripcion, grupo) VALUES (-7,'constructor', 'Módulo para diseñar páginas.', 'development');
 INSERT INTO <nombre>bloque (id_bloque, nombre, descripcion, grupo) VALUES (-8,'contenidoCentral', 'Contenido página principal de desarrollo.', 'development');
 INSERT INTO <nombre>bloque (id_bloque, nombre, descripcion, grupo) VALUES (-9,'codificador', 'Módulo para decodificar cadenas.', 'development');
+INSERT INTO <nombre>bloque (id_bloque, nombre, descripcion, grupo) VALUES (-10,'plugin', 'Módulo para agregar plugin preconfigurados.', 'development');
+INSERT INTO <nombre>bloque (id_bloque, nombre, descripcion, grupo) VALUES (-11,'saraFormCreator', 'Módulo para crear formulario con la recomendación de bloques de SARA.', 'development');
 
 -- Estructura
 
@@ -48,6 +51,18 @@ INSERT INTO <nombre>bloque_pagina (id_pagina, id_bloque, seccion, posicion) VALU
 INSERT INTO <nombre>bloque_pagina (id_pagina, id_bloque, seccion, posicion) VALUES (-6, -2, 'E', 1 );
 INSERT INTO <nombre>bloque_pagina (id_pagina, id_bloque, seccion, posicion) VALUES (-6, -3, 'A', 1 );
 INSERT INTO <nombre>bloque_pagina (id_pagina, id_bloque, seccion, posicion) VALUES (-6, -7, 'C', 1 );
+
+INSERT INTO <nombre>bloque_pagina (id_pagina, id_bloque, seccion, posicion) VALUES (-7, -1, 'B', 1 );
+INSERT INTO <nombre>bloque_pagina (id_pagina, id_bloque, seccion, posicion) VALUES (-7, -2, 'E', 1 );
+INSERT INTO <nombre>bloque_pagina (id_pagina, id_bloque, seccion, posicion) VALUES (-7, -3, 'A', 1 );
+INSERT INTO <nombre>bloque_pagina (id_pagina, id_bloque, seccion, posicion) VALUES (-7, -10, 'C', 1 );
+--Begin SARA form creator
+INSERT INTO <nombre>bloque_pagina (id_pagina, id_bloque, seccion, posicion) VALUES (-8, -1, 'B', 1 );
+INSERT INTO <nombre>bloque_pagina (id_pagina, id_bloque, seccion, posicion) VALUES (-8, -2, 'E', 1 );
+INSERT INTO <nombre>bloque_pagina (id_pagina, id_bloque, seccion, posicion) VALUES (-8, -3, 'A', 1 );
+INSERT INTO <nombre>bloque_pagina (id_pagina, id_bloque, seccion, posicion) VALUES (-8, -11, 'C', 1 );
+--End SARA form creator
+
 
 
 

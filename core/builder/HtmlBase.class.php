@@ -10,6 +10,8 @@ include_once ("core/manager/Configurador.class.php");
  */
 class HtmlBase {
     
+	var $instanciaFormulario;
+	
     var $conexion_id;
     
     var $cuadro_registro;
@@ -120,6 +122,8 @@ class HtmlBase {
     
     const TEXTO = 'texto';
     
+    const ANCHOCAJA = 'anchoCaja';
+    
     /**
      * Atributos HTML
      * Se definen como constantes para evitar errores al duplicar
@@ -136,8 +140,9 @@ class HtmlBase {
     
     const HTMLENDLABEL = '</label>';
     
-    function __construct() {
-        
+    function __construct(&$instanciaAgregador='') {
+    	//Se hace una referencia a la instancia del Agregador que es de la que hereda el FormularioHtml
+    	$this->instanciaFormulario = $instanciaAgregador;  
         $this->miConfigurador = Configurador::singleton ();
     
     }
@@ -200,6 +205,8 @@ class HtmlBase {
         
         if (isset ( $_REQUEST ['tiempo'] )) {
             $this->atributos ['tiempo'] = $_REQUEST ['tiempo'];
+        }else{
+        	$this->atributos ['tiempo'] = '';
         }
         
         if (isset ( $this->atributos ['campoSeguro'] ) && $this->atributos ['campoSeguro'] && $this->atributos [self::ID] != 'formSaraData') {

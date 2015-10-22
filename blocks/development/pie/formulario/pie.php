@@ -28,7 +28,7 @@ $enlace= $this->miConfigurador->getVariableConfiguracion ( 'enlace' );
 				<br>
 			</p>
 			<p>
-				<img src="<? echo $urlBloque.'/imagen/' ?>arrow_footer.gif"> <a
+				<img src="<?php echo $urlBloque.'/imagen/' ?>arrow_footer.gif"> <a
 					href="https://github.com/cartago/sara" target="_blank" 
 					title="">Repositorio</a>
 			</p>
@@ -37,7 +37,7 @@ $enlace= $this->miConfigurador->getVariableConfiguracion ( 'enlace' );
 		<!--Fin del Grupo de Enlaces -->
 		<!--Division entre secciones -->
 		<div class="footer_division fleft">
-			<br> <img src="<? echo $urlBloque.'/imagen/' ?>bg_ulfooter.gif">
+			<br> <img src="<?php echo $urlBloque.'/imagen/' ?>bg_ulfooter.gif">
 		</div>
 		<!--Fin division entre secciones -->
 		<!--Mensaje en grupo enlaces -->

@@ -40,7 +40,7 @@ class RegistradorBloque {
          * $atributos= array_merge($atributos,$atributosGlobales);
          */
         $atributosGlobales ['tiempo'] = time();
-        $atributosGlobales ['campoSeguro'] = 'true';
+        $_REQUEST ['campoSeguro'] = 'true';
         
         // -------------------------------------------------------------------------------------------------
         
@@ -228,10 +228,10 @@ class RegistradorBloque {
          * SARA permite que los nombres de los campos sean dinámicos.
          * Para ello utiliza la hora en que es creado el formulario para
          * codificar el nombre de cada campo. Si se utiliza esta técnica es necesario pasar dicho tiempo como una variable:
-         * (a) invocando a la variable $_REQUEST ['tiempo'] que se ha declarado en ready.php o
+         * (a) invocando a la variable $$atributosGlobales ['tiempo'] o
          * (b) asociando el tiempo en que se está creando el formulario
          */
-        $valorCodificado .= "&tiempo=" . time ();
+        $valorCodificado .= "&campoSeguro=" . $_REQUEST ['tiempo'];
         // Paso 2: codificar la cadena resultante
         $valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
         

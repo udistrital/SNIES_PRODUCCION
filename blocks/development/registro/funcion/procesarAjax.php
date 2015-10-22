@@ -9,8 +9,9 @@ class procesarAjax {
     var $miConfigurador;
     var $lenguaje;
     var $miFormulario;
+    var $sql;
     
-    function __construct($lenguaje) {
+    function __construct($lenguaje,$sql) {
         
         include_once ("core/builder/FormularioHtml.class.php");
         
@@ -21,6 +22,8 @@ class procesarAjax {
         $this->miFormulario = new \FormularioHtml ();
         
         $this->lenguaje = $lenguaje;
+        
+        $this->sql=$sql;
         
         switch ($_REQUEST ['opcion']) {
             
@@ -35,7 +38,7 @@ class procesarAjax {
             
             case '3' :
                 
-                include ($this->miConfigurador->getVariableConfiguracion ( 'rutaBloque' ) . 'formulario/armarPagina.php');
+                include ($this->miConfigurador->getVariableConfiguracion ( 'rutaBloque' ) . 'formulario/disennarPagina.php');
                 break;
         
         }
@@ -44,7 +47,7 @@ class procesarAjax {
 
 }
 
-$miProcesarAjax = new procesarAjax ( $this->lenguaje );
+$miProcesarAjax = new procesarAjax ( $this->lenguaje,$this->sql);
 
 
 ?>

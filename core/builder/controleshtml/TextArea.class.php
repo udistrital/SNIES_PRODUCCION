@@ -13,37 +13,44 @@ class TextArea  extends HtmlBase{
     
     
     function campoTextArea($atributos) {
-        
+    	/*
+    	 * Estas 2 líneas hacen el paso de atributos de los componentes que heredan de la clase HtmlBase
+    	 * en este caso de pasan del componente a la instancia de FormularioHtml
+    	 */
+    	$campoValidar = (isset($atributos ["validar"]))?$atributos ["validar"]:'';
+    	$this->instanciaFormulario->validadorCampos[$atributos ["id"]] = $campoValidar;
+    	
         $this->setAtributos ( $atributos );
         $this->campoSeguro();
         
-        $final = '';
-        
-        $this->definirEstilo('campoAreaTexto');
-        
-       
-        if(isset($this->atributos [self::MARCO]) && !isset($this->atributos [self::ESTILOMARCO])){
-        	$this->cadenaHTML = "<div>\n";
-       		$final='</div>';       	
-        }elseif(isset($this->atributos [self::MARCO]) && isset($this->atributos [self::ESTILOMARCO]) && $this->atributos [self::ESTILOMARCO]!=''){
-        	$this->cadenaHTML = "<div class=".$this->atributos [self::ESTILOMARCO].">\n";
-        	$final='</div>';
-        }elseif(isset($this->atributos [self::MARCO]) && isset($this->atributos [self::ESTILOMARCO]) && $this->atributos [self::ESTILOMARCO]==''){
-        	$this->cadenaHTML = "<div>\n";
-        	$this->cadenaHTML .= "<fieldset class='".$this->atributos [self::ESTILO]."'>\n";
-        	$this->cadenaHTML .= "<legend class='".$this->atributos [self::ESTILO]."'>\n" . $this->atributos [self::ETIQUETA] . "</legend>\n";
-        	$final='</fieldset></div>';	
-        }
-        
+        if ($atributos [self::ESTILO] == self::JQUERYUI) {
+            $this->cadenaHTML = "<div>\n";
+            $this->cadenaHTML .= "<fieldset class='ui-widget ui-widget-content'>\n";
+            $this->cadenaHTML .= "<legend class='ui-state-default ui-corner-all'>\n" . $this->atributos [self::ETIQUETA] . "</legend>\n";
             $this->cadenaHTML .= $this->area_texto ( $this->configuracion );
-            $this->cadenaHTML .= $final;
+            $this->cadenaHTML .= "\n</fieldset>\n";
+            $this->cadenaHTML .= "</div>\n";
             return $this->cadenaHTML;
+        } else {
+    
+            if (isset ( $this->atributos [self::ESTILO] ) && $this->atributos [self::ESTILO] != "") {
+                $this->cadenaHTML = "<div class='" . $this->atributos [self::ESTILO] . "'>\n";
+            } else {
+                $this->cadenaHTML = "<div class='campoAreaTexto'>\n";
+            }
+    
+            $this->cadenaHTML .= $this->etiqueta ( $this->atributos );
+            $this->cadenaHTML .= "<div class='campoAreaContenido'>\n";
+            $this->cadenaHTML .= $this->area_texto ( $this->configuracion);
+            $this->cadenaHTML .= "\n</div>\n";
+            $this->cadenaHTML .= "</div>\n";
+            return $this->cadenaHTML;
+        }
     
     }
     
     function area_texto($datosConfiguracion) {
-     
-    	
+    
         $this->mi_cuadro = "<textarea ";
     
         $this->mi_cuadro .= "id='" . $this->atributos [self::ID] . "' ";
@@ -77,7 +84,7 @@ class TextArea  extends HtmlBase{
     }
     
     function atributosGeneralesAreaTexto() {
-    	
+    
         $cadena = '';
         
         if (isset ( $this->atributos [self::DESHABILITADO] ) && $this->atributos [self::DESHABILITADO]) {

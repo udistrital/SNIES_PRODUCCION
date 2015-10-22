@@ -30,8 +30,6 @@ class CheckBoxHtml extends HtmlBase{
     function checkBox($misAtributos) {
     
         $this->setAtributos ( $misAtributos );
-        
-        $this->campoSeguro();
     
         $this->miOpcion = "";
         $this->miOpcion .= self::HTMLLABEL . "'" . $this->atributos [self::ID] . "'>";

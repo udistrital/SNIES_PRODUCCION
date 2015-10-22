@@ -1,4 +1,4 @@
-<?
+<?php
 
 namespace development\registro;
 
@@ -13,9 +13,9 @@ class Frontera {
     
     var $ruta;
     var $sql;
-    var $funcion;
+    var $miFuncion;
     var $lenguaje;
-    var $formulario;
+    var $miFormulario;
     
     var 
 
@@ -36,7 +36,7 @@ class Frontera {
     }
     
     public function setFormulario($formulario) {
-        $this->formulario = $formulario;
+        $this->miFormulario = $formulario;
     }
     
     function frontera() {
@@ -49,7 +49,7 @@ class Frontera {
     }
     
     function setFuncion($funcion) {
-        $this->funcion = $funcion;
+        $this->miFuncion = $funcion;
     
     }
     

@@ -1,12 +1,13 @@
 <?php
 
 /**
- * IMPORTANTE: Cambiar la frase de seguridad predeterminada afecta el aplicativo si este depende de variables codificadas 
- * con la clave anterior (p.e. si se guardaron datos codificados en la base de datos o en config.inc.php).
+ * IMPORTANTE: La frase de seguridad predeterminada debe cambiarse antes instalar el aplicativo. Cambiarla después puede dejar
+ * inservible la instalación si esta depende de variables codificadas con la clave anterior 
+ * (p.e. si se guardaron datos codificados en la base de datos o en config.inc.php).
  * 
  * 
- * @todo Mejorar la clase para que acepte otras semillas. Tener cuidado pues esta clase se utiliza en bootstrap para decodificar
- * las variables de cofig.inc.php
+ * @todo Mejorar la clase para que acepte otras semillas. 
+ * 
  */
 require_once ("aes.class.php");
 require_once ("aesctr.class.php");
@@ -14,7 +15,8 @@ class Encriptador {
 	private static $instance;
 	private $llave;
 	private $iv;
-	const SEMILLA = '0xel0t1l';
+	//Se requiere una semilla de 16, 24 o 32 caracteres
+	const SEMILLA = '0xel0t1lwvXl1FO7';
 	
 	// Constructor
 	function __construct($llave = '') {
