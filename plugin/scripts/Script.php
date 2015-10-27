@@ -9,6 +9,9 @@ $estilo = array ();
 $funcion [$indice] = "funciones.js";
 $indice ++;
 
+$funcion [$indice] = "javascript/datatables.js";
+$indice ++;
+
 if (isset ( $_REQUEST ['jquery'] )) {
 	if($_REQUEST ['jquery'] != 'true'){//Se carga una versión de jquery en particular
 		$funcion [$indice] = 'javascript/jquery-'. $_REQUEST ['jquery'] . '.js';
@@ -27,6 +30,10 @@ if (isset ( $_REQUEST ['jquery-validation'] )) {
     $indice ++;
     $funcion [$indice] = "javascript/jquery.validationEngine-es.js";
     $indice ++;
+}
+if (isset ( $_REQUEST ['datatables'] )) {
+	$funcion [$indice] = "javascript/datatables.js";
+	$indice ++;	
 }
 if (isset ( $_REQUEST ['bootstrap'] )) {
 	if($_REQUEST ['bootstrap'] != 'true'){
