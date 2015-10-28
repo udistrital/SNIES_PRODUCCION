@@ -5,7 +5,6 @@ require_once ('component/GestorEstudiante/Componente.php');
 use snies\Componente as InscritoAdmitido;
 use sniesEstudiante\Componente;
 
-
 if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("../index.php");
 	exit ();
@@ -68,12 +67,11 @@ class registrarForm {
 		?>
 
 <br>
-<h3>INSCRITOS - ACTUALIZACIÓN SNIES CENTRAL</h3>
-<br>
+<h3>Jovenes en Acción - reporte al Departamento de Prosperidad Social (DPS)
+<br><br>
 <table id="example" class="display" cellspacing="0" width="100%">
 	<thead>
 		<tr>
-			<th>Variable</th>
 			<th>Año</th>
 			<th>Período</th>
 			<th>Total</th>
@@ -88,7 +86,6 @@ class registrarForm {
 		foreach ( $periodo as $miPeriodo ) {
 			?>
 				<tr>
-			<td><?php echo 'Inscrito';?></td>
 			<td align="center"><?php echo $miPeriodo['annio']?></td>
 			<td align="center"><?php echo $miPeriodo['semestre'];?></td>
 			<td align="right"><?php echo $miPeriodo['total'];?></td>

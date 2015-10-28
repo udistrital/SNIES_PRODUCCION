@@ -1,4 +1,4 @@
  $('#example').DataTable({ 
         	  	"jQueryUI": true,
-        	  	"order": [[ 1, "desc" ],[ 2, "desc" ]],//las columnas inician de cero        	  	
+        	  	"order": [[ 0, "desc" ],[ 1, "desc" ]],//las columnas inician de cero        	  	
  });
