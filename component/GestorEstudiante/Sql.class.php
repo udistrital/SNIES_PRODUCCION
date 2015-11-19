@@ -277,6 +277,14 @@ class Sql extends \Sql {
 				
 				break;
 			
+			case "contarMatriculados" :
+				$cadenaSql = "SELECT COUNT(*) FROM";
+				$cadenaSql .= " matriculado ";
+				$cadenaSql .= " WHERE est_annio=" . $variable ['annio'];
+				$cadenaSql .= " AND est_semestre='" . $variable ['semestre'] . "'";				
+				
+				break;
+			
 			case "registrarMatriculado" :
 				$cadenaSql = " INSERT";
 				$cadenaSql .= " INTO matriculado";

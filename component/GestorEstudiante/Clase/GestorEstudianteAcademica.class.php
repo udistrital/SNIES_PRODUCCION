@@ -16,14 +16,17 @@ class estudiante implements IGestorEstudiante {
 		$this->miSql = new Sql ();
 		$this->miConfigurador = \Configurador::singleton ();
 	}
-	function contarMatriculados($periodo) {
+	function contarMatriculados( $annio, $semestre) {
+		
 		$this->miConfigurador = \Configurador::singleton ();
 		// configuracion es el nombre de la conexión principal de SARA - se crea de forma automática tomando los
 		// datos de config.inc.php
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		$variable['annio']=$annio;
+		$variable['semestre']=$semestre;
 		
-		$cadenaSql = $this->miSql->cadena_sql ( 'contarMatriculados', $periodo );
+		$cadenaSql = $this->miSql->cadena_sql ( 'contarMatriculados', $variable );
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
 		

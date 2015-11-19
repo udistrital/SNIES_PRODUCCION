@@ -3,7 +3,7 @@
 namespace sniesEstudiante;
 
 interface IGestorEstudiante {
-	function contarMatriculados($periodo);
+	function contarMatriculados($annio, $semestre);
 	
 	/**
 	 * Consulta los datos de los estudiantes requeridos en la

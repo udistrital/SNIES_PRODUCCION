@@ -20,8 +20,8 @@ class Componente extends Component implements IGestorEstudiante {
 	}
 	
 	// funciones matriculados
-	function contarMatriculados($periodo) {
-		return $this->miEstudiante->contarMatriculados ( $periodo );
+	function contarMatriculados( $annio, $semestre) {
+		return $this->miEstudiante->contarMatriculados (  $annio, $semestre );
 	}
 	function consultarEstudianteAcademica($annio, $semestre) {
 		return $this->miEstudiante->consultarEstudianteAcademica ( $annio, $semestre );

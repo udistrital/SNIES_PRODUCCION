@@ -9,7 +9,12 @@ $this->idioma ['cerrarSesion'] = 'Cerrar Sesión';
 $this->idioma ['snies'] = 'SNIES';
 
 $this->idioma ['tituloInscrito'] = 'Inscrito';
-$this->idioma ['actualizarsnieslocal'] = 'Actualizar SNIES LOCAL';
+$this->idioma ['reportarInscrito'] = 'Reportar Inscrito SNIES LOCAL';
+$this->idioma ['corregirnombre'] = 'Corrregir Nombres';
+
+
+$this->idioma ['tituloMatriculado'] = 'Matriculado';
+$this->idioma ['reportarMatriculado'] = 'Reportar Matriculado SNIES LOCAL';
 $this->idioma ['corregirnombre'] = 'Corrregir Nombres';
 
 $this->idioma ['admitido'] = 'Admitido';
