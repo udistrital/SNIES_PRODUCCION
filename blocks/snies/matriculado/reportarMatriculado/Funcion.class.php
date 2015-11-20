@@ -38,12 +38,9 @@ class Funcion {
 	function procesarAjax() {
 		include_once ($this->ruta . "funcion/procesarAjax.php");
 	}
-	function registrar() {
-		include_once ($this->ruta . "/funcion/registrar.php");
-	}
-	function actualizarMaticulado() {
+	function actualizarMatriculado() {
 		
-		include_once ($this->ruta . "/funcion/actualizar.php");
+		include_once ($this->ruta . "/funcion/actualizarMatriculado.php");
 	}
 	function action() {		
 		
@@ -53,8 +50,7 @@ class Funcion {
 			
 			switch ($_REQUEST ["opcion"]) {
 				case 'actualizarMatriculado' :
-					echo 'por fin direccionando actualizar matriculado -  estoy en funcion';exit;
-					$this->consultarContrato ();
+					$this->actualizarMatriculado ();
 					break;
 				
 				case 'registrar' :

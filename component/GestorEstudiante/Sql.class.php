@@ -44,7 +44,9 @@ class Sql extends \Sql {
 			 */
 			case "consultarEstudianteAcademica" :
 				
-				$cadenaSql = " SELECT TO_CHAR('1301') ies_code,";
+				$cadenaSql = " SELECT ";
+				$cadenaSql .= " EST_COD CODIGO_ESTUDIANTE,";
+				$cadenaSql .= " TO_CHAR('1301') ies_code,";
 				$cadenaSql .= " EST_NOMBRE,";
 				$cadenaSql .= " TO_CHAR(eot_fecha_nac, 'yyyy-mm-dd') fecha_nacim,";
 				$cadenaSql .= " TO_CHAR('CO') pais_ln,";
@@ -87,7 +89,7 @@ class Sql extends \Sql {
 				} else {
 					$cadenaSql .= " AND mat_per =3 "; // el semestre 03 de la universidad es el semestre 02 de SNIES";
 				}
-				// $cadenaSql .= " AND rownum < 10";
+				//$cadenaSql .= " AND rownum < 3";
 				
 				break;
 			
@@ -281,7 +283,7 @@ class Sql extends \Sql {
 				$cadenaSql = "SELECT COUNT(*) FROM";
 				$cadenaSql .= " matriculado ";
 				$cadenaSql .= " WHERE est_annio=" . $variable ['annio'];
-				$cadenaSql .= " AND est_semestre='" . $variable ['semestre'] . "'";				
+				$cadenaSql .= " AND est_semestre='" . $variable ['semestre'] . "'";
 				
 				break;
 			
