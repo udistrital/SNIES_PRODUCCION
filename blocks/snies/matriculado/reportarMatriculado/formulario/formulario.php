@@ -82,6 +82,8 @@ class registrarForm {
 			<th>Total</th>
 			<th>Errores</th>
 			<th>Actualizar</th>
+			<th>Eliminar Duplicados</th>
+			<!-- Borra valores duplicados en la tablas PARTICIPANTE Y ESTUDIANTE -->
 			<th>Última Actualización</th>
 		</tr>
 	</thead>
@@ -97,6 +99,9 @@ class registrarForm {
 			<td align="center"><?php echo $miPeriodo['semestre'];?></td>
 			<td align="right"><?php echo $miPeriodo['total'];?></td>
 			<td align="right">-</td>
+			<td align="center"><a class=miEnlace href="<?php echo $enlace;?>"><img
+					src='<? echo $this->urlImagenes?>images/actualizar.png'
+					width='30px'></a></td>
 			<td align="center"><a class=miEnlace href="<?php echo $enlace;?>"><img
 					src='<? echo $this->urlImagenes?>images/actualizar.png'
 					width='30px'></a></td>
