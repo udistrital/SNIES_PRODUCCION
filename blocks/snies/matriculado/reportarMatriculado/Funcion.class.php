@@ -42,6 +42,10 @@ class Funcion {
 		
 		include_once ($this->ruta . "/funcion/actualizarMatriculado.php");
 	}
+	function actualizarEstudiante() {
+		
+		include_once ($this->ruta . "/funcion/actualizarEstudiante.php");
+	}
 	function action() {		
 		
 		if (isset ( $_REQUEST ['procesarAjax'] )) {
@@ -51,6 +55,10 @@ class Funcion {
 			switch ($_REQUEST ["opcion"]) {
 				case 'actualizarMatriculado' :
 					$this->actualizarMatriculado ();
+					break;
+				
+				case 'actualizarEstudiante' :
+					$this->actualizarEstudiante ();
 					break;
 				
 				case 'registrar' :

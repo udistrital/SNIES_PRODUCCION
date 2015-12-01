@@ -77,37 +77,23 @@ class FormProcessor {
 		
 		$this->actualizarParticipante ( $estudiante );
 		
-		//$valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
-		//$valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
+		// $valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
+		// $valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
 		
 		// Rescatar el parámetro enlace desde los datos de configuraión en la base de datos
-		//$variable = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
-		//$miEnlace = $this->host . $this->site . '/index.php?' . $variable . '=' . $valorCodificado;
+		// $variable = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+		// $miEnlace = $this->host . $this->site . '/index.php?' . $variable . '=' . $valorCodificado;
 		
-		//header ( "Location:$miEnlace" );
+		// header ( "Location:$miEnlace" );
 		exit ();
-		/**
-		echo 'proceso 2 actualizarEstudiante...<br>';
-		$this->actualizarEstudiante ( $estudiante );
-		echo 'proceso 3 actualizarEstudiantePrograma...<br>';
-		$this->actualizarEstudiantePrograma ( $estudiante );
-		echo 'proceso 4 actualizarMatriculado<br>';
-		$this->actualizarMatriculado ( $estudiante );
-		echo 'FIN<br>';
-		exit ();*/
-		
-
 	}
 	
 	/**
 	 * Funcion que decide que hacer con el registro de un participante
 	 * 1.
 	 * Si no existe lo registra
-	 * 2. Si existe una vez y es igual el tipo de documento, lo actualiza
-	 * 3. Si existe una vez y es diferente el tipo de documento, inserta el nuevo y borra el incorrecto
-	 * (en cascada, graduado, egresado, matriculado, estudiante_programa, estudiante, participante)
-	 * 4. Si existe dos veces actualiza el correcto y borra el incorrecto
-	 * (en cascada, graduado, egresado, matriculado, estudiante_programa, estudiante, participante)
+	 * 2. Si existe y es igual el tipo de documento se actualiza
+	 * 3. Si existe y es diferente el tipo de documento lo borra
 	 *
 	 * @param array $estudiante
 	 *        	datos de estudiante
@@ -124,17 +110,11 @@ class FormProcessor {
 				echo $unEstudiante ['CODIGO_UNICO'] . ' Nuevo<br>';
 			} else {
 				foreach ( $participante as $unParticipante ) {
-					// Si existe y es igual eltipo actualizar si no es igual borrar (en cascada)
+					// Si existe y es igual el tipo actualizar si no es igual borrar
 					if ($unParticipante ['tipo_doc_unico'] == $unEstudiante ['TIPO_DOC_UNICO']) {
 						$this->miComponente->actualizarParticipante ( $unEstudiante );
 						echo $unEstudiante ['CODIGO_UNICO'] . ' actualizado<br>';
 					} else {
-						
-						$this->miComponente->borrarGraduado ( $unEstudiante );
-						$this->miComponente->borrarEgresado ( $unEstudiante );
-						$this->miComponente->borrarMatriculado ( $unEstudiante );
-						$this->miComponente->borrarEstudiantePrograma ( $unEstudiante );
-						$this->miComponente->borrarEstudiante ( $unEstudiante );
 						$this->miComponente->borrarParticipante ( $unEstudiante );
 						echo $unEstudiante ['CODIGO_UNICO'] . ' borrado<br>';
 					}
@@ -142,64 +122,6 @@ class FormProcessor {
 			}
 		}
 		echo 'terminado';
-
-	}
-	
-	/**
-	 * Función que actualiza o registra los datos de la tabla ESTUDIANTE DEL SNIES:
-	 * Si no existe el registro en la tabla lo registra
-	 * Si existe el registo lo actualiza
-	 *
-	 * @param array $estudiante        	
-	 */
-	function actualizarEstudiante($estudiante) {
-		foreach ( $estudiante as $unEstudiante ) {
-			$this->miComponente->borrarEstudiante ( $unEstudiante );
-			$this->miComponente->registrarEstudiante ( $unEstudiante );
-		}
-	}
-	/**
-	 *
-	 * Función que actualiza o registra los datos de la tabla ESTUDIANTE_PROGRAMA DEL SNIES (Se refiere a estudiantes de primer semestre):
-	 * Si no existe el registro en la tabla lo registra
-	 * Si existe el registo lo actualiza
-	 *
-	 * @param array $estudiante        	
-	 */
-	function actualizarEstudiantePrograma($estudiante) {
-		
-		// borrar todos los registros de estudiante_programa para el periodo seleccionado
-		$this->miComponente->borrarEstudiantePrograma ( $this->annio, $this->semestre );
-		
-		// registrar los estudiantes de la cohorte seleccionada, año y período
-		foreach ( $estudiante as $unEstudiante ) {
-			
-			if ($unEstudiante ['ANIO'] == $this->annio and $unEstudiante ['SEMESTRE'] == $this->semestre) {
-				$this->miComponente->registrarEstudiantePrograma ( $unEstudiante );
-			}
-		}
-	}
-	
-	/**
-	 *
-	 * Función que actualiza o registra los datos de la tabla ESTUDIANTE_PROGRAMA DEL SNIES (Se refiere a estudiantes de primer semestre):
-	 * Si no existe el registro en la tabla lo registra
-	 * Si existe el registo lo actualiza
-	 *
-	 * @param array $estudiante        	
-	 */
-	function actualizarMatriculado($estudiante) {
-		
-		// borrar todos los registros de la tabla MATRICULADO para el periodo seleccionado
-		$this->miComponente->borrarMatriculado ( $this->annio, $this->semestre );
-		
-		// registrar los matriculados de un semestre año y período
-		foreach ( $estudiante as $unEstudiante ) {
-			
-			// Registrar todos los registros de la consulta (que son de un período y semestre determinado) en la tabla MATRICULADO
-			//
-			$this->miComponente->registrarMatriculado ( $unEstudiante, $this->annio, $this->semestre );
-		}
 	}
 }
 

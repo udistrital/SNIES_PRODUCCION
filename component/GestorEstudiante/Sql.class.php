@@ -188,7 +188,7 @@ class Sql extends \Sql {
 			// //ESTUDIANTE SNIES
 			
 			case "consultarEstudiante" :
-				$cadenaSql = "SELECT codigo_unico FROM";
+				$cadenaSql = "SELECT codigo_unico, tipo_doc_unico FROM";
 				$cadenaSql .= " estudiante ";
 				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
 				
@@ -223,7 +223,8 @@ class Sql extends \Sql {
 			case "borrarEstudiante" :
 				$cadenaSql = "DELETE FROM";
 				$cadenaSql .= " estudiante ";
-				$cadenaSql .= " WHERE codigo_unico=" . $variable ['CODIGO_UNICO'];
+				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
+				$cadenaSql .= " AND tipo_doc_unico='" . $variable ['TIPO_DOC_UNICO'] . "'";
 				
 				break;
 			
