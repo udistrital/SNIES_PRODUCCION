@@ -45,7 +45,7 @@ class procesadorExcepcion {
 			}			
 			$resultado = $unEstudiante ['FECHA_NACIM'];
 		} else {
-			$resultado = '1900-01-01'; // para distinguir los que tiene valor nulo
+			$resultado = '1990-01-01'; // para distinguir los que tiene valor nulo
 		}
 	
 		return $resultado;

@@ -89,13 +89,13 @@ class Sql extends \Sql {
 				} else {
 					$cadenaSql .= " AND mat_per =3 "; // el semestre 03 de la universidad es el semestre 02 de SNIES";
 				}
-				//$cadenaSql .= " AND rownum < 3";
+				//$cadenaSql .= " AND rownum < 1000";
 				
 				break;
 			
 			case "consultarParticipante" :
-				$cadenaSql = "SELECT codigo_unico FROM";
-				$cadenaSql .= " participante ";
+				$cadenaSql = "SELECT codigo_unico, tipo_doc_unico FROM";
+				$cadenaSql .= " participante ";			
 				$cadenaSql .= " WHERE codigo_unico=" . $variable ['CODIGO_UNICO'];
 				
 				break;
@@ -115,8 +115,8 @@ class Sql extends \Sql {
 				$cadenaSql .= " genero_code ='" . $variable ['GENERO_CODE'] . "',";
 				$cadenaSql .= " email ='" . $variable ['EMAIL'] . "',";
 				$cadenaSql .= " est_civil_code ='" . $variable ['EST_CIVIL_CODE'] . "',";
-				$cadenaSql .= " tipo_doc_unico ='" . $variable ['TIPO_DOC_UNICO'] . "',";
-				// $cadenaSql .= " codigo_unico ='" . $variable ['CODIGO_UNICO'] . "',";
+				//$cadenaSql .= " tipo_doc_unico ='" . $variable ['TIPO_DOC_UNICO'] . "',";
+				//$cadenaSql .= " codigo_unico ='" . $variable ['CODIGO_UNICO'] . "',";
 				$cadenaSql .= " tipo_id_ant ='" . $variable ['TIPO_ID_ANT'] . "',";
 				$cadenaSql .= " codigo_id_ant ='" . $variable ['CODIGO_ID_ANT'] . "',";
 				$cadenaSql .= " pais_tel ='" . $variable ['PAIS_TEL'] . "',";
@@ -129,7 +129,8 @@ class Sql extends \Sql {
 			case "borrarParticipante" :
 				$cadenaSql = "DELETE FROM";
 				$cadenaSql .= " participante ";
-				$cadenaSql .= " WHERE codigo_unico=" . $variable ['CODIGO_UNICO'];
+				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO']. "'";
+				$cadenaSql .= " AND tipo_doc_unico='" . $variable ['TIPO_DOC_UNICO']. "'";
 				
 				break;
 			

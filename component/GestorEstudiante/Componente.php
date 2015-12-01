@@ -28,8 +28,8 @@ class Componente extends Component implements IGestorEstudiante {
 	}
 	
 	// ///PARTICIPANTE SNIES
-	function cosultarParticipante($estudiante) {
-		return $this->miEstudiante->cosultarParticipante ( $estudiante );
+	function consultarParticipante($estudiante) {
+		return $this->miEstudiante->consultarParticipante ( $estudiante );
 	}
 	function actualizarParticipante($estudiante) {
 		return $this->miEstudiante->actualizarParticipante ( $estudiante );

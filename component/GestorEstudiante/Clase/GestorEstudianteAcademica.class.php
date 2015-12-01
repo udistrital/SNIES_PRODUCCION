@@ -51,7 +51,7 @@ class estudiante implements IGestorEstudiante {
 	}
 	
 	// ////PARTICIPANTE SNIES
-	function cosultarParticipante($estudiante) {
+	function consultarParticipante($estudiante) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
@@ -61,6 +61,10 @@ class estudiante implements IGestorEstudiante {
 		
 		return $resultado;
 	}
+	/**
+	 * (non-PHPdoc)
+	 * @see \sniesEstudiante\IGestorEstudiante::actualizarParticipante()
+	 */
 	function actualizarParticipante($estudiante) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );

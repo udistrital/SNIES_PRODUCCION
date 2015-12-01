@@ -18,7 +18,12 @@ interface IGestorEstudiante {
 	 *
 	 * @param unknown $estudiante        	
 	 */
-	function cosultarParticipante($estudiante);
+	function consultarParticipante($estudiante);
+	
+	/**
+	 * NO actualiza el número ni el tipo de documento
+	 * @param unknown $estudiante
+	 */
 	function actualizarParticipante($estudiante);
 	
 	/**

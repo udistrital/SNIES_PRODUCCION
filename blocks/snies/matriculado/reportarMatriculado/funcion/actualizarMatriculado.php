@@ -58,8 +58,6 @@ class FormProcessor {
 		
 		$caracteresInvalidos = $miProcesadorNombre->buscarCaracteresInvalidos ( $estudiante, 'EST_NOMBRE' );
 		
-		exit;
-		
 		// quita acentos del nombre
 		$estudiante = $miProcesadorNombre->quitarAcento ( $estudiante, 'EST_NOMBRE' );
 		
@@ -77,8 +75,18 @@ class FormProcessor {
 		// FORMATEA LOS VALORES NULOS, CODIFICA EXCEPCIONES
 		$estudiante = $miProcesadorExcepcion->procesarExcepcionEstudiante ( $estudiante );
 		
-		echo 'proceso 1 actualizarParticipante...<br>';
 		$this->actualizarParticipante ( $estudiante );
+		
+		//$valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
+		//$valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
+		
+		// Rescatar el parámetro enlace desde los datos de configuraión en la base de datos
+		//$variable = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+		//$miEnlace = $this->host . $this->site . '/index.php?' . $variable . '=' . $valorCodificado;
+		
+		//header ( "Location:$miEnlace" );
+		exit ();
+		/**
 		echo 'proceso 2 actualizarEstudiante...<br>';
 		$this->actualizarEstudiante ( $estudiante );
 		echo 'proceso 3 actualizarEstudiantePrograma...<br>';
@@ -86,32 +94,55 @@ class FormProcessor {
 		echo 'proceso 4 actualizarMatriculado<br>';
 		$this->actualizarMatriculado ( $estudiante );
 		echo 'FIN<br>';
-		exit ();
+		exit ();*/
 		
-		$valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
-		$valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
-		
-		// Rescatar el parámetro enlace desde los datos de configuraión en la base de datos
-		$variable = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
-		$miEnlace = $this->host . $this->site . '/index.php?' . $variable . '=' . $valorCodificado;
-		
-		header ( "Location:$miEnlace" );
+
 	}
 	
 	/**
-	 * Función que actualiza o registra los datos de la tabla PARTICIPANTE DEL SNIES
-	 * 1.Borra el estudiante de la tabla PARTICIPANTE -Sin importar si existe o no-
-	 * 2.Inserta el registro participante
+	 * Funcion que decide que hacer con el registro de un participante
+	 * 1.
+	 * Si no existe lo registra
+	 * 2. Si existe una vez y es igual el tipo de documento, lo actualiza
+	 * 3. Si existe una vez y es diferente el tipo de documento, inserta el nuevo y borra el incorrecto
+	 * (en cascada, graduado, egresado, matriculado, estudiante_programa, estudiante, participante)
+	 * 4. Si existe dos veces actualiza el correcto y borra el incorrecto
+	 * (en cascada, graduado, egresado, matriculado, estudiante_programa, estudiante, participante)
 	 *
 	 * @param array $estudiante
 	 *        	datos de estudiante
 	 */
 	function actualizarParticipante($estudiante) {
 		foreach ( $estudiante as $unEstudiante ) {
+			echo 'CODIGO: ' . $unEstudiante ['CODIGO_UNICO'] . '<br>';
+			// consulta enla tabla participante y cuenta el número de registros retornados
+			$participante = $this->miComponente->consultarParticipante ( $unEstudiante );
 			
-			$this->miComponente->borrarParticipante ( $unEstudiante );
-			$this->miComponente->registrarParticipante ( $unEstudiante );
+			// si no existe insertar el nuevo registro
+			if ($participante == false) {
+				$this->miComponente->registrarParticipante ( $unEstudiante );
+				echo $unEstudiante ['CODIGO_UNICO'] . ' Nuevo<br>';
+			} else {
+				foreach ( $participante as $unParticipante ) {
+					// Si existe y es igual eltipo actualizar si no es igual borrar (en cascada)
+					if ($unParticipante ['tipo_doc_unico'] == $unEstudiante ['TIPO_DOC_UNICO']) {
+						$this->miComponente->actualizarParticipante ( $unEstudiante );
+						echo $unEstudiante ['CODIGO_UNICO'] . ' actualizado<br>';
+					} else {
+						
+						$this->miComponente->borrarGraduado ( $unEstudiante );
+						$this->miComponente->borrarEgresado ( $unEstudiante );
+						$this->miComponente->borrarMatriculado ( $unEstudiante );
+						$this->miComponente->borrarEstudiantePrograma ( $unEstudiante );
+						$this->miComponente->borrarEstudiante ( $unEstudiante );
+						$this->miComponente->borrarParticipante ( $unEstudiante );
+						echo $unEstudiante ['CODIGO_UNICO'] . ' borrado<br>';
+					}
+				}
+			}
 		}
+		echo 'terminado';
+
 	}
 	
 	/**

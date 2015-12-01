@@ -10,7 +10,7 @@ class procesadorNombre {
 	 * @param unknown $campo        	
 	 */
 	function buscarCaracteresInvalidos($arreglo, $campo) {
-		//$a=0;
+		$a=0;
 		foreach ( $arreglo as $key => $value ) {
 			$nombre = $arreglo [$key] [$campo];
 			$codigo = $arreglo [$key] ['CODIGO_ESTUDIANTE'];
@@ -26,7 +26,6 @@ class procesadorNombre {
 				//echo ' válido<br>';
 			}
 		}
-		exit ();
 	}
 	
 	/**
