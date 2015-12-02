@@ -16,15 +16,14 @@ class estudiante implements IGestorEstudiante {
 		$this->miSql = new Sql ();
 		$this->miConfigurador = \Configurador::singleton ();
 	}
-	function contarMatriculados( $annio, $semestre) {
-		
+	function contarMatriculados($annio, $semestre) {
 		$this->miConfigurador = \Configurador::singleton ();
 		// configuracion es el nombre de la conexión principal de SARA - se crea de forma automática tomando los
 		// datos de config.inc.php
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-		$variable['annio']=$annio;
-		$variable['semestre']=$semestre;
+		$variable ['annio'] = $annio;
+		$variable ['semestre'] = $semestre;
 		
 		$cadenaSql = $this->miSql->cadena_sql ( 'contarMatriculados', $variable );
 		
@@ -63,6 +62,7 @@ class estudiante implements IGestorEstudiante {
 	}
 	/**
 	 * (non-PHPdoc)
+	 *
 	 * @see \sniesEstudiante\IGestorEstudiante::actualizarParticipante()
 	 */
 	function actualizarParticipante($estudiante) {
@@ -159,13 +159,12 @@ class estudiante implements IGestorEstudiante {
 		
 		return $resultado;
 	}
-	
 	function borrarEstudiante($estudiante) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-	
+		
 		$cadenaSql = $this->miSql->cadena_sql ( 'borrarEstudiante', $estudiante );
-	
+		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
 		if ($resultado == FALSE) {
 			$error = $esteRecursoDB->obtener_error ();
@@ -187,7 +186,7 @@ class estudiante implements IGestorEstudiante {
 		
 		return $resultado;
 	}
-	function borrarEstudiantePrograma($annio, $semestre) {
+	function borrarEstudiantePrograma($estudiante) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
@@ -217,7 +216,7 @@ class estudiante implements IGestorEstudiante {
 	}
 	
 	// //MATRICULADO
-	function borrarMatriculado($annio, $semestre) {
+	function borrarMatriculado($estudiante) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
@@ -247,6 +246,40 @@ class estudiante implements IGestorEstudiante {
 			var_dump ( $error );
 		}
 		
+		return $resultado;
+	}
+	
+	// //EGRESADO
+	function borrarEgresado($estudiante) {
+		$conexion = "sniesLocal";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		$cadenaSql = $this->miSql->cadena_sql ( 'borrarEgresado', $estudiante );
+		
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
+		if ($resultado == FALSE) {
+			$error = $esteRecursoDB->obtener_error ();
+			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';
+			echo $cadenaSql;
+			var_dump ( $error );
+		}
+		return $resultado;
+	}
+	
+	// //GRADUADO
+	function borrarGraduado($estudiante) {
+		$conexion = "sniesLocal";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		$cadenaSql = $this->miSql->cadena_sql ( 'borrarGraduado', $estudiante );
+		
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
+		if ($resultado == FALSE) {
+			$error = $esteRecursoDB->obtener_error ();
+			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';
+			echo $cadenaSql;
+			var_dump ( $error );
+		}
 		return $resultado;
 	}
 }

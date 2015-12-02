@@ -22,7 +22,8 @@ interface IGestorEstudiante {
 	
 	/**
 	 * NO actualiza el número ni el tipo de documento
-	 * @param unknown $estudiante
+	 *
+	 * @param unknown $estudiante        	
 	 */
 	function actualizarParticipante($estudiante);
 	
@@ -46,14 +47,13 @@ interface IGestorEstudiante {
 	function registrarEstudiante($estudiante);
 	function borrarEstudiante($estudiante);
 	
-	
 	// ///ESTUDIANTE_PROGRAMA SNIES
 	function consultarEstudiantePrograma($estudiante);
-	function borrarEstudiantePrograma($annio, $semestre);
+	function borrarEstudiantePrograma($estudiante);
 	function registrarEstudiantePrograma($estudiante);
 	
 	// MATRICULADO
-	function borrarMatriculado($annio, $semestre);
+	function borrarMatriculado($estudiante);
 	function registrarMatriculado($estudiante, $annio, $semestre);
 }
 

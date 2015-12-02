@@ -20,8 +20,8 @@ class Componente extends Component implements IGestorEstudiante {
 	}
 	
 	// funciones matriculados
-	function contarMatriculados( $annio, $semestre) {
-		return $this->miEstudiante->contarMatriculados (  $annio, $semestre );
+	function contarMatriculados($annio, $semestre) {
+		return $this->miEstudiante->contarMatriculados ( $annio, $semestre );
 	}
 	function consultarEstudianteAcademica($annio, $semestre) {
 		return $this->miEstudiante->consultarEstudianteAcademica ( $annio, $semestre );
@@ -59,19 +59,31 @@ class Componente extends Component implements IGestorEstudiante {
 	function consultarEstudiantePrograma($estudiante) {
 		return $this->miEstudiante->consultarEstudiantePrograma ( $estudiante );
 	}
-	function borrarEstudiantePrograma($annio, $semestre) {
-		return $this->miEstudiante->borrarEstudiantePrograma ( $annio, $semestre );
+	function borrarEstudiantePrograma($estudiante) {
+		return $this->miEstudiante->borrarEstudiantePrograma ( $estudiante );
 	}
 	function registrarEstudiantePrograma($estudiante) {
 		return $this->miEstudiante->registrarEstudiantePrograma ( $estudiante );
 	}
 	
 	// MATRICULADO
-	function borrarMatriculado($annio, $semestre) {
-		return $this->miEstudiante->borrarMatriculado ( $annio, $semestre );
+	function borrarMatriculado($estudiante) {
+		return $this->miEstudiante->borrarMatriculado ($estudiante);
 	}
 	function registrarMatriculado($estudiante, $annio, $semestre) {
 		return $this->miEstudiante->registrarMatriculado ( $estudiante, $annio, $semestre );
+	}
+	
+	//EGRESADO SNIES
+	
+	function borrarEgresado($estudiante) {
+		return $this->miEstudiante->borrarEgresado ( $estudiante);
+	}
+	
+	// //GRADUADO SNIES
+	
+	function borrarGraduado($estudiante) {
+		return $this->miEstudiante->borrarGraduado ( $estudiante);
 	}
 }
 
