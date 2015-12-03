@@ -148,8 +148,9 @@ class estudiante implements IGestorEstudiante {
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		$cadenaSql = $this->miSql->cadena_sql ( 'registrarEstudiante', $estudiante );
-		
+
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
+
 		if ($resultado == FALSE) {
 			$error = $esteRecursoDB->obtener_error ();
 			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';
@@ -164,7 +165,7 @@ class estudiante implements IGestorEstudiante {
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		$cadenaSql = $this->miSql->cadena_sql ( 'borrarEstudiante', $estudiante );
-		
+
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
 		if ($resultado == FALSE) {
 			$error = $esteRecursoDB->obtener_error ();
@@ -219,7 +220,7 @@ class estudiante implements IGestorEstudiante {
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		$cadenaSql = $this->miSql->cadena_sql ( 'borrarMatriculado', $estudiante );
-		
+		echo $cadenaSql;
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
 		
 		return $resultado;

@@ -116,15 +116,26 @@ class FormProcessor {
 						// $this->miComponente->actualizarEstudiante ( $unEstudiante );
 						// echo $unEstudiante ['CODIGO_UNICO'] . ' No requiere actualizar<br>';
 					} else {
-						//Borra los registros 
-						//El filtro es  codigo y tipo de documento que aparece en la tabla participante
-						//OJO, NO es el obtenido de la DB académica
-						echo 'corregir esto';exit;
-						$this->miComponente->borrarGraduado ( $unEstudiante );
-						$this->miComponente->borrarEgresado ( $unEstudiante );
-						$this->miComponente->borrarMatriculado ( $unEstudiante );						
-						$this->miComponente->borrarEstudiantePrograma ( $unEstudiante );
-						$this->miComponente->borrarEstudiante ( $unEstudiante );
+						// Borra los registros
+						// El filtro es codigo y tipo de documento que aparece en la tabla participante
+						// OJO, NO es el obtenido de la DB académica
+						$estudianteError ['CODIGO_UNICO'] = $unEstudianteParticipante ['codigo_unico'];
+						$estudianteError ['TIPO_DOC_UNICO'] = $unEstudianteParticipante ['tipo_doc_unico'];
+						
+						$this->miComponente->borrarGraduado ( $estudianteError );
+						$this->miComponente->borrarEgresado ( $estudianteError );
+						$this->miComponente->borrarMatriculado ( $estudianteError );
+						$this->miComponente->borrarEstudiantePrograma ( $estudianteError );
+						$this->miComponente->borrarEstudiante ( $estudianteError );
+						
+						$estudianteParticipante = $this->miComponente->consultarEstudiante ( $unEstudiante );
+						
+						// si no existe insertar el nuevo registro
+						if ($estudianteParticipante == false) {
+							$this->miComponente->registrarEstudiante ( $unEstudiante );
+							echo $unEstudiante ['CODIGO_UNICO'] . ' Nuevo<br>';
+						}
+						
 						echo $unEstudiante ['CODIGO_UNICO'] . ' borrado<br>';
 					}
 				}

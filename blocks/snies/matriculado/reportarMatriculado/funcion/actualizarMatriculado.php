@@ -120,6 +120,7 @@ class FormProcessor {
 						// OJO, NO es el obtenido de la DB académica
 						$estudianteError ['CODIGO_UNICO'] = $unParticipante ['codigo_unico'];
 						$estudianteError ['TIPO_DOC_UNICO'] = $unParticipante ['tipo_doc_unico'];
+						
 						$this->miComponente->borrarParticipante ( $estudianteError );
 						
 						$participante = $this->miComponente->consultarParticipante ( $unEstudiante );
