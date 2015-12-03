@@ -10,14 +10,14 @@ class procesadorNombre {
 	 * @param unknown $campo        	
 	 */
 	function buscarCaracteresInvalidos($arreglo, $campo) {
-		$a=0;
+		//$a=0;
 		foreach ( $arreglo as $key => $value ) {
 			$nombre = $arreglo [$key] [$campo];
 			$codigo = $arreglo [$key] ['CODIGO_ESTUDIANTE'];
 			$documento = $arreglo [$key] ['CODIGO_UNICO'];
 			if (! preg_match ( "/^[a-zA-ZnÑáéíóúüÁÉÍÓÚÜ ]*$/", $nombre )) {
-				$a++;
-				echo $a.'<br>';
+				//$a++;
+				//echo $a.'<br>';
 				echo $codigo.', '.$nombre.', '.$documento;
 				$nameErr = " <b>Solo letras y espacio permitidos</b>";
 				//echo $nameErr;

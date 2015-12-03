@@ -113,7 +113,7 @@ class FormProcessor {
 					// Si existe y es igual el tipo actualizar si no es igual borrar
 					if ($unParticipante ['tipo_doc_unico'] == $unEstudiante ['TIPO_DOC_UNICO']) {
 						$this->miComponente->actualizarParticipante ( $unEstudiante );
-						echo $unEstudiante ['CODIGO_UNICO'] . ' actualizado<br>';
+						//echo $unEstudiante ['CODIGO_UNICO'] . ' actualizado<br>';
 					} else {
 						// Borra los registros
 						// El filtro es codigo y tipo de documento que aparece en la tabla participante
