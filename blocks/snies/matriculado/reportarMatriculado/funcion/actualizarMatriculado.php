@@ -27,6 +27,7 @@ class FormProcessor {
 		$this->annio = $_REQUEST ['annio'];
 		$this->semestre = $_REQUEST ['semestre'];
 		
+		
 		/**
 		 * PROCEDIMIENTO
 		 * 1.
@@ -54,89 +55,60 @@ class FormProcessor {
 			header ( "Location:$miEnlace" );
 		}
 		
-		$miProcesadorNombre = new procesadorNombre ();
-		
-		$caracteresInvalidos = $miProcesadorNombre->buscarCaracteresInvalidos ( $estudiante, 'EST_NOMBRE' );
-		
-		// quita acentos del nombre
-		$estudiante = $miProcesadorNombre->quitarAcento ( $estudiante, 'EST_NOMBRE' );
-		
-		// descompone nombre completo en sus partes y las aglega al final de cada registro
-		foreach ( $estudiante as $clave => $valor ) {
-			// echo $estudiante [$clave] ['CODIGO_UNICO'].'<br>';
-			$nombreCompleto = $miProcesadorNombre->dividirNombreCompleto ( $estudiante [$clave] ['EST_NOMBRE'] );
-			$estudiante [$clave] ['PRIMER_APELLIDO'] = $nombreCompleto ['primer_apellido'];
-			$estudiante [$clave] ['SEGUNDO_APELLIDO'] = $nombreCompleto ['segundo_apellido'];
-			$estudiante [$clave] ['PRIMER_NOMBRE'] = $nombreCompleto ['primer_nombre'];
-			$estudiante [$clave] ['SEGUNDO_NOMBRE'] = $nombreCompleto ['segundo_nombre'];
-		}
-		
 		$miProcesadorExcepcion = new procesadorExcepcion ();
 		// FORMATEA LOS VALORES NULOS, CODIFICA EXCEPCIONES
 		$estudiante = $miProcesadorExcepcion->procesarExcepcionEstudiante ( $estudiante );
 		
-		$this->actualizarParticipante ( $estudiante );
-		
-		// $valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
-		// $valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
-		
-		// Rescatar el parámetro enlace desde los datos de configuraión en la base de datos
-		// $variable = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
-		// $miEnlace = $this->host . $this->site . '/index.php?' . $variable . '=' . $valorCodificado;
-		
-		// header ( "Location:$miEnlace" );
+		echo 'proceso 1 actualizarEstudiantePrograma...<br>';
+		$this->actualizarEstudiantePrograma ( $estudiante );
+		echo 'proceso 2 actualizarMatriculado<br>';
+		$this->actualizarMatriculado ( $estudiante );
+		echo 'FIN<br>';
 		exit ();
 	}
 	
 	/**
-	 * Funcion que decide que hacer con el registro de un participante
-	 * 1.
-	 * Si no existe lo registra
-	 * 2. Si existe y es igual el tipo de documento se actualiza
-	 * 3. Si existe y es diferente el tipo de documento lo borra
 	 *
-	 * @param array $estudiante
-	 *        	datos de estudiante
+	 * Función que actualiza o registra los datos de la tabla ESTUDIANTE_PROGRAMA DEL SNIES (Se refiere a estudiantes de primer semestre):
+	 * Si no existe el registro en la tabla lo registra
+	 * Si existe el registo lo actualiza
+	 *
+	 * @param array $estudiante        	
 	 */
-	function actualizarParticipante($estudiante) {
+	function actualizarEstudiantePrograma($estudiante) {
+		
+		// borrar todos los registros de estudiante_programa para el periodo seleccionado
+		$this->miComponente->borrarEstudianteProgramaPeriodoTodos ( $this->annio, $this->semestre );
+		
+		// registrar los estudiantes de la cohorte seleccionada, año y período
 		foreach ( $estudiante as $unEstudiante ) {
-			echo 'CODIGO: ' . $unEstudiante ['CODIGO_UNICO'] . '<br>';
-			// consulta enla tabla participante y cuenta el número de registros retornados
-			$participante = $this->miComponente->consultarParticipante ( $unEstudiante );
 			
-			// si no existe insertar el nuevo registro
-			if ($participante == false) {
-				$this->miComponente->registrarParticipante ( $unEstudiante );
-				echo $unEstudiante ['CODIGO_UNICO'] . ' Nuevo<br>';
-			} else {
-				foreach ( $participante as $unParticipante ) {
-					// Si existe y es igual el tipo actualizar si no es igual borrar
-					if ($unParticipante ['tipo_doc_unico'] == $unEstudiante ['TIPO_DOC_UNICO']) {
-						$this->miComponente->actualizarParticipante ( $unEstudiante );
-						echo $unEstudiante ['CODIGO_UNICO'] . ' actualizado<br>';
-					} else {
-						// Borra los registros
-						// El filtro es codigo y tipo de documento que aparece en la tabla participante
-						// OJO, NO es el obtenido de la DB académica
-						$estudianteError ['CODIGO_UNICO'] = $unParticipante ['codigo_unico'];
-						$estudianteError ['TIPO_DOC_UNICO'] = $unParticipante ['tipo_doc_unico'];
-						
-						$this->miComponente->borrarParticipante ( $estudianteError );
-						
-						$participante = $this->miComponente->consultarParticipante ( $unEstudiante );
-						
-						// si no existe insertar el nuevo registro
-						if ($participante == false) {
-							$this->miComponente->registrarParticipante ( $unEstudiante );
-							echo $unEstudiante ['CODIGO_UNICO'] . ' Nuevo<br>';
-						}
-						
-						echo $unEstudiante ['CODIGO_UNICO'] . ' borrado<br>';
-					}
-				}
+			if ($unEstudiante ['ANIO'] == $this->annio and $unEstudiante ['SEMESTRE'] == $this->semestre) {
+				$this->miComponente->registrarEstudiantePrograma ( $unEstudiante );
 			}
 		}
-		echo 'terminado';
+	}
+	
+	/**
+	 *
+	 * Función que actualiza o registra los datos de la tabla ESTUDIANTE_PROGRAMA DEL SNIES (Se refiere a estudiantes de primer semestre):
+	 * Si no existe el registro en la tabla lo registra
+	 * Si existe el registo lo actualiza
+	 *
+	 * @param array $estudiante        	
+	 */
+	function actualizarMatriculado($estudiante) {
+		
+		// borrar todos los registros de la tabla MATRICULADO para el periodo seleccionado
+		$this->miComponente->borrarMatriculadoPeriodoTodos ( $this->annio, $this->semestre );
+
+		// registrar los matriculados de un semestre año y período
+		foreach ( $estudiante as $unEstudiante ) {
+			
+			// Registrar todos los registros de la consulta (que son de un período y semestre determinado) en la tabla MATRICULADO
+			//
+			$this->miComponente->registrarMatriculado ( $unEstudiante, $this->annio, $this->semestre );
+		}
 	}
 }
 

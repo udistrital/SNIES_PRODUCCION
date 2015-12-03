@@ -80,8 +80,9 @@ class registrarForm {
 			<th>Año</th>
 			<th>Período</th>
 			<th>Total</th>
-			<th>Actualizar Participante</th>
-			<th>Actualizar Estudiante</th>
+			<th>1. Actualizar Participante</th>
+			<th>2. Actualizar Estudiante</th>
+			<th>3. Actualizar Matriculado</th>
 			<th>Errores Participante</th>
 			<th>Última Actualización</th>
 		</tr>
@@ -91,18 +92,22 @@ class registrarForm {
 			<?php
 		foreach ( $periodo as $miPeriodo ) {
 			
-			$enlaceActualizarMatriculado = $this->enlaceActializarVariable ( 'actualizarMatriculado', $miPeriodo ['annio'], $miPeriodo ['semestre'] );
+			$enlaceActualizarParticipante = $this->enlaceActializarVariable ( 'actualizarParticipante', $miPeriodo ['annio'], $miPeriodo ['semestre'] );
 			$enlaceActualizarEstudiante = $this->enlaceActializarVariable ( 'actualizarEstudiante', $miPeriodo ['annio'], $miPeriodo ['semestre'] );
+			$enlaceActualizarMatriculado = $this->enlaceActializarVariable ( 'actualizarMatriculado', $miPeriodo ['annio'], $miPeriodo ['semestre'] );
 			?>
 				<tr>
 			<td><?php echo 'Matriculado';?></td>
 			<td align="center"><?php echo $miPeriodo['annio']?></td>
 			<td align="center"><?php echo $miPeriodo['semestre'];?></td>
 			<td align="right"><?php echo $miPeriodo['total'];?></td>
-			<td align="center"><a class=miEnlace href="<?php echo $enlaceActualizarMatriculado;?>"><img
+			<td align="center"><a class=miEnlace href="<?php echo $enlaceActualizarParticipante;?>"><img
 					src='<? echo $this->urlImagenes?>images/actualizar.png'
 					width='30px'></a></td>
 			<td align="center"><a class=miEnlace href="<?php echo $enlaceActualizarEstudiante;?>"><img
+					src='<? echo $this->urlImagenes?>images/actualizar.png'
+					width='30px'></a></td>
+			<td align="center"><a class=miEnlace href="<?php echo $enlaceActualizarMatriculado;?>"><img
 					src='<? echo $this->urlImagenes?>images/actualizar.png'
 					width='30px'></a></td>
 			<td align="center">-</td>

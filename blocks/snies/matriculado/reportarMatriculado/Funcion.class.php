@@ -38,14 +38,20 @@ class Funcion {
 	function procesarAjax() {
 		include_once ($this->ruta . "funcion/procesarAjax.php");
 	}
-	function actualizarMatriculado() {
+	function actualizarParticipante() {
 		
-		include_once ($this->ruta . "/funcion/actualizarMatriculado.php");
+		include_once ($this->ruta . "/funcion/actualizarParticipante.php");
 	}
 	function actualizarEstudiante() {
 		
 		include_once ($this->ruta . "/funcion/actualizarEstudiante.php");
 	}
+	function actualizarMatriculado() {
+		
+		include_once ($this->ruta . "/funcion/actualizarMatriculado.php");
+	}
+	
+	
 	function action() {		
 		
 		if (isset ( $_REQUEST ['procesarAjax'] )) {
@@ -53,12 +59,16 @@ class Funcion {
 		} else if (isset ( $_REQUEST ["opcion"] )) {
 			
 			switch ($_REQUEST ["opcion"]) {
-				case 'actualizarMatriculado' :
-					$this->actualizarMatriculado ();
+				case 'actualizarParticipante' :
+					$this->actualizarParticipante ();
 					break;
 				
 				case 'actualizarEstudiante' :
 					$this->actualizarEstudiante ();
+					break;
+					
+				case 'actualizarMatriculado' :
+					$this->actualizarMatriculado ();
 					break;
 				
 				case 'registrar' :

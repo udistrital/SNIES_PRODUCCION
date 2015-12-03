@@ -89,7 +89,7 @@ class Sql extends \Sql {
 				} else {
 					$cadenaSql .= " AND mat_per =3 "; // el semestre 03 de la universidad es el semestre 02 de SNIES";
 				}
-				 $cadenaSql .= " AND rownum < 1000";
+				// $cadenaSql .= " AND rownum < 1000";
 				
 				break;
 			
@@ -247,6 +247,15 @@ class Sql extends \Sql {
 				
 				break;
 			
+			// borra todos los estudiantes de la tabla estudiante_programa para un año y semestre definido
+			case "borrarEstudianteProgramaPeriodoTodos" :
+				$cadenaSql = "DELETE FROM";
+				$cadenaSql .= " estudiante_programa ";
+				$cadenaSql .= " WHERE anio='" . $variable ['ANNIO'] . "'";
+				$cadenaSql .= " AND semestre='" . $variable ['SEMESTRE'] . "'";
+				
+				break;
+			
 			case "registrarEstudiantePrograma" :
 				$cadenaSql = " INSERT";
 				$cadenaSql .= " INTO estudiante_programa";
@@ -283,6 +292,17 @@ class Sql extends \Sql {
 				$cadenaSql .= " AND tipo_doc_unico='" . $variable ['TIPO_DOC_UNICO'] . "'";
 				
 				break;
+				
+				
+			// borra el todos los matriculados para el año y periodo dados
+			case "borrarMatriculadoPeriodoTodos" :
+				$cadenaSql = "DELETE FROM";
+				$cadenaSql .= " matriculado ";
+				$cadenaSql .= " WHERE est_annio='" . $variable ['ANNIO_MATRICULA'] . "'";
+				$cadenaSql .= " AND est_semestre='" . $variable ['SEMESTRE_MATRICULA'] . "'";
+				
+				break;
+				
 			
 			case "contarMatriculados" :
 				$cadenaSql = "SELECT COUNT(*) FROM";
