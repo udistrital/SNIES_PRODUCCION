@@ -116,7 +116,10 @@ class FormProcessor {
 						// $this->miComponente->actualizarEstudiante ( $unEstudiante );
 						// echo $unEstudiante ['CODIGO_UNICO'] . ' No requiere actualizar<br>';
 					} else {
-						//Borra los registros (el filtro es  codigo y tipo de documento)
+						//Borra los registros 
+						//El filtro es  codigo y tipo de documento que aparece en la tabla participante
+						//OJO, NO es el obtenido de la DB académica
+						echo 'corregir esto';exit;
 						$this->miComponente->borrarGraduado ( $unEstudiante );
 						$this->miComponente->borrarEgresado ( $unEstudiante );
 						$this->miComponente->borrarMatriculado ( $unEstudiante );						

@@ -190,9 +190,7 @@ class estudiante implements IGestorEstudiante {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-		$variable ['annio'] = $annio;
-		$variable ['semestre'] = $semestre;
-		$cadenaSql = $this->miSql->cadena_sql ( 'borrarEstudiantePrograma', $variable );
+		$cadenaSql = $this->miSql->cadena_sql ( 'borrarEstudiantePrograma', $estudiante );
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
 		
@@ -220,9 +218,7 @@ class estudiante implements IGestorEstudiante {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-		$variable ['annio'] = $annio;
-		$variable ['semestre'] = $semestre;
-		$cadenaSql = $this->miSql->cadena_sql ( 'borrarMatriculado', $variable );
+		$cadenaSql = $this->miSql->cadena_sql ( 'borrarMatriculado', $estudiante );
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
 		

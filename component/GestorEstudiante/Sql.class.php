@@ -89,7 +89,7 @@ class Sql extends \Sql {
 				} else {
 					$cadenaSql .= " AND mat_per =3 "; // el semestre 03 de la universidad es el semestre 02 de SNIES";
 				}
-				// $cadenaSql .= " AND rownum < 1000";
+				 $cadenaSql .= " AND rownum < 1000";
 				
 				break;
 			
@@ -131,6 +131,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " participante ";
 				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
 				$cadenaSql .= " AND tipo_doc_unico='" . $variable ['TIPO_DOC_UNICO'] . "'";
+				echo $cadenaSql;
 				
 				break;
 			
@@ -280,8 +281,6 @@ class Sql extends \Sql {
 				$cadenaSql .= " matriculado ";
 				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
 				$cadenaSql .= " AND tipo_doc_unico='" . $variable ['TIPO_DOC_UNICO'] . "'";
-				echo $cadenaSql;
-				exit ();
 				
 				break;
 			

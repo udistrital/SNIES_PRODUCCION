@@ -115,7 +115,21 @@ class FormProcessor {
 						$this->miComponente->actualizarParticipante ( $unEstudiante );
 						echo $unEstudiante ['CODIGO_UNICO'] . ' actualizado<br>';
 					} else {
-						$this->miComponente->borrarParticipante ( $unEstudiante );
+						// Borra los registros
+						// El filtro es codigo y tipo de documento que aparece en la tabla participante
+						// OJO, NO es el obtenido de la DB académica
+						$estudianteError ['CODIGO_UNICO'] = $unParticipante ['codigo_unico'];
+						$estudianteError ['TIPO_DOC_UNICO'] = $unParticipante ['tipo_doc_unico'];
+						$this->miComponente->borrarParticipante ( $estudianteError );
+						
+						$participante = $this->miComponente->consultarParticipante ( $unEstudiante );
+						
+						// si no existe insertar el nuevo registro
+						if ($participante == false) {
+							$this->miComponente->registrarParticipante ( $unEstudiante );
+							echo $unEstudiante ['CODIGO_UNICO'] . ' Nuevo<br>';
+						}
+						
 						echo $unEstudiante ['CODIGO_UNICO'] . ' borrado<br>';
 					}
 				}
