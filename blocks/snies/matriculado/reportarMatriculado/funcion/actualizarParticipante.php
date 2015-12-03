@@ -100,7 +100,7 @@ class FormProcessor {
 	 */
 	function actualizarParticipante($estudiante) {
 		foreach ( $estudiante as $unEstudiante ) {
-			echo 'CODIGO: ' . $unEstudiante ['CODIGO_UNICO'] . '<br>';
+			//echo 'CODIGO: ' . $unEstudiante ['CODIGO_UNICO'] . '<br>';
 			// consulta enla tabla participante y cuenta el número de registros retornados
 			$participante = $this->miComponente->consultarParticipante ( $unEstudiante );
 			

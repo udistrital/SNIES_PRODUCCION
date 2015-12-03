@@ -27,7 +27,6 @@ class FormProcessor {
 		$this->annio = $_REQUEST ['annio'];
 		$this->semestre = $_REQUEST ['semestre'];
 		
-		
 		/**
 		 * PROCEDIMIENTO
 		 * 1.
@@ -62,7 +61,7 @@ class FormProcessor {
 		echo 'proceso 1 actualizarEstudiantePrograma...<br>';
 		$this->actualizarEstudiantePrograma ( $estudiante );
 		echo 'proceso 2 actualizarMatriculado<br>';
-		$this->actualizarMatriculado ( $estudiante );
+		// $this->actualizarMatriculado ( $estudiante );
 		echo 'FIN<br>';
 		exit ();
 	}
@@ -84,6 +83,7 @@ class FormProcessor {
 		foreach ( $estudiante as $unEstudiante ) {
 			
 			if ($unEstudiante ['ANIO'] == $this->annio and $unEstudiante ['SEMESTRE'] == $this->semestre) {
+				$this->miComponente->borrarEstudiantePrograma ( $unEstudiante );//borra si un fue estudiante en 
 				$this->miComponente->registrarEstudiantePrograma ( $unEstudiante );
 			}
 		}
@@ -101,7 +101,7 @@ class FormProcessor {
 		
 		// borrar todos los registros de la tabla MATRICULADO para el periodo seleccionado
 		$this->miComponente->borrarMatriculadoPeriodoTodos ( $this->annio, $this->semestre );
-
+		
 		// registrar los matriculados de un semestre año y período
 		foreach ( $estudiante as $unEstudiante ) {
 			

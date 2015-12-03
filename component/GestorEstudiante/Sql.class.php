@@ -89,6 +89,8 @@ class Sql extends \Sql {
 				} else {
 					$cadenaSql .= " AND mat_per =3 "; // el semestre 03 de la universidad es el semestre 02 de SNIES";
 				}
+				
+				//$cadenaSql .= " AND est_nro_iden=1016065211";
 				// $cadenaSql .= " AND rownum < 1000";
 				
 				break;
@@ -244,7 +246,8 @@ class Sql extends \Sql {
 				$cadenaSql .= " estudiante_programa ";
 				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
 				$cadenaSql .= " AND tipo_doc_unico='" . $variable ['TIPO_DOC_UNICO'] . "'";
-				
+				$cadenaSql .= " AND pro_consecutivo='" . $variable ['PRO_CONSECUTIVO'] . "'";
+			
 				break;
 			
 			// borra todos los estudiantes de la tabla estudiante_programa para un año y semestre definido
@@ -292,8 +295,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " AND tipo_doc_unico='" . $variable ['TIPO_DOC_UNICO'] . "'";
 				
 				break;
-				
-				
+			
 			// borra el todos los matriculados para el año y periodo dados
 			case "borrarMatriculadoPeriodoTodos" :
 				$cadenaSql = "DELETE FROM";
@@ -302,7 +304,6 @@ class Sql extends \Sql {
 				$cadenaSql .= " AND est_semestre='" . $variable ['SEMESTRE_MATRICULA'] . "'";
 				
 				break;
-				
 			
 			case "contarMatriculados" :
 				$cadenaSql = "SELECT COUNT(*) FROM";
@@ -342,13 +343,13 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable ['CODIGO_UNICO'] . "', ";
 				$cadenaSql .= "'" . $variable ['HORARIO_CODE'] . "', ";
 				$cadenaSql .= " '1301',"; // ceres
-				$cadenaSql .= "'" . $variable ['DEPARTAMENTO_LN'] . "', ";
-				$cadenaSql .= "'" . $variable ['MUNICIPIO_LN'] . "', ";
+				$cadenaSql .= " '11',"; // departamento del proyecto
+				$cadenaSql .= " '11001',"; // municipio del proyecto
 				$cadenaSql .= "'" . $variable ['PRO_CONSECUTIVO'] . "', ";
 				$cadenaSql .= " '01',"; // pago
 				$cadenaSql .= "'" . $variable ['TIPO_DOC_UNICO'] . "', ";
-				$cadenaSql .= " '11001',"; // municipio
-				$cadenaSql .= " '11',"; // departamento
+				$cadenaSql .= " '11001',"; // municipio donde se dicta
+				$cadenaSql .= " '11',"; // departamento donde se dicta
 				$cadenaSql .= " '1301',"; // ceres
 				$cadenaSql .= "'02', "; // estudiante_articulacion
 				$cadenaSql .= "'0', ";
