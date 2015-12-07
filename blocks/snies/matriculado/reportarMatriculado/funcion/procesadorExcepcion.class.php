@@ -21,7 +21,7 @@ class procesadorExcepcion {
 			$estudiante [$clave] ['TIPO_ID_ANT'] = $this->excepcionTipoIdAnt ( $estudiante [$clave] );
 			$estudiante [$clave] ['NUMERO_TEL'] = $this->excepcionNumeroTel ( $estudiante [$clave] );
 		}
-		
+
 		return $estudiante;
 	}
 	
@@ -33,21 +33,22 @@ class procesadorExcepcion {
 	 */
 	function excepcionFechaNacim($unEstudiante) {
 		if (isset ( $unEstudiante ['FECHA_NACIM'] )) {
-			
-			//si la fecha es inferior a 1926 o mayor a 2001 se coloca valor por defecto '1990-01-01'
-			//SNIES valida que la edad esté entre 14 y 90 años
+			// si la fecha es inferior a 1926 o mayor a 2001 se coloca valor por defecto '1990-01-01'
+			// SNIES valida que la edad esté entre 14 y 90 años
 			$fecha = split ( '-', $unEstudiante ['FECHA_NACIM'] );
 			$ano = $fecha [0];
+			
 			if ($ano < '1926' or $ano > '2001') {
+				
 				$resultado = '1990-01-01';
 			} else {
-				$unEstudiante ['FECHA_NACIM'];
-			}			
-			$resultado = $unEstudiante ['FECHA_NACIM'];
+				
+				$resultado=$unEstudiante ['FECHA_NACIM'];
+			}
 		} else {
 			$resultado = '1990-01-01'; // para distinguir los que tiene valor nulo
 		}
-	
+		
 		return $resultado;
 	}
 	
