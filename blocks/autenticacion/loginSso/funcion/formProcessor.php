@@ -25,6 +25,7 @@ class FormProcessor {
 		
 		// $aplication_base_url = 'http://10.20.2.68/splocal/';
 		$aplication_base_url = $this->host.$this->site.'/';
+	
 		$source = 'SP_SNIES'; // Fuente de autenticación definida en el authsources del SP
 		
 		$as = new SimpleSAML_Auth_Simple ( $source ); // Se pasa como parametro la fuente de autenticación

@@ -40,7 +40,7 @@ class procesadorNombre {
 	 * @return mixed
 	 */
 	function quitarAcento($arreglo, $campo) {
-		
+					
 		// estos arreglos se utilizan para quitar los acentos debido a que el SNIES central no acepta caracteres con acento, si acepta la ñ y la Ñ
 		$acento = array (
 				'á',
@@ -77,6 +77,7 @@ class procesadorNombre {
 				'N',
 				'N',
 				'N',
+				'N',
 				' ' 
 		);
 		
@@ -85,8 +86,9 @@ class procesadorNombre {
 		foreach ( $arreglo as $key => $value ) {
 			
 			$arreglo [$key] [$campo] = str_replace ( $acento, $sinAcento, $arreglo [$key] [$campo] );
+			
 		}
-		
+
 		return $arreglo;
 	}
 	
