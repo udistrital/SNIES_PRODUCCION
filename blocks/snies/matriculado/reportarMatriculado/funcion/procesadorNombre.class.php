@@ -77,7 +77,6 @@ class procesadorNombre {
 				'N',
 				'N',
 				'N',
-				'N',
 				' ' 
 		);
 		
