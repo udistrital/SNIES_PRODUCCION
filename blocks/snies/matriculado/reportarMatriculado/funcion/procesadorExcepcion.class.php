@@ -41,9 +41,9 @@ class procesadorExcepcion {
 			if ($ano < '1926' or $ano > '2001') {
 				$resultado = '1990-01-01';
 			} else {
-				$unEstudiante ['FECHA_NACIM'];
+				$resultado=$unEstudiante ['FECHA_NACIM'];
 			}			
-			$resultado = $unEstudiante ['FECHA_NACIM'];
+			
 		} else {
 			$resultado = '1990-01-01'; // para distinguir los que tiene valor nulo
 		}

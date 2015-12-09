@@ -55,6 +55,7 @@ class procesadorNombre {
 				'Ó',
 				'Ú',
 				'Ü',
+				'Ñ',
 				'?',
 				'¿',
 				'	' 
@@ -73,6 +74,7 @@ class procesadorNombre {
 				'O',
 				'U',
 				'U',
+				'N',
 				'N',
 				'N',
 				' ' 
