@@ -75,6 +75,9 @@ class FormProcessor {
 		// FORMATEA LOS VALORES NULOS, CODIFICA EXCEPCIONES
 		$estudiante = $miProcesadorExcepcion->procesarExcepcionEstudiante ( $estudiante );
 		
+		$this->generarReporteAuditoria ( $estudiante );
+		exit ();
+		
 		$this->actualizarParticipante ( $estudiante );
 		
 		// $valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
@@ -100,7 +103,7 @@ class FormProcessor {
 	 */
 	function actualizarParticipante($estudiante) {
 		foreach ( $estudiante as $unEstudiante ) {
-			//echo 'CODIGO: ' . $unEstudiante ['CODIGO_UNICO'] . '<br>';
+			// echo 'CODIGO: ' . $unEstudiante ['CODIGO_UNICO'] . '<br>';
 			// consulta enla tabla participante y cuenta el número de registros retornados
 			$participante = $this->miComponente->consultarParticipante ( $unEstudiante );
 			
@@ -113,7 +116,7 @@ class FormProcessor {
 					// Si existe y es igual el tipo actualizar si no es igual borrar
 					if ($unParticipante ['tipo_doc_unico'] == $unEstudiante ['TIPO_DOC_UNICO']) {
 						$this->miComponente->actualizarParticipante ( $unEstudiante );
-						//echo $unEstudiante ['CODIGO_UNICO'] . ' actualizado<br>';
+						// echo $unEstudiante ['CODIGO_UNICO'] . ' actualizado<br>';
 					} else {
 						// Borra los registros
 						// El filtro es codigo y tipo de documento que aparece en la tabla participante
@@ -137,6 +140,38 @@ class FormProcessor {
 			}
 		}
 		echo 'terminado';
+	}
+	function generarReporteAuditoria($estudiante) {
+		$raizDocumento = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" );
+		$fp = fopen ( $raizDocumento . '/document/matriculado.csv', 'w' );
+		foreach ( $estudiante as $unEstudiante ) {
+			var_dump($unEstudiante);
+			$matriculado['CODIGO']=$unEstudiante['CODIGO_UNICO'];
+			$matriculado['ANIO']=$this->annio;
+			$matriculado['SEMESTRE']=$this->semestre;
+			$matriculado['IES_CODE']='1301';
+			$matriculado['PRO_CONSECUTIVO']=$unEstudiante['PRO_CONSECUTIVO'];
+			$matriculado['DEPATAMENTO']='11';
+			$matriculado['MUNICIPIO']='11001';
+			$matriculado['CERES']='1301';
+			$matriculado['TIPO_DOC_UNICO']=$unEstudiante['TIPO_DOC_UNICO'];
+			$matriculado['CODIGO_UNICO']=$unEstudiante['CODIGO_UNICO'];
+			$matriculado['PRIMER_NOMBRE']=$unEstudiante['PRIMER_NOMBRE'];
+			$matriculado['SEGUNDO_NOMBRE']=$unEstudiante['SEGUNDO_NOMBRE'];
+			$matriculado['PRIMER_APELLIDO']=$unEstudiante['PRIMER_APELLIDO'];
+			$matriculado['SEGUNDO_APELLIDO']=$unEstudiante['SEGUNDO_APELLIDO'];
+			$matriculado['GENERO']=$unEstudiante['GENERO_CODE'];
+			$matriculado['ES_TRANSFERENCIA']=$unEstudiante['ES_TRANSFERENCIA'];
+			$matriculado['ESTUDIANTE_ARTICULACION']='02';
+			$matriculado['GRADO_QUE_CURSA']='0';
+			
+			
+			
+			
+			fputcsv ( $fp, $matriculado );
+		}
+		
+		fclose ( $fp );
 	}
 }
 

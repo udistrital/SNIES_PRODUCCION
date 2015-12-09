@@ -91,7 +91,7 @@ class Sql extends \Sql {
 				}
 				
 				//$cadenaSql .= " AND est_nro_iden=1016065211";
-				// $cadenaSql .= " AND rownum < 1000";
+				$cadenaSql .= " AND rownum < 10";
 				
 				break;
 			
@@ -351,8 +351,8 @@ class Sql extends \Sql {
 				$cadenaSql .= " '11001',"; // municipio donde se dicta
 				$cadenaSql .= " '11',"; // departamento donde se dicta
 				$cadenaSql .= " '1301',"; // ceres
-				$cadenaSql .= "'02', "; // estudiante_articulacion
-				$cadenaSql .= "'0', ";
+				$cadenaSql .= "'02', "; // estudiante_articulacion, si es de bachillerato 01 si 02 no
+				$cadenaSql .= "'0', ";//grado que cursa - cero si no es de articulación
 				$cadenaSql .= "'' ";
 				$cadenaSql .= " )";
 				
