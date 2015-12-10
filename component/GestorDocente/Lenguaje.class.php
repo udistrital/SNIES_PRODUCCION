@@ -1,6 +1,6 @@
 <?php
 
-namespace sniesEstudiante;
+namespace sniesDocente;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
     include ("../index.php");

@@ -2,7 +2,7 @@
 include_once ('component/GestorDocente/Componente.php');
 include_once ('blocks/snies/matriculado/reportarMatriculado/funcion/procesadorNombre.class.php');
 include_once ('blocks/snies/matriculado/reportarMatriculado/funcion/procesadorExcepcion.class.php');
-use sniesEstudiante\Componente;
+use sniesDocente\Componente;
 use bloqueSnies\procesadorExcepcion;
 use bloqueSnies\procesadorNombre;
 class FormProcessor {
@@ -28,8 +28,8 @@ class FormProcessor {
 		$this->semestre = $_REQUEST ['semestre'];
 		
 		// estudiante de la académica
-		echo 'estoy consultando docente	';
 		$docente = $this->miComponente->consultarDocenteAcademica ( $this->annio, $this->semestre );
+		var_dump($docente);
 		
 		exit ();
 		
