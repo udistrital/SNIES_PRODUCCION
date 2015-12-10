@@ -56,14 +56,12 @@ class registrarForm {
 		for($ano = $anoInicial; $ano <= $annioActual; $ano ++) {
 			$periodo [$a] ['annio'] = $ano;
 			$periodo [$a] ['semestre'] = '01';
-			//$periodo [$a] ['total'] = $this->miComponente->contarMatriculados ( $ano, '01' );
 			$a ++;
 			
 			if ($annioActual == $ano and $semestreActual == 1) {
 			} else {
 				$periodo [$a] ['annio'] = $ano;
 				$periodo [$a] ['semestre'] = '02';
-				//$periodo [$a] ['total'] = $this->miComponente->contarMatriculados ( $ano, '02' );
 				$a ++;
 			}
 		}
@@ -71,7 +69,7 @@ class registrarForm {
 		?>
 
 <br>
-<h3>MATRICULADO - ACTUALIZACIÓN LOCAL</h3>
+<h3>MATRICULADO - Generar CSV de matriculado y estudiante_programa</h3>
 <br>
 <table id="example" class="display" cellspacing="0" width="100%">
 	<thead>
@@ -80,11 +78,7 @@ class registrarForm {
 			<th>Año</th>
 			<th>Período</th>
 			<!--<th>Total</th>  -->
-			<th>1. Actualizar Participante</th>
-			<th>2. Actualizar Estudiante</th>
-			<th>3. Actualizar Matriculado</th>
-			<th>Errores Participante</th>
-			<th>Última Actualización</th>
+			<th>Generar csv</th>
 		</tr>
 	</thead>
 
@@ -92,26 +86,16 @@ class registrarForm {
 			<?php
 		foreach ( $periodo as $miPeriodo ) {
 			
-			$enlaceActualizarParticipante = $this->enlaceActializarVariable ( 'actualizarParticipante', $miPeriodo ['annio'], $miPeriodo ['semestre'] );
-			$enlaceActualizarEstudiante = $this->enlaceActializarVariable ( 'actualizarEstudiante', $miPeriodo ['annio'], $miPeriodo ['semestre'] );
-			$enlaceActualizarMatriculado = $this->enlaceActializarVariable ( 'actualizarMatriculado', $miPeriodo ['annio'], $miPeriodo ['semestre'] );
+			$enlace = $this->armarEnlace ( 'generarCSV', $miPeriodo ['annio'], $miPeriodo ['semestre'] );
 			?>
 				<tr>
 			<td><?php echo 'Matriculado';?></td>
 			<td align="center"><?php echo $miPeriodo['annio']?></td>
 			<td align="center"><?php echo $miPeriodo['semestre'];?></td>
 			<!--<td align="right"><?php echo $miPeriodo['total'];?></td>  -->
-			<td align="center"><a class=miEnlace href="<?php echo $enlaceActualizarParticipante;?>"><img
+			<td align="center"><a class=miEnlace href="<?php echo $enlace;?>"><img
 					src='<? echo $this->urlImagenes?>images/actualizar.png'
 					width='30px'></a></td>
-			<td align="center"><a class=miEnlace href="<?php echo $enlaceActualizarEstudiante;?>"><img
-					src='<? echo $this->urlImagenes?>images/actualizar.png'
-					width='30px'></a></td>
-			<td align="center"><a class=miEnlace href="<?php echo $enlaceActualizarMatriculado;?>"><img
-					src='<? echo $this->urlImagenes?>images/actualizar.png'
-					width='30px'></a></td>
-			<td align="center">-</td>
-			<td align="right">-</td>
 		</tr>
 				<?php }?>
 			</tbody>
@@ -122,7 +106,8 @@ class registrarForm {
 
 <?
 	}
-	function enlaceActializarVariable($opcion, $annio, $semestre) {
+	function armarEnlace($opcion, $annio, $semestre) {
+		
 		$valorCodificado = "actionBloque=" . $this->esteBloque ["nombre"];
 		$valorCodificado .= "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 		$valorCodificado .= "&bloque=" . $this->esteBloque ['nombre'];

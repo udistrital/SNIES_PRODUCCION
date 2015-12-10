@@ -34,26 +34,24 @@ class Funcion {
 	// return true;
 	// }
 	// }
-	
 	function procesarAjax() {
 		include_once ($this->ruta . "funcion/procesarAjax.php");
 	}
 	function actualizarParticipante() {
-		
 		include_once ($this->ruta . "/funcion/actualizarParticipante.php");
 	}
 	function actualizarEstudiante() {
-		
 		include_once ($this->ruta . "/funcion/actualizarEstudiante.php");
 	}
 	function actualizarMatriculado() {
-		
 		include_once ($this->ruta . "/funcion/actualizarMatriculado.php");
 	}
+	function generarCSV() {
+		include_once ($this->ruta . "/funcion/generarCSV.php");
+	}
 	
+	function action() {
 	
-	function action() {		
-		
 		if (isset ( $_REQUEST ['procesarAjax'] )) {
 			$this->procesarAjax ();
 		} else if (isset ( $_REQUEST ["opcion"] )) {
@@ -66,23 +64,27 @@ class Funcion {
 				case 'actualizarEstudiante' :
 					$this->actualizarEstudiante ();
 					break;
-					
+				
 				case 'actualizarMatriculado' :
 					$this->actualizarMatriculado ();
 					break;
 				
-				case 'registrar' :
-					$this->registrar ();
+				case 'actualizarMatriculado' :
+					$this->actualizarMatriculado ();
+					break;
+				
+				case 'generarCSV' :
+					$this->generarCSV ();
 					break;
 				
 				case 'actualizar' :
-					case 'actualizar':
+				case 'actualizar' :
 					if (isset ( $_REQUEST ["botonRegresar"] ) && $_REQUEST ["botonRegresar"] == 'true') {
-						$arreglo = unserialize ( $_REQUEST ['arreglo'] );	
+						$arreglo = unserialize ( $_REQUEST ['arreglo'] );
 						redireccion::redireccionar ( "paginaConsulta", $arreglo );
-						exit();
+						exit ();
 					} else if (isset ( $_REQUEST ["botonGuardar"] ) && $_REQUEST ["botonGuardar"] == 'true') {
-						$this->actualizar();
+						$this->actualizar ();
 					}
 					break;
 			}

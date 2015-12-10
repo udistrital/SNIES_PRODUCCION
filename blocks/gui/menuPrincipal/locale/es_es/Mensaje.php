@@ -14,7 +14,8 @@ $this->idioma ['corregirnombre'] = 'Corrregir Nombres';
 
 
 $this->idioma ['tituloMatriculado'] = 'Matriculado';
-$this->idioma ['reportarMatriculado'] = 'Reportar Matriculado SNIES LOCAL';
+$this->idioma ['reportarMatriculado'] = 'Actualizar Matriculado';
+$this->idioma ['auditoriaMatriculado'] = 'Generar archivos auditoría';
 $this->idioma ['corregirnombre'] = 'Corrregir Nombres';
 
 $this->idioma ['admitido'] = 'Admitido';
