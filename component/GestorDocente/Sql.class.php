@@ -49,12 +49,8 @@ class Sql extends \Sql {
 				$cadenaSql .= " '1' AREA_TEL,";
 				$cadenaSql .= " TO_CHAR(DOC_TELEFONO) NUMERO_TEL,";
 				$cadenaSql .= " DECODE(DOC_NIVEL_ESTUDIO, 'postdoctorado', '01', 'doctorado', '02', 'maestria', '03', 'especializacion', '04', 'pregrado', '05', 'licenciatura', '06', 'tecnologia', '07', 'tecnico', '08', '05') NIVEL_EST_CODE,";
-				$cadenaSql .= " DECODE(DOC_FECHA_DESDE,'0','1980-02-29','','1980-02-29', TO_CHAR(DOC_FECHA_DESDE, 'yyyy-mm-dd')) FECHA_INGRESO,";
-				$cadenaSql .= " DTV_TVI_COD tipo_vinculacion, ";
-				$cadenaSql .= " tvi_nombre nombre_vinculacion";
+				$cadenaSql .= " DECODE(DOC_FECHA_DESDE,'0','1980-02-29','','1980-02-29', TO_CHAR(DOC_FECHA_DESDE, 'yyyy-mm-dd')) FECHA_INGRESO";
 				$cadenaSql .= " FROM mntac.acdocente";
-				$cadenaSql .= " LEFT JOIN ACDOCTIPVIN on DTV_DOC_NRO_IDEN=DOC_NRO_IDEN";
-				$cadenaSql .= " INNER JOIN actipvin on tvi_cod=dtv_tvi_cod";
 				$cadenaSql .= " WHERE doc_nro_iden IN";
 				$cadenaSql .= " (SELECT DISTINCT car_doc_nro AS car_doc_nro_iden";
 				$cadenaSql .= " FROM accursos";
@@ -73,12 +69,24 @@ class Sql extends \Sql {
 				$cadenaSql .= " AND car_ape_per='" . $variable ['semestre'] . "'";
 				$cadenaSql .= " AND car_estado='A'";
 				$cadenaSql .= " )";
-				$cadenaSql .= " AND DTV_APE_ANO ='" . $variable ['annio'] . "'";
-				$cadenaSql .= " AND DTV_APE_PER ='" . $variable ['semestre'] . "'";
-				$cadenaSql .= " AND doc_nro_iden=79708124";
+				//$cadenaSql .= " AND doc_nro_iden=79708124";
 				
-				echo $cadenaSql;
-				exit ();
+				
+				break;
+			
+			// Datos del docente tomados de la base de datos académica
+			case "consultarVinculacionDocente" :
+				
+				$cadenaSql = " SELECT dtv_ape_ano ANO,";
+				$cadenaSql .= " DTV_APE_PER SEMESTRE ,";
+				$cadenaSql .= " DTV_DOC_NRO_IDEN DOCUMENTO,";
+				$cadenaSql .= " TVI_COD VINCULACION,";
+				$cadenaSql .= " tvi_nombre NOMBRE_VINCULACION";
+				$cadenaSql .= " FROM acdoctipvin";
+				$cadenaSql .= " INNER JOIN actipvin";
+				$cadenaSql .= " ON tvi_cod = dtv_tvi_cod";
+				$cadenaSql .= " WHERE dtv_ape_ano='" . $variable ['annio'] . "'";
+				$cadenaSql .= " AND dtv_ape_per ='" . $variable ['semestre'] . "'";
 				
 				break;
 		}

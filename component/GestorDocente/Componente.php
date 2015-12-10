@@ -21,5 +21,8 @@ class Componente extends Component implements IGestorDocente {
 	function consultarDocenteAcademica($annio, $semestre) {
 		return $this->miDocente->consultarDocenteAcademica ( $annio, $semestre );
 	}
+	function consultarVinculacionDocente($annio, $semestre) {
+		return $this->miDocente->consultarVinculacionDocente ( $annio, $semestre );
+	}
 }
 

@@ -33,4 +33,25 @@ class Docente implements IGestorDocente {
 		
 		return $resultado;
 	}
+	
+	function consultarVinculacionDocente($annio, $semestre) {
+		$conexion = "academica";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		// el semestre 03 de la universidad corresponde al semestre 02 de SNIES
+		$variable ['annio'] = $annio;
+		if ($semestre == 02) {
+			$variable ['semestre'] = 3;
+			;
+		} else {
+			$variable ['semestre'] = 1;
+		}
+		$cadenaSql = $this->miSql->cadena_sql ( 'consultarVinculacionDocente', $variable );
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+		
+		return $resultado;
+	}
+	
+	
+	
 }

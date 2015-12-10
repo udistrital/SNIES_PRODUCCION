@@ -29,16 +29,10 @@ class FormProcessor {
 		
 		// estudiante de la académica
 		$docente = $this->miComponente->consultarDocenteAcademica ( $this->annio, $this->semestre );
+		// consulta todas las vinculaciones de todos los decentes para un año y período
+		$vinculacionDocente = $this->miComponente->consultarVinculacionDocente ( $this->annio, $this->semestre );
 		
 		$miProcesadorNombre = new procesadorNombre ();
-		
-		// $caracteresInvalidos = $miProcesadorNombre->buscarCaracteresInvalidos ( $docente, 'DOC_APELLIDO' );
-		// $caracteresInvalidos = $miProcesadorNombre->buscarCaracteresInvalidos ( $docente, 'DOC_NOMBRE' );
-		
-		// quita acentos del nombre
-		// $docente = $miProcesadorNombre->quitarAcento ( $docente, 'EST_NOMBRE' );
-		
-		// descompone nombre completo en sus partes y las aglega al final de cada registro
 		foreach ( $docente as $clave => $valor ) {
 			
 			$apellidoCompleto = $miProcesadorNombre->dividirApellidos ( $docente [$clave] ['DOC_APELLIDO'] );
@@ -50,6 +44,75 @@ class FormProcessor {
 			$docente [$clave] ['SEGUNDO_NOMBRE'] = $nombreCompleto ['segundo_nombre'];
 		}
 		
+		// codificar vinculacion docente
+		foreach ( $vinculacionDocente as $clave => $valor ) {
+			switch ($vinculacionDocente [$clave] ['VINCULACION']) {
+				case 1 :
+					$vinculacionDocente [$clave] ['TIPO_CONTRATO'] = '01';
+					$vinculacionDocente [$clave] ['DEDICACION'] = '01';
+					break;
+				case 2 :
+					$vinculacionDocente [$clave] ['TIPO_CONTRATO'] = '02';
+					$vinculacionDocente [$clave] ['DEDICACION'] = '01';
+					break;
+				case 3 :
+					$vinculacionDocente [$clave] ['TIPO_CONTRATO'] = '02';
+					$vinculacionDocente [$clave] ['DEDICACION'] = '02';
+					break;
+				case 4 :
+					$vinculacionDocente [$clave] ['TIPO_CONTRATO'] = '02';
+					$vinculacionDocente [$clave] ['DEDICACION'] = '04';
+					break;
+				case 5 :
+					$vinculacionDocente [$clave] ['TIPO_CONTRATO'] = '03';
+					$vinculacionDocente [$clave] ['DEDICACION'] = '04';
+					break;
+				case 6 :
+					$vinculacionDocente [$clave] ['TIPO_CONTRATO'] = '01';
+					$vinculacionDocente [$clave] ['DEDICACION'] = '02';
+					break;
+				case 7 :
+					$vinculacionDocente [$clave] ['TIPO_CONTRATO'] = '03';
+					$vinculacionDocente [$clave] ['DEDICACION'] = '03';
+					break;
+				case 8 :
+					$vinculacionDocente [$clave] ['TIPO_CONTRATO'] = '01';
+					$vinculacionDocente [$clave] ['DEDICACION'] = '01';
+					break;
+				
+				default :
+					echo 'Sin vinculación';
+					break;
+			}
+		}
+		
+		foreach ( $docente as $key => $value ) {
+			$docente [$key] ['DEDICACION'] = '04';
+			$docente [$key] ['TIPO_CONTRATO'] = '03';
+			foreach ( $vinculacionDocente as $unaVinculacion ) {
+				if ($docente [$key] ['CODIGO_UNICO'] == $unaVinculacion ['DOCUMENTO']) {
+					if ($docente [$key] ['DEDICACION'] > $unaVinculacion ['DEDICACION']) {
+						$docente [$key] ['DEDICACION'] = $unaVinculacion ['DEDICACION'];
+					}
+					if ($docente [$key] ['TIPO_CONTRATO'] > $unaVinculacion ['TIPO_CONTRATO']) {
+						$docente [$key] ['TIPO_CONTRATO'] = $unaVinculacion ['TIPO_CONTRATO'];
+					}
+				}
+			}
+		}
+		
+		// var_dump ( $vinculacionDocente );
+		// exit ();
+		// foreach ( $docente as $unDocente ) {
+		
+		// $caracteresInvalidos = $miProcesadorNombre->buscarCaracteresInvalidos ( $docente, 'DOC_APELLIDO' );
+		// $caracteresInvalidos = $miProcesadorNombre->buscarCaracteresInvalidos ( $docente, 'DOC_NOMBRE' );
+		
+		// quita acentos del nombre
+		// $docente = $miProcesadorNombre->quitarAcento ( $docente, 'EST_NOMBRE' );
+		
+		// descompone nombre completo en sus partes y las aglega al final de cada registro
+		
 		$miProcesadorExcepcion = new procesadorExcepcion ();
 		// FORMATEA LOS VALORES NULOS, CODIFICA EXCEPCIONES
 		$docente = $miProcesadorExcepcion->procesarExcepcionEstudiante ( $docente );
@@ -58,25 +121,6 @@ class FormProcessor {
 		$raizDocumento = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" );
 		echo 'Se ha generado el archivo: ' . $raizDocumento . '/document/docente' . $this->annio . $this->semestre . '.csv';
 		echo '<br>';
-
-	/**
-	 * $valorCodificado = "&pagina=" .
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	 * $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
-	 * $valorCodificado .= "&opcion=auditoriaMatriculado";
-	 * $valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
-	 * //Rescatar el parámetro enlace desde los datos de configuraión en la base de datos
-	 * $variable = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
-	 * $miEnlace = $this->host . $this->site . '/index.php?' . $variable . '=' . $valorCodificado;
-	 *
-	 * header( "Location:$miEnlace" );
-	 */
 	}
 	function generarListadoDocentes($docente) {
 		$raizDocumento = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" );
@@ -96,10 +140,10 @@ class FormProcessor {
 				'NIVEL_EST_CODE',
 				'DEDICACION',
 				'TIPO_CONTRATO',
-				'FECHA_INGRESO'				
+				'FECHA_INGRESO' 
 		) );
 		foreach ( $docente as $unDocente ) {
-	
+			
 			$arregloDocente ['CODIGO'] = $unDocente ['CODIGO_UNICO'];
 			$arregloDocente ['IES_CODE'] = '1301';
 			$arregloDocente ['ANIO'] = $this->annio;
@@ -112,8 +156,8 @@ class FormProcessor {
 			$arregloDocente ['SEGUNDO_APELLIDO'] = $unDocente ['SEGUNDO_APELLIDO'];
 			$arregloDocente ['GENERO'] = $unDocente ['GENERO_CODE'];
 			$arregloDocente ['NIVEL_EST_CODE'] = $unDocente ['NIVEL_EST_CODE'];
-			$arregloDocente ['DEDICACION'] = $unDocente ['NIVEL_EST_CODE'];
-			$arregloDocente ['TIPO_CONTRATO'] = $unDocente ['NIVEL_EST_CODE'];
+			$arregloDocente ['DEDICACION'] = $unDocente ['DEDICACION'];
+			$arregloDocente ['TIPO_CONTRATO'] = $unDocente ['TIPO_CONTRATO'];
 			$arregloDocente ['FECHA_INGRESO'] = $unDocente ['FECHA_INGRESO'];
 			
 			fputcsv ( $fp, $arregloDocente );
