@@ -69,7 +69,7 @@ class registrarForm {
 		?>
 
 <br>
-<h3>DOCENTE - Generar CSV de docentes</h3>
+<h3>DOCENTE - Generar CSV para auditoría</h3>
 <br>
 <table id="example" class="display" cellspacing="0" width="100%">
 	<thead>
