@@ -1,7 +1,5 @@
 <?php
 include_once ('component/GestorDocente/Componente.php');
-include_once ('blocks/snies/matriculado/reportarMatriculado/funcion/procesadorNombre.class.php');
-include_once ('blocks/snies/matriculado/reportarMatriculado/funcion/procesadorExcepcion.class.php');
 use sniesDocente\Componente;
 use bloqueSnies\procesadorExcepcion;
 use bloqueSnies\procesadorNombre;
@@ -27,7 +25,7 @@ class FormProcessor {
 		$this->annio = $_REQUEST ['annio'];
 		$this->semestre = $_REQUEST ['semestre'];
 		
-		// estudiante de la académica
+		// docente de la académica
 		$docente = $this->miComponente->consultarDocenteAcademica ( $this->annio, $this->semestre );
 		// consulta todas las vinculaciones de todos los decentes para un año y período
 		$vinculacionDocente = $this->miComponente->consultarVinculacionDocente ( $this->annio, $this->semestre );

@@ -37,8 +37,8 @@ class Funcion {
 	function procesarAjax() {
 		include_once ($this->ruta . "funcion/procesarAjax.php");
 	}
-	function actualizarParticipante() {
-		include_once ($this->ruta . "/funcion/actualizarParticipante.php");
+	function actualizarParticipanteDocente() {
+		include_once ($this->ruta . "/funcion/actualizarParticipanteDocente.php");
 	}
 	function actualizarEstudiante() {
 		include_once ($this->ruta . "/funcion/actualizarEstudiante.php");
@@ -57,8 +57,8 @@ class Funcion {
 		} else if (isset ( $_REQUEST ["opcion"] )) {
 			
 			switch ($_REQUEST ["opcion"]) {
-				case 'actualizarParticipante' :
-					$this->actualizarParticipante ();
+				case 'actualizarParticipanteDocente' :
+					$this->actualizarParticipanteDocente ();
 					break;
 				
 				case 'actualizarEstudiante' :
