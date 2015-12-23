@@ -33,9 +33,10 @@ class loginSso {
 		$source = 'SP_SNIES';   # Fuente de autenticación definida en el authsources del SP		
 		
 		$as = new SimpleSAML_Auth_Simple($source);   # Se pasa como parametro la fuente de autenticación		
-		//var_dump($as->isAuthenticated());
-		if(!$as->isAuthenticated()) {
-			
+		//var_dump($as->isAuthenticated());//activar
+		//if(!$as->isAuthenticated()) {//activar
+		$a=false;//borrar 
+		if($a==true) {	//borrar
 			
 			$this->formulario();
 			
