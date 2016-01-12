@@ -32,9 +32,16 @@ $this->idioma ['graduado'] = 'Graduado';
 $this->idioma ['docente'] = 'Docente';
 $this->idioma ['enlaces'] = 'Enlaces';
 
-//SNIES
+//SPADIES
 $this->idioma ['spadies'] = 'SPADIES';
-$this->idioma ['matriculado'] = 'Generar matriculado';
+$this->idioma ['tituloMatriculado'] = 'Matriculado';
+$this->idioma ['generarReporteMatriculado'] = 'Generar csv';
+$this->idioma ['tituloPrimiparo'] = 'Primiparo';
+$this->idioma ['generarReportePrimiparo'] = 'Generar csv';
+$this->idioma ['tituloGraduado'] = 'Graduado';
+$this->idioma ['generarReporteGraduado'] = 'Generar csv';
+
+
 
 //DPS Departamento de Prosperidad Social
 $this->idioma ['dps'] = 'DPS';
