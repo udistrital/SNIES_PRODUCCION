@@ -1,6 +1,6 @@
 <?php
 
-namespace snies;
+namespace sniesInscritoAdmitido;
 
 include_once 'component/Component.class.php';
 use component\Component;

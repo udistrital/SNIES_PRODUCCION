@@ -1,6 +1,6 @@
 <?php
 
-namespace snies;
+namespace sniesInscritoAdmitido;
 
 use snies\Componente;
 use component\GestorInscritoAdmitido\Sql;

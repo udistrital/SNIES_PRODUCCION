@@ -1,6 +1,6 @@
 <?php
 
-namespace snies;
+namespace sniesInscritoAdmitido;
 
 interface IGestorInscrito {
 	function consultarInscritoPregadoAcademica($annio, $semestre);

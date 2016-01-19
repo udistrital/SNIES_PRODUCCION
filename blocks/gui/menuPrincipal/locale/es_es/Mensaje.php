@@ -10,7 +10,12 @@ $this->idioma ['snies'] = 'SNIES';
 
 //INSCRITO
 $this->idioma ['tituloInscrito'] = 'Inscrito';
-$this->idioma ['reportarInscrito'] = 'Reportar Inscrito SNIES LOCAL';
+$this->idioma ['actualizarInscrito'] = 'Actualizar Inscrito';
+$this->idioma ['corregirnombre'] = 'Corrregir Nombres';
+
+//ADMITIDO
+$this->idioma ['tituloAdmitido'] = 'Admitido';
+$this->idioma ['actualizarAdmitido'] = 'Actualizar Admitido';
 $this->idioma ['corregirnombre'] = 'Corrregir Nombres';
 
 //MATRICULADO

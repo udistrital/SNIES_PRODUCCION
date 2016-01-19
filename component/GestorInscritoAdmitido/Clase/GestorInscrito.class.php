@@ -1,9 +1,10 @@
 <?php
 
-namespace snies;
+namespace sniesInscritoAdmitido;
 
-use snies\Componente;
+use sniesInscritoAdmitido\Componente;
 use component\GestorInscritoAdmitido\Sql;
+use sniesInscritoAdmitido\IGestorInscrito;
 
 include_once ('component/GestorInscritoAdmitido/Sql.class.php');
 require_once ('component/GestorInscritoAdmitido/Interfaz/IGestorInscrito.php');
