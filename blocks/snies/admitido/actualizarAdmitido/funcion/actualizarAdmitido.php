@@ -6,6 +6,8 @@ include_once ('blocks/snies/funcion/procesadorExcepcion.class.php');
 use sniesInscritoAdmitido\Componente;
 use bloqueSnies\procesadorExcepcion;
 use bloqueSnies\procesadorNombre;
+echo 'se debe copiar el código de reportarAdmitido';
+exit;
 class FormProcessor {
 	var $miConfigurador;
 	var $lenguaje;

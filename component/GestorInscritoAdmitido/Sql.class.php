@@ -119,6 +119,7 @@ class Sql extends \Sql {
 				
 				break;
 			
+			//Borra inscritos de un año y semestre especifico
 			case "borrarInscritos" :
 				$cadenaSql = "DELETE FROM";
 				$cadenaSql .= " inscrito ";
@@ -165,7 +166,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable ['MUNICIPIO'] . "', ";
 				$cadenaSql .= "'" . $variable ['DEPARTAMENTO'] . "' ";
 				$cadenaSql .= "); ";
-				
+
 				break;
 			
 			/**

@@ -16,7 +16,6 @@ class GestorInscrito implements IGestorInscrito {
 	function __construct() {
 		$this->miConfigurador = \Configurador::singleton ();
 		$this->miSql = new Sql ();
-				
 	}
 	function consultarInscritoPregadoAcademica($annio, $semestre) {
 		$periodo ['annio'] = $annio;
@@ -54,19 +53,24 @@ class GestorInscrito implements IGestorInscrito {
 		$cadenaSql = $this->miSql->cadena_sql ( 'insertarInscrito', $inscrito );
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
 		
-		if ($resultado == true) {
-			return true;
-		} else {
-			return false;
+		if ($resultado == FALSE) {
+			$error = $esteRecursoDB->obtener_error ();
+			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';
+			echo $cadenaSql;
+			var_dump ( $error );
 		}
+		
+		return $resultado;
 	}
 	function actualizarInscritoSnies() {
 	}
 	function borrarInscritoSnies($annio, $semestre) {
-		$datos ['annio'] = $annio;
-		$datos ['semestre'] = $semestre;
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		$datos ['annio'] = $annio;
+		$datos ['semestre'] = $semestre;
+		
 		$cadenaSql = $this->miSql->cadena_sql ( 'borrarInscritos', $datos );
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
 		
