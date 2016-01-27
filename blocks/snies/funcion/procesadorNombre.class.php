@@ -10,20 +10,20 @@ class procesadorNombre {
 	 * @param unknown $campo        	
 	 */
 	function buscarCaracteresInvalidos($arreglo, $campo) {
-		//$a=0;
+		// $a=0;
 		foreach ( $arreglo as $key => $value ) {
 			$nombre = $arreglo [$key] [$campo];
 			$codigo = $arreglo [$key] ['CODIGO_ESTUDIANTE'];
 			$documento = $arreglo [$key] ['CODIGO_UNICO'];
 			if (! preg_match ( "/^[a-zA-ZnÑáéíóúüÁÉÍÓÚÜ ]*$/", $nombre )) {
-				//$a++;
-				//echo $a.'<br>';
-				echo $codigo.', '.$nombre.', '.$documento;
+				// $a++;
+				// echo $a.'<br>';
+				echo $codigo . ', ' . $nombre . ', ' . $documento;
 				$nameErr = " <b>Solo letras y espacio permitidos</b>";
-				//echo $nameErr;
+				// echo $nameErr;
 				echo '<br>';
-			}else {
-				//echo ' válido<br>';
+			} else {
+				// echo ' válido<br>';
 			}
 		}
 	}
@@ -40,20 +40,25 @@ class procesadorNombre {
 	 * @return mixed
 	 */
 	function quitarAcento($arreglo, $campo) {
-					
+		
 		// estos arreglos se utilizan para quitar los acentos debido a que el SNIES central no acepta caracteres con acento, si acepta la ñ y la Ñ
 		$acento = array (
 				'á',
 				'é',
 				'í',
 				'ó',
-				'ú',
+				'ú',//tilde minuscula
 				'ü',
 				'Á',
 				'É',
 				'Í',
 				'Ó',
-				'Ú',
+				'Ú',//tilde mayuscula
+				'À',
+				'È',
+				'Ì',
+				'Ò',
+				'Ù',//tilde invertida mayuscula
 				'Ü',
 				'Ñ',
 				'?',
@@ -66,13 +71,18 @@ class procesadorNombre {
 				'e',
 				'i',
 				'o',
-				'u',
+				'u',//tilde minuscula
 				'u',
 				'A',
 				'E',
 				'I',
 				'O',
-				'U',
+				'U',//tilde mayuscula
+				'A',
+				'E',
+				'I',
+				'O',
+				'U',//tilde invertida mayuscula
 				'U',
 				'N',
 				'N',
@@ -85,9 +95,8 @@ class procesadorNombre {
 		foreach ( $arreglo as $key => $value ) {
 			
 			$arreglo [$key] [$campo] = str_replace ( $acento, $sinAcento, $arreglo [$key] [$campo] );
-			
 		}
-
+		
 		return $arreglo;
 	}
 	
