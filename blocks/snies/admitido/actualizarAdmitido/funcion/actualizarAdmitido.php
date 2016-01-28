@@ -36,6 +36,12 @@ class FormProcessor {
 		$semestre = $_REQUEST ['semestre'];
 		
 		/**
+		 * Asegure de que todos los programas estén registrados en la tabla accra_snies 
+		 * para buscar los que no están registrados utilice la consulta
+		 * SELECT * FROM ACCRA WHERE CRA_COD NOT IN (SELECT AS_CRA_COD FROM ACCRA_SNIES  )AND CRA_ESTADO='A'order by cra_cod asc
+		 */
+		
+		/**
 		 * Consultar admitidos pregrado y prostgrado
 		 */
 		$admitidosPregrado = $this->miComponente->consultarAdmitidoPregradoAcademica ( $annio, $semestre );

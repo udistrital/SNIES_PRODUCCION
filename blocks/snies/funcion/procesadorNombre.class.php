@@ -61,6 +61,7 @@ class procesadorNombre {
 				'Ù',//tilde invertida mayuscula
 				'Ü',
 				'Ñ',
+				'Ñ',
 				'?',
 				'¿',
 				'	' 
