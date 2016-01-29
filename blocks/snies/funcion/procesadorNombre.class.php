@@ -47,46 +47,47 @@ class procesadorNombre {
 				'é',
 				'í',
 				'ó',
-				'ú',//tilde minuscula
+				'ú', // 5
 				'ü',
 				'Á',
 				'É',
 				'Í',
-				'Ó',
-				'Ú',//tilde mayuscula
+				'Ó', // 10
+				'Ú',
 				'À',
 				'È',
 				'Ì',
-				'Ò',
-				'Ù',//tilde invertida mayuscula
+				'Ò', // 15
+				'Ù', 
 				'Ü',
 				'Ñ',
 				'Ñ',
-				'?',
+				'?', // 20
 				'¿',
 				'	' 
 		); // ' 'tabulador por espacio
 		
 		$sinAcento = array (
-				'a',
-				'e',
-				'i',
-				'o',
-				'u',//tilde minuscula
+				'a', // 1
+				'e', // 2
+				'i', // 3
+				'o', // 4
+				'u', // 5
 				'u',
 				'A',
 				'E',
 				'I',
-				'O',
-				'U',//tilde mayuscula
+				'O', // 10
+				'U', //
 				'A',
 				'E',
 				'I',
-				'O',
-				'U',//tilde invertida mayuscula
+				'O', // 15
+				'U', 
 				'U',
 				'N',
 				'N',
+				'N', // 20
 				'N',
 				' ' 
 		);
