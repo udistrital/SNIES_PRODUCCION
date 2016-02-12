@@ -64,6 +64,7 @@ class procesadorNombre {
 				'Ñ',
 				'?', // 20
 				'¿',
+				'Ã',
 				'	' 
 		); // ' 'tabulador por espacio
 		
@@ -89,6 +90,7 @@ class procesadorNombre {
 				'N',
 				'N', // 20
 				'N',
+				'',
 				' ' 
 		);
 		
