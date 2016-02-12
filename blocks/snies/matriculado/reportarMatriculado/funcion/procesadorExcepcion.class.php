@@ -91,7 +91,12 @@ class procesadorExcepcion {
 	 */
 	function excepcionTipoDocUnico($unEstudiante) {
 		if (isset ( $unEstudiante ['TIPO_DOC_UNICO'] ) and ($unEstudiante ['TIPO_DOC_UNICO'] == 'CC' or $unEstudiante ['TIPO_DOC_UNICO'] == 'TI' or $unEstudiante ['TIPO_DOC_UNICO'] == 'PS')) {
-			$resultado = $unEstudiante ['TIPO_DOC_UNICO'];
+			$longitudDocumento = strlen ( $unEstudiante ['CODIGO_UNICO'] );
+			if ($longitudDocumento == 11) {
+				$resultado = 'TI';
+			} else {
+				$resultado = $unEstudiante ['TIPO_DOC_UNICO'];
+			}
 		} else {
 			// echo $unEstudiante ['CODIGO_UNICO']."<br>";
 			$longitudDocumento = strlen ( $unEstudiante ['CODIGO_UNICO'] );
