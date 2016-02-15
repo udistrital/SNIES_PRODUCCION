@@ -11,10 +11,12 @@ class procesadorExcepcion {
 	 * @return \bloqueSnies\Ambigous
 	 */
 	function procesarExcepcionEstudiante($estudiante) {
+
 		foreach ( $estudiante as $clave => $valor ) {
 			
 			$estudiante [$clave] ['FECHA_NACIM'] = $this->excepcionFechaNacim ( $estudiante [$clave] );
 			$estudiante [$clave] ['MUNICIPIO_LN'] = $this->excepcionMunicipio ( $estudiante [$clave] );
+			$estudiante [$clave] ['DEPARTAMENTO_LN'] = $this->excepcionDepartamento ( $estudiante [$clave] );
 			$estudiante [$clave] ['EMAIL'] = $this->excepcionEmail ( $estudiante [$clave] );
 			$estudiante [$clave] ['TIPO_DOC_UNICO'] = $this->excepcionTipoDocUnico ( $estudiante [$clave] );
 			$estudiante [$clave] ['CODIGO_ID_ANT'] = $this->excepcionCodigoIdAnt ( $estudiante [$clave] );
@@ -57,11 +59,39 @@ class procesadorExcepcion {
 	 * @return Ambigous <string, unknown>
 	 */
 	function excepcionMunicipio($unEstudiante) {
-		// si es de usme es Bogotá (11001)
-		if ($unEstudiante ['MUNICIPIO_LN'] == '11850') {
-			$resultado = '11001';
-		} else {
-			$resultado = $unEstudiante ['MUNICIPIO_LN'];
+		switch ($unEstudiante ['MUNICIPIO_LN']) {
+			case '11850' : // Usme
+				$resultado = '11001';
+				;
+				break;
+			
+			case '1' : // extranjero
+				$resultado = '0001';
+				break;
+			
+			default :
+				$resultado = $unEstudiante ['MUNICIPIO_LN'];
+				break;
+		}
+		
+		return $resultado;
+	}
+	
+	/**
+	 *
+	 * @param unknown $unEstudiante        	
+	 * @return unknown
+	 */
+	function excepcionDepartamento($unEstudiante) {
+		switch ($unEstudiante ['DEPARTAMENTO_LN']) {
+			case '30' : // extranjero
+				$resultado = '0';
+				;
+				break;
+			
+			default :
+				$resultado = $unEstudiante ['DEPARTAMENTO_LN'];
+				break;
 		}
 		
 		return $resultado;

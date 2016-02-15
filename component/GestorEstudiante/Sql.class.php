@@ -90,8 +90,8 @@ class Sql extends \Sql {
 					$cadenaSql .= " AND mat_per =3 "; // el semestre 03 de la universidad es el semestre 02 de SNIES";
 				}
 				
-				//$cadenaSql .= " AND est_nro_iden=1016065211";
-				//$cadenaSql .= " AND rownum < 10";
+				 //$cadenaSql .= " AND est_nro_iden=1020742945";
+				// $cadenaSql .= " AND rownum < 10";
 				
 				break;
 			
@@ -246,8 +246,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " estudiante_programa ";
 				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
 				$cadenaSql .= " AND tipo_doc_unico='" . $variable ['TIPO_DOC_UNICO'] . "'";
-				$cadenaSql .= " AND pro_consecutivo='" . $variable ['PRO_CONSECUTIVO'] . "'";
-			
+				
 				break;
 			
 			// borra todos los estudiantes de la tabla estudiante_programa para un año y semestre definido
@@ -352,7 +351,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " '11',"; // departamento donde se dicta
 				$cadenaSql .= " '1301',"; // ceres
 				$cadenaSql .= "'02', "; // estudiante_articulacion, si es de bachillerato 01 si 02 no
-				$cadenaSql .= "'0', ";//grado que cursa - cero si no es de articulación
+				$cadenaSql .= "'0', "; // grado que cursa - cero si no es de articulación
 				$cadenaSql .= "'' ";
 				$cadenaSql .= " )";
 				
