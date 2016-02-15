@@ -29,33 +29,18 @@ class FormProcessor {
 		
 		/**
 		 * PROCEDIMIENTO
-		 * 1.
-		 * Consultar los datos de los estudiantes para un período
+		 * 1. Consultar los datos de los estudiantes para un período
 		 * 2. Quitar acentos
 		 * 3. Dividir nombres
 		 * 4. Actualizar en PARTICIPANTE
-		 * 5. Actualizar ESTUDIANTE
-		 * 6. Actualizar ESTUDIANTE_PROGRAMA
-		 * 7. Actualizar MATRICULADO
 		 */
 		
 		// estudiante de la académica
 		$estudiante = $this->miComponente->consultarEstudianteAcademica ( $this->annio, $this->semestre );
 		
-		// en el caso de que no se haga la consulta redirecciona
-		if ($estudiante == false) {
-			$valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
-			$valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
-			
-			// Rescatar el parámetro enlace desde los datos de configuraión en la base de datos
-			$variable = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
-			$miEnlace = $this->host . $this->site . '/index.php?' . $variable . '=' . $valorCodificado;
-			
-			header ( "Location:$miEnlace" );
-		}
-		
 		$miProcesadorNombre = new procesadorNombre ();
 		
+		//Busca y presenta los caracteres inválidos
 		$caracteresInvalidos = $miProcesadorNombre->buscarCaracteresInvalidos ( $estudiante, 'EST_NOMBRE' );
 		
 		// quita acentos del nombre
