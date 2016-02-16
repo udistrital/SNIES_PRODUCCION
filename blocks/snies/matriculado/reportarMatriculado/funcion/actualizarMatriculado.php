@@ -63,6 +63,7 @@ class FormProcessor {
 		echo 'proceso 2 actualizarMatriculado<br>';
 		$this->actualizarMatriculado ( $estudiante );
 		echo 'FIN<br>';
+		echo '<script>window.location.assign("'.$miEnlace.'")</script>';
 		exit ();
 	}
 	
