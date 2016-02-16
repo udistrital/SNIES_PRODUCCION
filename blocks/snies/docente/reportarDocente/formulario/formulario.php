@@ -88,8 +88,8 @@ class registrarForm {
 			<?php
 		foreach ( $periodo as $miPeriodo ) {
 			
-			$enlaceActualizarParticipante = $this->enlaceActializarVariable ( 'actualizarParticipanteDocente', $miPeriodo ['annio'], $miPeriodo ['semestre'] );
-			$enlaceActualizarDocente = $this->enlaceActializarVariable ( 'actualizarDocente', $miPeriodo ['annio'], $miPeriodo ['semestre'] );
+			$enlaceActualizarParticipante = $this->enlaceActualizarVariable ( 'actualizarParticipanteDocente', $miPeriodo ['annio'], $miPeriodo ['semestre'] );
+			$enlaceActualizarDocente = $this->enlaceActualizarVariable ( 'actualizarDocente', $miPeriodo ['annio'], $miPeriodo ['semestre'] );
 			
 			?>
 				<tr>
@@ -115,7 +115,7 @@ class registrarForm {
 
 <?
 	}
-	function enlaceActializarVariable($opcion, $annio, $semestre) {
+	function enlaceActualizarVariable($opcion, $annio, $semestre) {
 		$valorCodificado = "actionBloque=" . $this->esteBloque ["nombre"];
 		$valorCodificado .= "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 		$valorCodificado .= "&bloque=" . $this->esteBloque ['nombre'];

@@ -90,15 +90,17 @@ class Sql extends \Sql {
 					$cadenaSql .= " AND mat_per =3 "; // el semestre 03 de la universidad es el semestre 02 de SNIES";
 				}
 				
-				 //$cadenaSql .= " AND est_nro_iden=1020742945";
+				// $cadenaSql .= " AND est_nro_iden=1020742945";
 				// $cadenaSql .= " AND rownum < 10";
 				
 				break;
 			
+			// //PARTICIPANTE SNIES
+			
 			case "consultarParticipante" :
 				$cadenaSql = "SELECT codigo_unico, tipo_doc_unico FROM";
 				$cadenaSql .= " participante ";
-				$cadenaSql .= " WHERE codigo_unico=" . $variable ['CODIGO_UNICO'];
+				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
 				
 				break;
 			

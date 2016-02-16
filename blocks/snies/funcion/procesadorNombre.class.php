@@ -13,12 +13,13 @@ class procesadorNombre {
 		// $a=0;
 		foreach ( $arreglo as $key => $value ) {
 			$nombre = $arreglo [$key] [$campo];
-			$codigo = $arreglo [$key] ['CODIGO_ESTUDIANTE'];
+			//$codigo = $arreglo [$key] ['CODIGO_ESTUDIANTE'];
 			$documento = $arreglo [$key] ['CODIGO_UNICO'];
 			if (! preg_match ( "/^[a-zA-ZnÑáéíóúüÁÉÍÓÚÜ ]*$/", $nombre )) {
 				// $a++;
 				// echo $a.'<br>';
-				echo $codigo . ', ' . $nombre . ', ' . $documento;
+				//echo $codigo . ', ' . $nombre . ', ' . $documento;
+				echo $nombre . ', ' . $documento;
 				$nameErr = " <b>Solo letras y espacio permitidos</b>";
 				// echo $nameErr;
 				echo '<br>';
@@ -65,6 +66,7 @@ class procesadorNombre {
 				'?', // 20
 				'¿',
 				'Ã',
+				'\'',//escapa la comilla sencilla ejemplo D'LUIS
 				'	' 
 		); // ' 'tabulador por espacio
 		
@@ -90,6 +92,7 @@ class procesadorNombre {
 				'N',
 				'N', // 20
 				'N',
+				'',
 				'',
 				' ' 
 		);

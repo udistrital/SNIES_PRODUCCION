@@ -33,7 +33,6 @@ class Docente implements IGestorDocente {
 		
 		return $resultado;
 	}
-	
 	function consultarVinculacionDocente($annio, $semestre) {
 		$conexion = "academica";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
@@ -52,6 +51,70 @@ class Docente implements IGestorDocente {
 		return $resultado;
 	}
 	
-	
-	
+	// ////PARTICIPANTE SNIES
+	function consultarParticipante($docente) {
+		$conexion = "sniesLocal";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		$cadenaSql = $this->miSql->cadena_sql ( 'consultarParticipante', $docente );
+		
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+		
+		return $resultado;
+	}
+	/**
+	 * (non-PHPdoc)
+	 *
+	 * @see \sniesEstudiante\IGestorEstudiante::actualizarParticipante()
+	 */
+	function actualizarParticipante($docente) {
+		$conexion = "sniesLocal";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		$cadenaSql = $this->miSql->cadena_sql ( 'actualizarParticipante', $docente );
+		
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
+		
+		if ($resultado == FALSE) {
+			$error = $esteRecursoDB->obtener_error ();
+			echo '<b>INFORMACION DEL ERROR:</b><br>';
+			echo $cadenaSql;
+			var_dump ( $error );
+			var_dump ( $docente );
+		}
+		
+		return $resultado;
+	}
+	function registrarParticipante($docente) {
+		$conexion = "sniesLocal";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		$cadenaSql = $this->miSql->cadena_sql ( 'registrarParticipante', $docente );
+		
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
+		
+		if ($resultado == FALSE) {
+			$error = $esteRecursoDB->obtener_error ();
+			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';
+			echo $cadenaSql;
+			var_dump ( $error );
+		}
+		
+		return $resultado;
+	}
+	function borrarParticipante($docente) {
+		$conexion = "sniesLocal";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		$cadenaSql = $this->miSql->cadena_sql ( 'borrarParticipante', $docente );
+		
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
+		if ($resultado == FALSE) {
+			$error = $esteRecursoDB->obtener_error ();
+			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';
+			echo $cadenaSql;
+			var_dump ( $error );
+		}
+		return $resultado;
+	}
 }

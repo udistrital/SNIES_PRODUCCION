@@ -1,9 +1,10 @@
 <?php
 include_once ('component/GestorDocente/Componente.php');
+include_once ('blocks/snies/funcion/procesadorNombre.class.php');
+include_once ('blocks/snies/funcion/procesadorExcepcion.class.php');
 use sniesDocente\Componente;
 use bloqueSnies\procesadorExcepcion;
 use bloqueSnies\procesadorNombre;
-
 class FormProcessor {
 	var $miConfigurador;
 	var $lenguaje;
@@ -25,45 +26,38 @@ class FormProcessor {
 	function procesarFormulario() {
 		$this->annio = $_REQUEST ['annio'];
 		$this->semestre = $_REQUEST ['semestre'];
-	
+		
 		// docente de la académica
 		$docente = $this->miComponente->consultarDocenteAcademica ( $this->annio, $this->semestre );
-		var_dump($docente);
-		
-		// en el caso de que no se haga la consulta redirecciona
-		if ($estudiante == false) {
-			$valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
-			$valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
-			
-			// Rescatar el parámetro enlace desde los datos de configuraión en la base de datos
-			$variable = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
-			$miEnlace = $this->host . $this->site . '/index.php?' . $variable . '=' . $valorCodificado;
-			
-			header ( "Location:$miEnlace" );
-		}
 		
 		$miProcesadorNombre = new procesadorNombre ();
 		
-		$caracteresInvalidos = $miProcesadorNombre->buscarCaracteresInvalidos ( $estudiante, 'EST_NOMBRE' );
+		$caracteresInvalidosApellido = $miProcesadorNombre->buscarCaracteresInvalidos ( $docente, 'DOC_APELLIDO' );
+		$caracteresInvalidosNombre = $miProcesadorNombre->buscarCaracteresInvalidos ( $docente, 'DOC_NOMBRE' );
 		
 		// quita acentos del nombre
-		$estudiante = $miProcesadorNombre->quitarAcento ( $estudiante, 'EST_NOMBRE' );
+		$docente = $miProcesadorNombre->quitarAcento ( $docente, 'DOC_APELLIDO' );
+		$docente = $miProcesadorNombre->quitarAcento ( $docente, 'DOC_NOMBRE' );
 		
 		// descompone nombre completo en sus partes y las aglega al final de cada registro
-		foreach ( $estudiante as $clave => $valor ) {
-			// echo $estudiante [$clave] ['CODIGO_UNICO'].'<br>';
-			$nombreCompleto = $miProcesadorNombre->dividirNombreCompleto ( $estudiante [$clave] ['EST_NOMBRE'] );
-			$estudiante [$clave] ['PRIMER_APELLIDO'] = $nombreCompleto ['primer_apellido'];
-			$estudiante [$clave] ['SEGUNDO_APELLIDO'] = $nombreCompleto ['segundo_apellido'];
-			$estudiante [$clave] ['PRIMER_NOMBRE'] = $nombreCompleto ['primer_nombre'];
-			$estudiante [$clave] ['SEGUNDO_NOMBRE'] = $nombreCompleto ['segundo_nombre'];
+		foreach ( $docente as $clave => $valor ) {
+			// echo $docente [$clave] ['CODIGO_UNICO'].'<br>';
+			$apellidos = $miProcesadorNombre->dividirApellidos ( $docente [$clave] ['DOC_APELLIDO'] );
+			$docente [$clave] ['PRIMER_APELLIDO'] = $apellidos ['primer_apellido'];
+			$docente [$clave] ['SEGUNDO_APELLIDO'] = $apellidos ['segundo_apellido'];
+			
+			$nombres = $miProcesadorNombre->dividirNombres ( $docente [$clave] ['DOC_NOMBRE'] );
+			$docente [$clave] ['PRIMER_NOMBRE'] = $nombres ['primer_nombre'];
+			$docente [$clave] ['SEGUNDO_NOMBRE'] = $nombres ['segundo_nombre'];
 		}
+		
 		
 		$miProcesadorExcepcion = new procesadorExcepcion ();
 		// FORMATEA LOS VALORES NULOS, CODIFICA EXCEPCIONES
-		$estudiante = $miProcesadorExcepcion->procesarExcepcionEstudiante ( $estudiante );
+		$docente = $miProcesadorExcepcion->procesarExcepcionDocente ( $docente );
 		
-		$this->actualizarParticipante ( $estudiante );
+		
+		$this->actualizarParticipante ( $docente );
 		
 		// $valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 		// $valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
@@ -83,43 +77,43 @@ class FormProcessor {
 	 * 2. Si existe y es igual el tipo de documento se actualiza
 	 * 3. Si existe y es diferente el tipo de documento lo borra
 	 *
-	 * @param array $estudiante
+	 * @param array $docente
 	 *        	datos de estudiante
 	 */
-	function actualizarParticipante($estudiante) {
-		foreach ( $estudiante as $unEstudiante ) {
-			// echo 'CODIGO: ' . $unEstudiante ['CODIGO_UNICO'] . '<br>';
+	function actualizarParticipante($docente) {
+		foreach ( $docente as $unDocente ) {
+			// echo 'CODIGO: ' . $unDocente ['CODIGO_UNICO'] . '<br>';
 			// consulta enla tabla participante y cuenta el número de registros retornados
-			$participante = $this->miComponente->consultarParticipante ( $unEstudiante );
+			$participante = $this->miComponente->consultarParticipante ( $unDocente );
 			
 			// si no existe insertar el nuevo registro
 			if ($participante == false) {
-				$this->miComponente->registrarParticipante ( $unEstudiante );
-				echo $unEstudiante ['CODIGO_UNICO'] . ' Nuevo<br>';
+				$this->miComponente->registrarParticipante ( $unDocente );
+				echo $unDocente ['CODIGO_UNICO'] . ' Nuevo<br>';exit;
 			} else {
 				foreach ( $participante as $unParticipante ) {
 					// Si existe y es igual el tipo actualizar si no es igual borrar
-					if ($unParticipante ['tipo_doc_unico'] == $unEstudiante ['TIPO_DOC_UNICO']) {
-						$this->miComponente->actualizarParticipante ( $unEstudiante );
-						// echo $unEstudiante ['CODIGO_UNICO'] . ' actualizado<br>';
+					if ($unParticipante ['tipo_doc_unico'] == $unDocente ['TIPO_DOC_UNICO']) {
+						$this->miComponente->actualizarParticipante ( $unDocente );
+						// echo $unDocente ['CODIGO_UNICO'] . ' actualizado<br>';
 					} else {
 						// Borra los registros
 						// El filtro es codigo y tipo de documento que aparece en la tabla participante
 						// OJO, NO es el obtenido de la DB académica
-						$estudianteError ['CODIGO_UNICO'] = $unParticipante ['codigo_unico'];
-						$estudianteError ['TIPO_DOC_UNICO'] = $unParticipante ['tipo_doc_unico'];
+						$docenteError ['CODIGO_UNICO'] = $unParticipante ['codigo_unico'];
+						$docenteError ['TIPO_DOC_UNICO'] = $unParticipante ['tipo_doc_unico'];
 						
-						$this->miComponente->borrarParticipante ( $estudianteError );
+						$this->miComponente->borrarParticipante ( $docenteError );
 						
-						$participante = $this->miComponente->consultarParticipante ( $unEstudiante );
+						$participante = $this->miComponente->consultarParticipante ( $unDocente );
 						
 						// si no existe insertar el nuevo registro
 						if ($participante == false) {
-							$this->miComponente->registrarParticipante ( $unEstudiante );
-							echo $unEstudiante ['CODIGO_UNICO'] . ' Nuevo<br>';
+							$this->miComponente->registrarParticipante ( $unDocente );
+							echo $unDocente ['CODIGO_UNICO'] . ' Nuevo<br>';
 						}
 						
-						echo $unEstudiante ['CODIGO_UNICO'] . ' borrado<br>';
+						echo $unDocente ['CODIGO_UNICO'] . ' borrado<br>';
 					}
 				}
 			}
