@@ -270,33 +270,45 @@ class Sql extends \Sql {
 				$cadenaSql .= " libros_pub_investigacion,";
 				$cadenaSql .= " libros_pub_texto,";
 				$cadenaSql .= " reportes_investigacion,";
-				$cadenaSql .= " patentes_obtenidas_semestre,";
-				$cadenaSql .= " redes_academicas,";
-				$cadenaSql .= " docente_ceres,";
-				$cadenaSql .= " certificacion_tic";
+				$cadenaSql .= " patentes_obtenidas_semestre";
+				// $cadenaSql .= " redes_academicas,";
+				// $cadenaSql .= " docente_ceres,";No es obligatorio
+				// $cadenaSql .= " certificacion_tic";
 				$cadenaSql .= " )";
 				$cadenaSql .= " VALUES";
 				$cadenaSql .= " (";
 				$cadenaSql .= "'" . $variable ['IES_CODE'] . "', ";
 				$cadenaSql .= "'" . $variable ['ANNIO'] . "', ";
-				$cadenaSql .= "'" . $variable ['SEMESTRE'] . "', ";//Unidad Organizacional
-				$cadenaSql .= "'" . $variable ['ANNIO'] . "', ";
-				$cadenaSql .= "'" . $variable ['ANNIO'] . "', ";
-				$cadenaSql .= "'" . $variable ['ANNIO'] . "', ";
-				$cadenaSql .= "'" . $variable ['ANNIO'] . "', ";
-				$cadenaSql .= "'" . $variable ['ANNIO'] . "', ";
-				$cadenaSql .= "'" . $variable ['ANNIO'] . "', ";
-				$cadenaSql .= "'" . $variable ['ANNIO'] . "', ";
-				$cadenaSql .= "'" . $variable ['ANNIO'] . "', ";
-				$cadenaSql .= "'" . $variable ['ANNIO'] . "', ";
-				$cadenaSql .= "'" . $variable ['ANNIO'] . "', ";
-				$cadenaSql .= "'" . $variable ['ANNIO'] . "', ";
-				$cadenaSql .= "'" . $variable ['ANNIO'] . "', ";
-				$cadenaSql .= "'" . $variable ['ANNIO'] . "', ";
-				$cadenaSql .= "'" . $variable ['ANNIO'] . "', ";
+				$cadenaSql .= "'" . $variable ['SEMESTRE'] . "', ";
+				$cadenaSql .= "'2',"; // Unidad Organizacional
+				$cadenaSql .= "'" . $variable ['CODIGO_UNICO'] . "', ";
+				$cadenaSql .= "'" . $variable ['DEDICACION'] . "', ";
+				$cadenaSql .= "'100',";
+				$cadenaSql .= "'0',";
+				$cadenaSql .= "'0',";
+				$cadenaSql .= "'0',";
+				$cadenaSql .= "'0',";
+				$cadenaSql .= "'0',";
+				$cadenaSql .= "'0',";
+				$cadenaSql .= "'" . $variable ['TIPO_CONTRATO'] . "', ";
+				$cadenaSql .= "'0',";
+				$cadenaSql .= "'0',";
+				$cadenaSql .= "'0',";
+				$cadenaSql .= "'0',";
+				$cadenaSql .= "'" . $variable ['TIPO_DOC_UNICO'] . "', ";
+				$cadenaSql .= "'0',";
+				$cadenaSql .= "'0',";
+				$cadenaSql .= "'0',";
+				$cadenaSql .= "'0',";
+				$cadenaSql .= "'0'";
+				// $cadenaSql .= " redes_academicas,";
+				// $cadenaSql .= " docente_ceres,";No es obligatorio
+				// $cadenaSql .= " certificacion_tic";
+				$cadenaSql .= " )";
 				
-				var_dump ( $variable );
-				echo $cadenaSql;
+				
+				echo $cadenaSql.'<br>';
+				echo 'SE DEBE INCLUIR LA UNIDAD ORGANIACIONAL ES DECIR LA FACULTAD';
 				exit ();
 				
 				break;
