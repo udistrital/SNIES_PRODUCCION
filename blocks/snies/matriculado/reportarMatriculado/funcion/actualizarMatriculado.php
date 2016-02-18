@@ -63,6 +63,12 @@ class FormProcessor {
 		echo 'proceso 2 actualizarMatriculado<br>';
 		$this->actualizarMatriculado ( $estudiante );
 		echo 'FIN<br>';
+		$valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
+		$valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
+			
+		// Rescatar el parámetro enlace desde los datos de configuraión en la base de datos
+		$variable = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+		$miEnlace = $this->host . $this->site . '/index.php?' . $variable . '=' . $valorCodificado;
 		echo '<script>window.location.assign("'.$miEnlace.'")</script>';
 		exit ();
 	}
