@@ -69,7 +69,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " AND car_ape_per='" . $variable ['semestre'] . "'";
 				$cadenaSql .= " AND car_estado='A'";
 				$cadenaSql .= " )";
-				// $cadenaSql .= " AND doc_nro_iden=79708124";
+				$cadenaSql .= " AND doc_nro_iden=3182871";
 				
 				break;
 			
@@ -187,10 +187,10 @@ class Sql extends \Sql {
 			// //DOCENTE SNIES
 			
 			case "consultarDocente" :
-				$cadenaSql = "SELECT codigo_unico, tipo_doc_unico FROM";
-				$cadenaSql .= " Docente ";
+				$cadenaSql = "SELECT codigo_unico, tipo_doc_unico, nivel_est_code, fecha_ingreso FROM";
+				$cadenaSql .= " docente ";
 				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
-				
+								
 				break;
 			
 			case "actualizarDocente" :

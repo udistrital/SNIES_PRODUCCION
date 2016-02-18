@@ -62,7 +62,19 @@ class FormProcessor {
 				foreach ( $docenteParticipante as $unDocenteParticipante ) {
 					// Si existe y es igual el tipo actualizar los demas datos, si no es igual borrar
 					if ($unDocenteParticipante ['tipo_doc_unico'] == $unDocente ['TIPO_DOC_UNICO']) {
-						// $this->miComponente->actualizarEstudiante ( $unDocente );
+						
+						// si el nivel de estudios es diferente actualizar o si la fecha de ingreso e diferente actualizar
+						if ($unDocenteParticipante ['nivel_est_code'] == $unDocente ['NIVEL_EST_CODE'] or 
+							$unDocenteParticipante ['fecha_ingreso'] == $unDocente ['FECHA_INGRESO']) {
+						$this->miComponente->actualizarDocente ( $unDocente );;
+						}
+						var_dump ( $unDocenteParticipante );
+						var_dump ( $unDocente );
+						
+						exit ();
+						echo 'se debe actualizar';
+						exit ();
+						$this->miComponente->actualizarDocente ( $unDocente );
 						// echo $unDocente ['CODIGO_UNICO'] . ' No requiere actualizar<br>';
 					} else {
 						// Borra los registros
@@ -74,13 +86,11 @@ class FormProcessor {
 						$this->miComponente->borrarDocente_h ( $docenteError );
 						$this->miComponente->borrarDocente ( $docenteError );
 						
-						echo 'Ingresar los datos del docente, aquí vamos';
-						exit;
-						// $docenteParticipante = $this->miComponente->consultarEstudiante ( $unDocente );
+						$docenteParticipante = $this->miComponente->consultarDocente ( $unDocente );
 						
 						// si no existe insertar el nuevo registro
 						if ($docenteParticipante == false) {
-							$this->miComponente->registrarEstudiante ( $unDocente );
+							$this->miComponente->registrarDocente ( $unDocente );
 							echo $unDocente ['CODIGO_UNICO'] . ' Nuevo<br>';
 						}
 						
