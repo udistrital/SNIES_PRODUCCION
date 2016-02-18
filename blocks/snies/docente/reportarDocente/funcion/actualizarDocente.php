@@ -108,9 +108,74 @@ class FormProcessor {
 		echo 'Actualizando docentes_h...<br>';
 		// Borrar todos los registros para un perído definido
 		$this->miComponente->borrarDocente_hPeriodoTodos ( $this->annio, $this->semestre );
+		$vinculacionDocente = $this->miComponente->consultarVinculacionDocente ( $this->annio, $this->semestre );
+		
+		// codificar vinculacion docente
+		foreach ( $vinculacionDocente as $clave => $valor ) {
+			switch ($vinculacionDocente [$clave] ['VINCULACION']) {
+				case 1 :
+					$vinculacionDocente [$clave] ['TIPO_CONTRATO'] = '01';
+					$vinculacionDocente [$clave] ['DEDICACION'] = '01';
+					break;
+				case 2 :
+					$vinculacionDocente [$clave] ['TIPO_CONTRATO'] = '02';
+					$vinculacionDocente [$clave] ['DEDICACION'] = '01';
+					break;
+				case 3 :
+					$vinculacionDocente [$clave] ['TIPO_CONTRATO'] = '02';
+					$vinculacionDocente [$clave] ['DEDICACION'] = '02';
+					break;
+				case 4 :
+					$vinculacionDocente [$clave] ['TIPO_CONTRATO'] = '02';
+					$vinculacionDocente [$clave] ['DEDICACION'] = '04';
+					break;
+				case 5 :
+					$vinculacionDocente [$clave] ['TIPO_CONTRATO'] = '03';
+					$vinculacionDocente [$clave] ['DEDICACION'] = '04';
+					break;
+				case 6 :
+					$vinculacionDocente [$clave] ['TIPO_CONTRATO'] = '01';
+					$vinculacionDocente [$clave] ['DEDICACION'] = '02';
+					break;
+				case 7 :
+					$vinculacionDocente [$clave] ['TIPO_CONTRATO'] = '03';
+					$vinculacionDocente [$clave] ['DEDICACION'] = '03';
+					break;
+				case 8 :
+					$vinculacionDocente [$clave] ['TIPO_CONTRATO'] = '01';
+					$vinculacionDocente [$clave] ['DEDICACION'] = '01';
+					break;
+				
+				default :
+					echo 'Sin vinculación';
+					break;
+			}
+		}
+		
+		foreach ( $docente as $key => $value ) {
+			$docente [$key] ['DEDICACION'] = '04';
+			$docente [$key] ['TIPO_CONTRATO'] = '03';
+			foreach ( $vinculacionDocente as $unaVinculacion ) {
+				if ($docente [$key] ['CODIGO_UNICO'] == $unaVinculacion ['DOCUMENTO']) {
+					if ($docente [$key] ['DEDICACION'] > $unaVinculacion ['DEDICACION']) {
+						$docente [$key] ['DEDICACION'] = $unaVinculacion ['DEDICACION'];
+					}
+					if ($docente [$key] ['TIPO_CONTRATO'] > $unaVinculacion ['TIPO_CONTRATO']) {
+						$docente [$key] ['TIPO_CONTRATO'] = $unaVinculacion ['TIPO_CONTRATO'];
+					}
+				}
+			}
+		}
+		
+		foreach ($docente as $unDocente) {
+			$this->miComponente->registrarDocente_h ( $unDocente, $this->annio, $this->semestre );
+		}
+		
+		exit ();
 		
 		echo 'Actualización docente_h terminado <br>';
-		var_dump($docente);exit;
+		var_dump ( $docente );
+		exit ();
 	}
 }
 

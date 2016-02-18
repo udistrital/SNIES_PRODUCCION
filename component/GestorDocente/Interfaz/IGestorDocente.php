@@ -21,7 +21,7 @@ interface IGestorDocente {
 	// DOCENTE_H SNIES
 	function consultarDocente_h($docente);
 	function actualizarDocente_h($docente);
-	function registrarDocente_h($docente);
+	function registrarDocente_h($docente, $annio, $semestre);
 	function borrarDocente_h($docente);
 	function borrarDocente_hPeriodoTodos($annio, $semestre);
 }

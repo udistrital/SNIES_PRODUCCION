@@ -70,6 +70,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " AND car_estado='A'";
 				$cadenaSql .= " )";
 				// $cadenaSql .= " AND doc_nro_iden=3182871";
+				$cadenaSql .= " AND doc_nro_iden=79708124";
 				
 				break;
 			
@@ -237,16 +238,7 @@ class Sql extends \Sql {
 			
 			case "consultarDocente_h" :
 				$cadenaSql = "SELECT codigo_unico, tipo_doc_unico FROM";
-				$cadenaSql .= " Docente ";
-				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
-				
-				break;
-			
-			case "actualizarDocente_h" :
-				$cadenaSql = " UPDATE docente_h";
-				$cadenaSql .= " SET ";
-				$cadenaSql .= " ies_code ='" . $variable ['IES_CODE'] . "',";
-				$cadenaSql .= " tipo_doc_unico ='" . $variable ['TIPO_DOC_UNICO'] . "'";
+				$cadenaSql .= " docente_h ";
 				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
 				
 				break;
@@ -256,19 +248,56 @@ class Sql extends \Sql {
 				$cadenaSql .= " INTO docente_h";
 				$cadenaSql .= " (";
 				$cadenaSql .= " ies_code,";
+				$cadenaSql .= " annio,";
+				$cadenaSql .= " semestre,";
+				$cadenaSql .= " cod_uni_org,";
 				$cadenaSql .= " codigo_unico,";
-				$cadenaSql .= " nivel_est_code,";
+				$cadenaSql .= " dedicacion,";
+				$cadenaSql .= " porcentaje_docencia,";
+				$cadenaSql .= " porcentaje_investigacion,";
+				$cadenaSql .= " porcentaje_administrativa,";
+				$cadenaSql .= " porcentaje_bienestar,";
+				$cadenaSql .= " porcentaje_edu_no_formal_ycont,";
+				$cadenaSql .= " porcentaje_proy_progr_remun,";
+				$cadenaSql .= " porcentaje_proy_no_remun,";
+				$cadenaSql .= " tipo_contrato,";
+				$cadenaSql .= " premios_semestre_nal,";
+				$cadenaSql .= " libros_publ_texto_calificados,";
+				$cadenaSql .= " premios_semestre_internal,";
+				$cadenaSql .= " duracion_en_horas,";
 				$cadenaSql .= " tipo_doc_unico,";
-				$cadenaSql .= " fecha_ingreso";
+				$cadenaSql .= " porcentaje_otras_actividades,";
+				$cadenaSql .= " libros_pub_investigacion,";
+				$cadenaSql .= " libros_pub_texto,";
+				$cadenaSql .= " reportes_investigacion,";
+				$cadenaSql .= " patentes_obtenidas_semestre,";
+				$cadenaSql .= " redes_academicas,";
+				$cadenaSql .= " docente_ceres,";
+				$cadenaSql .= " certificacion_tic";
 				$cadenaSql .= " )";
 				$cadenaSql .= " VALUES";
 				$cadenaSql .= " (";
 				$cadenaSql .= "'" . $variable ['IES_CODE'] . "', ";
-				$cadenaSql .= "'" . $variable ['CODIGO_UNICO'] . "', ";
-				$cadenaSql .= "'" . $variable ['NIVEL_EST_CODE'] . "', ";
-				$cadenaSql .= "'" . $variable ['TIPO_DOC_UNICO'] . "', ";
-				$cadenaSql .= "'" . $variable ['FECHA_INGRESO'] . "' ";
-				$cadenaSql .= " );";
+				$cadenaSql .= "'" . $variable ['ANNIO'] . "', ";
+				$cadenaSql .= "'" . $variable ['SEMESTRE'] . "', ";//Unidad Organizacional
+				$cadenaSql .= "'" . $variable ['ANNIO'] . "', ";
+				$cadenaSql .= "'" . $variable ['ANNIO'] . "', ";
+				$cadenaSql .= "'" . $variable ['ANNIO'] . "', ";
+				$cadenaSql .= "'" . $variable ['ANNIO'] . "', ";
+				$cadenaSql .= "'" . $variable ['ANNIO'] . "', ";
+				$cadenaSql .= "'" . $variable ['ANNIO'] . "', ";
+				$cadenaSql .= "'" . $variable ['ANNIO'] . "', ";
+				$cadenaSql .= "'" . $variable ['ANNIO'] . "', ";
+				$cadenaSql .= "'" . $variable ['ANNIO'] . "', ";
+				$cadenaSql .= "'" . $variable ['ANNIO'] . "', ";
+				$cadenaSql .= "'" . $variable ['ANNIO'] . "', ";
+				$cadenaSql .= "'" . $variable ['ANNIO'] . "', ";
+				$cadenaSql .= "'" . $variable ['ANNIO'] . "', ";
+				$cadenaSql .= "'" . $variable ['ANNIO'] . "', ";
+				
+				var_dump ( $variable );
+				echo $cadenaSql;
+				exit ();
 				
 				break;
 			
@@ -287,8 +316,6 @@ class Sql extends \Sql {
 				$cadenaSql .= " AND semestre='" . $variable ['SEMESTRE'] . "'";
 				
 				break;
-				
-				
 		}
 		
 		return $cadenaSql;
