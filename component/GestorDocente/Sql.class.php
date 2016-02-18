@@ -69,7 +69,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " AND car_ape_per='" . $variable ['semestre'] . "'";
 				$cadenaSql .= " AND car_estado='A'";
 				$cadenaSql .= " )";
-				$cadenaSql .= " AND doc_nro_iden=3182871";
+				// $cadenaSql .= " AND doc_nro_iden=3182871";
 				
 				break;
 			
@@ -190,14 +190,16 @@ class Sql extends \Sql {
 				$cadenaSql = "SELECT codigo_unico, tipo_doc_unico, nivel_est_code, fecha_ingreso FROM";
 				$cadenaSql .= " docente ";
 				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
-								
+				
 				break;
 			
 			case "actualizarDocente" :
 				$cadenaSql = " UPDATE docente";
 				$cadenaSql .= " SET ";
 				$cadenaSql .= " ies_code ='" . $variable ['IES_CODE'] . "',";
-				$cadenaSql .= " tipo_doc_unico ='" . $variable ['TIPO_DOC_UNICO'] . "'";
+				$cadenaSql .= " tipo_doc_unico ='" . $variable ['TIPO_DOC_UNICO'] . "',";
+				$cadenaSql .= " nivel_est_code ='" . $variable ['NIVEL_EST_CODE'] . "',";
+				$cadenaSql .= " fecha_ingreso ='" . $variable ['FECHA_INGRESO'] . "'";
 				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
 				
 				break;
@@ -236,7 +238,7 @@ class Sql extends \Sql {
 			case "consultarDocente_h" :
 				$cadenaSql = "SELECT codigo_unico, tipo_doc_unico FROM";
 				$cadenaSql .= " Docente ";
-				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";				
+				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
 				
 				break;
 			
@@ -277,6 +279,16 @@ class Sql extends \Sql {
 				$cadenaSql .= " AND tipo_doc_unico='" . $variable ['TIPO_DOC_UNICO'] . "'";
 				
 				break;
+			
+			case "borrarDocente_hPeriodoTodos" :
+				$cadenaSql = "DELETE FROM";
+				$cadenaSql .= " docente_h ";
+				$cadenaSql .= " WHERE annio='" . $variable ['ANNIO'] . "'";
+				$cadenaSql .= " AND semestre='" . $variable ['SEMESTRE'] . "'";
+				
+				break;
+				
+				
 		}
 		
 		return $cadenaSql;

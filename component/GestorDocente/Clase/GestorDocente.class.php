@@ -122,11 +122,11 @@ class Docente implements IGestorDocente {
 	function consultarDocente($docente) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-	
+		
 		$cadenaSql = $this->miSql->cadena_sql ( 'consultarDocente', $docente );
-	
+		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
-	
+		
 		return $resultado;
 	}
 	/**
@@ -137,11 +137,11 @@ class Docente implements IGestorDocente {
 	function actualizarDocente($docente) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-	
+		
 		$cadenaSql = $this->miSql->cadena_sql ( 'actualizarDocente', $docente );
-	
+		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
-	
+		
 		if ($resultado == FALSE) {
 			$error = $esteRecursoDB->obtener_error ();
 			echo '<b>INFORMACION DEL ERROR:</b><br>';
@@ -149,32 +149,32 @@ class Docente implements IGestorDocente {
 			var_dump ( $error );
 			var_dump ( $docente );
 		}
-	
+		
 		return $resultado;
 	}
 	function registrarDocente($docente) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-	
+		
 		$cadenaSql = $this->miSql->cadena_sql ( 'registrarDocente', $docente );
-	
+		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
-	
+		
 		if ($resultado == FALSE) {
 			$error = $esteRecursoDB->obtener_error ();
 			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';
 			echo $cadenaSql;
 			var_dump ( $error );
 		}
-	
+		
 		return $resultado;
 	}
 	function borrarDocente($docente) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-	
+		
 		$cadenaSql = $this->miSql->cadena_sql ( 'borrarDocente', $docente );
-	
+		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
 		if ($resultado == FALSE) {
 			$error = $esteRecursoDB->obtener_error ();
@@ -186,15 +186,14 @@ class Docente implements IGestorDocente {
 	}
 	
 	// ////DOCENTE_H SNIES
-	
 	function consultarDocente_h($docente) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-	
+		
 		$cadenaSql = $this->miSql->cadena_sql ( 'consultarDocente_h', $docente );
-	
+		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
-	
+		
 		return $resultado;
 	}
 	/**
@@ -205,11 +204,11 @@ class Docente implements IGestorDocente {
 	function actualizarDocente_h($docente) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-	
+		
 		$cadenaSql = $this->miSql->cadena_sql ( 'actualizarDocente_h', $docente );
-	
+		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
-	
+		
 		if ($resultado == FALSE) {
 			$error = $esteRecursoDB->obtener_error ();
 			echo '<b>INFORMACION DEL ERROR:</b><br>';
@@ -217,32 +216,49 @@ class Docente implements IGestorDocente {
 			var_dump ( $error );
 			var_dump ( $docente_h );
 		}
-	
+		
 		return $resultado;
 	}
 	function registrarDocente_h($docente) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-	
+		
 		$cadenaSql = $this->miSql->cadena_sql ( 'registrarDocente_h', $docente );
-	
+		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
-	
+		
 		if ($resultado == FALSE) {
 			$error = $esteRecursoDB->obtener_error ();
 			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';
 			echo $cadenaSql;
 			var_dump ( $error );
 		}
-	
+		
 		return $resultado;
 	}
 	function borrarDocente_h($docente) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-	
+		
 		$cadenaSql = $this->miSql->cadena_sql ( 'borrarDocente_h', $docente );
-	
+		
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
+		if ($resultado == FALSE) {
+			$error = $esteRecursoDB->obtener_error ();
+			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';
+			echo $cadenaSql;
+			var_dump ( $error );
+		}
+		return $resultado;
+	}
+	function borrarDocente_hPeriodoTodos($annio, $semestre) {
+		$conexion = "sniesLocal";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		$variable['ANNIO']=$annio;
+		$variable['SEMESTRE']=$semestre;
+		$cadenaSql = $this->miSql->cadena_sql ( 'borrarDocente_hPeriodoTodos', $variable );
+		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
 		if ($resultado == FALSE) {
 			$error = $esteRecursoDB->obtener_error ();

@@ -35,6 +35,7 @@ class FormProcessor {
 		$docente = $miProcesadorExcepcion->procesarExcepcionDocente ( $docente );
 		
 		$this->actualizarDocente ( $docente );
+		$this->actualizarDocente_h ( $docente );
 		
 		exit ();
 	}
@@ -49,7 +50,7 @@ class FormProcessor {
 	 * @param unknown $docente        	
 	 */
 	function actualizarDocente($docente) {
-		echo 'Actualizando docentes...';
+		echo 'Actualizando docentes...<br>';
 		foreach ( $docente as $unDocente ) {
 			
 			$docenteParticipante = $this->miComponente->consultarDocente ( $unDocente );
@@ -63,19 +64,11 @@ class FormProcessor {
 					// Si existe y es igual el tipo actualizar los demas datos, si no es igual borrar
 					if ($unDocenteParticipante ['tipo_doc_unico'] == $unDocente ['TIPO_DOC_UNICO']) {
 						
-						// si el nivel de estudios es diferente actualizar o si la fecha de ingreso e diferente actualizar
-						if ($unDocenteParticipante ['nivel_est_code'] == $unDocente ['NIVEL_EST_CODE'] or 
-							$unDocenteParticipante ['fecha_ingreso'] == $unDocente ['FECHA_INGRESO']) {
-						$this->miComponente->actualizarDocente ( $unDocente );;
+						// si el nivel de estudios es diferente o si la fecha de ingreso es diferente; actualizar el registro
+						if ($unDocenteParticipante ['nivel_est_code'] != $unDocente ['NIVEL_EST_CODE'] or $unDocenteParticipante ['fecha_ingreso'] != $unDocente ['FECHA_INGRESO']) {
+							$this->miComponente->actualizarDocente ( $unDocente );
+							echo $unDocente ['CODIGO_UNICO'] . ' Docente actualizado<br>';
 						}
-						var_dump ( $unDocenteParticipante );
-						var_dump ( $unDocente );
-						
-						exit ();
-						echo 'se debe actualizar';
-						exit ();
-						$this->miComponente->actualizarDocente ( $unDocente );
-						// echo $unDocente ['CODIGO_UNICO'] . ' No requiere actualizar<br>';
 					} else {
 						// Borra los registros
 						// El filtro es codigo y tipo de documento que aparece en la tabla participante
@@ -99,7 +92,25 @@ class FormProcessor {
 				}
 			}
 		}
-		echo 'terminado';
+		echo 'actualización docente terminado <br>';
+	}
+	
+	/**
+	 * Pasos
+	 * 1.
+	 * Borrar regitro para el año y semestre dado
+	 * 2. Ajustar dedicación
+	 * 3. Registrar valores
+	 *
+	 * @param unknown $docente        	
+	 */
+	function actualizarDocente_h($docente) {
+		echo 'Actualizando docentes_h...<br>';
+		// Borrar todos los registros para un perído definido
+		$this->miComponente->borrarDocente_hPeriodoTodos ( $this->annio, $this->semestre );
+		
+		echo 'Actualización docente_h terminado <br>';
+		var_dump($docente);exit;
 	}
 }
 
