@@ -94,7 +94,7 @@ class Sql extends \Sql {
 			case "consultarParticipante" :
 				$cadenaSql = "SELECT codigo_unico, tipo_doc_unico FROM";
 				$cadenaSql .= " participante ";
-				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO']."'";			
+				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
 				
 				break;
 			
@@ -181,6 +181,100 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable ['AREA_TEL'] . "', ";
 				$cadenaSql .= "'" . $variable ['NUMERO_TEL'] . "'";
 				$cadenaSql .= " )";
+				
+				break;
+			
+			// //DOCENTE SNIES
+			
+			case "consultarDocente" :
+				$cadenaSql = "SELECT codigo_unico, tipo_doc_unico FROM";
+				$cadenaSql .= " Docente ";
+				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
+				
+				break;
+			
+			case "actualizarDocente" :
+				$cadenaSql = " UPDATE docente";
+				$cadenaSql .= " SET ";
+				$cadenaSql .= " ies_code ='" . $variable ['IES_CODE'] . "',";
+				$cadenaSql .= " tipo_doc_unico ='" . $variable ['TIPO_DOC_UNICO'] . "'";
+				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
+				
+				break;
+			
+			case "registrarDocente" :
+				$cadenaSql = " INSERT";
+				$cadenaSql .= " INTO docente";
+				$cadenaSql .= " (";
+				$cadenaSql .= " ies_code,";
+				$cadenaSql .= " codigo_unico,";
+				$cadenaSql .= " nivel_est_code,";
+				$cadenaSql .= " tipo_doc_unico,";
+				$cadenaSql .= " fecha_ingreso";
+				$cadenaSql .= " )";
+				$cadenaSql .= " VALUES";
+				$cadenaSql .= " (";
+				$cadenaSql .= "'" . $variable ['IES_CODE'] . "', ";
+				$cadenaSql .= "'" . $variable ['CODIGO_UNICO'] . "', ";
+				$cadenaSql .= "'" . $variable ['NIVEL_EST_CODE'] . "', ";
+				$cadenaSql .= "'" . $variable ['TIPO_DOC_UNICO'] . "', ";
+				$cadenaSql .= "'" . $variable ['FECHA_INGRESO'] . "' ";
+				$cadenaSql .= " );";
+				
+				break;
+			
+			case "borrarDocente" :
+				$cadenaSql = "DELETE FROM";
+				$cadenaSql .= " docente ";
+				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
+				$cadenaSql .= " AND tipo_doc_unico='" . $variable ['TIPO_DOC_UNICO'] . "'";
+				
+				break;
+			
+			// //DOCENTE_H SNIES
+			
+			case "consultarDocente_h" :
+				$cadenaSql = "SELECT codigo_unico, tipo_doc_unico FROM";
+				$cadenaSql .= " Docente ";
+				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";				
+				
+				break;
+			
+			case "actualizarDocente_h" :
+				$cadenaSql = " UPDATE docente_h";
+				$cadenaSql .= " SET ";
+				$cadenaSql .= " ies_code ='" . $variable ['IES_CODE'] . "',";
+				$cadenaSql .= " tipo_doc_unico ='" . $variable ['TIPO_DOC_UNICO'] . "'";
+				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
+				
+				break;
+			
+			case "registrarDocente_h" :
+				$cadenaSql = " INSERT";
+				$cadenaSql .= " INTO docente_h";
+				$cadenaSql .= " (";
+				$cadenaSql .= " ies_code,";
+				$cadenaSql .= " codigo_unico,";
+				$cadenaSql .= " nivel_est_code,";
+				$cadenaSql .= " tipo_doc_unico,";
+				$cadenaSql .= " fecha_ingreso";
+				$cadenaSql .= " )";
+				$cadenaSql .= " VALUES";
+				$cadenaSql .= " (";
+				$cadenaSql .= "'" . $variable ['IES_CODE'] . "', ";
+				$cadenaSql .= "'" . $variable ['CODIGO_UNICO'] . "', ";
+				$cadenaSql .= "'" . $variable ['NIVEL_EST_CODE'] . "', ";
+				$cadenaSql .= "'" . $variable ['TIPO_DOC_UNICO'] . "', ";
+				$cadenaSql .= "'" . $variable ['FECHA_INGRESO'] . "' ";
+				$cadenaSql .= " );";
+				
+				break;
+			
+			case "borrarDocente_h" :
+				$cadenaSql = "DELETE FROM";
+				$cadenaSql .= " docente_h ";
+				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
+				$cadenaSql .= " AND tipo_doc_unico='" . $variable ['TIPO_DOC_UNICO'] . "'";
 				
 				break;
 		}

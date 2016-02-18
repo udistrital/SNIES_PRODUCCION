@@ -42,18 +42,6 @@ class FormProcessor {
 		// estudiante de la académica
 		$estudiante = $this->miComponente->consultarEstudianteAcademica ( $this->annio, $this->semestre );
 		
-		// en el caso de que no se haga la consulta redirecciona
-		if ($estudiante == false) {
-			$valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
-			$valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
-			
-			// Rescatar el parámetro enlace desde los datos de configuraión en la base de datos
-			$variable = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
-			$miEnlace = $this->host . $this->site . '/index.php?' . $variable . '=' . $valorCodificado;
-			
-			header ( "Location:$miEnlace" );
-		}
-		
 		$miProcesadorExcepcion = new procesadorExcepcion ();
 		// FORMATEA LOS VALORES NULOS, CODIFICA EXCEPCIONES
 		$estudiante = $miProcesadorExcepcion->procesarExcepcionEstudiante ( $estudiante );

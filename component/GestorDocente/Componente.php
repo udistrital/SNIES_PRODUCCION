@@ -38,5 +38,32 @@ class Componente extends Component implements IGestorDocente {
 	function borrarParticipante($docente) {
 		return $this->miDocente->borrarParticipante ( $docente );
 	}
+	
+	// DECENTE SNIES
+	function consultarDocente($docente) {
+		return $this->miDocente->consultarDocente ( $docente );
+	}
+	function actualizarDocente($docente) {
+		return $this->miDocente->actualizarDocente ( $docente );
+	}
+	function registrarDocente($docente) {
+		return $this->miDocente->registrarDocente ( $docente );
+	}
+	function borrarDocente($docente) {
+		return $this->miDocente->borrarDocente ( $docente );
+	}
+	// DECENTE SNIES
+	function consultarDocente_h($docente) {
+		return $this->miDocente->consultarDocente_h ( $docente );
+	}
+	function actualizarDocente_h($docente) {
+		return $this->miDocente->actualizarDocente_h ( $docente );
+	}
+	function registrarDocente_h($docente) {
+		return $this->miDocente->registrarDocente_h ( $docente );
+	}
+	function borrarDocente_h($docente) {
+		return $this->miDocente->borrarDocente_h ( $docente );
+	}
 }
 

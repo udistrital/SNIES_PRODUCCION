@@ -40,18 +40,11 @@ class Funcion {
 	function actualizarParticipanteDocente() {
 		include_once ($this->ruta . "/funcion/actualizarParticipanteDocente.php");
 	}
-	function actualizarEstudiante() {
-		include_once ($this->ruta . "/funcion/actualizarEstudiante.php");
-	}
-	function actualizarMatriculado() {
-		include_once ($this->ruta . "/funcion/actualizarMatriculado.php");
-	}
-	function generarCsvDocente() {
-		include_once ($this->ruta . "/funcion/generarCsvDocente.php");
+	function actualizarDocente() {
+		include_once ($this->ruta . "/funcion/actualizarDocente.php");
 	}
 	
 	function action() {
-	
 		if (isset ( $_REQUEST ['procesarAjax'] )) {
 			$this->procesarAjax ();
 		} else if (isset ( $_REQUEST ["opcion"] )) {
@@ -61,16 +54,8 @@ class Funcion {
 					$this->actualizarParticipanteDocente ();
 					break;
 				
-				case 'actualizarEstudiante' :
-					$this->actualizarEstudiante ();
-					break;
-				
-				case 'actualizarMatriculado' :
-					$this->actualizarMatriculado ();
-					break;
-				
-				case 'actualizarMatriculado' :
-					$this->actualizarMatriculado ();
+				case 'actualizarDocente' :
+					$this->actualizarDocente ();
 					break;
 				
 				case 'generarCsvDocente' :
