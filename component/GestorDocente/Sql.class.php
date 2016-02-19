@@ -70,7 +70,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " AND car_estado='A'";
 				$cadenaSql .= " )";
 				// $cadenaSql .= " AND doc_nro_iden=3182871";
-				$cadenaSql .= " AND doc_nro_iden=79708124";
+				//$cadenaSql .= " AND doc_nro_iden=79708124";
 				
 				break;
 			
@@ -307,9 +307,9 @@ class Sql extends \Sql {
 				$cadenaSql .= " )";
 				
 				
-				echo $cadenaSql.'<br>';
-				echo 'SE DEBE INCLUIR LA UNIDAD ORGANIACIONAL ES DECIR LA FACULTAD';
-				exit ();
+				//echo $cadenaSql.'<br>';
+				//echo 'SE DEBE INCLUIR LA UNIDAD ORGANIACIONAL ES DECIR LA FACULTAD';
+				//exit ();
 				
 				break;
 			

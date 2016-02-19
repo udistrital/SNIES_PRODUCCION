@@ -171,10 +171,10 @@ class FormProcessor {
 			$this->miComponente->registrarDocente_h ( $unDocente, $this->annio, $this->semestre );
 		}
 		
-		exit ();
-		
+
+		echo 'SE DEBE INCLUIR LA UNIDAD ORGANIACIONAL ES DECIR LA FACULTAD';
 		echo 'Actualización docente_h terminado <br>';
-		var_dump ( $docente );
+	
 		exit ();
 	}
 }
