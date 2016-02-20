@@ -71,7 +71,7 @@ class registrarForm {
 		?>
 
 <br>
-<h3>DOCENTE - ACTUALIZACIÓN LOCAL</h3>
+<h3>PRIMIPARO - GENERACION ARCHIVO CSV PARA SPADIES</h3>
 <br>
 <table id="example" class="display" cellspacing="0" width="100%">
 	<thead>
@@ -79,8 +79,8 @@ class registrarForm {
 			<th>Variable</th>
 			<th>Año</th>
 			<th>Período</th>
-			<th>1. Actualizar Participante</th>
-			<th>2. Actualizar Docente</th>
+			<th>Generar archivo CSV</th>
+			<th>Última Actualización</th>
 		</tr>
 	</thead>
 
@@ -88,8 +88,8 @@ class registrarForm {
 			<?php
 		foreach ( $periodo as $miPeriodo ) {
 			
-			$enlaceActualizarParticipante = $this->enlaceActualizarVariable ( 'actualizarParticipanteDocente', $miPeriodo ['annio'], $miPeriodo ['semestre'] );
-			$enlaceActualizarDocente = $this->enlaceActualizarVariable ( 'actualizarDocente', $miPeriodo ['annio'], $miPeriodo ['semestre'] );
+			$generarCsvPrimiparoSpadies = $this->enlaceActualizarVariable ( 'generarCsvPrimiparoSpadies', $miPeriodo ['annio'], $miPeriodo ['semestre'] );
+			//$enlaceActualizarDocente = $this->enlaceActualizarVariable ( 'actualizarDocente', $miPeriodo ['annio'], $miPeriodo ['semestre'] );
 			
 			?>
 				<tr>
@@ -98,13 +98,10 @@ class registrarForm {
 			<td align="center"><?php echo $miPeriodo['semestre'];?></td>
 			<!--<td align="right"><?php echo $miPeriodo['total'];?></td>  -->
 			<td align="center"><a class=miEnlace
-				href="<?php echo $enlaceActualizarParticipante;?>"><img
+				href="<?php echo $generarCsvPrimiparoSpadies;?>"><img
 					src='<? echo $this->urlImagenes?>images/actualizar.png'
 					width='30px'></a></td>
-			<td align="center"><a class=miEnlace
-				href="<?php echo $enlaceActualizarDocente;?>"><img
-					src='<? echo $this->urlImagenes?>images/actualizar.png'
-					width='30px'></a></td>
+			<td></td>
 		</tr>
 				<?php }?>
 			</tbody>

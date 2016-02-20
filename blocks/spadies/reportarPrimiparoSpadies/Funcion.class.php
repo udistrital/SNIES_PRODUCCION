@@ -37,40 +37,17 @@ class Funcion {
 	function procesarAjax() {
 		include_once ($this->ruta . "funcion/procesarAjax.php");
 	}
-	function actualizarParticipanteDocente() {
-		include_once ($this->ruta . "/funcion/actualizarParticipanteDocente.php");
+	function generarCsvPrimiparoSpadies() {
+		include_once ($this->ruta . "/funcion/generarCsvPrimiparoSpadies.php");
 	}
-	function actualizarDocente() {
-		include_once ($this->ruta . "/funcion/actualizarDocente.php");
-	}
-	
 	function action() {
 		if (isset ( $_REQUEST ['procesarAjax'] )) {
 			$this->procesarAjax ();
 		} else if (isset ( $_REQUEST ["opcion"] )) {
 			
 			switch ($_REQUEST ["opcion"]) {
-				case 'actualizarParticipanteDocente' :
-					$this->actualizarParticipanteDocente ();
-					break;
-				
-				case 'actualizarDocente' :
-					$this->actualizarDocente ();
-					break;
-				
-				case 'generarCsvDocente' :
-					$this->generarCsvDocente ();
-					break;
-				
-				case 'actualizar' :
-				case 'actualizar' :
-					if (isset ( $_REQUEST ["botonRegresar"] ) && $_REQUEST ["botonRegresar"] == 'true') {
-						$arreglo = unserialize ( $_REQUEST ['arreglo'] );
-						redireccion::redireccionar ( "paginaConsulta", $arreglo );
-						exit ();
-					} else if (isset ( $_REQUEST ["botonGuardar"] ) && $_REQUEST ["botonGuardar"] == 'true') {
-						$this->actualizar ();
-					}
+				case 'generarCsvPrimiparoSpadies' :
+					$this->generarCsvPrimiparoSpadies ();
 					break;
 			}
 		} else {

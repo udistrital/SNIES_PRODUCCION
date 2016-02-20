@@ -22,6 +22,8 @@ class FormProcessor {
 		$this->esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 	}
 	function procesarFormulario() {
+		
+		echo 'Funcion para generarCsvPrimiparoSpadies';exit;
 		$this->annio = $_REQUEST ['annio'];
 		$this->semestre = $_REQUEST ['semestre'];
 		
