@@ -26,6 +26,19 @@ $this->idioma ['corregirnombre'] = 'Corrregir Nombres';
 
 //DOCENTE
 
+$this->idioma ['tituloGraduado'] = 'Graduado';
+$this->idioma ['reportarGraduado'] = 'Actualizar Graduado';
+
+//
+$this->idioma ['admitido'] = 'Admitido';
+$this->idioma ['estudiante'] = 'Estudiante';
+$this->idioma ['graduado'] = 'Graduado';
+$this->idioma ['docente'] = 'Docente';
+$this->idioma ['enlaces'] = 'Enlaces';
+
+
+//DOCENTE
+
 $this->idioma ['tituloDocente'] = 'Docente';
 $this->idioma ['reportarMatriculado'] = 'Actualizar Matriculado';
 $this->idioma ['auditoriaDocente'] = 'Generar archivos auditoría';
