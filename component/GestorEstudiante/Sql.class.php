@@ -361,6 +361,58 @@ class Sql extends \Sql {
 			
 			// EGRESADO SNIES
 			
+			case "consultarGraduadoAcademica" :
+				
+				$cadenaSql = " SELECT ";
+				$cadenaSql .= " EST_COD CODIGO_ESTUDIANTE,";
+				$cadenaSql .= " TO_CHAR('1301') ies_code,";
+				$cadenaSql .= " EST_NOMBRE,";
+				$cadenaSql .= " TO_CHAR(eot_fecha_nac, 'yyyy-mm-dd') fecha_nacim,";
+				$cadenaSql .= " TO_CHAR('CO') pais_ln,";
+				$cadenaSql .= " TO_CHAR(DECODE (mun_dep_cod,0,11,'',11, mun_dep_cod)) departamento_ln,";
+				$cadenaSql .= " TO_CHAR(DECODE (mun_cod,0,11001,'',11001,99999,11001, mun_cod)) municipio_ln,";
+				$cadenaSql .= " TO_CHAR(DECODE(est_sexo,'M','01','F','02','01')) genero_code,";
+				$cadenaSql .= " eot_email email,";
+				$cadenaSql .= " DECODE(eot_estado_civil,1,'01',2,'02',3,'05',4,'03',5,'04', '01') est_civil_code,";
+				$cadenaSql .= " TO_CHAR(DECODE(est_tipo_iden,'C', 'CC', 'T', 'TI', 'E', 'CE', 'P', 'PS')) tipo_doc_unico,";
+				$cadenaSql .= " TO_CHAR(est_nro_iden) codigo_unico,";
+				$cadenaSql .= " TO_CHAR(DECODE(est_tipo_iden_ant,'C', 'CC', 'T', 'TI', 'E', 'CE', 'P', 'PS')) tipo_id_ant,";
+				$cadenaSql .= " est_nro_iden_ant codigo_id_ant,";
+				$cadenaSql .= " '57' pais_tel,";
+				$cadenaSql .= " '1' area_tel,";
+				$cadenaSql .= " TO_CHAR(est_telefono) numero_tel,";
+				$cadenaSql .= " as_cra_cod_snies pro_consecutivo,";
+				$cadenaSql .= " DECODE(LENGTH(est_cod),7,(SUBSTR(est_cod,1,2)+1900),11,(SUBSTR(est_cod, 1,4))) anio,";
+				$cadenaSql .= " DECODE(DECODE(LENGTH(est_cod),7,((SUBSTR(est_cod,3,1))),11,(SUBSTR(est_cod, 5,1))), '1','01','02') semestre,";
+				$cadenaSql .= " '02' es_transferencia,";
+				$cadenaSql .= " DECODE(CRA_JORNADA, 'DIURNA', '01', 'NOCTURNA', '02', '01' ) HORARIO_CODE,";
+				$cadenaSql .= " '01' PAGO,";
+				$cadenaSql .= " TO_NUMBER(TO_CHAR(egr_fecha_grado,'yyyy')) GRAD_ANNIO,";
+				$cadenaSql .= " DECODE(TO_NUMBER(TO_CHAR(egr_fecha_grado,'mm')),1,1,2,1,3,1,4,1,5,1,6,1,7,2,8,2,9,2,10,2,11,2,12,2) GRAD_SEMESTRE,";
+				$cadenaSql .= " 'no' ECAES_OBSERVACIONES,";
+				$cadenaSql .= " '0' ECAES_RESULTADOS,";
+				$cadenaSql .= " '11' DEPARTAMENTO,";//Donde se gradúa
+				$cadenaSql .= " '11001' MUNICIPIO,";//Donde se gradúa
+				$cadenaSql .= " '1301' CODIGO_ENT_AULA,";
+				$cadenaSql .= " EGR_ACTA_GRADO ACTA,";
+				$cadenaSql .= " EGR_FOLIO FOLIO,";
+				$cadenaSql .= " eot_nro_snp SNP";
+				$cadenaSql .= " FROM ACEGRESADO";
+				$cadenaSql .= " INNER JOIN mntac.acest";
+				$cadenaSql .= " ON egr_est_cod=est_cod";
+				$cadenaSql .= " INNER JOIN mntac.acestotr";
+				$cadenaSql .= " ON est_cod = eot_cod";
+				$cadenaSql .= " INNER JOIN accra_snies";
+				$cadenaSql .= " ON as_cra_cod=est_cra_cod";
+				$cadenaSql .= " INNER JOIN mntge.gemunicipio";
+				$cadenaSql .= " ON MUN_COD=DECODE(EOT_COD_MUN_NAC,0,11001,'',11001,EOT_COD_MUN_NAC)";
+				$cadenaSql .= " INNER JOIN accra";
+				$cadenaSql .= " ON CRA_COD = EST_CRA_COD";
+				$cadenaSql .= " WHERE TO_NUMBER(TO_CHAR(egr_fecha_grado,'yyyy'))='" . $variable ['annio'] . "'";
+				$cadenaSql .= " AND DECODE(TO_NUMBER(TO_CHAR(egr_fecha_grado,'mm')),1,1,2,1,3,1,4,1,5,1,6,1,7,3,8,3,9,3,10,3,11,3,12,3)='" . $variable ['semestre'] . "'";
+				
+				break;
+			
 			case "borrarEgresado" :
 				$cadenaSql = "DELETE FROM";
 				$cadenaSql .= " egresado ";

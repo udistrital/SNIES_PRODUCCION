@@ -24,6 +24,7 @@ class FormProcessor {
 		$this->esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 	}
 	function procesarFormulario() {
+		
 		$this->annio = $_REQUEST ['annio'];
 		$this->semestre = $_REQUEST ['semestre'];
 	
@@ -40,13 +41,13 @@ class FormProcessor {
 		 */
 		
 		// estudiante de la académica
-		$estudiante = $this->miComponente->consultarEstudianteAcademica ( $this->annio, $this->semestre );
+		$graduado = $this->miComponente->consultarGraduadoAcademica ( $this->annio, $this->semestre );
 		
 		$miProcesadorExcepcion = new procesadorExcepcion ();
 		// FORMATEA LOS VALORES NULOS, CODIFICA EXCEPCIONES
-		$estudiante = $miProcesadorExcepcion->procesarExcepcionEstudiante ( $estudiante );
+		$graduado = $miProcesadorExcepcion->procesarExcepcionEstudiante ( $graduado );
 		
-		$this->actualizarEstudiante ( $estudiante );
+		$this->actualizarEstudiante ( $graduado );
 		
 		// $valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 		// $valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );

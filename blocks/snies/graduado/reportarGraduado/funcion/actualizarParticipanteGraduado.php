@@ -38,31 +38,32 @@ class FormProcessor {
 		
 		// estudiante de la académica
 		
-		$graduado = $this->miComponente->consultarEstudianteAcademica ( $this->annio, $this->semestre );
-		exit;
+		$graduado = $this->miComponente->consultarGraduadoAcademica ( $this->annio, $this->semestre );
+		
 		$miProcesadorNombre = new procesadorNombre ();
 		
 		//Busca y presenta los caracteres inválidos
-		$caracteresInvalidos = $miProcesadorNombre->buscarCaracteresInvalidos ( $estudiante, 'EST_NOMBRE' );
+		$caracteresInvalidos = $miProcesadorNombre->buscarCaracteresInvalidos ( $graduado, 'EST_NOMBRE' );
+		
 		
 		// quita acentos del nombre
-		$estudiante = $miProcesadorNombre->quitarAcento ( $estudiante, 'EST_NOMBRE' );
+		$graduado = $miProcesadorNombre->quitarAcento ( $graduado, 'EST_NOMBRE' );
 		
 		// descompone nombre completo en sus partes y las aglega al final de cada registro
-		foreach ( $estudiante as $clave => $valor ) {
+		foreach ( $graduado as $clave => $valor ) {
 			// echo $estudiante [$clave] ['CODIGO_UNICO'].'<br>';
-			$nombreCompleto = $miProcesadorNombre->dividirNombreCompleto ( $estudiante [$clave] ['EST_NOMBRE'] );
-			$estudiante [$clave] ['PRIMER_APELLIDO'] = $nombreCompleto ['primer_apellido'];
-			$estudiante [$clave] ['SEGUNDO_APELLIDO'] = $nombreCompleto ['segundo_apellido'];
-			$estudiante [$clave] ['PRIMER_NOMBRE'] = $nombreCompleto ['primer_nombre'];
-			$estudiante [$clave] ['SEGUNDO_NOMBRE'] = $nombreCompleto ['segundo_nombre'];
+			$nombreCompleto = $miProcesadorNombre->dividirNombreCompleto ( $graduado [$clave] ['EST_NOMBRE'] );
+			$graduado [$clave] ['PRIMER_APELLIDO'] = $nombreCompleto ['primer_apellido'];
+			$graduado [$clave] ['SEGUNDO_APELLIDO'] = $nombreCompleto ['segundo_apellido'];
+			$graduado [$clave] ['PRIMER_NOMBRE'] = $nombreCompleto ['primer_nombre'];
+			$graduado [$clave] ['SEGUNDO_NOMBRE'] = $nombreCompleto ['segundo_nombre'];
 		}
 		
 		$miProcesadorExcepcion = new procesadorExcepcion ();
 		// FORMATEA LOS VALORES NULOS, CODIFICA EXCEPCIONES
-		$estudiante = $miProcesadorExcepcion->procesarExcepcionEstudiante ( $estudiante );
+		$graduado = $miProcesadorExcepcion->procesarExcepcionEstudiante ( $graduado );
 		
-		$this->actualizarParticipante ( $estudiante );
+		$this->actualizarParticipante ( $graduado );
 		
 		// $valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 		// $valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );

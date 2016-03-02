@@ -41,10 +41,10 @@ class Funcion {
 		include_once ($this->ruta . "/funcion/actualizarParticipanteGraduado.php");
 	}
 	function actualizarEstudiante() {
-		include_once ($this->ruta . "/funcion/actualizarEstudiante.php");
+		include_once ($this->ruta . "/funcion/actualizarEstudianteGraduado.php");
 	}
-	function actualizarMatriculado() {
-		include_once ($this->ruta . "/funcion/actualizarMatriculado.php");
+	function actualizarGraduado() {
+		include_once ($this->ruta . "/funcion/actualizarGraduado.php");
 	}
 	function generarCSV() {
 		include_once ($this->ruta . "/funcion/generarCSV.php");
@@ -61,17 +61,14 @@ class Funcion {
 					$this->actualizarParticipante ();
 					break;
 				
-				case 'actualizarEstudiante' :
+				case 'actualizarEstudianteGraduado' :
 					$this->actualizarEstudiante ();
 					break;
 				
-				case 'actualizarMatriculado' :
-					$this->actualizarMatriculado ();
+				case 'actualizarGraduado' :
+					$this->actualizarGraduado ();
 					break;
-				
-				case 'actualizarMatriculado' :
-					$this->actualizarMatriculado ();
-					break;
+
 				
 				case 'generarCSV' :
 					$this->generarCSV ();

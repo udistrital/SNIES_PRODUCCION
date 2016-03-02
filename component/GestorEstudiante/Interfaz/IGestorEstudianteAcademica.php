@@ -57,6 +57,9 @@ interface IGestorEstudiante {
 	function borrarMatriculado($estudiante);
 	function borrarMatriculadoPeriodoTodos( $annio, $semestre);
 	function registrarMatriculado($estudiante, $annio, $semestre);
+	
+	//GRADUADO
+	function consultarGraduadoAcademica($annio, $semestre);
 }
 
 ?>

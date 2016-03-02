@@ -197,12 +197,12 @@ class estudiante implements IGestorEstudiante {
 		
 		return $resultado;
 	}
-	function borrarEstudianteProgramaPeriodoTodos($annio, $semestre ) {
+	function borrarEstudianteProgramaPeriodoTodos($annio, $semestre) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-		$variable['ANNIO']=$annio;
-		$variable['SEMESTRE']=$semestre;
+		$variable ['ANNIO'] = $annio;
+		$variable ['SEMESTRE'] = $semestre;
 		$cadenaSql = $this->miSql->cadena_sql ( 'borrarEstudianteProgramaPeriodoTodos', $variable );
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
@@ -214,8 +214,6 @@ class estudiante implements IGestorEstudiante {
 		}
 		return $resultado;
 	}
-	
-	
 	function registrarEstudiantePrograma($estudiante) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
@@ -249,14 +247,14 @@ class estudiante implements IGestorEstudiante {
 		}
 		return $resultado;
 	}
-	function borrarMatriculadoPeriodoTodos( $annio, $semestre) {
+	function borrarMatriculadoPeriodoTodos($annio, $semestre) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		$estudiante ['ANNIO_MATRICULA'] = $annio;
 		$estudiante ['SEMESTRE_MATRICULA'] = $semestre;
 		$cadenaSql = $this->miSql->cadena_sql ( 'borrarMatriculadoPeriodoTodos', $estudiante );
-
+		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
 		if ($resultado == FALSE) {
 			$error = $esteRecursoDB->obtener_error ();
@@ -266,9 +264,6 @@ class estudiante implements IGestorEstudiante {
 		}
 		return $resultado;
 	}
-	
-	
-	
 	function registrarMatriculado($estudiante, $annio, $semestre) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
@@ -290,7 +285,25 @@ class estudiante implements IGestorEstudiante {
 		return $resultado;
 	}
 	
-	// //EGRESADO
+	// //GRADUADO
+	function consultarGraduadoAcademica($annio, $semestre) {
+		$conexion = "academica";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		// el semestre 03 de la universidad corresponde al semestre 02 de SNIES
+		$periodo ['annio'] = $annio;
+		if ($semestre == 02) {
+			$periodo ['semestre'] = 3;
+			;
+		} else {
+			$periodo ['semestre'] = 1;
+		}
+		
+		$cadenaSql = $this->miSql->cadena_sql ( 'consultarGraduadoAcademica', $periodo );
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+		
+		return $resultado;
+	}
+	
 	function borrarEgresado($estudiante) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
