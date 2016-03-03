@@ -303,12 +303,13 @@ class estudiante implements IGestorEstudiante {
 		
 		return $resultado;
 	}
-	
-	function borrarEgresado($estudiante) {
+	function borrarGraduadoPeriodoTodos($annio, $semestre) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-		$cadenaSql = $this->miSql->cadena_sql ( 'borrarEgresado', $estudiante );
+		$variable ['ANNIO_GRADO'] = $annio;
+		$variable ['SEMESTRE_GRADO'] = $semestre;
+		$cadenaSql = $this->miSql->cadena_sql ( 'borrarGraduadoPeriodoTodos', $variable );
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
 		if ($resultado == FALSE) {
@@ -319,8 +320,22 @@ class estudiante implements IGestorEstudiante {
 		}
 		return $resultado;
 	}
-	
-	// //GRADUADO
+	function registrarGraduado($estudiante) {
+		$conexion = "sniesLocal";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+
+		$cadenaSql = $this->miSql->cadena_sql ( 'registrarGraduado', $estudiante );
+		
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
+		if ($resultado == FALSE) {
+			$error = $esteRecursoDB->obtener_error ();
+			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';
+			echo $cadenaSql;
+			var_dump ( $error );
+		}
+		
+		return $resultado;
+	}
 	function borrarGraduado($estudiante) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );

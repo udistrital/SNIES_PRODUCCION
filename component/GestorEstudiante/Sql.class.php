@@ -387,12 +387,13 @@ class Sql extends \Sql {
 				$cadenaSql .= " '02' es_transferencia,";
 				$cadenaSql .= " DECODE(CRA_JORNADA, 'DIURNA', '01', 'NOCTURNA', '02', '01' ) HORARIO_CODE,";
 				$cadenaSql .= " '01' PAGO,";
+				$cadenaSql .= " egr_fecha_grado FECHA_GRADO,";
 				$cadenaSql .= " TO_NUMBER(TO_CHAR(egr_fecha_grado,'yyyy')) GRAD_ANNIO,";
-				$cadenaSql .= " DECODE(TO_NUMBER(TO_CHAR(egr_fecha_grado,'mm')),1,1,2,1,3,1,4,1,5,1,6,1,7,2,8,2,9,2,10,2,11,2,12,2) GRAD_SEMESTRE,";
+				$cadenaSql .= " DECODE(TO_NUMBER(TO_CHAR(egr_fecha_grado,'mm')),1,'01',2,'01',3,'01',4,'01',5,'01',6,'01',7,'02',8,'02',9,'02',10,'02',11,'02',12,'02') GRAD_SEMESTRE,";
 				$cadenaSql .= " 'no' ECAES_OBSERVACIONES,";
 				$cadenaSql .= " '0' ECAES_RESULTADOS,";
-				$cadenaSql .= " '11' DEPARTAMENTO,";//Donde se gradúa
-				$cadenaSql .= " '11001' MUNICIPIO,";//Donde se gradúa
+				$cadenaSql .= " '11' DEPARTAMENTO,"; // Donde se gradúa
+				$cadenaSql .= " '11001' MUNICIPIO,"; // Donde se gradúa
 				$cadenaSql .= " '1301' CODIGO_ENT_AULA,";
 				$cadenaSql .= " EGR_ACTA_GRADO ACTA,";
 				$cadenaSql .= " EGR_FOLIO FOLIO,";
@@ -422,6 +423,55 @@ class Sql extends \Sql {
 				break;
 			
 			// GRADUADO SNIES
+			
+			case "borrarGraduadoPeriodoTodos" :
+				$cadenaSql = "DELETE FROM";
+				$cadenaSql .= " graduado ";
+				$cadenaSql .= " WHERE grad_annio='" . $variable ['ANNIO_GRADO'] . "'";
+				$cadenaSql .= " AND grad_semestre='" . $variable ['SEMESTRE_GRADO'] . "'";
+				
+				break;
+			
+			case "registrarGraduado" :
+				$cadenaSql = " INSERT";
+				$cadenaSql .= " INTO graduado";
+				$cadenaSql .= " (";
+				$cadenaSql .= " ies_code,";
+				$cadenaSql .= " grad_annio,";
+				$cadenaSql .= " grad_semestre,";
+				$cadenaSql .= " codigo_unico,";
+				$cadenaSql .= " pro_consecutivo,";
+				$cadenaSql .= " fecha_grado,";
+				$cadenaSql .= " ecaes_observaciones,";
+				$cadenaSql .= " ecaes_resultados,";
+				$cadenaSql .= " departamento,";
+				$cadenaSql .= " municipio,";
+				$cadenaSql .= " codigo_ent_aula,";
+				$cadenaSql .= " acta,";
+				$cadenaSql .= " folio,";
+				$cadenaSql .= " tipo_doc_unico,";
+				$cadenaSql .= " snp";
+				$cadenaSql .= " )";
+				$cadenaSql .= " VALUES";
+				$cadenaSql .= " (";
+				$cadenaSql .= "'" . $variable ['IES_CODE'] . "', ";
+				$cadenaSql .= "'" . $variable ['GRAD_ANNIO'] . "', ";
+				$cadenaSql .= "'" . $variable ['GRAD_SEMESTRE'] . "', ";
+				$cadenaSql .= "'" . $variable ['CODIGO_UNICO'] . "', ";
+				$cadenaSql .= "'" . $variable ['PRO_CONSECUTIVO'] . "', ";
+				$cadenaSql .= "'" . $variable ['FECHA_GRADO'] . "', ";
+				$cadenaSql .= "'" . $variable ['ECAES_OBSERVACIONES'] . "', ";
+				$cadenaSql .= "'" . $variable ['ECAES_RESULTADOS'] . "', ";
+				$cadenaSql .= "'" . $variable ['DEPARTAMENTO'] . "', ";
+				$cadenaSql .= "'" . $variable ['MUNICIPIO'] . "', ";
+				$cadenaSql .= "'" . $variable ['CODIGO_ENT_AULA'] . "', ";
+				$cadenaSql .= "'" . $variable ['ACTA'] . "', ";
+				$cadenaSql .= "'" . $variable ['FOLIO'] . "', ";	
+				$cadenaSql .= "'" . $variable ['TIPO_DOC_UNICO'] . "', ";
+				$cadenaSql .= "'" . $variable ['SNP'] . "' ";
+				$cadenaSql .= " )";
+			
+				break;
 			
 			case "borrarGraduado" :
 				$cadenaSql = "DELETE FROM";

@@ -82,7 +82,7 @@ class registrarForm {
 			<!--<th>Total</th>  -->
 			<th>1. Actualizar Participante</th>
 			<th>2. Actualizar Estudiante</th>
-			<th>3. Actualizar Matriculado</th>
+			<th>3. Actualizar Graduado</th>
 			<th>Errores Participante</th>
 			<th>Última Actualización</th>
 		</tr>

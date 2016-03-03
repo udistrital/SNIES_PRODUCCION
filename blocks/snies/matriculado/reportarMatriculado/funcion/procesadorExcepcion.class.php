@@ -11,7 +11,6 @@ class procesadorExcepcion {
 	 * @return \bloqueSnies\Ambigous
 	 */
 	function procesarExcepcionEstudiante($estudiante) {
-
 		foreach ( $estudiante as $clave => $valor ) {
 			
 			$estudiante [$clave] ['FECHA_NACIM'] = $this->excepcionFechaNacim ( $estudiante [$clave] );
@@ -25,6 +24,22 @@ class procesadorExcepcion {
 		}
 		
 		return $estudiante;
+	}
+	
+
+	/**
+	 * Excepciones para registrar en la tabla graduados
+	 * 
+	 * @param unknown $graduado
+	 * @return \bloqueSnies\Ambigous
+	 */
+	function procesarExcepcionGraduado($graduado) {
+		foreach ( $graduado as $clave => $valor ) {
+			
+			$graduado [$clave] ['SNP'] = $this->excepcionSNP ( $graduado [$clave] );
+		}
+		
+		return $graduado;
 	}
 	
 	/**
@@ -188,6 +203,22 @@ class procesadorExcepcion {
 			$resultado = $unEstudiante ['NUMERO_TEL'];
 		} else {
 			$resultado = ''; // para distinguir los que tiene valor nulo
+		}
+		
+		return $resultado;
+	}
+	
+	/**
+	 * 
+	 * @param unknown $graduado
+	 * @return Ambigous <string, unknown>
+	 */
+	function excepcionSNP($graduado) {
+			
+		if (isset ( $graduado ['SNP'] )) {
+			$resultado = $graduado ['SNP'];
+		} else {
+			$resultado = 'N/A'; // para distinguir los que tiene valor nulo
 		}
 		
 		return $resultado;
