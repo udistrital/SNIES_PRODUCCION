@@ -285,6 +285,24 @@ class estudiante implements IGestorEstudiante {
 		return $resultado;
 	}
 	
+	
+	//EGRESADO
+	function borrarEgresado($estudiante) {
+		$conexion = "sniesLocal";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+	
+		$cadenaSql = $this->miSql->cadena_sql ( 'borrarEgresado', $estudiante );
+	
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
+		if ($resultado == FALSE) {
+			$error = $esteRecursoDB->obtener_error ();
+			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';
+			echo $cadenaSql;
+			var_dump ( $error );
+		}
+		return $resultado;
+	}
+	
 	// //GRADUADO
 	function consultarGraduadoAcademica($annio, $semestre) {
 		$conexion = "academica";

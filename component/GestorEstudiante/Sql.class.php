@@ -195,7 +195,7 @@ class Sql extends \Sql {
 			case "consultarEstudiante" :
 				$cadenaSql = "SELECT codigo_unico, tipo_doc_unico FROM";
 				$cadenaSql .= " estudiante ";
-				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
+				//$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
 				
 				break;
 			
