@@ -127,6 +127,16 @@ class estudiante implements IGestorEstudiante {
 		
 		return $resultado;
 	}
+	function consultarEstudianteTodos() {
+		$conexion = "sniesLocal";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		$cadenaSql = $this->miSql->cadena_sql ( 'consultarEstudianteTodos', '' );
+		
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+		
+		return $resultado;
+	}
 	function actualizarEstudiante($estudiante) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
