@@ -41,6 +41,7 @@ $this->idioma ['enlaces'] = 'Enlaces';
 
 $this->idioma ['tituloDocente'] = 'Docente';
 $this->idioma ['reportarMatriculado'] = 'Actualizar Matriculado';
+$this->idioma ['reportarDocenteDoctoradoMaestria'] = 'Actualizar Docente Doctorado y Maestria';
 $this->idioma ['auditoriaDocente'] = 'Generar archivos auditoría';
 
 //

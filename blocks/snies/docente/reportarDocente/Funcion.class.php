@@ -40,10 +40,14 @@ class Funcion {
 	function actualizarParticipanteDocente() {
 		include_once ($this->ruta . "/funcion/actualizarParticipanteDocente.php");
 	}
+	
+	function actualizarDocenteDoctoradoMaestria() {
+		include_once ($this->ruta . "/funcion/actualizarDocenteDoctoradoMaestria.php");
+	}
+	
 	function actualizarDocente() {
 		include_once ($this->ruta . "/funcion/actualizarDocente.php");
 	}
-	
 	function action() {
 		if (isset ( $_REQUEST ['procesarAjax'] )) {
 			$this->procesarAjax ();
@@ -58,11 +62,14 @@ class Funcion {
 					$this->actualizarDocente ();
 					break;
 				
+				case 'actualizarDocenteDoctoradoMaestria' :
+					$this->actualizarDocenteDoctoradoMaestria ();
+					break;
+				
 				case 'generarCsvDocente' :
 					$this->generarCsvDocente ();
 					break;
 				
-				case 'actualizar' :
 				case 'actualizar' :
 					if (isset ( $_REQUEST ["botonRegresar"] ) && $_REQUEST ["botonRegresar"] == 'true') {
 						$arreglo = unserialize ( $_REQUEST ['arreglo'] );
