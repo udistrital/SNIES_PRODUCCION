@@ -271,4 +271,73 @@ class Docente implements IGestorDocente {
 		}
 		return $resultado;
 	}
+	
+	function consultarDocenteDoctoradoMaestria($annio, $semestre) {
+		$conexion = "academica";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+	
+		// el semestre 03 de la universidad corresponde al semestre 02 de SNIES
+		$variable ['annio'] = $annio;
+		if ($semestre == 02) {
+			$variable ['semestre'] = 3;
+			;
+		} else {
+			$variable ['semestre'] = 1;
+		}
+		$cadenaSql = $this->miSql->cadena_sql ( 'consultarDocenteDoctoradoMaestria', $variable );
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+	
+		return $resultado;
+	}
+	
+	function borrarDocenteDoctoradoMaestriaTodos($annio, $semestre) {
+		$conexion = "sniesLocal";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+	
+		$variable ['ANNIO'] = $annio;
+		$variable ['SEMESTRE'] = $semestre;
+		$cadenaSql = $this->miSql->cadena_sql ( 'borrarDocenteDoctoradoMaestriaTodos', $variable );
+	
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
+		if ($resultado == FALSE) {
+			$error = $esteRecursoDB->obtener_error ();
+			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';
+			echo $cadenaSql;
+			var_dump ( $error );
+		}
+		return $resultado;
+	}
+	function registrarDocenteDoctoradoMaestria($docente) {
+		$conexion = "sniesLocal";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+			// Ajusta el formato del mes de acuerdo al SNIES 1->01; 2->03
+			if ($docente ['SEMESTRE'] == 1)
+				$docente ['SEMESTRE'] = '01';
+			{
+			}
+			if ($docente ['SEMESTRE'] == 3) 
+
+			{
+				$docente ['SEMESTRE'] = '02';
+			}		
+	
+		$cadenaSql = $this->miSql->cadena_sql ( 'registrarDocenteDoctoradoMaestria', $docente );
+	
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
+	
+		if ($resultado == FALSE) {
+			$error = $esteRecursoDB->obtener_error ();
+			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';
+			echo $cadenaSql;
+			var_dump ( $error );
+		}
+	
+		return $resultado;
+	}
+	
+	
+	
+	
+	
 }

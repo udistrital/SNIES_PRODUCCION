@@ -70,7 +70,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " AND car_estado='A'";
 				$cadenaSql .= " )";
 				// $cadenaSql .= " AND doc_nro_iden=3182871";
-				//$cadenaSql .= " AND doc_nro_iden=79708124";
+				// $cadenaSql .= " AND doc_nro_iden=79708124";
 				
 				break;
 			
@@ -306,10 +306,9 @@ class Sql extends \Sql {
 				// $cadenaSql .= " certificacion_tic";
 				$cadenaSql .= " )";
 				
-				
-				//echo $cadenaSql.'<br>';
-				//echo 'SE DEBE INCLUIR LA UNIDAD ORGANIACIONAL ES DECIR LA FACULTAD';
-				//exit ();
+				// echo $cadenaSql.'<br>';
+				// echo 'SE DEBE INCLUIR LA UNIDAD ORGANIACIONAL ES DECIR LA FACULTAD';
+				// exit ();
 				
 				break;
 			
@@ -326,6 +325,64 @@ class Sql extends \Sql {
 				$cadenaSql .= " docente_h ";
 				$cadenaSql .= " WHERE annio='" . $variable ['ANNIO'] . "'";
 				$cadenaSql .= " AND semestre='" . $variable ['SEMESTRE'] . "'";
+				
+				break;
+			
+			case "consultarDocenteDoctoradoMaestria" :
+				$cadenaSql = " SELECT DISTINCT ";
+				$cadenaSql .= " '1301' IES_CODE,";
+				$cadenaSql .= " car_doc_nro CODIGO_UNICO,";
+				$cadenaSql .= " DECODE(ACDOCENTE.DOC_TIP_IDEN,'', 'CC', 'C', 'CC', 'T','TI', 'E', 'CE', 'P', 'PS' ) TIPO_DOC_UNICO,";
+				$cadenaSql .= " ACCURSOS.CUR_APE_ANO ANNIO,";
+				$cadenaSql .= " ACCURSOS.CUR_APE_PER SEMESTRE,";
+				$cadenaSql .= " AS_CRA_COD_SNIES PRO_CONSECUTIVO";
+				$cadenaSql .= " FROM ACCARGAS";
+				$cadenaSql .= " INNER JOIN ACHORARIOS";
+				$cadenaSql .= " ON ACCARGAS.CAR_HOR_ID = ACHORARIOS.HOR_ID";
+				$cadenaSql .= " INNER JOIN ACCURSOS";
+				$cadenaSql .= " ON CUR_ID=HOR_ID_CURSO";
+				$cadenaSql .= " INNER JOIN ACCRA";
+				$cadenaSql .= " ON CRA_COD=CUR_CRA_COD";
+				$cadenaSql .= " INNER JOIN ACTIPCRA";
+				$cadenaSql .= " ON TRA_COD =CRA_tip_cra";
+				$cadenaSql .= " INNER JOIN ACDOCENTE";
+				$cadenaSql .= " ON DOC_NRO_IDEN =CAR_DOC_NRO";
+				$cadenaSql .= " INNER JOIN accra_snies";
+				$cadenaSql .= " ON as_cra_cod =cra_cod";
+				$cadenaSql .= " WHERE CUR_APE_ANO ='" . $variable ['annio'] . "'";
+				$cadenaSql .= " AND CUR_APE_PER ='" . $variable ['semestre'] . "'";
+				$cadenaSql .= " AND TRA_cod_NIVEL IN ( '2', '3', '4')"; // 2:especializacion, 3:maestria, 4:doctorado
+
+				break;
+			
+			case "borrarDocenteDoctoradoMaestriaTodos" :
+				$cadenaSql = "DELETE FROM";
+				$cadenaSql .= " profesores_doctorado ";
+				$cadenaSql .= " WHERE annio='" . $variable ['ANNIO'] . "'";
+				$cadenaSql .= " AND semestre='" . $variable ['SEMESTRE'] . "'";
+				
+				break;
+			
+			case "registrarDocenteDoctoradoMaestria" :
+				$cadenaSql = " INSERT";
+				$cadenaSql .= " INTO profesores_doctorado";
+				$cadenaSql .= " (";
+				$cadenaSql .= " ies_code,";
+				$cadenaSql .= " codigo_unico,";
+				$cadenaSql .= " tipo_doc_unico,";
+				$cadenaSql .= " annio,";
+				$cadenaSql .= " semestre,";
+				$cadenaSql .= " pro_consecutivo";
+				$cadenaSql .= " )";
+				$cadenaSql .= " VALUES";
+				$cadenaSql .= " (";
+				$cadenaSql .= "'" . $variable ['IES_CODE'] . "', ";
+				$cadenaSql .= "'" . $variable ['CODIGO_UNICO'] . "', ";
+				$cadenaSql .= "'" . $variable ['TIPO_DOC_UNICO'] . "', ";
+				$cadenaSql .= "'" . $variable ['ANNIO'] . "', ";
+				$cadenaSql .= "'" . $variable ['SEMESTRE'] . "', ";
+				$cadenaSql .= "'" . $variable ['PRO_CONSECUTIVO'] . "' ";
+				$cadenaSql .= " )";
 				
 				break;
 		}

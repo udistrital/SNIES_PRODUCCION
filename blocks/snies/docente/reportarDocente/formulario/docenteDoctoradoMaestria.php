@@ -79,7 +79,7 @@ class registrarForm {
 			<th>Variable</th>
 			<th>Año</th>
 			<th>Período</th>
-			<th>1. Actualizar ProfesorMaestria</th>
+			<th>1. Actualizar profesores_doctorado</th>
 		</tr>
 	</thead>
 
