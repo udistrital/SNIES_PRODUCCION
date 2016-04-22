@@ -49,6 +49,24 @@ class estudiante implements IGestorEstudiante {
 		return $resultado;
 	}
 	
+	function consultarEstudianteBpudc($annio, $semestre) {
+		$conexion = "academica";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		// el semestre 03 de la universidad corresponde al semestre 02 de SNIES
+		$periodo ['annio'] = $annio;
+		if ($semestre == 02) {
+			$periodo ['semestre'] = 3;
+			;
+		} else {
+			$periodo ['semestre'] = 1;
+		}
+	
+		$cadenaSql = $this->miSql->cadena_sql ( 'consultarEstudianteBpudc', $periodo );
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+	
+		return $resultado;
+	}
+	
 	// ////PARTICIPANTE SNIES
 	function consultarParticipante($estudiante) {
 		$conexion = "sniesLocal";

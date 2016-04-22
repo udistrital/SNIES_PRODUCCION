@@ -14,6 +14,14 @@ interface IGestorEstudiante {
 	function consultarEstudianteAcademica($annio, $semestre);
 	
 	/**
+	 * Consulta los datos de los estudiantes para la Base Poblacional Unificada Distrito Capital
+	 * @param unknown $annio
+	 * @param unknown $semestre
+	 */
+	function consultarEstudianteBpudc($annio, $semestre);
+	
+	
+	/**
 	 * Consulta el registro para un codigo_unico de estudiante
 	 *
 	 * @param unknown $estudiante        	

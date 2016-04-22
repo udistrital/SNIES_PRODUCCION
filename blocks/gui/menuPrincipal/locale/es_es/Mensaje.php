@@ -62,9 +62,9 @@ $this->idioma ['generarReporteGraduado'] = 'Generar csv';
 
 
 
-//DPS Departamento de Prosperidad Social
-$this->idioma ['dps'] = 'DPS';
-$this->idioma ['jovenesenaccion'] = 'Jóvenes en Acción';
+//MIN TIC
+$this->idioma ['mintic'] = 'MIN TIC';
+$this->idioma ['bpudc'] = 'BPUDC';
 $this->idioma ['generarreporte'] = 'Generar Reporte';
 
 $this->idioma ['usuario'] = 'Usuarios';
