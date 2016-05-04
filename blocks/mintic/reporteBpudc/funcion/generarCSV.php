@@ -48,7 +48,7 @@ class FormProcessor {
 		}
 		
 		$miProcesadorExcepcion = new procesadorExcepcion ();
-		//FORMATEA LOS VALORES NULOS, CODIFICA EXCEPCIONES
+		// FORMATEA LOS VALORES NULOS, CODIFICA EXCEPCIONES
 		$estudiante = $miProcesadorExcepcion->procesarExcepcionEstudianteBPUDC ( $estudiante );
 		
 		$this->generarListadoEstudiantesBPUDC ( $estudiante );
@@ -71,7 +71,7 @@ class FormProcessor {
 				'PAIS_NAC',
 				'FEC_ID',
 				'SEXO',
-				/**'FEC_NAC',
+				'FEC_NAC',
 				'GRU_SANG',
 				'FACT_RH',
 				'ETNIA',
@@ -132,26 +132,26 @@ class FormProcessor {
 				'TEL_FIJO_CONTACTO_CONTACTO',
 				'TEL_CELULAR_CONTACTO_CONTACTO',
 				'CORREO_ELECTR_CONTACTO',
-				'NOMBRE_CONTACTO' */
-		) ,'|');
+				'NOMBRE_CONTACTO' 
+		), '|' );
+		
 		foreach ( $estudiante as $unEstudiante ) {
-				
+			
 			$estudianteBPUDC ['ID'] = $unEstudiante ['ID'];
 			$estudianteBPUDC ['NOMBRE_1'] = $unEstudiante ['NOMBRE_1'];
 			$estudianteBPUDC ['NOMBRE_2'] = $unEstudiante ['NOMBRE_2'];
 			$estudianteBPUDC ['APELLIDO_1'] = $unEstudiante ['APELLIDO_1'];
 			$estudianteBPUDC ['APELLIDO_2'] = $unEstudiante ['APELLIDO_2'];
-			$estudianteBPUDC ['TIP_ID'] = $unEstudiante ['TIP_ID'];
+			$estudianteBPUDC ['TIP_ID'] = isset ( $unEstudiante ['TIP_ID'] ) ? $unEstudiante ['TIP_ID'] : '';
 			$estudianteBPUDC ['NUM_ID'] = $unEstudiante ['NUM_ID'];
 			$estudianteBPUDC ['MUN_NAC'] = $unEstudiante ['MUN_NAC'];
 			$estudianteBPUDC ['PAIS_NAC'] = $unEstudiante ['PAIS_NAC'];
 			$estudianteBPUDC ['FEC_ID'] = $unEstudiante ['FEC_ID'];
 			$estudianteBPUDC ['SEXO'] = $unEstudiante ['SEXO'];
-			/**$estudianteBPUDC ['FEC_NAC'] = $unEstudiante ['FEC_NAC'];
+			$estudianteBPUDC ['FEC_NAC'] = isset ( $estudianteBPUDC ['FEC_NAC'] ) ? $estudianteBPUDC ['FEC_NAC'] : '';
 			$estudianteBPUDC ['GRU_SANG'] = $unEstudiante ['GRU_SANG'];
 			$estudianteBPUDC ['FACT_RH'] = $unEstudiante ['FACT_RH'];
-			//$estudianteBPUDC ['ETNIA'] = $unEstudiante ['ETNIA'];
-			$estudianteBPUDC ['CUAL_ETNIA'] = $unEstudiante ['CUAL_ETNIA'];
+			$estudianteBPUDC ['ETNIA'] = isset ( $unEstudiante ['ETNIA'] ) ? $unEstudiante ['ETNIA'] : '';
 			$estudianteBPUDC ['GENERO'] = $unEstudiante ['GENERO'];
 			$estudianteBPUDC ['CUAL_GENERO'] = $unEstudiante ['CUAL_GENERO'];
 			$estudianteBPUDC ['NOM_IDENTITARIO'] = $unEstudiante ['NOM_IDENTITARIO'];
@@ -186,7 +186,7 @@ class FormProcessor {
 			$estudianteBPUDC ['DIRECCION_RURAL'] = $unEstudiante ['DIRECCION_RURAL'];
 			$estudianteBPUDC ['ESTRATO'] = $unEstudiante ['ESTRATO'];
 			$estudianteBPUDC ['TEL_FIJO_CONTACTO'] = $unEstudiante ['TEL_FIJO_CONTACTO'];
-			//$estudianteBPUDC ['TEL_CELULAR_CONTACTO'] = $unEstudiante ['TEL_CELULAR_CONTACTO'];
+			$estudianteBPUDC ['TEL_CELULAR_CONTACTO'] = isset ( $estudianteBPUDC ['TEL_CELULAR_CONTACTO'] ) ? $estudianteBPUDC ['TEL_CELULAR_CONTACTO'] : '';
 			$estudianteBPUDC ['CORREO_ELECTR'] = $unEstudiante ['CORREO_ELECTR'];
 			$estudianteBPUDC ['LOCALIDAD_CONTACTO'] = $unEstudiante ['LOCALIDAD_CONTACTO'];
 			$estudianteBPUDC ['TIPO_ZONA_CONTACTO'] = $unEstudiante ['TIPO_ZONA_CONTACTO'];
@@ -208,9 +208,9 @@ class FormProcessor {
 			$estudianteBPUDC ['TEL_FIJO_CONTACTO_CONTACTO'] = $unEstudiante ['TEL_FIJO_CONTACTO_CONTACTO'];
 			$estudianteBPUDC ['TEL_CELULAR_CONTACTO_CONTACTO'] = $unEstudiante ['TEL_CELULAR_CONTACTO_CONTACTO'];
 			$estudianteBPUDC ['CORREO_ELECTR_CONTACTO'] = $unEstudiante ['CORREO_ELECTR_CONTACTO'];
-			$estudianteBPUDC ['NOMBRE_CONTACTO'] = $unEstudiante ['NOMBRE_CONTACTO'];*/
+			$estudianteBPUDC ['NOMBRE_CONTACTO'] = $unEstudiante ['NOMBRE_CONTACTO'];
 			
-			fputcsv ( $fp, $estudianteBPUDC,'|' );
+			fputcsv ( $fp, $estudianteBPUDC, '|' );
 		}
 		
 		fclose ( $fp );
