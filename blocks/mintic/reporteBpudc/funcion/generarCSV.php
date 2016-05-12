@@ -138,7 +138,6 @@ class FormProcessor {
 		), '|' );
 		
 		foreach ( $estudiante as $unEstudiante ) {
-			var_dump ( $unEstudiante ['FACT_RH'] );
 			
 			$estudianteBPUDC ['ID'] = isset ( $unEstudiante ['ID'] ) ? $unEstudiante ['ID'] : '';
 			$estudianteBPUDC ['NOMBRE_1'] = isset ( $unEstudiante ['NOMBRE_1'] ) ? $unEstudiante ['NOMBRE_1'] : '';
@@ -151,21 +150,44 @@ class FormProcessor {
 			$estudianteBPUDC ['PAIS_NAC'] = isset ( $unEstudiante ['PAIS_NAC'] ) ? $unEstudiante ['PAIS_NAC'] : '';
 			$estudianteBPUDC ['FEC_ID'] = isset ( $unEstudiante ['FEC_ID'] ) ? $unEstudiante ['FEC_ID'] : '';
 			$estudianteBPUDC ['SEXO'] = isset ( $unEstudiante ['SEXO'] ) ? $unEstudiante ['SEXO'] : '';
-			$estudianteBPUDC ['FEC_NAC'] = isset ( $unEstudiante ['FEC_NAC'] ) ? $unEstudiante ['FEC_NAC'] : '';
-			$estudianteBPUDC ['GRU_SANG'] = isset ( $unEstudiante ['GRU_SANG'] ) ? $unEstudiante ['GRU_SANG'] : '';
+			$estudianteBPUDC ['FEC_NAC'] = isset ( $unEstudiante ['FEC_NAC'] ) ? $unEstudiante ['FEC_NAC'] : '';			
+			if (isset ( $unEstudiante ['GRU_SANG'] )) {
+				
+				switch ($unEstudiante ['GRU_SANG']) {
+					
+					case 'A' :
+						$estudianteBPUDC ['GRU_SANG'] = 'A';
+						break;
+					case 'B' :
+						$estudianteBPUDC ['GRU_SANG'] = 'B';
+						break;
+					case 'AB' :
+						$estudianteBPUDC ['GRU_SANG'] = 'AB';
+						break;
+					case 'O' :
+						$estudianteBPUDC ['GRU_SANG'] = 'O';
+						break;
+						$estudianteBPUDC ['GRU_SANG'] = '';
+					default :
+				}
+			} else {
+				$estudianteBPUDC ['GRU_SANG'] = '';
+			}
 			if (isset ( $unEstudiante ['FACT_RH'] )) {
 				
 				switch ($unEstudiante ['FACT_RH']) {
 					
 					case '+' :
-						$estudianteBPUDC ['FACT_RH'] = 'positivo';
+						$estudianteBPUDC ['FACT_RH'] = '+';
 						break;
 					case '-' :
-						$estudianteBPUDC ['FACT_RH'] = 'negativo';
+						$estudianteBPUDC ['FACT_RH'] = '-';
 						break;
+						$estudianteBPUDC ['FACT_RH'] = '';
+					default :
 				}
 			} else {
-				$estudianteBPUDC ['FACT_RH'] = 'no existe';
+				$estudianteBPUDC ['FACT_RH'] = '';
 			}
 			$estudianteBPUDC ['ETNIA'] = isset ( $unEstudiante ['ETNIA'] ) ? $unEstudiante ['ETNIA'] : '';
 			$estudianteBPUDC ['CUAL_ETNIA'] = isset ( $unEstudiante ['CUAL_ETNIA'] ) ? $unEstudiante ['CUAL_ETNIA'] : '';
@@ -226,8 +248,7 @@ class FormProcessor {
 			$estudianteBPUDC ['TEL_CELULAR_CONTACTO_CONTACTO'] = isset ( $unEstudiante ['TEL_CELULAR_CONTACTO_CONTACTO'] ) ? $unEstudiante ['TEL_CELULAR_CONTACTO_CONTACTO'] : '';
 			$estudianteBPUDC ['CORREO_ELECTR_CONTACTO'] = isset ( $unEstudiante ['CORREO_ELECTR_CONTACTO'] ) ? $unEstudiante ['CORREO_ELECTR_CONTACTO'] : '';
 			$estudianteBPUDC ['NOMBRE_CONTACTO'] = isset ( $unEstudiante ['NOMBRE_CONTACTO'] ) ? $unEstudiante ['NOMBRE_CONTACTO'] : '';
-			var_dump ( $estudianteBPUDC ['FACT_RH'] );
-			exit ();
+			var_dump ( $estudianteBPUDC ['GRU_SANG'] );
 			fputcsv ( $fp, $estudianteBPUDC, '|' );
 		}
 		
