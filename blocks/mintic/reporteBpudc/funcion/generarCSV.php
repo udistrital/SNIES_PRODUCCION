@@ -29,7 +29,9 @@ class FormProcessor {
 		
 		// estudiante de la académica
 		$estudiante = $this->miComponente->consultarEstudianteBpudc ( $this->annio, $this->semestre );
-
+		
+		// var_dump($estudiante);
+		
 		$miProcesadorNombre = new procesadorNombre ();
 		
 		// $caracteresInvalidos = $miProcesadorNombre->buscarCaracteresInvalidos ( $estudiante, 'EST_NOMBRE' );
@@ -47,9 +49,9 @@ class FormProcessor {
 			$estudiante [$clave] ['NOMBRE_2'] = $nombreCompleto ['segundo_nombre'];
 		}
 		
-		$miProcesadorExcepcion = new procesadorExcepcion ();
+		// $miProcesadorExcepcion = new procesadorExcepcion ();
 		// FORMATEA LOS VALORES NULOS, CODIFICA EXCEPCIONES
-		$estudiante = $miProcesadorExcepcion->procesarExcepcionEstudianteBPUDC ( $estudiante );
+		// $estudiante = $miProcesadorExcepcion->procesarExcepcionEstudianteBPUDC ( $estudiante );
 		
 		$this->generarListadoEstudiantesBPUDC ( $estudiante );
 		$raizDocumento = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" );
@@ -134,9 +136,9 @@ class FormProcessor {
 				'CORREO_ELECTR_CONTACTO',
 				'NOMBRE_CONTACTO' 
 		), '|' );
-		echo 'hola';
-		exit ();
+		
 		foreach ( $estudiante as $unEstudiante ) {
+			var_dump ( $unEstudiante ['FACT_RH'] );
 			
 			$estudianteBPUDC ['ID'] = isset ( $unEstudiante ['ID'] ) ? $unEstudiante ['ID'] : '';
 			$estudianteBPUDC ['NOMBRE_1'] = isset ( $unEstudiante ['NOMBRE_1'] ) ? $unEstudiante ['NOMBRE_1'] : '';
@@ -151,7 +153,20 @@ class FormProcessor {
 			$estudianteBPUDC ['SEXO'] = isset ( $unEstudiante ['SEXO'] ) ? $unEstudiante ['SEXO'] : '';
 			$estudianteBPUDC ['FEC_NAC'] = isset ( $unEstudiante ['FEC_NAC'] ) ? $unEstudiante ['FEC_NAC'] : '';
 			$estudianteBPUDC ['GRU_SANG'] = isset ( $unEstudiante ['GRU_SANG'] ) ? $unEstudiante ['GRU_SANG'] : '';
-			$estudianteBPUDC ['FACT_RH'] = isset ( $unEstudiante ['FACT_RH'] ) ? $unEstudiante ['FACT_RH'] : '';
+			if (isset ( $unEstudiante ['FACT_RH'] )) {
+				
+				switch ($unEstudiante ['FACT_RH']) {
+					
+					case '+' :
+						$estudianteBPUDC ['FACT_RH'] = 'positivo';
+						break;
+					case '-' :
+						$estudianteBPUDC ['FACT_RH'] = 'negativo';
+						break;
+				}
+			} else {
+				$estudianteBPUDC ['FACT_RH'] = 'no existe';
+			}
 			$estudianteBPUDC ['ETNIA'] = isset ( $unEstudiante ['ETNIA'] ) ? $unEstudiante ['ETNIA'] : '';
 			$estudianteBPUDC ['CUAL_ETNIA'] = isset ( $unEstudiante ['CUAL_ETNIA'] ) ? $unEstudiante ['CUAL_ETNIA'] : '';
 			$estudianteBPUDC ['GENERO'] = isset ( $unEstudiante ['GENERO'] ) ? $unEstudiante ['GENERO'] : '';
@@ -211,7 +226,8 @@ class FormProcessor {
 			$estudianteBPUDC ['TEL_CELULAR_CONTACTO_CONTACTO'] = isset ( $unEstudiante ['TEL_CELULAR_CONTACTO_CONTACTO'] ) ? $unEstudiante ['TEL_CELULAR_CONTACTO_CONTACTO'] : '';
 			$estudianteBPUDC ['CORREO_ELECTR_CONTACTO'] = isset ( $unEstudiante ['CORREO_ELECTR_CONTACTO'] ) ? $unEstudiante ['CORREO_ELECTR_CONTACTO'] : '';
 			$estudianteBPUDC ['NOMBRE_CONTACTO'] = isset ( $unEstudiante ['NOMBRE_CONTACTO'] ) ? $unEstudiante ['NOMBRE_CONTACTO'] : '';
-			
+			var_dump ( $estudianteBPUDC ['FACT_RH'] );
+			exit ();
 			fputcsv ( $fp, $estudianteBPUDC, '|' );
 		}
 		

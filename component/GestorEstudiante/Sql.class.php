@@ -174,7 +174,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " FROM ACEST";
 				$cadenaSql .= " INNER JOIN acestotr";
 				$cadenaSql .= " ON ACESTOTR.EOT_COD = ACEST.EST_COD";
-				$cadenaSql .= " WHERE EST_COD LIKE '2016%'";
+				$cadenaSql .= " WHERE EST_COD LIKE '20161020%'";
 				// $cadenaSql .= " WHERE EST_COD = '20161025106'";
 				// echo $cadenaSql;
 				// exit;
