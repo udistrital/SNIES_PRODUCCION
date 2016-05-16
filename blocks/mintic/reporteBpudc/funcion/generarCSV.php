@@ -38,7 +38,8 @@ class FormProcessor {
 		
 		// quita acentos del nombre
 		// $estudiante = $miProcesadorNombre->quitarAcento ( $estudiante, 'EST_NOMBRE' );
-		
+		echo 'consulta';
+
 		// descompone nombre completo en sus partes y las aglega al final de cada registro
 		foreach ( $estudiante as $clave => $valor ) {
 			// echo $estudiante [$clave] ['CODIGO_UNICO'].'<br>';
@@ -48,6 +49,8 @@ class FormProcessor {
 			$estudiante [$clave] ['NOMBRE_1'] = $nombreCompleto ['primer_nombre'];
 			$estudiante [$clave] ['NOMBRE_2'] = $nombreCompleto ['segundo_nombre'];
 		}
+		
+	
 		
 		// $miProcesadorExcepcion = new procesadorExcepcion ();
 		// FORMATEA LOS VALORES NULOS, CODIFICA EXCEPCIONES
@@ -145,12 +148,54 @@ class FormProcessor {
 			$estudianteBPUDC ['APELLIDO_1'] = isset ( $unEstudiante ['APELLIDO_1'] ) ? $unEstudiante ['APELLIDO_1'] : '';
 			$estudianteBPUDC ['APELLIDO_2'] = isset ( $unEstudiante ['APELLIDO_2'] ) ? $unEstudiante ['APELLIDO_2'] : '';
 			$estudianteBPUDC ['TIP_ID'] = isset ( $unEstudiante ['TIP_ID'] ) ? $unEstudiante ['TIP_ID'] : '';
+			if (isset ( $unEstudiante ['TIP_ID'] )) {
+				
+				switch ($unEstudiante ['TIP_ID']) {
+					
+					case 'T' :
+						$estudianteBPUDC ['TIP_ID'] = 'TI';
+						break;
+					case 'C' :
+						$estudianteBPUDC ['TIP_ID'] = 'CC';
+						break;
+					case 'E' :
+						$estudianteBPUDC ['TIP_ID'] = 'CE';
+						break;
+					case 'P' :
+						$estudianteBPUDC ['TIP_ID'] = 'PA';
+						break;
+					
+					default :
+						$estudianteBPUDC ['TIP_ID'] = 'CC';
+						break;
+				}
+			} else {
+				$estudianteBPUDC ['TIP_ID'] = '';
+			}
 			$estudianteBPUDC ['NUM_ID'] = isset ( $unEstudiante ['NUM_ID'] ) ? $unEstudiante ['NUM_ID'] : '';
 			$estudianteBPUDC ['MUN_NAC'] = isset ( $unEstudiante ['MUN_NAC'] ) ? $unEstudiante ['MUN_NAC'] : '';
 			$estudianteBPUDC ['PAIS_NAC'] = isset ( $unEstudiante ['PAIS_NAC'] ) ? $unEstudiante ['PAIS_NAC'] : '';
 			$estudianteBPUDC ['FEC_ID'] = isset ( $unEstudiante ['FEC_ID'] ) ? $unEstudiante ['FEC_ID'] : '';
 			$estudianteBPUDC ['SEXO'] = isset ( $unEstudiante ['SEXO'] ) ? $unEstudiante ['SEXO'] : '';
-			$estudianteBPUDC ['FEC_NAC'] = isset ( $unEstudiante ['FEC_NAC'] ) ? $unEstudiante ['FEC_NAC'] : '';			
+			if (isset ( $unEstudiante ['SEXO'] )) {
+			
+				switch ($unEstudiante ['SEXO']) {
+						
+					case 'F' :
+						$estudianteBPUDC ['SEXO'] = 'M';
+						break;
+					case 'M' :
+						$estudianteBPUDC ['SEXO'] = 'H';
+						break;
+							
+					default :
+						$estudianteBPUDC ['SEXO'] = '';
+						break;
+				}
+			} else {
+				$estudianteBPUDC ['GRU_SANG'] = '';
+			}
+			$estudianteBPUDC ['FEC_NAC'] = isset ( $unEstudiante ['FEC_NAC'] ) ? $unEstudiante ['FEC_NAC'] : '';
 			if (isset ( $unEstudiante ['GRU_SANG'] )) {
 				
 				switch ($unEstudiante ['GRU_SANG']) {
@@ -167,8 +212,10 @@ class FormProcessor {
 					case 'O' :
 						$estudianteBPUDC ['GRU_SANG'] = 'O';
 						break;
-						$estudianteBPUDC ['GRU_SANG'] = '';
+					
 					default :
+						$estudianteBPUDC ['GRU_SANG'] = '';
+						break;
 				}
 			} else {
 				$estudianteBPUDC ['GRU_SANG'] = '';
@@ -183,8 +230,9 @@ class FormProcessor {
 					case '-' :
 						$estudianteBPUDC ['FACT_RH'] = '-';
 						break;
-						$estudianteBPUDC ['FACT_RH'] = '';
 					default :
+						$estudianteBPUDC ['FACT_RH'] = '';
+						break;
 				}
 			} else {
 				$estudianteBPUDC ['FACT_RH'] = '';
@@ -248,7 +296,9 @@ class FormProcessor {
 			$estudianteBPUDC ['TEL_CELULAR_CONTACTO_CONTACTO'] = isset ( $unEstudiante ['TEL_CELULAR_CONTACTO_CONTACTO'] ) ? $unEstudiante ['TEL_CELULAR_CONTACTO_CONTACTO'] : '';
 			$estudianteBPUDC ['CORREO_ELECTR_CONTACTO'] = isset ( $unEstudiante ['CORREO_ELECTR_CONTACTO'] ) ? $unEstudiante ['CORREO_ELECTR_CONTACTO'] : '';
 			$estudianteBPUDC ['NOMBRE_CONTACTO'] = isset ( $unEstudiante ['NOMBRE_CONTACTO'] ) ? $unEstudiante ['NOMBRE_CONTACTO'] : '';
-			var_dump ( $estudianteBPUDC ['GRU_SANG'] );
+			//echo 'real';
+			//var_dump ( $unEstudiante ['TIP_ID'] );
+			//var_dump ( $estudianteBPUDC ['TIP_ID'] );
 			fputcsv ( $fp, $estudianteBPUDC, '|' );
 		}
 		

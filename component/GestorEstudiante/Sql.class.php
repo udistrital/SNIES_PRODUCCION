@@ -109,7 +109,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " 'CO' PAIS_NAC,";
 				$cadenaSql .= " '' FEC_ID,";
 				$cadenaSql .= " EOT_SEXO SEXO,";
-				$cadenaSql .= " EOT_FECHA_NAC FEC_NAC,";
+				$cadenaSql .= " TO_CHAR(to_date(EOT_FECHA_NAC),'YYYY-MM-DD') FEC_NAC,";
 				$cadenaSql .= " EOT_TIPOSANGRE GRU_SANG,";
 				$cadenaSql .= " EOT_RH FACT_RH,";
 				$cadenaSql .= " EOT_GRUPO_ETNICO ETNIA,";
@@ -174,7 +174,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " FROM ACEST";
 				$cadenaSql .= " INNER JOIN acestotr";
 				$cadenaSql .= " ON ACESTOTR.EOT_COD = ACEST.EST_COD";
-				$cadenaSql .= " WHERE EST_COD LIKE '20161020%'";
+				$cadenaSql .= " WHERE EST_COD > 20160000000";
 				// $cadenaSql .= " WHERE EST_COD = '20161025106'";
 				// echo $cadenaSql;
 				// exit;
