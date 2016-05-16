@@ -12,8 +12,8 @@ class procesadorExcepcion {
 	 */
 	function procesarExcepcionEstudiante($estudiante) {
 		foreach ( $estudiante as $clave => $valor ) {
-			
-			$estudiante [$clave] ['GRU_SANG'] = $this->excepcion_gru_sang ( $estudiante [$clave] );
+						
+			$estudiante [$clave] ['FECHA_NACIM'] = $this->excepcionFechaNacim ( $estudiante [$clave] );
 			$estudiante [$clave] ['MUNICIPIO_LN'] = $this->excepcionMunicipio ( $estudiante [$clave] );
 			$estudiante [$clave] ['DEPARTAMENTO_LN'] = $this->excepcionDepartamento ( $estudiante [$clave] );
 			$estudiante [$clave] ['EMAIL'] = $this->excepcionEmail ( $estudiante [$clave] );
@@ -26,26 +26,6 @@ class procesadorExcepcion {
 		return $estudiante;
 	}
 	
-	/**
-	 * BPUDC - Base de datos Poblacional Unificada Distrito Capital MINTIC
-	 * @param unknown $estudiante
-	 * @return \bloqueSnies\Ambigous
-	 */
-	function procesarExcepcionEstudianteBPUDC($estudiante) {
-		foreach ( $estudiante as $clave => $valor ) {
-			
-			$estudiante [$clave] ['GRU_SANG'] = $this->excepcionGruSang ( $estudiante [$clave] );
-			//$estudiante [$clave] ['MUNICIPIO_LN'] = $this->excepcionMunicipio ( $estudiante [$clave] );
-			//$estudiante [$clave] ['DEPARTAMENTO_LN'] = $this->excepcionDepartamento ( $estudiante [$clave] );
-			//$estudiante [$clave] ['EMAIL'] = $this->excepcionEmail ( $estudiante [$clave] );
-			//$estudiante [$clave] ['TIPO_DOC_UNICO'] = $this->excepcionTipoDocUnico ( $estudiante [$clave] );
-			//$estudiante [$clave] ['CODIGO_ID_ANT'] = $this->excepcionCodigoIdAnt ( $estudiante [$clave] );
-			//$estudiante [$clave] ['TIPO_ID_ANT'] = $this->excepcionTipoIdAnt ( $estudiante [$clave] );
-			//$estudiante [$clave] ['NUMERO_TEL'] = $this->excepcionNumeroTel ( $estudiante [$clave] );
-		}		
-				
-		return $estudiante;
-	}
 	
 	/**
 	 * Excepciones para registrar en la tabla graduados
@@ -60,23 +40,7 @@ class procesadorExcepcion {
 		}
 		
 		return $graduado;
-	}
-	
-	/**
-	 * Excepciones para grupo sanguineo
-	 * @param unknown $unEstudiante
-	 */
-	function excepcionGruSang($unEstudiante) {
-		if (isset ( $unEstudiante ['GRU_SANG'] )) {
-				
-			$resultado = $unEstudiante ['GRU_SANG'];
-
-		} else {			
-			$resultado = ' '; // para distinguir los que tienen valor nulo
-		}
-	
-		return $resultado;
-	}
+	}	
 	
 	
 	/**
