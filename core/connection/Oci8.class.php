@@ -98,11 +98,11 @@ class Oci8 extends ConectorDb {
 	 * @name conectar_db
 	 * @return void
 	 * @access public
-	 *        
+	 *
 	 */
 	function conectar_db() {
 		$this->enlace = oci_connect ( $this->usuario, $this->clave, $this->servidor . ':' . $this->puerto . '/' . $this->db, 'UTF8');
-		
+
 		if ($this->enlace) {
 			return $this->enlace;
 		} else {
@@ -116,7 +116,7 @@ class Oci8 extends ConectorDb {
 	 * @name probar_conexion
 	 * @return void
 	 * @access public
-	 *        
+	 *
 	 */
 	function probar_conexion() {
 		return $this->enlace;
@@ -129,7 +129,7 @@ class Oci8 extends ConectorDb {
 	 *        	resource enlace
 	 * @return void
 	 * @access public
-	 *        
+	 *
 	 */
 	function desconectar_db() {
 		oci_close ( $this->enlace );
@@ -156,7 +156,7 @@ class Oci8 extends ConectorDb {
 	 *        	string conexion_id
 	 * @return boolean
 	 * @access public
-	 *        
+	 *
 	 */
 	function obtener_error() {
 		return $this->error;
@@ -171,7 +171,7 @@ class Oci8 extends ConectorDb {
 	 *        	int numero
 	 * @return boolean
 	 * @access public
-	 *        
+	 *
 	 */
 	function registro_db($cadena, $numeroRegistros = 0) {
 		if (! is_resource ( $this->enlace )) {
@@ -189,34 +189,34 @@ class Oci8 extends ConectorDb {
 	// Fin del método registro_db
 	private function procesarResultado($cadenaParser, $numeroRegistros) {
 		unset ( $this->registro );
-		
+
 		$busqueda = OCIExecute ( $cadenaParser );
-		
+
 		if ($busqueda !== TRUE) {
 			$mensaje = "ERROR EN LA CADENA " . $cadena_sql;
 			error_log ( $mensaje );
 		}
 		if ($busqueda) {
-			
+
 			// carga una a una las filas en $this->registro
 			while ( $row = oci_fetch_array ( $cadenaParser, OCI_BOTH ) ) {
 				$this->registro [] = $row;
 			}
-			
+
 			// si por lo menos una fila es cargada a $this->registro entonces cuenta
 			if (isset ( $this->registro )) {
-				
+
 				$this->conteo = count ( $this->registro );
-				
+
 			}
-			
+
 			@OCIFreeCursor ( $cadenaParser );
 			// en caso de que existan cero (0) registros retorna falso ($this->conteo=false)
 			return $this->conteo;
 		} else {
 			$this->error = oci_error ();
 			echo $this->error ();
-			
+
 			return 0;
 		}
 	}
@@ -225,7 +225,7 @@ class Oci8 extends ConectorDb {
 	 * @name transaccion
 	 * @return boolean resultado
 	 * @access public
-	 *        
+	 *
 	 */
 	function transaccion($clausulas) {
 		$acceso = true;
@@ -251,8 +251,8 @@ class Oci8 extends ConectorDb {
 	/**
 	 *
 	 * @name db_admin
-	 *      
-	 *      
+	 *
+	 *
 	 */
 	function __construct($registro) {
 		$this->servidor = trim ( $registro ["dbdns"] );
@@ -278,7 +278,7 @@ class Oci8 extends ConectorDb {
 	 *        	string conexion_id
 	 * @return boolean
 	 * @access public
-	 *        
+	 *
 	 */
 	private function ejecutar_acceso_db($cadena, $esTransaccion = false) {
 		$cadenaParser = oci_parse ( $this->enlace, $cadena );

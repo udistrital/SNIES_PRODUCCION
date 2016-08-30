@@ -36,18 +36,18 @@ if (class_exists ( 'BloqueloginSso' ) === false) {
 		var $miFuncion;
 		var $miSql;
 		var $miConfigurador;
-		public 
+		public
 
-	
-    
+
+
     function __construct($esteBloque, $lenguaje = "") {
-        
+
         // El objeto de la clase Configurador debe ser único en toda la aplicación
         $this->miConfigurador = Configurador::singleton ();
-        
+
         $ruta = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" );
         $rutaURL = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" );
-        
+
         if (! isset ( $esteBloque ["grupo"] ) || $esteBloque ["grupo"] == "") {
             $ruta .= "/blocks/" . $esteBloque ["nombre"] . "/";
             $rutaURL .= "/blocks/" . $esteBloque ["nombre"] . "/";
@@ -55,48 +55,48 @@ if (class_exists ( 'BloqueloginSso' ) === false) {
             $ruta .= "/blocks/" . $esteBloque ["grupo"] . "/" . $esteBloque ["nombre"] . "/";
             $rutaURL .= "/blocks/" . $esteBloque ["grupo"] . "/" . $esteBloque ["nombre"] . "/";
         }
-        
+
         $this->miConfigurador->setVariableConfiguracion ( "rutaBloque", $ruta );
         $this->miConfigurador->setVariableConfiguracion ( "rutaUrlBloque", $rutaURL );
-        
+
         $nombreClaseFuncion = "Funcion" . $esteBloque ["nombre"];
         $this->miFuncion = new $nombreClaseFuncion ();
-        
+
         $nombreClaseSQL = "Sql" . $esteBloque ["nombre"];
         $this->miSql = new $nombreClaseSQL ();
-        
+
         $nombreClaseFrontera = "Frontera" . $esteBloque ["nombre"];
         $this->miFrontera = new $nombreClaseFrontera ();
-        
+
         $nombreClaseLenguaje = "Lenguaje" . $esteBloque ["nombre"];
         $this->miLenguaje = new $nombreClaseLenguaje ();
-    
-    }
-		public 
 
-	
-    
+    }
+		public
+
+
+
     function bloque() {
-        
+
         if (isset ( $_REQUEST ['botonCancelar'] ) && $_REQUEST ['botonCancelar'] == "true") {
             $this->miFuncion->redireccionar ( "paginaPrincipal" );
         } else {
-            
+
             if (! isset ( $_REQUEST ['action'] )) {
-                
+
                 $this->miFrontera->setSql ( $this->miSql );
                 $this->miFrontera->setFuncion ( $this->miFuncion );
                 $this->miFrontera->setLenguaje ( $this->miLenguaje );
                 $this->miFrontera->frontera ();
             } else {
-                
+
                 $this->miFuncion->setSql ( $this->miSql );
                 $this->miFuncion->setFuncion ( $this->miFuncion );
                 $this->miFuncion->setLenguaje ( $this->miLenguaje );
                 $this->miFuncion->action ();
             }
         }
-    
+
     }
 }
 }

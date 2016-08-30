@@ -1,7 +1,4 @@
 <?php
-require_once ('component/GestorEstudiante/Componente.php');
-
-use sniesEstudiante\Componente as Estudiante;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("../index.php");
@@ -17,29 +14,27 @@ class registrarForm {
 	var $miSql;
 	function __construct($lenguaje, $formulario, $sql) {
 		$this->miConfigurador = \Configurador::singleton ();
-		
+
 		$this->miInspectorHTML = \InspectorHTML::singleton ();
-		
+
 		$this->miConfigurador->fabricaConexiones->setRecursoDB ( 'principal' );
-		
+
 		$this->lenguaje = $lenguaje;
-		
+
 		$this->miFormulario = $formulario;
-		
+
 		$this->miSql = $sql;
-		
-		$this->miComponente = new Estudiante ();
-		
-		$this->host = $this->miConfigurador->getVariableConfiguracion ( "host" );
-		
-		$this->site = $this->miConfigurador->getVariableConfiguracion ( "site" );
-		
-		$this->esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
-		
+
 		$this->urlImagenes = $this->miConfigurador->getVariableConfiguracion ( "rutaUrlBloque" );
+
+		$this->host = $this->miConfigurador->getVariableConfiguracion ( "host" );
+
+		$this->site = $this->miConfigurador->getVariableConfiguracion ( "site" );
+
+		$this->esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 	}
 	function miForm() {
-		
+
 		// Obtener año y período actual basado en la fecha del sistema
 		$fecha = getdate ();
 		$annioActual = $fecha ['year'];
@@ -48,7 +43,7 @@ class registrarForm {
 		} else {
 			$semestreActual = '02';
 		}
-		
+
 		// crea un arreglo con todos los años y semestres desde 2000-1 hasta el presente semestre
 		// contar la cantidad de registro para cada periodo(año, semestre)
 		$a = 0;
@@ -56,20 +51,22 @@ class registrarForm {
 		for($ano = $anoInicial; $ano <= $annioActual; $ano ++) {
 			$periodo [$a] ['annio'] = $ano;
 			$periodo [$a] ['semestre'] = '01';
+			// $periodo [$a] ['total'] = $this->miComponente->contarMatriculados ( $ano, '01' );
 			$a ++;
-			
+
 			if ($annioActual == $ano and $semestreActual == 1) {
 			} else {
 				$periodo [$a] ['annio'] = $ano;
 				$periodo [$a] ['semestre'] = '02';
+				// $periodo [$a] ['total'] = $this->miComponente->contarMatriculados ( $ano, '02' );
 				$a ++;
 			}
 		}
-		
+
 		?>
 
 <br>
-<h3>DOCENTE - Generar CSV para auditoría</h3>
+<h3>INSCRITOS - GENERACIÓN DE PLANTILLA CSV</h3>
 <br>
 <table id="example" class="display" cellspacing="0" width="100%">
 	<thead>
@@ -77,25 +74,26 @@ class registrarForm {
 			<th>Variable</th>
 			<th>Año</th>
 			<th>Período</th>
-			<!--<th>Total</th>  -->
-			<th>Generar csv</th>
+			<th>Generar CSV</th>
+
 		</tr>
 	</thead>
 
 	<tbody>
 			<?php
+
 		foreach ( $periodo as $miPeriodo ) {
-			
-			$enlace = $this->armarEnlace ( 'generarCsvDocente', $miPeriodo ['annio'], $miPeriodo ['semestre'] );
+			$enlaceGenerarPlantillaInscrito = $this->enlaceActualizarVariable ( 'generarPlantillaInscrito', $miPeriodo ['annio'], $miPeriodo ['semestre'] );
 			?>
 				<tr>
-			<td><?php echo 'Docente';?></td>
+			<td><?php echo 'Inscrito';?></td>
 			<td align="center"><?php echo $miPeriodo['annio']?></td>
 			<td align="center"><?php echo $miPeriodo['semestre'];?></td>
-			<!--<td align="right"><?php echo $miPeriodo['total'];?></td>  -->
-			<td align="center"><a class=miEnlace href="<?php echo $enlace;?>"><img
+			<td align="center"><a class=miEnlace
+				href="<?php echo $enlaceGenerarPlantillaInscrito;?>"><img
 					src='<? echo $this->urlImagenes?>images/actualizar.png'
 					width='30px'></a></td>
+
 		</tr>
 				<?php }?>
 			</tbody>
@@ -106,8 +104,7 @@ class registrarForm {
 
 <?
 	}
-	function armarEnlace($opcion, $annio, $semestre) {
-		
+	function enlaceActualizarVariable($opcion, $annio, $semestre) {
 		$valorCodificado = "actionBloque=" . $this->esteBloque ["nombre"];
 		$valorCodificado .= "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 		$valorCodificado .= "&bloque=" . $this->esteBloque ['nombre'];
@@ -116,7 +113,7 @@ class registrarForm {
 		$valorCodificado .= "&annio=" . $annio;
 		$valorCodificado .= "&semestre=" . $semestre;
 		$valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
-		
+
 		// Rescatar el parámetro enlace desde los datos de configuraión en la base de datos
 		$variable = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 		$miEnlace = $this->host . $this->site . '/index.php?' . $variable . '=' . $valorCodificado;
@@ -127,4 +124,4 @@ class registrarForm {
 $miSeleccionador = new registrarForm ( $this->lenguaje, $this->miFormulario, $this->sql );
 
 $miSeleccionador->miForm ();
-?>	
+?>

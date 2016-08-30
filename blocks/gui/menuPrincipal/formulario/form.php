@@ -13,28 +13,28 @@ class FormularioMenu {
 	var $lenguaje;
 	var $miFormulario;
 	var $miSql;
-	
+
 	function __construct($lenguaje, $formulario, $sql) {
 		$this->miConfigurador = \Configurador::singleton ();
-		
+
 		$this->miConfigurador->fabricaConexiones->setRecursoDB ( 'principal' );
-		
+
 		$this->lenguaje = $lenguaje;
-		
+
 		$this->miFormulario = $formulario;
-		
+
 		$this->miSql = $sql;
 	}
 	function formulario() {
-		
+
 		// Rescatar los datos de este bloque
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
-		
+
 		$directorio = $this->miConfigurador->getVariableConfiguracion ( "host" );
 		$directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
 		$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
-		
+
 		$rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "host" );
 		$rutaBloque .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/";
 		$rutaBloque .= $esteBloque ['grupo'] . '/' . $esteBloque ['nombre'];
@@ -43,10 +43,10 @@ class FormularioMenu {
 		 * Por tanto en el archivo ready.php se delaran algunas funciones js
 		 * que lo complementan.
 		 */
-		
+
 		// Rescatar los datos de este bloque
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
-		
+
 		// ---------------- SECCION: Parámetros Globales del Formulario ----------------------------------
 		/**
 		 * Atributos que deben ser aplicados a todos los controles de este formulario.
@@ -58,11 +58,11 @@ class FormularioMenu {
 		 */
 		$atributosGlobales ['campoSeguro'] = 'true';
 		$_REQUEST ['tiempo'] = time ();
-		
+
 		// -------------------------------------------------------------------------------------------------
-		
-		
-		
+
+
+
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
 		$esteCampo = $esteBloque ['nombre'];
 		$atributos ['id'] = $esteCampo;
@@ -73,44 +73,45 @@ class FormularioMenu {
 		 */
 		// Si no se coloca, entonces toma el valor predeterminado 'application/x-www-form-urlencoded'
 		$atributos ['tipoFormulario'] = 'multipart/form-data';
-		
+
 		// Si no se coloca, entonces toma el valor predeterminado 'POST'
 		$atributos ['metodo'] = 'POST';
-		
+
 		// Si no se coloca, entonces toma el valor predeterminado 'index.php' (Recomendado)
 		$atributos ['action'] = 'index.php';
 		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo );
-		
+
 		// Si no se coloca, entonces toma el valor predeterminado.
 		$atributos ['estilo'] = '';
 		$atributos ['marco'] = true;
 		$tab = 1;
 		// ---------------- FIN SECCION: de Parámetros Generales del Formulario ----------------------------
-		
+
 		$conexion = "menu";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
-		
+
 		// ----------------INICIAR EL FORMULARIO ------------------------------------------------------------
 		$atributos ['tipoEtiqueta'] = 'inicio';
 // 		$atributos = array_merge ( $atributos, $atributosGlobales );
 		echo $this->miFormulario->formulario ( $atributos );
 		unset ( $atributos );
 		// ---------------- SECCION: Controles del Formulario -----------------------------------------------
-						
+
 		$cadenaSql = $this->miSql->getCadenaSql ( "datosMenu", 0 );
 		$datosMenu = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
+
+
 		foreach ( $datosMenu as $menu => $item ) {
 			$enlaces [$this->lenguaje->getCadena ($item ['grupo'])]['columna'. $item ['columna']][$item ['tipo_item']][$this->lenguaje->getCadena ($item ['descripcion'])] = array ();
 		}
-		foreach ( $datosMenu as $menu => $item ) {			
+		foreach ( $datosMenu as $menu => $item ) {
 			if(strcmp($item['tipo_item'], 'tittle') == 0){
-				$enlace = '#';	
-				$enlaces [$this->lenguaje->getCadena ($item ['grupo'])]['columna'. $item ['columna']][$item ['tipo_item']][$this->lenguaje->getCadena ($item ['descripcion'])] = $enlace;				
+				$enlace = '#';
+				$enlaces [$this->lenguaje->getCadena ($item ['grupo'])]['columna'. $item ['columna']][$item ['tipo_item']][$this->lenguaje->getCadena ($item ['descripcion'])] = $enlace;
 			}elseif(strcmp($item['tipo_item'], 'item') == 0){
-				$enlace = 'pagina=' . $item ['link'].$item['parametros'];				
+				$enlace = 'pagina=' . $item ['link'].$item['parametros'];
 				$enlace = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $enlace, $directorio );
-				$enlaces [$this->lenguaje->getCadena ($item ['grupo'])]['columna'. $item ['columna']][$item ['tipo_item']][$this->lenguaje->getCadena ($item ['descripcion'])] = $enlace;						
+				$enlaces [$this->lenguaje->getCadena ($item ['grupo'])]['columna'. $item ['columna']][$item ['tipo_item']][$this->lenguaje->getCadena ($item ['descripcion'])] = $enlace;
 			}
 			elseif(strcmp($item['tipo_item'], 'menu') == 0){
 				$enlace = 'pagina=' . $item ['grupo'];
@@ -120,17 +121,17 @@ class FormularioMenu {
 			}elseif(strcmp($item['tipo_item'], 'link') == 0){
 				$enlace = $item ['link'];
 				//$enlace = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $enlace, $directorio );
-				$enlaces [$this->lenguaje->getCadena ($item ['grupo'])]['columna'. $item ['columna']][$item ['tipo_item']][$this->lenguaje->getCadena ($item ['descripcion'])] = $enlace;						
+				$enlaces [$this->lenguaje->getCadena ($item ['grupo'])]['columna'. $item ['columna']][$item ['tipo_item']][$this->lenguaje->getCadena ($item ['descripcion'])] = $enlace;
 			}
 		}
 
 		$atributos ['enlaces'] = $enlaces;
-		
+
 		$crearMenu = new Dibujar ();
 		echo $crearMenu->html ( $atributos );
-		
+
 		// ------------------- SECCION: Paso de variables ------------------------------------------------
-		
+
 		/**
 		 * En algunas ocasiones es útil pasar variables entre las diferentes páginas.
 		 * SARA permite realizar esto a través de tres
@@ -141,11 +142,11 @@ class FormularioMenu {
 		 * formsara, cuyo valor será una cadena codificada que contiene las variables.
 		 * (c) a través de campos ocultos en los formularios. (deprecated)
 		 */
-		
+
 		// En este formulario se utiliza el mecanismo (b) para pasar las siguientes variables:
-		
+
 		// Paso 1: crear el listado de variables
-		
+
 		$valorCodificado = "actionBloque=" . $esteBloque ["nombre"];
 		$valorCodificado .= "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 		$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
@@ -160,7 +161,7 @@ class FormularioMenu {
 		$valorCodificado .= "&tiempo=" . time();
 		// Paso 2: codificar la cadena resultante
 		$valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
-		
+
 		$atributos ["id"] = "formSaraData"; // No cambiar este nombre
 		$atributos ["tipo"] = "hidden";
 		$atributos ['estilo'] = '';
@@ -170,11 +171,11 @@ class FormularioMenu {
 		$atributos ["valor"] = $valorCodificado;
 		echo $this->miFormulario->campoCuadroTexto ( $atributos );
 		unset ( $atributos );
-		
+
 		// ----------------FIN SECCION: Paso de variables -------------------------------------------------
-		
+
 		// ---------------- FIN SECCION: Controles del Formulario -------------------------------------------
-		
+
 		// ----------------FINALIZAR EL FORMULARIO ----------------------------------------------------------
 		// Se debe declarar el mismo atributo de marco con que se inició el formulario.
 		$atributos ['marco'] = true;
@@ -182,17 +183,17 @@ class FormularioMenu {
 		echo $this->miFormulario->formulario ( $atributos );
 	}
 	function mensaje() {
-		
+
 		// Si existe algun tipo de error en el login aparece el siguiente mensaje
 		$mensaje = $this->miConfigurador->getVariableConfiguracion ( 'mostrarMensaje' );
 		$this->miConfigurador->setVariableConfiguracion ( 'mostrarMensaje', null );
-		
+
 		if ($mensaje) {
-			
+
 			$tipoMensaje = $this->miConfigurador->getVariableConfiguracion ( 'tipoMensaje' );
-			
+
 			if ($tipoMensaje == 'json') {
-				
+
 				$atributos ['mensaje'] = $mensaje;
 				$atributos ['json'] = true;
 			} else {
@@ -209,7 +210,7 @@ class FormularioMenu {
 			echo $this->miFormulario->campoMensaje ( $atributos );
 			unset ( $atributos );
 		}
-		
+
 		return true;
 	}
 }

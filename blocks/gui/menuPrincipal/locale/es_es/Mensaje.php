@@ -11,6 +11,7 @@ $this->idioma ['snies'] = 'SNIES';
 //INSCRITO
 $this->idioma ['tituloInscrito'] = 'Inscrito';
 $this->idioma ['actualizarInscrito'] = 'Actualizar Inscrito';
+$this->idioma ['plantillaInscrito'] = 'Generar Plantilla Inscrito';
 $this->idioma ['corregirnombre'] = 'Corrregir Nombres';
 
 //ADMITIDO
