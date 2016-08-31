@@ -40,7 +40,7 @@ class Funcion {
 	function actualizarAdmitido() {
 		include_once ($this->ruta . "/funcion/actualizarAdmitido.php");
 	}
-	function generarPlantilla() {
+	function generarPlantillaAdmitido() {
 		include_once ($this->ruta . "/funcion/generarPlantillaAdmitido.php");
 	}
 
@@ -99,12 +99,13 @@ class Funcion {
 			$this->procesarAjax ();
 		} else if (isset ( $_REQUEST ["opcion"] )) {
 
+
 			switch ($_REQUEST ["opcion"]) {
 				case 'actualizarAdmitido' :
 					$this->actualizarAdmitido ();
 					break;
-				case 'generarPlantilla' :
-						$this->generarPlantilla ();
+				case 'generarPlantillaAdmitido' :
+						$this->generarPlantillaAdmitido ();
 						break;
 			}
 		} else {

@@ -102,7 +102,7 @@ class FormProcessor {
 
 		//CSV inscritos -programa pueden ser varios registros
 		$this->generarPlantillaInscritoPrograma ( $inscritosTodos );
-		echo 'Se ha generado un archivo CSV "inscrito_programa_año_semestre" en el directorio document de la aplicación'
+		echo 'Se ha generado un archivo CSV "inscrito_programa_año_semestre" en el directorio document de la aplicación';
 		//CSV Relacion inscritos
 
 		//Esta plantilla solo acepta valores únicos un registro por cada inscrito
@@ -111,7 +111,7 @@ class FormProcessor {
 			}
 
 		$this->generarPlantillaInscrito ( $inscritosSinDuplicados );
-		echo 'Se ha generado un archivo CSV "inscritos_año_semestre" en el directorio document de la aplicación'
+		echo 'Se ha generado un archivo CSV "inscritos_año_semestre" en el directorio document de la aplicación';
 
 		echo 'Proceso finalizado';
 
@@ -166,7 +166,7 @@ class FormProcessor {
 		$fp = fopen ( $raizDocumento . '/document/inscrito_programa_' . $this->annio . $this->semestre . '.csv', 'w' );
 		//ENCABEZADO DE LA PLANTILLA
 		fputcsv ( $fp, array('Herramienta de Cargue Hecca - V 3.1'));
-		fputcsv ( $fp, array('[144]','Nombre de la Plantilla: [Inscrito Programa] Descripcion: [Relación de programas de los inscritos]'));
+		fputcsv ( $fp, array('[144]', 'Nombre de la Plantilla: [Inscrito Programa] Descripcion: [Relación de programas de los inscritos]'));
 		fputcsv ( $fp, array('Licenciado para Ministerio de Educacion Nacional 2016'));
 		fputcsv ( $fp, array (
 				'AÑO',
