@@ -180,22 +180,21 @@ class Sql extends \Sql {
 			case "consultarAdmitidoPregradoAcademica" :
 				$prefijo = "mntac.";
 				$cadenaSql = " SELECT UNIQUE ";
-				$cadenaSql .= " asp_nro_iden documento, ";
-				$cadenaSql .= " DECODE(asp_tip_doc,'',DECODE(length(asp_nro_iden),11,'TI',12,'TI','CC'),'C', 'CC', '1', 'CC', 'c', 'CC', 'T', 'TI', '2', 'TI', 't', 'TI', 'E', 'CE', 'P', 'PS', 'CC') tipo_identif, ";
-				$cadenaSql .= " asp_apellido apellido, ";
-				$cadenaSql .= " asp_nombre nombre, ";
+				$cadenaSql .= "asp_ape_ano annio, ";
+				$cadenaSql .= "DECODE(asp_ape_per,1,'01',3,'02', asp_ape_per) semestre, ";
+				$cadenaSql .= " DECODE(asp_tip_doc,'',DECODE(length(asp_nro_iden),11,'TI',12,'TI','CC'),'C', 'CC', '1', 'CC', 'c', 'CC', 'T', 'TI', '2', 'TI', 't', 'TI', 'E', 'CE', 'P', 'PS', 'CC') id_tipo_documento, ";
+				$cadenaSql .= " asp_nro_iden num_documento, ";
 				$cadenaSql .= " as_cra_cod_snies pro_consecutivo, ";
-				$cadenaSql .= " TO_CHAR(DECODE(asp_snp,'','N/A',NULL,'N/A',replace(asp_snp,' ',''))) snp,";
-				$cadenaSql .= " '2014-09-01' fecha_snp, "; // Se debe incluir la fecha de presentación de SNP
-				$cadenaSql .= " TO_CHAR('1301') ies_code, ";
-				$cadenaSql .= " asp_ape_ano adm_annio, ";
-				$cadenaSql .= " DECODE(asp_ape_per,1,'01',3,'02') adm_semestre, ";
-				$cadenaSql .= " '11' departamento, ";
-				$cadenaSql .= " '11001' municipio, ";
-				$cadenaSql .= " '11001' municipio, ";
-				$cadenaSql .= " '1301' codigo_ent_aula, ";
-				$cadenaSql .= " TO_CHAR(DECODE(asp_sexo,'M','01','F','02','01')) genero, ";
-				$cadenaSql .= " as_cra_nom prog";
+				$cadenaSql .= " '11001' id_municipio ";
+				//$cadenaSql .= " asp_apellido apellido, ";
+				//$cadenaSql .= " asp_nombre nombre, ";
+				//$cadenaSql .= " TO_CHAR(DECODE(asp_snp,'','N/A',NULL,'N/A',replace(asp_snp,' ',''))) snp,";
+				//$cadenaSql .= " '2014-09-01' fecha_snp, "; // Se debe incluir la fecha de presentación de SNP
+				//$cadenaSql .= " TO_CHAR('1301') ies_code, ";
+				//$cadenaSql .= " '11' departamento, ";
+				//$cadenaSql .= " '1301' codigo_ent_aula, ";
+				//$cadenaSql .= " TO_CHAR(DECODE(asp_sexo,'M','01','F','02','01')) genero, ";
+				//$cadenaSql .= " as_cra_nom prog";
 				$cadenaSql .= " FROM " . $prefijo . "accra_snies ";
 				$cadenaSql .= " INNER JOIN " . $prefijo . "accra ON cra_cod = as_cra_cod ";
 				$cadenaSql .= " INNER JOIN " . $prefijo . "acasp ON cra_cod = asp_cra_cod ";
@@ -217,20 +216,20 @@ class Sql extends \Sql {
 			case "consultarAdmitidoPostgradoAcademica" :
 				$prefijo = "mntac.";
 				$cadenaSql = " SELECT UNIQUE ";
-				$cadenaSql .= " est_nro_iden documento, ";
-				$cadenaSql .= " DECODE(est_tipo_iden,'',DECODE(length(est_nro_iden),11,'TI',12,'TI','CC'),'C', 'CC', '1', 'CC', 'c', 'CC', 'T', 'TI', '2', 'TI', 't', 'TI', 'E', 'CE', 'P', 'PS', 'CC') tipo_identif, ";
-				$cadenaSql .= " est_nombre nombre, ";
+				$cadenaSql .= " mat_ano annio, ";
+				$cadenaSql .= " DECODE(mat_per,1,'01',3,'02', mat_per) semestre, ";
+				$cadenaSql .= " DECODE(est_tipo_iden,'',DECODE(length(est_nro_iden),11,'TI',12,'TI','CC'),'C', 'CC', '1', 'CC', 'c', 'CC', 'T', 'TI', '2', 'TI', 't', 'TI', 'E', 'CE', 'P', 'PS', 'CC') id_tipo_documento, ";
+				$cadenaSql .= " est_nro_iden num_documento, ";
 				$cadenaSql .= " as_cra_cod_snies pro_consecutivo, ";
-				$cadenaSql .= " TO_CHAR(DECODE(eot_nro_snp,'','N/A',NULL,'N/A',replace(eot_nro_snp,' ',''))) snp,";
-				$cadenaSql .= " '2010-09-01' fecha_snp, "; // se debe buscar
-				$cadenaSql .= " TO_CHAR('1301') ies_code, ";
-				$cadenaSql .= " mat_ano adm_annio, ";
-				$cadenaSql .= " DECODE(mat_per,1,'01',3,'02', mat_per) adm_semestre, ";
-				$cadenaSql .= " '11' departamento, ";
-				$cadenaSql .= " '11001' municipio, ";
-				$cadenaSql .= " '1301' codigo_ent_aula, ";
-				$cadenaSql .= " TO_CHAR(DECODE(est_sexo,'M','01','F','02','01')) genero, ";
-				$cadenaSql .= " as_cra_nom prog ";
+				$cadenaSql .= " '11001' id_municipio ";
+				//$cadenaSql .= " '2010-09-01' fecha_snp, "; // se debe buscar
+				//$cadenaSql .= " TO_CHAR(DECODE(eot_nro_snp,'','N/A',NULL,'N/A',replace(eot_nro_snp,' ',''))) snp,";
+				//$cadenaSql .= " TO_CHAR('1301') ies_code, ";
+				//$cadenaSql .= " est_nombre nombre, ";
+				//$cadenaSql .= " '11' departamento, ";
+				//$cadenaSql .= " '1301' codigo_ent_aula, ";
+				//$cadenaSql .= " TO_CHAR(DECODE(est_sexo,'M','01','F','02','01')) genero, ";
+				//$cadenaSql .= " as_cra_nom prog ";
 				$cadenaSql .= " FROM " . $prefijo . "acest ";
 				$cadenaSql .= " INNER JOIN " . $prefijo . "acestotr ON est_cod = eot_cod ";
 				$cadenaSql .= " INNER JOIN " . $prefijo . "v_tot_matri_ape_per ON est_cod = mat_est_cod ";

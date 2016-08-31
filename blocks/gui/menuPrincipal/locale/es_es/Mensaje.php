@@ -17,6 +17,7 @@ $this->idioma ['corregirnombre'] = 'Corrregir Nombres';
 //ADMITIDO
 $this->idioma ['tituloAdmitido'] = 'Admitido';
 $this->idioma ['actualizarAdmitido'] = 'Actualizar Admitido';
+$this->idioma ['plantillaAdmitido'] = 'Generar Plantilla Admitido';
 $this->idioma ['corregirnombre'] = 'Corrregir Nombres';
 
 //MATRICULADO

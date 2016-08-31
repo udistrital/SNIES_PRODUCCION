@@ -102,7 +102,7 @@ class FormProcessor {
 
 		//CSV inscritos -programa pueden ser varios registros
 		$this->generarPlantillaInscritoPrograma ( $inscritosTodos );
-
+		echo 'Se ha generado un archivo CSV "inscrito_programa_año_semestre" en el directorio document de la aplicación'
 		//CSV Relacion inscritos
 
 		//Esta plantilla solo acepta valores únicos un registro por cada inscrito
@@ -111,6 +111,7 @@ class FormProcessor {
 			}
 
 		$this->generarPlantillaInscrito ( $inscritosSinDuplicados );
+		echo 'Se ha generado un archivo CSV "inscritos_año_semestre" en el directorio document de la aplicación'
 
 		echo 'Proceso finalizado';
 
@@ -124,9 +125,9 @@ class FormProcessor {
 		$this->semestre=$_REQUEST['semestre'];
 		$fp = fopen ( $raizDocumento . '/document/inscritos_' . $this->annio . $this->semestre . '.csv', 'w' );
 		//ENCABEZADO DE LA PLANTILLA
-		fputcsv ( $fp, array('Herramienta de Cargue Hecca - V 3.1'));
-		fputcsv ( $fp, array('[143]', 'Nombre de la Plantilla: [Inscritos - Relación de Inscritos] Descripcion: [Persona natural que solicita formalmente el ingreso a un programa académico en calidad de estudiante.]'));
-		fputcsv ( $fp, array('Licenciado para Ministerio de Educacion Nacional 2014'));
+		fputcsv ( $fp, array ('Herramienta de Cargue Hecca - V 3.1'));
+		fputcsv ( $fp, array ('[143]', 'Nombre de la Plantilla: [Inscritos - Relación de Inscritos] Descripcion: [Persona natural que solicita formalmente el ingreso a un programa académico en calidad de estudiante.]'));
+		fputcsv ( $fp, array ('Licenciado para Ministerio de Educacion Nacional 2014'));
 		fputcsv ( $fp, array (
 				'AÑO',
 				'SEMESTRE',
@@ -176,7 +177,7 @@ class FormProcessor {
 				'ID_MUNICIPIO'
 		) , ";");
 		foreach ( $inscrito as $unInscrito ) {
-			 var_dump ( $unInscrito );
+			 //var_dump ( $unInscrito );
 			$RelacionInscrito ['AÑO'] = $unInscrito ['INS_ANNIO'];
 			$RelacionInscrito ['SEMESTRE'] = $unInscrito ['INS_SEMESTRE'];
 			$RelacionInscrito ['ID_TIPO_DOCUMENTO'] = $unInscrito ['TIPO_IDENT_CODE'];
