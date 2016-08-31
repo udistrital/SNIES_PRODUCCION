@@ -18,16 +18,16 @@ class Sql extends \Sql {
 		$this->miConfigurador = \Configurador::singleton ();
 	}
 	function cadena_sql($tipo, $variable = "") {
-		
+
 		/**
 		 * 1.
 		 * Revisar las variables para evitar SQL Injection
 		 */
 		$prefijo = 'sniesud_';
 		$idSesion = $this->miConfigurador->getVariableConfiguracion ( "id_sesion" );
-		
+
 		switch ($tipo) {
-			
+
 			/**
 			 * ***************************
 			 *
@@ -35,7 +35,7 @@ class Sql extends \Sql {
 			 *
 			 * ***************************
 			 */
-			
+
 			case "consultarInscritoPregradoAcademica" :
 				$prefijo = "mntac.";
 				$cadenaSql = "SELECT UNIQUE ";
@@ -48,7 +48,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "asp_nombre nombre, "; // en este campo estan los nombres
 				$cadenaSql .= "as_cra_cod_snies prog_prim_opc, ";
 				$cadenaSql .= "TO_CHAR(DECODE(asp_snp,'','N/A',NULL,'N/A',replace(asp_snp,' ',''))) snp,";
-				$cadenaSql .= "TO_CHAR(DECODE(asp_sexo,'M','01','F','02','01')) genero, ";
+				$cadenaSql .= "TO_CHAR(DECODE(asp_sexo,'M','1','F','2','1')) genero, ";
 				$cadenaSql .= "'1301' codigo_ent_aula, ";
 				$cadenaSql .= "'11001' municipio, ";
 				$cadenaSql .= "'11' departamento, ";
@@ -65,9 +65,9 @@ class Sql extends \Sql {
 					$cadenaSql .= " AND asp_ape_per=3";
 				}
 				$cadenaSql .= " AND tra_nivel IN ('PREGRADO') ";
-				
+
 				break;
-			
+
 			case "consultarInscritoPostgradoAcademica" :
 				$prefijo = "mntac.";
 				$cadenaSql = "SELECT UNIQUE ";
@@ -100,9 +100,9 @@ class Sql extends \Sql {
 				$cadenaSql .= "AND SUBSTR(est_cod,0,4)=mat_ano ";
 				$cadenaSql .= "AND SUBSTR(est_cod,5,1)=DECODE(mat_per,1,'1',3,'2',mat_per) ";
 				$cadenaSql .= "AND tra_nivel IN ('DOCTORADO','MAESTRIA','POSGRADO') ";
-				
+
 				break;
-			
+
 			/**
 			 * ***************************
 			 *
@@ -110,24 +110,24 @@ class Sql extends \Sql {
 			 *
 			 * ***************************
 			 */
-			
+
 			case "contarInscritos" :
 				$cadenaSql = "SELECT COUNT(documento) FROM";
 				$cadenaSql .= " inscrito ";
 				$cadenaSql .= " WHERE ins_annio=" . $variable ['annio'];
 				$cadenaSql .= " AND ins_semestre='" . $variable ['semestre'] . "'";
-				
+
 				break;
-			
+
 			//Borra inscritos de un año y semestre especifico
 			case "borrarInscritos" :
 				$cadenaSql = "DELETE FROM";
 				$cadenaSql .= " inscrito ";
 				$cadenaSql .= " WHERE ins_annio=" . $variable ['annio'];
 				$cadenaSql .= " AND ins_semestre='" . $variable ['semestre'] . "'";
-				
+
 				break;
-			
+
 			case "insertarInscrito" :
 				$cadenaSql = "INSERT INTO ";
 				$cadenaSql .= "inscrito ";
@@ -168,7 +168,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "); ";
 
 				break;
-			
+
 			/**
 			 * ***************************
 			 *
@@ -176,7 +176,7 @@ class Sql extends \Sql {
 			 *
 			 * ***************************
 			 */
-			
+
 			case "consultarAdmitidoPregradoAcademica" :
 				$prefijo = "mntac.";
 				$cadenaSql = " SELECT UNIQUE ";
@@ -211,9 +211,9 @@ class Sql extends \Sql {
 				}
 				$cadenaSql .= " AND tra_nivel IN ('PREGRADO') ";
 				// $cadenaSql .= " AND ROWNUM <= 100 ";
-				
+
 				break;
-			
+
 			case "consultarAdmitidoPostgradoAcademica" :
 				$prefijo = "mntac.";
 				$cadenaSql = " SELECT UNIQUE ";
@@ -248,9 +248,9 @@ class Sql extends \Sql {
 				$cadenaSql .= " AND SUBSTR(est_cod,5,1)=DECODE(mat_per,1,'1',3,'2',mat_per) ";
 				$cadenaSql .= " AND tra_nivel IN ('DOCTORADO','MAESTRIA','POSGRADO') ";
 				// $cadenaSql .= " AND ROWNUM <= 100 ";
-				
+
 				break;
-			
+
 			/**
 			 * ***************************
 			 *
@@ -260,25 +260,25 @@ class Sql extends \Sql {
 			 *
 			 * ***************************
 			 */
-			
+
 			case "contarAdmitidos" :
 				$cadenaSql = "SELECT COUNT(documento) FROM";
 				$cadenaSql .= " admitido ";
 				$cadenaSql .= " WHERE adm_annio=" . $variable ['annio'];
 				$cadenaSql .= " AND adm_semestre='" . $variable ['semestre'] . "'";
-				
+
 				break;
-			
+
 			case "borrarAdmitidosSnies" :
 				$cadenaSql = "DELETE FROM";
 				$cadenaSql .= " admitido ";
 				$cadenaSql .= " WHERE adm_annio=" . $variable ['annio'];
 				$cadenaSql .= " AND adm_semestre='" . $variable ['semestre'] . "'";
-				
+
 				break;
-			
+
 			case "insertaAdmitidoSnies" :
-				
+
 				$cadenaSql = " INSERT";
 				$cadenaSql .= " INTO admitido";
 				$cadenaSql .= " (";
@@ -318,10 +318,10 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable ['CODIGO_ENT_AULA'] . "',";
 				$cadenaSql .= "'" . $variable ['GENERO'] . "'";
 				$cadenaSql .= " );";
-				
+
 				break;
 		}
-		
+
 		return $cadenaSql;
 	}
 }
