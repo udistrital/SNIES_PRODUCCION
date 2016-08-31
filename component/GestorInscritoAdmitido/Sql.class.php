@@ -39,20 +39,20 @@ class Sql extends \Sql {
 			case "consultarInscritoPregradoAcademica" :
 				$prefijo = "mntac.";
 				$cadenaSql = "SELECT UNIQUE ";
-				$cadenaSql .= "TO_CHAR('1301') ies_code, ";
+				//$cadenaSql .= "TO_CHAR('1301') ies_code, ";
 				$cadenaSql .= "asp_ape_ano ins_annio, ";
 				$cadenaSql .= "DECODE(asp_ape_per,1,'01',3,'02', asp_ape_per) ins_semestre, ";
 				$cadenaSql .= "DECODE(asp_tip_doc,'',DECODE(length(asp_nro_iden),11,'TI',12,'TI','CC'),'C', 'CC', '1', 'CC', 'c', 'CC', 'T', 'TI', '2', 'TI', 't', 'TI', 'E', 'CE', 'P', 'PS', 'CC') tipo_ident_code, ";
 				$cadenaSql .= "asp_nro_iden documento, ";
 				$cadenaSql .= "asp_apellido apellido, "; // en este campo están los apellidos
 				$cadenaSql .= "asp_nombre nombre, "; // en este campo estan los nombres
-				$cadenaSql .= "as_cra_cod_snies prog_prim_opc, ";
-				$cadenaSql .= "TO_CHAR(DECODE(asp_snp,'','N/A',NULL,'N/A',replace(asp_snp,' ',''))) snp,";
 				$cadenaSql .= "TO_CHAR(DECODE(asp_sexo,'M','1','F','2','1')) genero, ";
-				$cadenaSql .= "'1301' codigo_ent_aula, ";
-				$cadenaSql .= "'11001' municipio, ";
-				$cadenaSql .= "'11' departamento, ";
-				$cadenaSql .= "as_cra_nom prog ";
+				$cadenaSql .= "as_cra_cod_snies prog_prim_opc, ";
+				$cadenaSql .= "'11001' municipio ";
+				//$cadenaSql .= "TO_CHAR(DECODE(asp_snp,'','N/A',NULL,'N/A',replace(asp_snp,' ',''))) snp,";
+				//$cadenaSql .= "'1301' codigo_ent_aula, ";
+				//$cadenaSql .= "'11' departamento ";
+				//$cadenaSql .= "as_cra_nom prog ";
 				$cadenaSql .= "FROM " . $prefijo . "accra_snies ";
 				$cadenaSql .= "INNER JOIN " . $prefijo . "accra ON cra_cod = as_cra_cod ";
 				$cadenaSql .= "INNER JOIN " . $prefijo . "acasp ON cra_cod = asp_cra_cod ";
@@ -71,19 +71,19 @@ class Sql extends \Sql {
 			case "consultarInscritoPostgradoAcademica" :
 				$prefijo = "mntac.";
 				$cadenaSql = "SELECT UNIQUE ";
-				$cadenaSql .= "TO_CHAR('1301') ies_code, ";
+				//$cadenaSql .= "TO_CHAR('1301') ies_code, ";
 				$cadenaSql .= "mat_ano ins_annio, ";
 				$cadenaSql .= "DECODE(mat_per,1,'01',3,'02', mat_per) ins_semestre, ";
 				$cadenaSql .= "DECODE(est_tipo_iden,'',DECODE(length(est_nro_iden),11,'TI',12,'TI','CC'),'C', 'CC', '1', 'CC', 'c', 'CC', 'T', 'TI', '2', 'TI', 't', 'TI', 'E', 'CE', 'P', 'PS', 'CC') tipo_ident_code, ";
 				$cadenaSql .= "est_nro_iden  documento, ";
 				$cadenaSql .= "est_nombre nombre, "; // en este campo estan los nombres y apellidos
-				$cadenaSql .= "as_cra_cod_snies prog_prim_opc,  ";
-				$cadenaSql .= "TO_CHAR(DECODE(eot_nro_snp,'','N/A',NULL,'N/A',replace(eot_nro_snp,' ',''))) snp,";
 				$cadenaSql .= "TO_CHAR(DECODE(est_sexo,'M','01','F','02','01')) genero, ";
-				$cadenaSql .= "'1301' codigo_ent_aula, ";
-				$cadenaSql .= "'11001' municipio, ";
-				$cadenaSql .= "'11' departamento, ";
-				$cadenaSql .= "as_cra_nom prog ";
+				$cadenaSql .= "as_cra_cod_snies prog_prim_opc,  ";
+				$cadenaSql .= "'11001' municipio ";
+				//$cadenaSql .= "TO_CHAR(DECODE(eot_nro_snp,'','N/A',NULL,'N/A',replace(eot_nro_snp,' ',''))) snp,";
+				//$cadenaSql .= "'1301' codigo_ent_aula, ";
+				//$cadenaSql .= "'11' departamento, ";
+				//$cadenaSql .= "as_cra_nom prog ";
 				$cadenaSql .= "FROM " . $prefijo . "acest ";
 				$cadenaSql .= "INNER JOIN " . $prefijo . "acestotr ON est_cod = eot_cod  ";
 				$cadenaSql .= "INNER JOIN " . $prefijo . "v_tot_matri_ape_per ON est_cod = mat_est_cod ";

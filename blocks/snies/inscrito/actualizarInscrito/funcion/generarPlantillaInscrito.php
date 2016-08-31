@@ -44,27 +44,12 @@ class FormProcessor {
 		$inscritosPregrado = $this->miComponente->consultarInscritoPregadoAcademica ( $annio, $semestre );
 		$inscritosPostgrado = $this->miComponente->consultarInscritoPostgradoAcademica ( $annio, $semestre );
 
-
-
-		// Si no realiza la consulta retorna a la pagina inicial
-		if ($inscritosPregrado == false or $inscritosPostgrado == false) {
-			$valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
-			$valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
-
-			// Rescatar el parámetro enlace desde los datos de configuraión en la base de datos
-			$variable = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
-			$miEnlace = $this->host . $this->site . '/index.php?' . $variable . '=' . $valorCodificado;
-
-			header ( "Location:$miEnlace" );
-		}
-
 		// PARTE DE INSCRITOS DE PREGRADO
 
 		$miProcesadorNombre = new procesadorNombre ();
 
 		$inscritosPregrado = $miProcesadorNombre->quitarAcento ( $inscritosPregrado, 'APELLIDO' );
 		$inscritosPregrado = $miProcesadorNombre->quitarAcento ( $inscritosPregrado, 'NOMBRE' );
-		$inscritosPregrado = $miProcesadorNombre->quitarAcento ( $inscritosPregrado, 'PROG' );
 
 		// descompone nombre y apellidos en sus partes y las agrega al final de cada registro
 		foreach ( $inscritosPregrado as $clave => $valor ) {
@@ -88,21 +73,10 @@ class FormProcessor {
 * ESTE SE DIFERENCIA DE PREGADO POR QUE LOS NOMBRES ESTAN EN UN SOLO CAMPO/
 */
 
-		// PARTE DE INSCRITOS DE POSTGRADO
-		/**
-		 * Esta función realiza las siguientes acciones
-		 * 1.consulta en la académica
-		 * 2.Procesar los datos obtenidos, cambiar acentos.
-		 * 3.Registrar errores de la fuente para reportarlos
-		 * 4.Borrar los registros para el año y periodo seleccionado en SNIES LOCAL
-		 * 5.Insertar los registros en el SNIES LOCAL
-		 * 6.Redireccionar a lista de variables
-		 */
 
 		$miProcesadorNombre = new procesadorNombre ();
 
 		$inscritosPostgrado = $miProcesadorNombre->quitarAcento ( $inscritosPostgrado, 'NOMBRE' );
-		$inscritosPostgrado = $miProcesadorNombre->quitarAcento ( $inscritosPostgrado, 'PROG' );
 
 		// descompone nombre completo en sus partes y las agrega al final de cada registro
 		foreach ( $inscritosPostgrado as $clave => $valor ) {
@@ -126,18 +100,29 @@ class FormProcessor {
 */
 		$inscritosTodos=array_merge($inscritosPregrado,$inscritosPostgrado);
 
-		$this->generarPlantillaInscrito ( $inscritosTodos );
+		//CSV inscritos -programa pueden ser varios registros
+		$this->generarPlantillaInscritoPrograma ( $inscritosTodos );
+
+		//CSV Relacion inscritos
+
+		//Esta plantilla solo acepta valores únicos un registro por cada inscrito
+		foreach ($inscritosTodos as $key => $value) {
+				$inscritosSinDuplicados[$value['DOCUMENTO']]=$value;
+			}
+
+		$this->generarPlantillaInscrito ( $inscritosSinDuplicados );
 
 		echo 'Proceso finalizado';
 
 	}
+
 
 	function generarPlantillaInscrito($inscrito) {
 		$raizDocumento = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" );
 
 		$this->annio=$_REQUEST['annio'];
 		$this->semestre=$_REQUEST['semestre'];
-		$fp = fopen ( $raizDocumento . '/document/RelacionInscritos_' . $this->annio . $this->semestre . '.csv', 'w' );
+		$fp = fopen ( $raizDocumento . '/document/inscritos_' . $this->annio . $this->semestre . '.csv', 'w' );
 		//ENCABEZADO DE LA PLANTILLA
 		fputcsv ( $fp, array('Herramienta de Cargue Hecca - V 3.1'));
 		fputcsv ( $fp, array('[143]', 'Nombre de la Plantilla: [Inscritos - Relación de Inscritos] Descripcion: [Persona natural que solicita formalmente el ingreso a un programa académico en calidad de estudiante.]'));
@@ -154,7 +139,7 @@ class FormProcessor {
 				'ID_SEXO_BIOLOGICO'
 		) , ";");
 		foreach ( $inscrito as $unInscrito ) {
-			 var_dump ( $unInscrito );
+			 //var_dump ( $unInscrito );
 			$RelacionInscrito ['AÑO'] = $unInscrito ['INS_ANNIO'];
 			$RelacionInscrito ['SEMESTRE'] = $unInscrito ['INS_SEMESTRE'];
 			$RelacionInscrito ['ID_TIPO_DOCUMENTO'] = $unInscrito ['TIPO_IDENT_CODE'];
@@ -166,6 +151,41 @@ class FormProcessor {
 			$RelacionInscrito ['ID_SEXO_BIOLOGICO'] = $unInscrito ['GENERO'];
 
 			fputcsv ( $fp, $RelacionInscrito, ";" );
+		}
+
+		fclose ( $fp );
+
+	}
+
+	function generarPlantillaInscritoPrograma($inscrito) {
+		$raizDocumento = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" );
+
+		$this->annio=$_REQUEST['annio'];
+		$this->semestre=$_REQUEST['semestre'];
+		$fp = fopen ( $raizDocumento . '/document/inscrito_programa_' . $this->annio . $this->semestre . '.csv', 'w' );
+		//ENCABEZADO DE LA PLANTILLA
+		fputcsv ( $fp, array('Herramienta de Cargue Hecca - V 3.1'));
+		fputcsv ( $fp, array('[144]','Nombre de la Plantilla: [Inscrito Programa] Descripcion: [Relación de programas de los inscritos]'));
+		fputcsv ( $fp, array('Licenciado para Ministerio de Educacion Nacional 2016'));
+		fputcsv ( $fp, array (
+				'AÑO',
+				'SEMESTRE',
+				'ID_TIPO_DOCUMENTO',
+				'NUM_DOCUMENTO',
+				'PRO_CONSECUTIVO',
+				'ID_MUNICIPIO'
+		) , ";");
+		foreach ( $inscrito as $unInscrito ) {
+			 var_dump ( $unInscrito );
+			$RelacionInscrito ['AÑO'] = $unInscrito ['INS_ANNIO'];
+			$RelacionInscrito ['SEMESTRE'] = $unInscrito ['INS_SEMESTRE'];
+			$RelacionInscrito ['ID_TIPO_DOCUMENTO'] = $unInscrito ['TIPO_IDENT_CODE'];
+			$RelacionInscrito ['NUM_DOCUMENTO'] = $unInscrito ['DOCUMENTO'];
+			$RelacionInscrito ['PRO_CONSECUTIVO'] = $unInscrito ['PROG_PRIM_OPC'];
+			$RelacionInscrito ['ID_MUNICIPIO'] = $unInscrito ['MUNICIPIO'];
+
+			fputcsv ( $fp, $RelacionInscrito, ";" );
+
 		}
 
 		fclose ( $fp );
