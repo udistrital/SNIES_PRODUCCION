@@ -45,12 +45,14 @@ if ($resultado == false) {
 		}
 		return $resultado;
 	}
+	
 	function consultarInscritoSnies() {
 	}
+	
 	function insertarInscritoSnies($inscrito) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-		$cadenaSql = $this->miSql->cadena_sql ( 'insertarInscrito', $inscrito );
+		$cadenaSql = $this->miSql->cadena_sql ( 'insertarInscritoSnies', $inscrito );
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
 
 		if ($resultado == FALSE) {
@@ -62,20 +64,68 @@ if ($resultado == false) {
 
 		return $resultado;
 	}
+	
+	
+	function insertarInscritoProgramaSnies($inscrito) {
+		$conexion = "sniesLocal";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		$cadenaSql = $this->miSql->cadena_sql ( 'insertarInscritoProgramaSnies', $inscrito );
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
+
+		if ($resultado == FALSE) {
+			$error = $esteRecursoDB->obtener_error ();
+			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';
+			echo $cadenaSql;
+			var_dump ( $error );
+		}
+
+		return $resultado;
+	}
+	
 	function actualizarInscritoSnies() {
 	}
+	
 	function borrarInscritoSnies($annio, $semestre) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
 
 		$datos ['annio'] = $annio;
 		$datos ['semestre'] = $semestre;
 
-		$cadenaSql = $this->miSql->cadena_sql ( 'borrarInscritos', $datos );
+		$cadenaSql = $this->miSql->cadena_sql ( 'borrarInscritoSnies', $datos );
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
+		
+		if ($resultado == FALSE) {
+			$error = $esteRecursoDB->obtener_error ();
+			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';
+			echo $cadenaSql;
+			var_dump ( $error );
+		}		
 
 		return true;
 	}
+		function borrarInscritoProgramaSnies($annio, $semestre) {
+		$conexion = "sniesLocal";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+
+		$datos ['annio'] = $annio;
+		$datos ['semestre'] = $semestre;
+
+		$cadenaSql = $this->miSql->cadena_sql ( 'borrarInscritoProgramaSnies', $datos );
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
+		
+		if ($resultado == FALSE) {
+			$error = $esteRecursoDB->obtener_error ();
+			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';
+			echo $cadenaSql;
+			var_dump ( $error );
+		}		
+
+		return true;
+	}
+	
 	function contarInscritos($annio, $semestre) {
 		$conexion = 'sniesLocal';
 

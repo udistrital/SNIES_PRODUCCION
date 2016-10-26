@@ -45,8 +45,9 @@ class FormProcessor {
 		$inscritosPregrado = $this->miComponente->consultarInscritoPregadoAcademica ( $annio, $semestre );
 		$inscritosPostgrado = $this->miComponente->consultarInscritoPostgradoAcademica ( $annio, $semestre );
 
+	
 		// Si no realiza la consulta retorna a la pagina inicial
-		if ($inscritosPregrado == false or $inscritosPostgrado == false) {
+		/**if ($inscritosPregrado == false or $inscritosPostgrado == false) {
 			$valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 			$valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
 
@@ -55,17 +56,18 @@ class FormProcessor {
 			$miEnlace = $this->host . $this->site . '/index.php?' . $variable . '=' . $valorCodificado;
 
 			header ( "Location:$miEnlace" );
-		}
+		}*/
 		// LIMPIAR LOS REGISTROS DEL AÑO Y SEMESTRE ESPECIFICADO
+		
 		$borrarInscritos = $this->miComponente->borrarInscritoSnies ( $annio, $semestre );
-
+		$borrarInscritoPrograma = $this->miComponente->borrarInscritoProgramaSnies ( $annio, $semestre );
+		
 		// PARTE DE INSCRITOS DE PREGRADO
 
 		$miProcesadorNombre = new procesadorNombre ();
 
 		$inscritosPregrado = $miProcesadorNombre->quitarAcento ( $inscritosPregrado, 'APELLIDO' );
 		$inscritosPregrado = $miProcesadorNombre->quitarAcento ( $inscritosPregrado, 'NOMBRE' );
-		$inscritosPregrado = $miProcesadorNombre->quitarAcento ( $inscritosPregrado, 'PROG' );
 
 		// descompone nombre y apellidos en sus partes y las agrega al final de cada registro
 		foreach ( $inscritosPregrado as $clave => $valor ) {
@@ -83,11 +85,22 @@ class FormProcessor {
 			$inscritosPregrado [$clave] ['SEGUNDO_NOMBRE'] = $nombre ['segundo_nombre'];
 		}
 
-		// Inserta uno a uno los registros de inscritos consultados en la académica
-		foreach ( $inscritosPregrado as $inscrito ) {
-			$insertarInscrito = $this->miComponente->insertarInscritoSnies ( $inscrito );
+		//La tabla inscrito acepta solo un registro por cada inscrito
+		foreach ($inscritosPregrado as $key => $value) {
+				$inscritosSinDuplicados[$value['DOCUMENTO']]=$value;
+			}
+		// Inserta uno a uno los registros sin duplicados de inscritos consultados en la académica
+		foreach ( $inscritosSinDuplicados as $inscrito ) {
+			$this->miComponente->insertarInscritoSnies ( $inscrito );
 		}
 
+		// Inserta uno a uno los registros en la tabla inscrito_programa consultados en la académica
+		foreach ( $inscritosPregrado as $inscrito ) {
+			$this->miComponente->insertarInscritoProgramaSnies ( $inscrito );
+		}
+		
+		
+	
 		// PARTE DE INSCRITOS DE POSTGRADO
 		/**
 		 * Esta función realiza las siguientes acciones
@@ -102,7 +115,6 @@ class FormProcessor {
 		$miProcesadorNombre = new procesadorNombre ();
 
 		$inscritosPostgrado = $miProcesadorNombre->quitarAcento ( $inscritosPostgrado, 'NOMBRE' );
-		$inscritosPostgrado = $miProcesadorNombre->quitarAcento ( $inscritosPostgrado, 'PROG' );
 
 		// descompone nombre completo en sus partes y las agrega al final de cada registro
 		foreach ( $inscritosPostgrado as $clave => $valor ) {
@@ -118,7 +130,8 @@ class FormProcessor {
 
 		// Inserta uno a uno los registros de inscritos consultados en la académica
 		foreach ( $inscritosPostgrado as $inscrito ) {
-			$insertarInscrito = $this->miComponente->insertarInscritoSnies ( $inscrito );
+			$this->miComponente->insertarInscritoSnies ( $inscrito );
+			$this->miComponente->insertarInscritoProgramaSnies ( $inscrito );
 		}
 
 		echo 'Proceso finalizado';

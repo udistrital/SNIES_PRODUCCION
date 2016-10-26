@@ -33,6 +33,9 @@ class Componente extends Component implements IGestorInscrito, IGestorAdmitido {
 	}
 	function insertarInscritoSnies($inscrito) {
 		return $this->miGestorInscrito->insertarInscritoSnies ( $inscrito );
+	}	
+	function insertarInscritoProgramaSnies($inscrito) {
+		return $this->miGestorInscrito->insertarInscritoProgramaSnies ( $inscrito );
 	}
 	function actualizarInscritoSnies() {
 		return $this->miGestorInscrito->actualizarInscritoSnies ( $periodo );
@@ -40,6 +43,9 @@ class Componente extends Component implements IGestorInscrito, IGestorAdmitido {
 	function borrarInscritoSnies($annio, $semestre) {
 		return $this->miGestorInscrito->borrarInscritoSnies ( $annio, $semestre );
 	}
+	function borrarInscritoProgramaSnies($annio, $semestre) {
+		return $this->miGestorInscrito->borrarInscritoProgramaSnies ( $annio, $semestre );
+	}	
 	function contarInscritos($annio, $semestre) {
 		return $this->miGestorInscrito->contarInscritos ( $annio, $semestre );
 	}
