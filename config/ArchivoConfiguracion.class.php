@@ -100,6 +100,7 @@ class ArchivoConfiguracion {
 				$this->conf ["dbclave"] = $linea [7];
 				$this->conf ["dbprefijo"] = $linea [8];
 				$this->conf ["dbesquema"] = $linea [9];
+				//var_dump($this->conf);
 
 				$respuesta = true;
 			}

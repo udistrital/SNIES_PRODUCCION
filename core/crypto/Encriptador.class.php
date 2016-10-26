@@ -38,6 +38,7 @@ class Encriptador {
 	}
 
 	function codificar($cadena) {
+		
 		if (function_exists ( 'mcrypt_encrypt' )) {
 			$cadena = mcrypt_encrypt ( MCRYPT_RIJNDAEL_256, $this->llave, $cadena, MCRYPT_MODE_ECB ) ;
 		} else {
@@ -49,7 +50,10 @@ class Encriptador {
 
 
 	function decodificar($cadena) {
-
+		//$cadena="5432";
+		//$cadena=$this->codificar($cadena);
+		//echo $cadena."<br>";
+		
 		$cadena=$this->base64url_decode($cadena);
 		if (function_exists ( 'mcrypt_decrypt' )) {
 			$cadena =  mcrypt_decrypt ( MCRYPT_RIJNDAEL_256, $this->llave, $cadena , MCRYPT_MODE_ECB ) ;

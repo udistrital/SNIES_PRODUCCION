@@ -32,6 +32,7 @@ class FormProcessor {
 	 * 6.Redireccionar a lista de variables
 	 */
 	function procesarFormulario() {
+		
 		$annio = $_REQUEST ['annio'];
 		$semestre = $_REQUEST ['semestre'];
 		/**
@@ -91,9 +92,6 @@ class FormProcessor {
 		}
 /////////////////////////////FIN PROCESAR NOMBRE POSTGRADO///////////////////////////
 
-
-
-
 /**
 * EN ESTA SECCIÓN SE GENERA EL ARCHIVO CSV
 *
@@ -120,14 +118,16 @@ class FormProcessor {
 
 	function generarPlantillaInscrito($inscrito) {
 		$raizDocumento = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" );
-
 		$this->annio=$_REQUEST['annio'];
 		$this->semestre=$_REQUEST['semestre'];
-		$fp = fopen ( $raizDocumento . '/document/inscritos_' . $this->annio . $this->semestre . '.csv', 'w' );
-		//ENCABEZADO DE LA PLANTILLA
-		fputcsv ( $fp, array ('Herramienta de Cargue Hecca - V 3.1'));
-		fputcsv ( $fp, array ('[143]', 'Nombre de la Plantilla: [Inscritos - Relación de Inscritos] Descripcion: [Persona natural que solicita formalmente el ingreso a un programa académico en calidad de estudiante.]'));
-		fputcsv ( $fp, array ('Licenciado para Ministerio de Educacion Nacional 2014'));
+		$fp = fopen ( $raizDocumento . '/document/inscritos_relacion_de_inscritos' . $this->annio . $this->semestre . '.csv', 'w' );
+		//ENCABEZADO DE LA PLANTILLA INSCRITOS - RELACION DE INSCRITOS
+		$linea1 = array('Herramienta de Cargue Hecca - V 3.4');
+		$linea2 = array('[143] Nombre de la Plantilla: [Inscritos - Relación de Inscritos] Descripcion: [Persona natural que solicita formalmente el ingreso a un programa académico en calidad de estudiante.]');
+		$linea3 = array('Licenciado para Ministerio de Educacion Nacional 2016');		
+		fwrite($fp, implode(',',$linea1 ) . "\r\n");//con esto elimina las comillas dobles del encabezado
+		fwrite($fp, implode(',',$linea2 ) . "\r\n");
+		fwrite($fp, implode(',',$linea3 ) . "\r\n");
 		fputcsv ( $fp, array (
 				'AÑO',
 				'SEMESTRE',
@@ -164,10 +164,13 @@ class FormProcessor {
 		$this->annio=$_REQUEST['annio'];
 		$this->semestre=$_REQUEST['semestre'];
 		$fp = fopen ( $raizDocumento . '/document/inscrito_programa_' . $this->annio . $this->semestre . '.csv', 'w' );
-		//ENCABEZADO DE LA PLANTILLA
-		fputcsv ( $fp, array('Herramienta de Cargue Hecca - V 3.1'));
-		fputcsv ( $fp, array('[144]', 'Nombre de la Plantilla: [Inscrito Programa] Descripcion: [Relación de programas de los inscritos]'));
-		fputcsv ( $fp, array('Licenciado para Ministerio de Educacion Nacional 2016'));
+		//ENCABEZADO DE LA PLANTILLA - INSCRITO - PROGRAMA
+		$linea1 = array('Herramienta de Cargue Hecca - V 3.4');
+		$linea2 = array('[144] Nombre de la Plantilla: [Inscrito Programa] Descripcion: [Relación de programas de los inscritos]');
+		$linea3 = array('Licenciado para Ministerio de Educacion Nacional 2016');		
+		fwrite($fp, implode(',',$linea1 ) . "\r\n");//con esto elimina las comillas dobles del encabezado
+		fwrite($fp, implode(',',$linea2 ) . "\r\n");
+		fwrite($fp, implode(',',$linea3 ) . "\r\n");
 		fputcsv ( $fp, array (
 				'AÑO',
 				'SEMESTRE',
