@@ -113,16 +113,15 @@ class estudiante implements IGestorEstudiante {
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		$cadenaSql = $this->miSql->cadena_sql ( 'registrarParticipante', $estudiante );
-		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
-		
+				
 		if ($resultado == FALSE) {
 			$error = $esteRecursoDB->obtener_error ();
 			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';
 			echo $cadenaSql;
 			var_dump ( $error );
 		}
-		
+		exit;
 		return $resultado;
 	}
 	function borrarParticipante($estudiante) {

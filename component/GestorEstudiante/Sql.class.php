@@ -181,43 +181,40 @@ class Sql extends \Sql {
 			// //PARTICIPANTE SNIES
 			
 			case "consultarParticipante" :
-				$cadenaSql = "SELECT codigo_unico, tipo_doc_unico FROM";
+				$cadenaSql = "SELECT num_documento, id_tipo_documento FROM";
 				$cadenaSql .= " participante ";
-				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
+				$cadenaSql .= " WHERE num_documento='" . $variable ['NUM_DOCUMENTO'] . "'";
 				
 				break;
 			
 			// actualiza los datos de un participante
 			case "actualizarParticipante" :
 				$cadenaSql = " UPDATE participante";
-				$cadenaSql .= " SET ies_code ='" . $variable ['IES_CODE'] . "',";
-				$cadenaSql .= " primer_apellido ='" . $variable ['PRIMER_APELLIDO'] . "',";
-				$cadenaSql .= " segundo_apellido='" . $variable ['SEGUNDO_APELLIDO'] . "',";
+				$cadenaSql .= " SET id_tipo_documento ='" . $variable ['ID_TIPO_DOCUMENTO'] . "',";
+				$cadenaSql .= " num_documento ='" . $variable ['NUM_DOCUMENTO'] . "',";
+				$cadenaSql .= " fecha_expedicion='" . $variable ['FECHA_EXPEDICION'] . "',";
 				$cadenaSql .= " primer_nombre ='" . $variable ['PRIMER_NOMBRE'] . "',";
 				$cadenaSql .= " segundo_nombre ='" . $variable ['SEGUNDO_NOMBRE'] . "',";
-				$cadenaSql .= " fecha_nacim ='" . $variable ['FECHA_NACIM'] . "',";
-				$cadenaSql .= " pais_ln ='" . $variable ['PAIS_LN'] . "',";
-				$cadenaSql .= " departamento_ln ='" . $variable ['DEPARTAMENTO_LN'] . "',";
-				$cadenaSql .= " municipio_ln ='" . $variable ['MUNICIPIO_LN'] . "',";
-				$cadenaSql .= " genero_code ='" . $variable ['GENERO_CODE'] . "',";
-				$cadenaSql .= " email ='" . $variable ['EMAIL'] . "',";
-				$cadenaSql .= " est_civil_code ='" . $variable ['EST_CIVIL_CODE'] . "',";
-				// $cadenaSql .= " tipo_doc_unico ='" . $variable ['TIPO_DOC_UNICO'] . "',";
-				// $cadenaSql .= " codigo_unico ='" . $variable ['CODIGO_UNICO'] . "',";
-				$cadenaSql .= " tipo_id_ant ='" . $variable ['TIPO_ID_ANT'] . "',";
-				$cadenaSql .= " codigo_id_ant ='" . $variable ['CODIGO_ID_ANT'] . "',";
-				$cadenaSql .= " pais_tel ='" . $variable ['PAIS_TEL'] . "',";
-				$cadenaSql .= " area_tel ='" . $variable ['AREA_TEL'] . "',";
-				$cadenaSql .= " numero_tel ='" . $variable ['NUMERO_TEL'] . "'";
-				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
+				$cadenaSql .= " primer_apellido ='" . $variable ['PRIMER_APELLIDO'] . "',";
+				$cadenaSql .= " segundo_apellido ='" . $variable ['SEGUNDO_APELLIDO'] . "',";
+				$cadenaSql .= " id_sexo_biologico ='" . $variable ['ID_SEXO_BIOLOGICO'] . "',";
+				$cadenaSql .= " id_estado_civil ='" . $variable ['ID_ESTADO_CIVIL'] . "',";
+				$cadenaSql .= " fecha_nacimiento ='" . $variable ['FECHA_NACIMIENTO'] . "',";
+				$cadenaSql .= " id_pais ='" . $variable ['ID_PAIS'] . "',";
+				$cadenaSql .= " id_municipio ='" . $variable ['ID_MUNICIPIO'] . "',";				
+				$cadenaSql .= " telefono_contacto ='" . $variable ['TELEFONO_CONTACTO'] . "',";
+				$cadenaSql .= " email_personal ='" . $variable ['EMAIL_PERSONAL'] . "',";
+				$cadenaSql .= " email_institucional ='" . $variable ['EMAIL_INSTITUCIONAL'] . "',";				
+				$cadenaSql .= " direccion_institucional ='" . $variable ['DIRECCION_INSTITUCIONAL'] . "'";
+				$cadenaSql .= " WHERE NUM_DOCUMENTO='" . $variable ['NUM_DOCUMENTO'] . "'";
 				
 				break;
 			
 			case "borrarParticipante" :
 				$cadenaSql = "DELETE FROM";
 				$cadenaSql .= " participante ";
-				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
-				$cadenaSql .= " AND tipo_doc_unico='" . $variable ['TIPO_DOC_UNICO'] . "'";
+				$cadenaSql .= " WHERE num_documento='" . $variable ['NUM_DOCUMENTO'] . "'";
+				$cadenaSql .= " AND id_tipo_documento='" . $variable ['ID_TIPO_DOCUMENTO'] . "'";
 				echo $cadenaSql;
 				
 				break;
@@ -228,47 +225,41 @@ class Sql extends \Sql {
 				$cadenaSql = " INSERT";
 				$cadenaSql .= " INTO participante";
 				$cadenaSql .= " (";
-				$cadenaSql .= " ies_code,";
+				$cadenaSql .= " id_tipo_documento,";
+				$cadenaSql .= " num_documento,";
+				$cadenaSql .= " fecha_expedicion,";				
+				$cadenaSql .= " primer_nombre,";
+				$cadenaSql .= " segundo_nombre,";					
 				$cadenaSql .= " primer_apellido,";
 				$cadenaSql .= " segundo_apellido,";
-				$cadenaSql .= " primer_nombre,";
-				$cadenaSql .= " segundo_nombre,";
-				$cadenaSql .= " fecha_nacim,";
-				$cadenaSql .= " pais_ln,";
-				$cadenaSql .= " departamento_ln,";
-				$cadenaSql .= " municipio_ln,";
-				$cadenaSql .= " genero_code,";
-				$cadenaSql .= " email,";
-				$cadenaSql .= " est_civil_code,";
-				$cadenaSql .= " tipo_doc_unico,";
-				$cadenaSql .= " codigo_unico,";
-				$cadenaSql .= " tipo_id_ant,";
-				$cadenaSql .= " codigo_id_ant,";
-				$cadenaSql .= " pais_tel,";
-				$cadenaSql .= " area_tel,";
-				$cadenaSql .= " numero_tel";
+				$cadenaSql .= " id_sexo_biologico,";
+				$cadenaSql .= " id_estado_civil,";				
+				$cadenaSql .= " fecha_nacimiento,";
+				$cadenaSql .= " id_pais,";
+				$cadenaSql .= " id_municipio,";	
+				$cadenaSql .= " telefono_contacto,";				
+				$cadenaSql .= " email_personal,";
+				$cadenaSql .= " email_institucional,";
+				$cadenaSql .= " direccion_institucional";
 				$cadenaSql .= " )";
 				$cadenaSql .= "VALUES ";
 				$cadenaSql .= "( ";
-				$cadenaSql .= "'" . $variable ['IES_CODE'] . "', ";
-				$cadenaSql .= "'" . $variable ['PRIMER_APELLIDO'] . "', ";
-				$cadenaSql .= "'" . $variable ['SEGUNDO_APELLIDO'] . "', ";
+				$cadenaSql .= "'" . $variable ['ID_TIPO_DOCUMENTO'] . "', ";
+				$cadenaSql .= "'" . $variable ['NUM_DOCUMENTO'] . "', ";
+				$cadenaSql .= "NULL, ";//Fecha de Expedición, no se captura
 				$cadenaSql .= "'" . $variable ['PRIMER_NOMBRE'] . "', ";
 				$cadenaSql .= "'" . $variable ['SEGUNDO_NOMBRE'] . "', ";
-				$cadenaSql .= "'" . $variable ['FECHA_NACIM'] . "', ";
-				$cadenaSql .= "'" . $variable ['PAIS_LN'] . "', ";
-				$cadenaSql .= "'" . $variable ['DEPARTAMENTO_LN'] . "', ";
-				$cadenaSql .= "'" . $variable ['MUNICIPIO_LN'] . "', ";
-				$cadenaSql .= "'" . $variable ['GENERO_CODE'] . "', ";
-				$cadenaSql .= "'" . $variable ['EMAIL'] . "', ";
-				$cadenaSql .= "'" . $variable ['EST_CIVIL_CODE'] . "', ";
-				$cadenaSql .= "'" . $variable ['TIPO_DOC_UNICO'] . "', ";
-				$cadenaSql .= "'" . $variable ['CODIGO_UNICO'] . "', ";
-				$cadenaSql .= "'" . $variable ['TIPO_ID_ANT'] . "', ";
-				$cadenaSql .= "'" . $variable ['CODIGO_ID_ANT'] . "', ";
-				$cadenaSql .= "'" . $variable ['PAIS_TEL'] . "', ";
-				$cadenaSql .= "'" . $variable ['AREA_TEL'] . "', ";
-				$cadenaSql .= "'" . $variable ['NUMERO_TEL'] . "'";
+				$cadenaSql .= "'" . $variable ['PRIMER_APELLIDO'] . "', ";
+				$cadenaSql .= "'" . $variable ['SEGUNDO_APELLIDO'] . "', ";				
+				$cadenaSql .= "'" . $variable ['ID_SEXO_BIOLOGICO'] . "', ";
+				$cadenaSql .= "'" . $variable ['ID_ESTADO_CIVIL'] . "', ";
+				$cadenaSql .= "'" . $variable ['FECHA_NACIMIENTO'] . "', ";
+				$cadenaSql .= "'" . $variable ['ID_PAIS'] . "', ";
+				$cadenaSql .= "'" . $variable ['ID_MUNICIPIO'] . "', ";
+				$cadenaSql .= "'" . $variable ['TELEFONO_CONTACTO'] . "', ";
+				$cadenaSql .= "'" . $variable ['EMAIL_PERSONAL'] . "', ";
+				$cadenaSql .= "'" . $variable ['EMAIL_INSTITUCIONAL']. "', ";
+				$cadenaSql .= "''";//NO OBLIGATORIO PARA ESTUDIANTES
 				$cadenaSql .= " )";
 				
 				break;
