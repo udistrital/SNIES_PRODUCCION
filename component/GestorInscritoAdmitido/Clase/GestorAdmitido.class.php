@@ -58,7 +58,7 @@ class GestorAdmitido implements IGestorAdmitido {
 		$datos ['semestre'] = $semestre;
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-		$cadenaSql = $this->miSql->cadena_sql ( 'borrarAdmitidosSnies', $datos );
+		$cadenaSql = $this->miSql->cadena_sql ( 'borrarAdmitidoSnies', $datos );
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
 		
 		return true;

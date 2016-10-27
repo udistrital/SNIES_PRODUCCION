@@ -81,10 +81,8 @@ class registrarForm {
 			<th>Período</th>
 			<!--<th>Total</th>  -->
 			<th>1. Actualizar Participante</th>
-			<th>2. Actualizar Estudiante</th>
+			<th>2. Actualizar Primer Curso</th>
 			<th>3. Actualizar Matriculado</th>
-			<th>Errores Participante</th>
-			<th>Última Actualización</th>
 		</tr>
 	</thead>
 
@@ -110,8 +108,6 @@ class registrarForm {
 			<td align="center"><a class=miEnlace href="<?php echo $enlaceActualizarMatriculado;?>"><img
 					src='<? echo $this->urlImagenes?>images/actualizar.png'
 					width='30px'></a></td>
-			<td align="center">-</td>
-			<td align="right">-</td>
 		</tr>
 				<?php }?>
 			</tbody>

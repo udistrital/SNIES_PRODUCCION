@@ -46,30 +46,27 @@ class Sql extends \Sql {
 				
 				$cadenaSql = " SELECT ";
 				$cadenaSql .= " EST_COD CODIGO_ESTUDIANTE,";
-				$cadenaSql .= " TO_CHAR('1301') ies_code,";
+				$cadenaSql .= " TO_CHAR(DECODE(est_tipo_iden_ant,'C', 'CC', 'T', 'TI', 'E', 'CE', 'P', 'PS')) id_tipo_documento,";
+				$cadenaSql .= " TO_CHAR(est_nro_iden) num_documento,";
+				$cadenaSql .= " '' fecha_expedicion,";
 				$cadenaSql .= " EST_NOMBRE,";
-				$cadenaSql .= " TO_CHAR(eot_fecha_nac, 'yyyy-mm-dd') fecha_nacim,";
-				$cadenaSql .= " TO_CHAR('CO') pais_ln,";
-				$cadenaSql .= " TO_CHAR(DECODE (mun_dep_cod,0,11,'',11, mun_dep_cod)) departamento_ln,";
-				$cadenaSql .= " TO_CHAR(DECODE (mun_cod,0,11001,'',11001,99999,11001, mun_cod)) municipio_ln,";
-				$cadenaSql .= " TO_CHAR(DECODE(est_sexo,'M','01','F','02','01')) genero_code,";
-				$cadenaSql .= " eot_email email,";
-				$cadenaSql .= " DECODE(eot_estado_civil,1,'01',2,'02',3,'05',4,'03',5,'04', '01') est_civil_code,";
-				$cadenaSql .= " TO_CHAR(DECODE(est_tipo_iden,'C', 'CC', 'T', 'TI', 'E', 'CE', 'P', 'PS')) tipo_doc_unico,";
-				$cadenaSql .= " TO_CHAR(est_nro_iden) codigo_unico,";
-				$cadenaSql .= " TO_CHAR(DECODE(est_tipo_iden_ant,'C', 'CC', 'T', 'TI', 'E', 'CE', 'P', 'PS')) tipo_id_ant,";
-				$cadenaSql .= " est_nro_iden_ant codigo_id_ant,";
-				$cadenaSql .= " '57' pais_tel,";
-				$cadenaSql .= " '1' area_tel,";
-				$cadenaSql .= " TO_CHAR(est_telefono) numero_tel,";
-				// $cadenaSql .= " --datos estudiante_programa";
+				$cadenaSql .= " TO_CHAR(DECODE(est_sexo,'M','1','F','2','01')) id_sexo_biologico,";
+				$cadenaSql .= " DECODE(eot_estado_civil,1,'1',2,'2',3,'5',4,'3',5,'4', '1') id_estado_civil,";
+				$cadenaSql .= " TO_CHAR(eot_fecha_nac, 'yyyy-mm-dd') fecha_nacimiento,";
+				$cadenaSql .= " TO_CHAR('CO') id_pais,";
+				$cadenaSql .= " TO_CHAR(DECODE (mun_cod,0,11001,'',11001,99999,11001, mun_cod)) id_municipio,";
+				$cadenaSql .= " TO_CHAR(est_telefono) telefono_contacto,";
+				$cadenaSql .= " eot_email email_personal,";
+				$cadenaSql .= " eot_email_ins email_institucional,";
+				$cadenaSql .= " '' direccion_institucional,";//obligatorio para autoridades
 				$cadenaSql .= " as_cra_cod_snies pro_consecutivo,";
 				$cadenaSql .= " DECODE(LENGTH(est_cod),7,(SUBSTR(est_cod,1,2)+1900),11,(SUBSTR(est_cod, 1,4))) anio,";
-				$cadenaSql .= " DECODE(DECODE(LENGTH(est_cod),7,((SUBSTR(est_cod,3,1))),11,(SUBSTR(est_cod, 5,1))), '1','01','02') semestre,";
-				$cadenaSql .= " '02' es_transferencia,";
+				$cadenaSql .= " DECODE(DECODE(LENGTH(est_cod),7,((SUBSTR(est_cod,3,1))),11,(SUBSTR(est_cod, 5,1))), '1','01','02') semestre";
+				//$cadenaSql .= " TO_CHAR(DECODE (mun_dep_cod,0,11,'',11, mun_dep_cod)) departamento_ln,";
+				//$cadenaSql .= " '02' es_transferencia,";
 				// $cadenaSql .= " --datos matriculado";
-				$cadenaSql .= " DECODE(cra_jornada, 'DIURNA', '01', 'NOCTURNA', '02', '01' ) horario_code,";
-				$cadenaSql .= " '01' pago";
+				//$cadenaSql .= " DECODE(cra_jornada, 'DIURNA', '01', 'NOCTURNA', '02', '01' ) horario_code,";
+				//$cadenaSql .= " '01' pago";
 				$cadenaSql .= " FROM mntac.acest";
 				$cadenaSql .= " INNER JOIN mntac.acestotr";
 				$cadenaSql .= " ON est_cod = eot_cod";
@@ -91,7 +88,7 @@ class Sql extends \Sql {
 				}
 				
 				// $cadenaSql .= " AND est_nro_iden=1020742945";
-				// $cadenaSql .= " AND rownum < 10";
+				$cadenaSql .= " AND rownum < 10";
 				
 				break;
 			

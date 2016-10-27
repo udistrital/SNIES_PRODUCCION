@@ -58,7 +58,9 @@ class FormProcessor {
 		
 		$miProcesadorExcepcion = new procesadorExcepcion ();
 		// FORMATEA LOS VALORES NULOS, CODIFICA EXCEPCIONES
-		$estudiante = $miProcesadorExcepcion->procesarExcepcionEstudiante ( $estudiante );
+		
+		//************************************/// OJO REVISAR LAS EXCEPCIONES
+		//$estudiante = $miProcesadorExcepcion->procesarExcepcionEstudiante ( $estudiante );
 		
 		$this->actualizarParticipante ( $estudiante );
 		
