@@ -88,7 +88,7 @@ class Sql extends \Sql {
 				}
 				
 				// $cadenaSql .= " AND est_nro_iden=1020742945";
-				$cadenaSql .= " AND rownum < 10";
+				//$cadenaSql .= " AND rownum < 10";
 				
 				break;
 			

@@ -64,7 +64,6 @@ class FormProcessor {
 		//************************************/// OJO REVISAR LAS EXCEPCIONES
 		$estudiante = $miProcesadorExcepcion -> procesarExcepcionEstudiante($estudiante);
 
-		var_dump($estudiante);
 
 		$this -> actualizarParticipante($estudiante);
 
@@ -93,8 +92,7 @@ class FormProcessor {
 		foreach ($estudiante as $unEstudiante) {
 			echo 'CODIGO: ' . $unEstudiante['NUM_DOCUMENTO'] . '<br>';
 			// consulta en la tabla participante y cuenta el número de registros retornados
-			$participante = $this -> miComponente -> consultarParticipante($unEstudiante);
-			var_dump($participante);
+			$participante = $this -> miComponente -> consultarParticipante($unEstudiante);			
 			// si no existe insertar el nuevo registro
 			if ($participante == false) {
 				$this -> miComponente -> registrarParticipante($unEstudiante);

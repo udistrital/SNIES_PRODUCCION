@@ -121,7 +121,7 @@ class estudiante implements IGestorEstudiante {
 			echo $cadenaSql;
 			var_dump ( $error );
 		}
-		exit;
+		
 		return $resultado;
 	}
 	function borrarParticipante($estudiante) {
