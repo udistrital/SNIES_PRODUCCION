@@ -215,7 +215,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " participante ";
 				$cadenaSql .= " WHERE num_documento='" . $variable ['NUM_DOCUMENTO'] . "'";
 				$cadenaSql .= " AND id_tipo_documento='" . $variable ['ID_TIPO_DOCUMENTO'] . "'";
-				echo $cadenaSql;
+				
 				
 				break;
 			
