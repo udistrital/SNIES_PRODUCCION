@@ -61,7 +61,17 @@ class Sql extends \Sql {
 				$cadenaSql .= " '' direccion_institucional,";//obligatorio para autoridades
 				$cadenaSql .= " as_cra_cod_snies pro_consecutivo,";
 				$cadenaSql .= " DECODE(LENGTH(est_cod),7,(SUBSTR(est_cod,1,2)+1900),11,(SUBSTR(est_cod, 1,4))) anio,";
-				$cadenaSql .= " DECODE(DECODE(LENGTH(est_cod),7,((SUBSTR(est_cod,3,1))),11,(SUBSTR(est_cod, 5,1))), '1','01','02') semestre";
+				$cadenaSql .= " DECODE(DECODE(LENGTH(est_cod),7,((SUBSTR(est_cod,3,1))),11,(SUBSTR(est_cod, 5,1))), '1','01','02') semestre,";
+				$cadenaSql .= " '1' id_tipo_vinculacion,";
+				$cadenaSql .= " '0' id_grupo_etnico,";
+				$cadenaSql .= " '0' id_pueblo_indigena,";
+				$cadenaSql .= " '0' id_comunidad_negra,";
+				$cadenaSql .= " '0' persona_condicion_discapacidad,";
+				$cadenaSql .= " '0' id_tipo_discapacidad,";
+				$cadenaSql .= " '0' id_capacidad_excepcional,";
+				$cadenaSql .= " eot_nro_snp cod_prueba_saber_11,";
+				$cadenaSql .= " DECODE (eot_arural, 'S', '2', 'N', '1', '1') id_zona_residencia,";// S es rural (2) N es urbano (1), default urbano (1)
+				$cadenaSql .= " 'N' id_reintegro";
 				//$cadenaSql .= " TO_CHAR(DECODE (mun_dep_cod,0,11,'',11, mun_dep_cod)) departamento_ln,";
 				//$cadenaSql .= " '02' es_transferencia,";
 				// $cadenaSql .= " --datos matriculado";
@@ -88,7 +98,7 @@ class Sql extends \Sql {
 				}
 				
 				// $cadenaSql .= " AND est_nro_iden=1020742945";
-				//$cadenaSql .= " AND rownum < 10";
+				$cadenaSql .= " AND rownum < 10";
 				
 				break;
 			
@@ -332,11 +342,11 @@ class Sql extends \Sql {
 				break;
 			
 			// borra todos los estudiantes de la tabla estudiante_programa para un año y semestre definido
-			case "borrarEstudianteProgramaPeriodoTodos" :
+			case "borrarEstudiantePrimerCursoPeriodoTodos" :
 				$cadenaSql = "DELETE FROM";
-				$cadenaSql .= " estudiante_programa ";
-				$cadenaSql .= " WHERE anio='" . $variable ['ANNIO'] . "'";
-				$cadenaSql .= " AND semestre='" . $variable ['SEMESTRE'] . "'";
+				$cadenaSql .= " primer_curso ";
+				$cadenaSql .= " WHERE ano='" . $variable ['ANNIO'] . "'";
+				$cadenaSql .= " AND semestre='" . $variable ['SEMESTRE'] . "'";				
 				
 				break;
 			

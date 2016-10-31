@@ -231,13 +231,13 @@ class estudiante implements IGestorEstudiante {
 		
 		return $resultado;
 	}
-	function borrarEstudianteProgramaPeriodoTodos($annio, $semestre) {
+	function borrarEstudiantePrimerCursoPeriodoTodos($annio, $semestre) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		$variable ['ANNIO'] = $annio;
 		$variable ['SEMESTRE'] = $semestre;
-		$cadenaSql = $this->miSql->cadena_sql ( 'borrarEstudianteProgramaPeriodoTodos', $variable );
+		$cadenaSql = $this->miSql->cadena_sql ( 'borrarEstudiantePrimerCursoPeriodoTodos', $variable );
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
 		if ($resultado == FALSE) {

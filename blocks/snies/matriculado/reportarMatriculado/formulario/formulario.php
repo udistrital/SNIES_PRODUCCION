@@ -71,7 +71,7 @@ class registrarForm {
 		?>
 
 <br>
-<h3>MATRICULADO - ACTUALIZACIÓN LOCAL</h3>
+<h3>MATRICULADO - ACTUALIZA ESTUDAINTES PRIMER CURSO Y MATRICULADOS</h3>
 <br>
 <table id="example" class="display" cellspacing="0" width="100%">
 	<thead>
@@ -81,8 +81,7 @@ class registrarForm {
 			<th>Período</th>
 			<!--<th>Total</th>  -->
 			<th>1. Actualizar Participante</th>
-			<th>2. Actualizar Primer Curso</th>
-			<th>3. Actualizar Matriculado</th>
+			<th align="center">3. Actualizar Primer curso y Matriculado</th>
 		</tr>
 	</thead>
 
@@ -100,9 +99,6 @@ class registrarForm {
 			<td align="center"><?php echo $miPeriodo['semestre'];?></td>
 			<!--<td align="right"><?php echo $miPeriodo['total'];?></td>  -->
 			<td align="center"><a class=miEnlace href="<?php echo $enlaceActualizarParticipante;?>"><img
-					src='<? echo $this->urlImagenes?>images/actualizar.png'
-					width='30px'></a></td>
-			<td align="center"><a class=miEnlace href="<?php echo $enlaceActualizarEstudiante;?>"><img
 					src='<? echo $this->urlImagenes?>images/actualizar.png'
 					width='30px'></a></td>
 			<td align="center"><a class=miEnlace href="<?php echo $enlaceActualizarMatriculado;?>"><img

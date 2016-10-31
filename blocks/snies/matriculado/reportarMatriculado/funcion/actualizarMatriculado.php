@@ -40,26 +40,14 @@ class FormProcessor {
 		 */
 		
 		// estudiante de la académica
-		$estudiante = $this->miComponente->consultarEstudianteAcademica ( $this->annio, $this->semestre );
-		
-		// en el caso de que no se haga la consulta redirecciona
-		if ($estudiante == false) {
-			$valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
-			$valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
-			
-			// Rescatar el parámetro enlace desde los datos de configuraión en la base de datos
-			$variable = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
-			$miEnlace = $this->host . $this->site . '/index.php?' . $variable . '=' . $valorCodificado;
-			
-			header ( "Location:$miEnlace" );
-		}
+		$estudiante = $this->miComponente->consultarEstudianteAcademica ( $this->annio, $this->semestre );	
 		
 		$miProcesadorExcepcion = new procesadorExcepcion ();
 		// FORMATEA LOS VALORES NULOS, CODIFICA EXCEPCIONES
 		$estudiante = $miProcesadorExcepcion->procesarExcepcionEstudiante ( $estudiante );
 		
-		echo 'proceso 1 actualizarEstudiantePrograma...<br>';
-		$this->actualizarEstudiantePrograma ( $estudiante );
+		echo 'proceso 1 actualizarEstudiantePrimerCurso...<br>';
+		$this->actualizarEstudiantePrimerCurso ( $estudiante );
 		echo 'proceso 2 actualizarMatriculado<br>';
 		$this->actualizarMatriculado ( $estudiante );
 		echo 'FIN<br>';
@@ -81,14 +69,15 @@ class FormProcessor {
 	 *
 	 * @param array $estudiante        	
 	 */
-	function actualizarEstudiantePrograma($estudiante) {
+	function actualizarEstudiantePrimerCurso($estudiante) {
 		
 		// borrar todos los registros de estudiante_programa para el periodo seleccionado
-		$this->miComponente->borrarEstudianteProgramaPeriodoTodos ( $this->annio, $this->semestre );
+		$this->miComponente->borrarEstudiantePrimerCursoPeriodoTodos ( $this->annio, $this->semestre );
 		
 		// registrar los estudiantes de la cohorte seleccionada, año y período
 		foreach ( $estudiante as $unEstudiante ) {
 			
+			echo "revisado hasta esta parte";  exit;
 			if ($unEstudiante ['ANIO'] == $this->annio and $unEstudiante ['SEMESTRE'] == $this->semestre) {
 				$this->miComponente->borrarEstudiantePrograma ( $unEstudiante );//borra si un fue estudiante en 
 				$this->miComponente->registrarEstudiantePrograma ( $unEstudiante );
