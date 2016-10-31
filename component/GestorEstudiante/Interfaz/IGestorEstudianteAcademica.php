@@ -56,11 +56,11 @@ interface IGestorEstudiante {
 	function registrarEstudiante($estudiante);
 	function borrarEstudiante($estudiante);
 	
-	// ///ESTUDIANTE_PROGRAMA SNIES
+	// ///ESTUDIANTE PRIMER_CURSO SNIES
 	function consultarEstudiantePrograma($estudiante);
 	function borrarEstudiantePrograma($estudiante);
 	function borrarEstudiantePrimerCursoPeriodoTodos($annio, $semestre);
-	function registrarEstudiantePrograma($estudiante);
+	function registrarEstudiantePrimerCurso($estudiante);
 	
 	// MATRICULADO
 	function borrarMatriculado($estudiante);

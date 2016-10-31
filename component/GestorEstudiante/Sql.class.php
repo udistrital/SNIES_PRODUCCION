@@ -2,9 +2,9 @@
 
 namespace sniesEstudiante;
 
-if (! isset ( $GLOBALS ["autorizado"] )) {
+if (!isset($GLOBALS["autorizado"])) {
 	include ("../index.php");
-	exit ();
+	exit();
 }
 
 include_once ("core/manager/Configurador.class.php");
@@ -15,25 +15,26 @@ include_once ("core/connection/Sql.class.php");
 class Sql extends \Sql {
 	var $miConfigurador;
 	function __construct() {
-		$this->miConfigurador = \Configurador::singleton ();
+		$this -> miConfigurador = \Configurador::singleton();
 	}
+
 	function cadena_sql($tipo, $variable = "") {
-		
+
 		/**
 		 * 1.
 		 * Revisar las variables para evitar SQL Injection
 		 */
 		$prefijo = 'sniesud_';
-		$idSesion = $this->miConfigurador->getVariableConfiguracion ( "id_sesion" );
-		
+		$idSesion = $this -> miConfigurador -> getVariableConfiguracion("id_sesion");
+
 		switch ($tipo) {
-			
+
 			/**
 			 * CONSULTA BASE DE DATOS INSTITUCIONAL
 			 * Datos necesarios para la tabla participante de estudiantes
 			 * se consulta los estudiantes que pagaron matrícula en un período
 			 */
-			
+
 			/**
 			 * Consulta que rescata los datos de la base de datos institucional
 			 * para poblar las tablas del SNIES relacionadas con estudiantes:
@@ -43,7 +44,6 @@ class Sql extends \Sql {
 			 * MATRICULADO
 			 */
 			case "consultarEstudianteAcademica" :
-				
 				$cadenaSql = " SELECT ";
 				$cadenaSql .= " EST_COD CODIGO_ESTUDIANTE,";
 				$cadenaSql .= " TO_CHAR(DECODE(est_tipo_iden_ant,'C', 'CC', 'T', 'TI', 'E', 'CE', 'P', 'PS')) id_tipo_documento,";
@@ -58,7 +58,8 @@ class Sql extends \Sql {
 				$cadenaSql .= " TO_CHAR(est_telefono) telefono_contacto,";
 				$cadenaSql .= " eot_email email_personal,";
 				$cadenaSql .= " eot_email_ins email_institucional,";
-				$cadenaSql .= " '' direccion_institucional,";//obligatorio para autoridades
+				$cadenaSql .= " '' direccion_institucional,";
+				//obligatorio para autoridades
 				$cadenaSql .= " as_cra_cod_snies pro_consecutivo,";
 				$cadenaSql .= " DECODE(LENGTH(est_cod),7,(SUBSTR(est_cod,1,2)+1900),11,(SUBSTR(est_cod, 1,4))) anio,";
 				$cadenaSql .= " DECODE(DECODE(LENGTH(est_cod),7,((SUBSTR(est_cod,3,1))),11,(SUBSTR(est_cod, 5,1))), '1','01','02') semestre,";
@@ -70,7 +71,8 @@ class Sql extends \Sql {
 				$cadenaSql .= " '0' id_tipo_discapacidad,";
 				$cadenaSql .= " '0' id_capacidad_excepcional,";
 				$cadenaSql .= " eot_nro_snp cod_prueba_saber_11,";
-				$cadenaSql .= " DECODE (eot_arural, 'S', '2', 'N', '1', '1') id_zona_residencia,";// S es rural (2) N es urbano (1), default urbano (1)
+				$cadenaSql .= " DECODE (eot_arural, 'S', '2', 'N', '1', '1') id_zona_residencia,";
+				// S es rural (2) N es urbano (1), default urbano (1)
 				$cadenaSql .= " 'N' id_reintegro";
 				//$cadenaSql .= " TO_CHAR(DECODE (mun_dep_cod,0,11,'',11, mun_dep_cod)) departamento_ln,";
 				//$cadenaSql .= " '02' es_transferencia,";
@@ -90,26 +92,27 @@ class Sql extends \Sql {
 				$cadenaSql .= " ON cra_cod = est_cra_cod";
 				$cadenaSql .= " INNER JOIN actipcra";
 				$cadenaSql .= " ON cra_tip_cra = tra_cod";
-				$cadenaSql .= " WHERE mat_ano ='" . $variable ['annio'] . "'";
-				if ($variable ['semestre'] == '01') {
+				$cadenaSql .= " WHERE mat_ano ='" . $variable['annio'] . "'";
+				if ($variable['semestre'] == '01') {
 					$cadenaSql .= " AND mat_per =1 ";
 				} else {
-					$cadenaSql .= " AND mat_per =3 "; // el semestre 03 de la universidad es el semestre 02 de SNIES";
+					$cadenaSql .= " AND mat_per =3 ";
+					// el semestre 03 de la universidad es el semestre 02 de SNIES";
 				}
-				
+
 				// $cadenaSql .= " AND est_nro_iden=1020742945";
-				$cadenaSql .= " AND rownum < 10";
-				
+				//$cadenaSql .= " AND rownum < 10";
+
 				break;
-			
+
 			// consulta para la Base Poblacional Unificada del Distrito Capital,
 			// En los casos que el valor es null se coloca el simbolo "|" para que se cree la variable
 			// para procesarla más adelante
 			case "consultarEstudianteBpudc" :
-				
 				$cadenaSql = " SELECT";
 				$cadenaSql .= " EST_COD ID,";
-				$cadenaSql .= " EST_NOMBRE NOMBRE,"; // NOMBRE_1, NOMBRE_2, APELLIDO_1, APELLIDO_2
+				$cadenaSql .= " EST_NOMBRE NOMBRE,";
+				// NOMBRE_1, NOMBRE_2, APELLIDO_1, APELLIDO_2
 				$cadenaSql .= " EST_TIPO_IDEN TIP_ID,";
 				$cadenaSql .= " EST_NRO_IDEN NUM_ID,";
 				$cadenaSql .= " EOT_COD_LUG_NAC MUN_NAC,";
@@ -185,50 +188,49 @@ class Sql extends \Sql {
 				// $cadenaSql .= " WHERE EST_COD = '20161025106'";
 				// echo $cadenaSql;
 				// exit;
-				
+
 				break;
-			
+
 			// //PARTICIPANTE SNIES
-			
+
 			case "consultarParticipante" :
 				$cadenaSql = "SELECT num_documento, id_tipo_documento FROM";
 				$cadenaSql .= " participante ";
-				$cadenaSql .= " WHERE num_documento='" . $variable ['NUM_DOCUMENTO'] . "'";
-				
+				$cadenaSql .= " WHERE num_documento='" . $variable['NUM_DOCUMENTO'] . "'";
+
 				break;
-			
+
 			// actualiza los datos de un participante
 			case "actualizarParticipante" :
 				$cadenaSql = " UPDATE participante";
-				$cadenaSql .= " SET id_tipo_documento ='" . $variable ['ID_TIPO_DOCUMENTO'] . "',";
-				$cadenaSql .= " num_documento ='" . $variable ['NUM_DOCUMENTO'] . "',";
-				$cadenaSql .= " fecha_expedicion='" . $variable ['FECHA_EXPEDICION'] . "',";
-				$cadenaSql .= " primer_nombre ='" . $variable ['PRIMER_NOMBRE'] . "',";
-				$cadenaSql .= " segundo_nombre ='" . $variable ['SEGUNDO_NOMBRE'] . "',";
-				$cadenaSql .= " primer_apellido ='" . $variable ['PRIMER_APELLIDO'] . "',";
-				$cadenaSql .= " segundo_apellido ='" . $variable ['SEGUNDO_APELLIDO'] . "',";
-				$cadenaSql .= " id_sexo_biologico ='" . $variable ['ID_SEXO_BIOLOGICO'] . "',";
-				$cadenaSql .= " id_estado_civil ='" . $variable ['ID_ESTADO_CIVIL'] . "',";
-				$cadenaSql .= " fecha_nacimiento ='" . $variable ['FECHA_NACIMIENTO'] . "',";
-				$cadenaSql .= " id_pais ='" . $variable ['ID_PAIS'] . "',";
-				$cadenaSql .= " id_municipio ='" . $variable ['ID_MUNICIPIO'] . "',";				
-				$cadenaSql .= " telefono_contacto ='" . $variable ['TELEFONO_CONTACTO'] . "',";
-				$cadenaSql .= " email_personal ='" . $variable ['EMAIL_PERSONAL'] . "',";
-				$cadenaSql .= " email_institucional ='" . $variable ['EMAIL_INSTITUCIONAL'] . "',";				
-				$cadenaSql .= " direccion_institucional ='" . $variable ['DIRECCION_INSTITUCIONAL'] . "'";
-				$cadenaSql .= " WHERE NUM_DOCUMENTO='" . $variable ['NUM_DOCUMENTO'] . "'";
-				
+				$cadenaSql .= " SET id_tipo_documento ='" . $variable['ID_TIPO_DOCUMENTO'] . "',";
+				$cadenaSql .= " num_documento ='" . $variable['NUM_DOCUMENTO'] . "',";
+				$cadenaSql .= " fecha_expedicion='" . $variable['FECHA_EXPEDICION'] . "',";
+				$cadenaSql .= " primer_nombre ='" . $variable['PRIMER_NOMBRE'] . "',";
+				$cadenaSql .= " segundo_nombre ='" . $variable['SEGUNDO_NOMBRE'] . "',";
+				$cadenaSql .= " primer_apellido ='" . $variable['PRIMER_APELLIDO'] . "',";
+				$cadenaSql .= " segundo_apellido ='" . $variable['SEGUNDO_APELLIDO'] . "',";
+				$cadenaSql .= " id_sexo_biologico ='" . $variable['ID_SEXO_BIOLOGICO'] . "',";
+				$cadenaSql .= " id_estado_civil ='" . $variable['ID_ESTADO_CIVIL'] . "',";
+				$cadenaSql .= " fecha_nacimiento ='" . $variable['FECHA_NACIMIENTO'] . "',";
+				$cadenaSql .= " id_pais ='" . $variable['ID_PAIS'] . "',";
+				$cadenaSql .= " id_municipio ='" . $variable['ID_MUNICIPIO'] . "',";
+				$cadenaSql .= " telefono_contacto ='" . $variable['TELEFONO_CONTACTO'] . "',";
+				$cadenaSql .= " email_personal ='" . $variable['EMAIL_PERSONAL'] . "',";
+				$cadenaSql .= " email_institucional ='" . $variable['EMAIL_INSTITUCIONAL'] . "',";
+				$cadenaSql .= " direccion_institucional ='" . $variable['DIRECCION_INSTITUCIONAL'] . "'";
+				$cadenaSql .= " WHERE NUM_DOCUMENTO='" . $variable['NUM_DOCUMENTO'] . "'";
+
 				break;
-			
+
 			case "borrarParticipante" :
 				$cadenaSql = "DELETE FROM";
 				$cadenaSql .= " participante ";
-				$cadenaSql .= " WHERE num_documento='" . $variable ['NUM_DOCUMENTO'] . "'";
-				$cadenaSql .= " AND id_tipo_documento='" . $variable ['ID_TIPO_DOCUMENTO'] . "'";
-				
-				
+				$cadenaSql .= " WHERE num_documento='" . $variable['NUM_DOCUMENTO'] . "'";
+				$cadenaSql .= " AND id_tipo_documento='" . $variable['ID_TIPO_DOCUMENTO'] . "'";
+
 				break;
-			
+
 			case "registrarParticipante" :
 				$cadenaSql = "INSERT INTO ";
 				$cadenaSql .= "participante ";
@@ -237,67 +239,68 @@ class Sql extends \Sql {
 				$cadenaSql .= " (";
 				$cadenaSql .= " id_tipo_documento,";
 				$cadenaSql .= " num_documento,";
-				$cadenaSql .= " fecha_expedicion,";				
+				$cadenaSql .= " fecha_expedicion,";
 				$cadenaSql .= " primer_nombre,";
-				$cadenaSql .= " segundo_nombre,";					
+				$cadenaSql .= " segundo_nombre,";
 				$cadenaSql .= " primer_apellido,";
 				$cadenaSql .= " segundo_apellido,";
 				$cadenaSql .= " id_sexo_biologico,";
-				$cadenaSql .= " id_estado_civil,";				
+				$cadenaSql .= " id_estado_civil,";
 				$cadenaSql .= " fecha_nacimiento,";
 				$cadenaSql .= " id_pais,";
-				$cadenaSql .= " id_municipio,";	
-				$cadenaSql .= " telefono_contacto,";				
+				$cadenaSql .= " id_municipio,";
+				$cadenaSql .= " telefono_contacto,";
 				$cadenaSql .= " email_personal,";
 				$cadenaSql .= " email_institucional,";
 				$cadenaSql .= " direccion_institucional";
 				$cadenaSql .= " )";
 				$cadenaSql .= "VALUES ";
 				$cadenaSql .= "( ";
-				$cadenaSql .= "'" . $variable ['ID_TIPO_DOCUMENTO'] . "', ";
-				$cadenaSql .= "'" . $variable ['NUM_DOCUMENTO'] . "', ";
-				$cadenaSql .= "NULL, ";//Fecha de Expedición, no se captura
-				$cadenaSql .= "'" . $variable ['PRIMER_NOMBRE'] . "', ";
-				$cadenaSql .= "'" . $variable ['SEGUNDO_NOMBRE'] . "', ";
-				$cadenaSql .= "'" . $variable ['PRIMER_APELLIDO'] . "', ";
-				$cadenaSql .= "'" . $variable ['SEGUNDO_APELLIDO'] . "', ";				
-				$cadenaSql .= "'" . $variable ['ID_SEXO_BIOLOGICO'] . "', ";
-				$cadenaSql .= "'" . $variable ['ID_ESTADO_CIVIL'] . "', ";
-				$cadenaSql .= "'" . $variable ['FECHA_NACIMIENTO'] . "', ";
-				$cadenaSql .= "'" . $variable ['ID_PAIS'] . "', ";
-				$cadenaSql .= "'" . $variable ['ID_MUNICIPIO'] . "', ";
-				$cadenaSql .= "'" . $variable ['TELEFONO_CONTACTO'] . "', ";
-				$cadenaSql .= "'" . $variable ['EMAIL_PERSONAL'] . "', ";
-				$cadenaSql .= "'" . $variable ['EMAIL_INSTITUCIONAL']. "', ";
-				$cadenaSql .= "''";//NO OBLIGATORIO PARA ESTUDIANTES
+				$cadenaSql .= "'" . $variable['ID_TIPO_DOCUMENTO'] . "', ";
+				$cadenaSql .= "'" . $variable['NUM_DOCUMENTO'] . "', ";
+				$cadenaSql .= "NULL, ";
+				//Fecha de Expedición, no se captura
+				$cadenaSql .= "'" . $variable['PRIMER_NOMBRE'] . "', ";
+				$cadenaSql .= "'" . $variable['SEGUNDO_NOMBRE'] . "', ";
+				$cadenaSql .= "'" . $variable['PRIMER_APELLIDO'] . "', ";
+				$cadenaSql .= "'" . $variable['SEGUNDO_APELLIDO'] . "', ";
+				$cadenaSql .= "'" . $variable['ID_SEXO_BIOLOGICO'] . "', ";
+				$cadenaSql .= "'" . $variable['ID_ESTADO_CIVIL'] . "', ";
+				$cadenaSql .= "'" . $variable['FECHA_NACIMIENTO'] . "', ";
+				$cadenaSql .= "'" . $variable['ID_PAIS'] . "', ";
+				$cadenaSql .= "'" . $variable['ID_MUNICIPIO'] . "', ";
+				$cadenaSql .= "'" . $variable['TELEFONO_CONTACTO'] . "', ";
+				$cadenaSql .= "'" . $variable['EMAIL_PERSONAL'] . "', ";
+				$cadenaSql .= "'" . $variable['EMAIL_INSTITUCIONAL'] . "', ";
+				$cadenaSql .= "''";	//NO OBLIGATORIO PARA ESTUDIANTES
 				$cadenaSql .= " )";
-				
+
 				break;
-			
+
 			// //ESTUDIANTE SNIES
-			
+
 			case "consultarEstudiante" :
 				$cadenaSql = "SELECT codigo_unico, tipo_doc_unico FROM";
 				$cadenaSql .= " estudiante ";
-				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
-				
+				$cadenaSql .= " WHERE codigo_unico='" . $variable['CODIGO_UNICO'] . "'";
+
 				break;
-			
+
 			case "consultarEstudianteTodos" :
 				$cadenaSql = "SELECT codigo_unico, tipo_doc_unico FROM";
 				$cadenaSql .= " estudiante ";
-				
+
 				break;
-			
+
 			case "actualizarEstudiante" :
 				$cadenaSql = " UPDATE estudiante";
 				$cadenaSql .= " SET ";
-				$cadenaSql .= " ies_code ='" . $variable ['IES_CODE'] . "',";
-				$cadenaSql .= " tipo_doc_unico ='" . $variable ['TIPO_DOC_UNICO'] . "'";
-				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
-				
+				$cadenaSql .= " ies_code ='" . $variable['IES_CODE'] . "',";
+				$cadenaSql .= " tipo_doc_unico ='" . $variable['TIPO_DOC_UNICO'] . "'";
+				$cadenaSql .= " WHERE codigo_unico='" . $variable['CODIGO_UNICO'] . "'";
+
 				break;
-			
+
 			case "registrarEstudiante" :
 				$cadenaSql = " INSERT";
 				$cadenaSql .= " INTO estudiante";
@@ -308,109 +311,127 @@ class Sql extends \Sql {
 				$cadenaSql .= " )";
 				$cadenaSql .= " VALUES";
 				$cadenaSql .= " (";
-				$cadenaSql .= "'" . $variable ['IES_CODE'] . "', ";
-				$cadenaSql .= "'" . $variable ['CODIGO_UNICO'] . "', ";
-				$cadenaSql .= "'" . $variable ['TIPO_DOC_UNICO'] . "' ";
+				$cadenaSql .= "'" . $variable['IES_CODE'] . "', ";
+				$cadenaSql .= "'" . $variable['CODIGO_UNICO'] . "', ";
+				$cadenaSql .= "'" . $variable['TIPO_DOC_UNICO'] . "' ";
 				$cadenaSql .= " );";
-				
+
 				break;
-			
+
 			case "borrarEstudiante" :
 				$cadenaSql = "DELETE FROM";
 				$cadenaSql .= " estudiante ";
-				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
-				$cadenaSql .= " AND tipo_doc_unico='" . $variable ['TIPO_DOC_UNICO'] . "'";
-				
+				$cadenaSql .= " WHERE codigo_unico='" . $variable['CODIGO_UNICO'] . "'";
+				$cadenaSql .= " AND tipo_doc_unico='" . $variable['TIPO_DOC_UNICO'] . "'";
+
 				break;
-			
+
 			// //ESTUDIANTE_PROGRAMA SNIES
-			
+
 			case "consultarEstudiantePrograma" :
 				$cadenaSql = "SELECT codigo_unico FROM";
 				$cadenaSql .= " estudiante_programa ";
-				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
-				
+				$cadenaSql .= " WHERE codigo_unico='" . $variable['CODIGO_UNICO'] . "'";
+
 				break;
-			
+
 			// borra el estudiante_programa con el numero y tipo de documento dado para todos los períodos
 			case "borrarEstudiantePrograma" :
 				$cadenaSql = "DELETE FROM";
 				$cadenaSql .= " estudiante_programa ";
-				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
-				$cadenaSql .= " AND tipo_doc_unico='" . $variable ['TIPO_DOC_UNICO'] . "'";
-				
+				$cadenaSql .= " WHERE codigo_unico='" . $variable['CODIGO_UNICO'] . "'";
+				$cadenaSql .= " AND tipo_doc_unico='" . $variable['TIPO_DOC_UNICO'] . "'";
+
 				break;
-			
+
 			// borra todos los estudiantes de la tabla estudiante_programa para un año y semestre definido
 			case "borrarEstudiantePrimerCursoPeriodoTodos" :
 				$cadenaSql = "DELETE FROM";
 				$cadenaSql .= " primer_curso ";
-				$cadenaSql .= " WHERE ano='" . $variable ['ANNIO'] . "'";
-				$cadenaSql .= " AND semestre='" . $variable ['SEMESTRE'] . "'";				
-				
+				$cadenaSql .= " WHERE ano='" . $variable['ANNIO'] . "'";
+				$cadenaSql .= " AND semestre='" . $variable['SEMESTRE'] . "'";
+
 				break;
-			
-			case "registrarEstudiantePrograma" :
+
+			case "registrarEstudiantePrimerCurso" :
 				$cadenaSql = " INSERT";
-				$cadenaSql .= " INTO estudiante_programa";
+				$cadenaSql .= " INTO primer_curso";
 				$cadenaSql .= " (";
-				$cadenaSql .= " pro_consecutivo,";
-				$cadenaSql .= " anio,";
+				$cadenaSql .= " ano,";
 				$cadenaSql .= " semestre,";
-				$cadenaSql .= " es_transferencia,";
-				$cadenaSql .= " ies_code,";
-				$cadenaSql .= " codigo_unico,";
-				$cadenaSql .= " tipo_doc_unico";
+				$cadenaSql .= " id_tipo_documento,";
+				$cadenaSql .= " num_documento,";
+				$cadenaSql .= " pro_consecutivo,";
+				$cadenaSql .= " id_municipio_programa,";
+				$cadenaSql .= " id_tipo_vinculacion,";
+				$cadenaSql .= " id_grupo_etnico,";
+				$cadenaSql .= " id_pueblo_indigena,";
+				$cadenaSql .= " id_comunidad_negra,";
+				$cadenaSql .= " persona_condicion_discapacidad,";
+				$cadenaSql .= " id_tipo_discapacidad,";
+				$cadenaSql .= " id_capacidad_excepcional,";
+				$cadenaSql .= " cod_prueba_saber_11";
 				$cadenaSql .= " )";
 				$cadenaSql .= " VALUES";
-				$cadenaSql .= " (";
-				$cadenaSql .= "'" . $variable ['PRO_CONSECUTIVO'] . "', ";
-				$cadenaSql .= "'" . $variable ['ANIO'] . "', ";
-				$cadenaSql .= "'" . $variable ['SEMESTRE'] . "', ";
-				$cadenaSql .= "'" . $variable ['ES_TRANSFERENCIA'] . "', ";
-				$cadenaSql .= "'" . $variable ['IES_CODE'] . "', ";
-				$cadenaSql .= "'" . $variable ['CODIGO_UNICO'] . "', ";
-				$cadenaSql .= "'" . $variable ['TIPO_DOC_UNICO'] . "' ";
+				$cadenaSql .= " (";				
+				$cadenaSql .= "'" . $variable['ANIO'] . "', ";
+				$cadenaSql .= "'" . $variable['SEMESTRE'] . "', ";
+				$cadenaSql .= "'" . $variable['ID_TIPO_DOCUMENTO'] . "', ";
+				$cadenaSql .= "'" . $variable['NUM_DOCUMENTO'] . "', ";
+				$cadenaSql .= "'" . $variable['PRO_CONSECUTIVO'] . "', ";
+				$cadenaSql .= "'11001', ";// id_municipio_programa bogota:11001
+				$cadenaSql .= "'" . $variable['ID_TIPO_VINCULACION'] . "', ";
+				$cadenaSql .= "'" . $variable['ID_GRUPO_ETNICO'] . "', ";
+				$cadenaSql .= "'" . $variable['ID_PUEBLO_INDIGENA'] . "', ";
+				$cadenaSql .= "'" . $variable['ID_COMUNIDAD_NEGRA'] . "', ";
+				$cadenaSql .= "'" . $variable['PERSONA_CONDICION_DISCAPACIDAD'] . "', ";
+				$cadenaSql .= "'" . $variable['ID_TIPO_DISCAPACIDAD'] . "', ";
+				$cadenaSql .= "'" . $variable['ID_CAPACIDAD_EXCEPCIONAL'] . "', ";
+				$cadenaSql .= "'" . $variable['COD_PRUEBA_SABER_11'] . "' ";
 				$cadenaSql .= " );";
 				$cadenaSql .= " ";
-				
+
 				break;
-			
+				
+								
+
 			// /MATRICULADO
-			
+
 			// borra el matriculado con el numero y tipo de documento dado para todos los períodos
 			case "borrarMatriculado" :
 				$cadenaSql = "DELETE FROM";
 				$cadenaSql .= " matriculado ";
-				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
-				$cadenaSql .= " AND tipo_doc_unico='" . $variable ['TIPO_DOC_UNICO'] . "'";
-				
+				$cadenaSql .= " WHERE codigo_unico='" . $variable['CODIGO_UNICO'] . "'";
+				$cadenaSql .= " AND tipo_doc_unico='" . $variable['TIPO_DOC_UNICO'] . "'";
+
 				break;
-			
+
 			// borra el todos los matriculados para el año y periodo dados
 			case "borrarMatriculadoPeriodoTodos" :
 				$cadenaSql = "DELETE FROM";
 				$cadenaSql .= " matriculado ";
-				$cadenaSql .= " WHERE est_annio='" . $variable ['ANNIO_MATRICULA'] . "'";
-				$cadenaSql .= " AND est_semestre='" . $variable ['SEMESTRE_MATRICULA'] . "'";
-				
+				$cadenaSql .= " WHERE est_annio='" . $variable['ANNIO_MATRICULA'] . "'";
+				$cadenaSql .= " AND est_semestre='" . $variable['SEMESTRE_MATRICULA'] . "'";
+
 				break;
-			
+
 			case "contarMatriculados" :
 				$cadenaSql = "SELECT COUNT(*) FROM";
 				$cadenaSql .= " matriculado ";
-				$cadenaSql .= " WHERE est_annio=" . $variable ['annio'];
-				$cadenaSql .= " AND est_semestre='" . $variable ['semestre'] . "'";
-				
+				$cadenaSql .= " WHERE est_annio=" . $variable['annio'];
+				$cadenaSql .= " AND est_semestre='" . $variable['semestre'] . "'";
+
 				break;
-			
+
 			case "registrarMatriculado" :
 				$cadenaSql = " INSERT";
 				$cadenaSql .= " INTO matriculado";
 				$cadenaSql .= " (";
 				$cadenaSql .= " ies_code,";
-				$cadenaSql .= " est_annio,"; // PERIODO A ACTUALIZAR, NO ES LA COHORTE DEL ESTUDIANTE
-				$cadenaSql .= " est_semestre,"; // PERIODO A ACTUALIZAR, NO ES LA COHORTE DEL ESTUDIANTE
+				$cadenaSql .= " est_annio,";
+				// PERIODO A ACTUALIZAR, NO ES LA COHORTE DEL ESTUDIANTE
+				$cadenaSql .= " est_semestre,";
+				// PERIODO A ACTUALIZAR, NO ES LA COHORTE DEL ESTUDIANTE
 				$cadenaSql .= " codigo_unico,";
 				$cadenaSql .= " horario_code,";
 				$cadenaSql .= " ceres,";
@@ -428,31 +449,40 @@ class Sql extends \Sql {
 				$cadenaSql .= " )";
 				$cadenaSql .= " VALUES";
 				$cadenaSql .= " (";
-				$cadenaSql .= "'" . $variable ['IES_CODE'] . "', ";
-				$cadenaSql .= "'" . $variable ['ANNIO_MATRICULA'] . "', "; // URGENTE SE DEBE REEMPLAZAR POR EL VALOR DE ANO Y DE SEMESTRE ACTUAL.
-				$cadenaSql .= "'" . $variable ['SEMESTRE_MATRICULA'] . "', ";
-				$cadenaSql .= "'" . $variable ['CODIGO_UNICO'] . "', ";
-				$cadenaSql .= "'" . $variable ['HORARIO_CODE'] . "', ";
-				$cadenaSql .= " '1301',"; // ceres
-				$cadenaSql .= " '11',"; // departamento del proyecto
-				$cadenaSql .= " '11001',"; // municipio del proyecto
-				$cadenaSql .= "'" . $variable ['PRO_CONSECUTIVO'] . "', ";
-				$cadenaSql .= " '01',"; // pago
-				$cadenaSql .= "'" . $variable ['TIPO_DOC_UNICO'] . "', ";
-				$cadenaSql .= " '11001',"; // municipio donde se dicta
-				$cadenaSql .= " '11',"; // departamento donde se dicta
-				$cadenaSql .= " '1301',"; // ceres
-				$cadenaSql .= "'02', "; // estudiante_articulacion, si es de bachillerato 01 si 02 no
-				$cadenaSql .= "'0', "; // grado que cursa - cero si no es de articulación
+				$cadenaSql .= "'" . $variable['IES_CODE'] . "', ";
+				$cadenaSql .= "'" . $variable['ANNIO_MATRICULA'] . "', ";
+				// URGENTE SE DEBE REEMPLAZAR POR EL VALOR DE ANO Y DE SEMESTRE ACTUAL.
+				$cadenaSql .= "'" . $variable['SEMESTRE_MATRICULA'] . "', ";
+				$cadenaSql .= "'" . $variable['CODIGO_UNICO'] . "', ";
+				$cadenaSql .= "'" . $variable['HORARIO_CODE'] . "', ";
+				$cadenaSql .= " '1301',";
+				// ceres
+				$cadenaSql .= " '11',";
+				// departamento del proyecto
+				$cadenaSql .= " '11001',";
+				// municipio del proyecto
+				$cadenaSql .= "'" . $variable['PRO_CONSECUTIVO'] . "', ";
+				$cadenaSql .= " '01',";
+				// pago
+				$cadenaSql .= "'" . $variable['TIPO_DOC_UNICO'] . "', ";
+				$cadenaSql .= " '11001',";
+				// municipio donde se dicta
+				$cadenaSql .= " '11',";
+				// departamento donde se dicta
+				$cadenaSql .= " '1301',";
+				// ceres
+				$cadenaSql .= "'02', ";
+				// estudiante_articulacion, si es de bachillerato 01 si 02 no
+				$cadenaSql .= "'0', ";
+				// grado que cursa - cero si no es de articulación
 				$cadenaSql .= "'' ";
 				$cadenaSql .= " )";
-				
+
 				break;
-			
+
 			// EGRESADO SNIES
-			
+
 			case "consultarGraduadoAcademica" :
-				
 				$cadenaSql = " SELECT ";
 				$cadenaSql .= " EST_COD CODIGO_ESTUDIANTE,";
 				$cadenaSql .= " TO_CHAR('1301') ies_code,";
@@ -482,8 +512,10 @@ class Sql extends \Sql {
 				$cadenaSql .= " DECODE(TO_NUMBER(TO_CHAR(egr_fecha_grado,'mm')),1,'01',2,'01',3,'01',4,'01',5,'01',6,'01',7,'02',8,'02',9,'02',10,'02',11,'02',12,'02') GRAD_SEMESTRE,";
 				$cadenaSql .= " 'no' ECAES_OBSERVACIONES,";
 				$cadenaSql .= " '0' ECAES_RESULTADOS,";
-				$cadenaSql .= " '11' DEPARTAMENTO,"; // Donde se gradúa
-				$cadenaSql .= " '11001' MUNICIPIO,"; // Donde se gradúa
+				$cadenaSql .= " '11' DEPARTAMENTO,";
+				// Donde se gradúa
+				$cadenaSql .= " '11001' MUNICIPIO,";
+				// Donde se gradúa
 				$cadenaSql .= " '1301' CODIGO_ENT_AULA,";
 				$cadenaSql .= " EGR_ACTA_GRADO ACTA,";
 				$cadenaSql .= " EGR_FOLIO FOLIO,";
@@ -499,29 +531,29 @@ class Sql extends \Sql {
 				$cadenaSql .= " ON MUN_COD=DECODE(EOT_COD_MUN_NAC,0,11001,'',11001,EOT_COD_MUN_NAC)";
 				$cadenaSql .= " INNER JOIN accra";
 				$cadenaSql .= " ON CRA_COD = EST_CRA_COD";
-				$cadenaSql .= " WHERE TO_NUMBER(TO_CHAR(egr_fecha_grado,'yyyy'))='" . $variable ['annio'] . "'";
-				$cadenaSql .= " AND DECODE(TO_NUMBER(TO_CHAR(egr_fecha_grado,'mm')),1,1,2,1,3,1,4,1,5,1,6,1,7,3,8,3,9,3,10,3,11,3,12,3)='" . $variable ['semestre'] . "'";
-				
+				$cadenaSql .= " WHERE TO_NUMBER(TO_CHAR(egr_fecha_grado,'yyyy'))='" . $variable['annio'] . "'";
+				$cadenaSql .= " AND DECODE(TO_NUMBER(TO_CHAR(egr_fecha_grado,'mm')),1,1,2,1,3,1,4,1,5,1,6,1,7,3,8,3,9,3,10,3,11,3,12,3)='" . $variable['semestre'] . "'";
+
 				break;
-			
+
 			case "borrarEgresado" :
 				$cadenaSql = "DELETE FROM";
 				$cadenaSql .= " egresado ";
-				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
-				$cadenaSql .= " AND tipo_doc_unico='" . $variable ['TIPO_DOC_UNICO'] . "'";
-				
+				$cadenaSql .= " WHERE codigo_unico='" . $variable['CODIGO_UNICO'] . "'";
+				$cadenaSql .= " AND tipo_doc_unico='" . $variable['TIPO_DOC_UNICO'] . "'";
+
 				break;
-			
+
 			// GRADUADO SNIES
-			
+
 			case "borrarGraduadoPeriodoTodos" :
 				$cadenaSql = "DELETE FROM";
 				$cadenaSql .= " graduado ";
-				$cadenaSql .= " WHERE grad_annio='" . $variable ['ANNIO_GRADO'] . "'";
-				$cadenaSql .= " AND grad_semestre='" . $variable ['SEMESTRE_GRADO'] . "'";
-				
+				$cadenaSql .= " WHERE grad_annio='" . $variable['ANNIO_GRADO'] . "'";
+				$cadenaSql .= " AND grad_semestre='" . $variable['SEMESTRE_GRADO'] . "'";
+
 				break;
-			
+
 			case "registrarGraduado" :
 				$cadenaSql = " INSERT";
 				$cadenaSql .= " INTO graduado";
@@ -544,35 +576,36 @@ class Sql extends \Sql {
 				$cadenaSql .= " )";
 				$cadenaSql .= " VALUES";
 				$cadenaSql .= " (";
-				$cadenaSql .= "'" . $variable ['IES_CODE'] . "', ";
-				$cadenaSql .= "'" . $variable ['GRAD_ANNIO'] . "', ";
-				$cadenaSql .= "'" . $variable ['GRAD_SEMESTRE'] . "', ";
-				$cadenaSql .= "'" . $variable ['CODIGO_UNICO'] . "', ";
-				$cadenaSql .= "'" . $variable ['PRO_CONSECUTIVO'] . "', ";
-				$cadenaSql .= "'" . $variable ['FECHA_GRADO'] . "', ";
-				$cadenaSql .= "'" . $variable ['ECAES_OBSERVACIONES'] . "', ";
-				$cadenaSql .= "'" . $variable ['ECAES_RESULTADOS'] . "', ";
-				$cadenaSql .= "'" . $variable ['DEPARTAMENTO'] . "', ";
-				$cadenaSql .= "'" . $variable ['MUNICIPIO'] . "', ";
-				$cadenaSql .= "'" . $variable ['CODIGO_ENT_AULA'] . "', ";
-				$cadenaSql .= "'" . $variable ['ACTA'] . "', ";
-				$cadenaSql .= "'" . $variable ['FOLIO'] . "', ";
-				$cadenaSql .= "'" . $variable ['TIPO_DOC_UNICO'] . "', ";
-				$cadenaSql .= "'" . $variable ['SNP'] . "' ";
+				$cadenaSql .= "'" . $variable['IES_CODE'] . "', ";
+				$cadenaSql .= "'" . $variable['GRAD_ANNIO'] . "', ";
+				$cadenaSql .= "'" . $variable['GRAD_SEMESTRE'] . "', ";
+				$cadenaSql .= "'" . $variable['CODIGO_UNICO'] . "', ";
+				$cadenaSql .= "'" . $variable['PRO_CONSECUTIVO'] . "', ";
+				$cadenaSql .= "'" . $variable['FECHA_GRADO'] . "', ";
+				$cadenaSql .= "'" . $variable['ECAES_OBSERVACIONES'] . "', ";
+				$cadenaSql .= "'" . $variable['ECAES_RESULTADOS'] . "', ";
+				$cadenaSql .= "'" . $variable['DEPARTAMENTO'] . "', ";
+				$cadenaSql .= "'" . $variable['MUNICIPIO'] . "', ";
+				$cadenaSql .= "'" . $variable['CODIGO_ENT_AULA'] . "', ";
+				$cadenaSql .= "'" . $variable['ACTA'] . "', ";
+				$cadenaSql .= "'" . $variable['FOLIO'] . "', ";
+				$cadenaSql .= "'" . $variable['TIPO_DOC_UNICO'] . "', ";
+				$cadenaSql .= "'" . $variable['SNP'] . "' ";
 				$cadenaSql .= " )";
-				
+
 				break;
-			
+
 			case "borrarGraduado" :
 				$cadenaSql = "DELETE FROM";
 				$cadenaSql .= " graduado ";
-				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
-				$cadenaSql .= " AND tipo_doc_unico='" . $variable ['TIPO_DOC_UNICO'] . "'";
-				
+				$cadenaSql .= " WHERE codigo_unico='" . $variable['CODIGO_UNICO'] . "'";
+				$cadenaSql .= " AND tipo_doc_unico='" . $variable['TIPO_DOC_UNICO'] . "'";
+
 				break;
 		}
-		
+
 		return $cadenaSql;
 	}
+
 }
 ?>

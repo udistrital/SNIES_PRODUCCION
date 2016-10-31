@@ -30,12 +30,8 @@ class FormProcessor {
 		/**
 		 * PROCEDIMIENTO
 		 * 1.
-		 * Consultar los datos de los estudiantes para un período
-		 * 2. Quitar acentos
-		 * 3. Dividir nombres
-		 * 4. Actualizar en PARTICIPANTE
-		 * 5. Actualizar ESTUDIANTE
-		 * 6. Actualizar ESTUDIANTE_PROGRAMA
+		 * Consultar los datos de los estudiantes para un período		 		 
+		 * 6. Actualizar ESTUDIANTE PRIMER_SEMESTRE
 		 * 7. Actualizar MATRICULADO
 		 */
 		
@@ -71,18 +67,13 @@ class FormProcessor {
 	 */
 	function actualizarEstudiantePrimerCurso($estudiante) {
 		
-		// borrar todos los registros de estudiante_programa para el periodo seleccionado
-		$this->miComponente->borrarEstudiantePrimerCursoPeriodoTodos ( $this->annio, $this->semestre );
-		
 		// registrar los estudiantes de la cohorte seleccionada, año y período
 		foreach ( $estudiante as $unEstudiante ) {
-			
-			echo "revisado hasta esta parte";  exit;
-			if ($unEstudiante ['ANIO'] == $this->annio and $unEstudiante ['SEMESTRE'] == $this->semestre) {
-				$this->miComponente->borrarEstudiantePrograma ( $unEstudiante );//borra si un fue estudiante en 
-				$this->miComponente->registrarEstudiantePrograma ( $unEstudiante );
-			}
-		}
+					
+			if ($unEstudiante ['ANIO'] == $this->annio and $unEstudiante ['SEMESTRE'] == $this->semestre) {				 
+				$this->miComponente->registrarEstudiantePrimerCurso ( $unEstudiante );			
+			}			
+		}exit;
 	}
 	
 	/**
