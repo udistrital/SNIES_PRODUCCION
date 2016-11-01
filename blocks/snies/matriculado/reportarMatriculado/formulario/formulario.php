@@ -71,7 +71,7 @@ class registrarForm {
 		?>
 
 <br>
-<h3>MATRICULADO - ACTUALIZA ESTUDAINTES PRIMER CURSO Y MATRICULADOS</h3>
+<h3>MATRICULADO - ACTUALIZA ESTUDIANTES PRIMER CURSO Y MATRICULADOS</h3>
 <br>
 <table id="example" class="display" cellspacing="0" width="100%">
 	<thead>

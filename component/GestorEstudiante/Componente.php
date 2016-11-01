@@ -30,6 +30,16 @@ class Componente extends Component implements IGestorEstudiante {
 		return $this->miEstudiante->consultarEstudianteBpudc ( $annio, $semestre );
 	}
 	
+	function consultarMatriculado($estudiante,$annio, $semestre) {
+		return $this->miEstudiante->consultarMatriculado ($estudiante, $annio, $semestre );
+	}	
+	function registrarMatriculado($estudiante,$annio, $semestre) {
+		return $this->miEstudiante->registrarMatriculado ($estudiante, $annio, $semestre );
+	}
+	function actualizarMatriculado($estudiante,$annio, $semestre) {
+		return $this->miEstudiante->actualizarMatriculado ($estudiante, $annio, $semestre );
+	}		
+	
 	// ///PARTICIPANTE SNIES
 	function consultarParticipante($estudiante) {
 		return $this->miEstudiante->consultarParticipante ( $estudiante );
@@ -62,8 +72,12 @@ class Componente extends Component implements IGestorEstudiante {
 	}
 	
 	// //ESTUDANTE PRIMER_CURSO SNIES
-	function consultarEstudiantePrograma($estudiante) {
-		return $this->miEstudiante->consultarEstudiantePrograma ( $estudiante );
+	
+	function actualizarEstudiantePrimerCurso($estudiante) {
+		return $this->miEstudiante->actualizarEstudiantePrimerCurso ( $estudiante );
+	}
+	function consultarEstudiantePrimerCurso($estudiante) {
+		return $this->miEstudiante->consultarEstudiantePrimerCurso ( $estudiante );
 	}
 	function borrarEstudiantePrograma($estudiante) {
 		return $this->miEstudiante->borrarEstudiantePrograma ( $estudiante );
@@ -75,16 +89,7 @@ class Componente extends Component implements IGestorEstudiante {
 		return $this->miEstudiante->registrarEstudiantePrimerCurso ( $estudiante );
 	}
 	
-	// MATRICULADO
-	function borrarMatriculado($estudiante) {
-		return $this->miEstudiante->borrarMatriculado ( $estudiante );
-	}
-	function borrarMatriculadoPeriodoTodos($annio, $semestre) {
-		return $this->miEstudiante->borrarMatriculadoPeriodoTodos ( $annio, $semestre );
-	}
-	function registrarMatriculado($estudiante, $annio, $semestre) {
-		return $this->miEstudiante->registrarMatriculado ( $estudiante, $annio, $semestre );
-	}
+
 	
 	// EGRESADO SNIES
 	function borrarEgresado($estudiante) {

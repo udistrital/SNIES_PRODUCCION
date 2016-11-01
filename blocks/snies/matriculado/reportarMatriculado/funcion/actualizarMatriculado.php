@@ -14,92 +14,105 @@ class FormProcessor {
 	var $annio;
 	var $semestre;
 	function __construct($lenguaje, $sql) {
-		$this->miConfigurador = \Configurador::singleton ();
-		$this->miConfigurador->fabricaConexiones->setRecursoDB ( 'principal' );
-		$this->lenguaje = $lenguaje;
-		$this->miSql = $sql;
-		$this->miComponente = new Componente ();
-		$this->host = $this->miConfigurador->getVariableConfiguracion ( "host" );
-		$this->site = $this->miConfigurador->getVariableConfiguracion ( "site" );
-		$this->esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
+		$this -> miConfigurador = \Configurador::singleton();
+		$this -> miConfigurador -> fabricaConexiones -> setRecursoDB('principal');
+		$this -> lenguaje = $lenguaje;
+		$this -> miSql = $sql;
+		$this -> miComponente = new Componente();
+		$this -> host = $this -> miConfigurador -> getVariableConfiguracion("host");
+		$this -> site = $this -> miConfigurador -> getVariableConfiguracion("site");
+		$this -> esteBloque = $this -> miConfigurador -> getVariableConfiguracion("esteBloque");
 	}
+
 	function procesarFormulario() {
-		$this->annio = $_REQUEST ['annio'];
-		$this->semestre = $_REQUEST ['semestre'];
-		
+		$this -> annio = $_REQUEST['annio'];
+		$this -> semestre = $_REQUEST['semestre'];
+
 		/**
 		 * PROCEDIMIENTO
 		 * 1.
-		 * Consultar los datos de los estudiantes para un período		 		 
+		 * Consultar los datos de los estudiantes para un período
 		 * 6. Actualizar ESTUDIANTE PRIMER_SEMESTRE
 		 * 7. Actualizar MATRICULADO
 		 */
-		
+
 		// estudiante de la académica
-		$estudiante = $this->miComponente->consultarEstudianteAcademica ( $this->annio, $this->semestre );	
-		
-		$miProcesadorExcepcion = new procesadorExcepcion ();
+		$estudiante = $this -> miComponente -> consultarEstudianteAcademica($this -> annio, $this -> semestre);
+				
+		$miProcesadorExcepcion = new procesadorExcepcion();
 		// FORMATEA LOS VALORES NULOS, CODIFICA EXCEPCIONES
-		$estudiante = $miProcesadorExcepcion->procesarExcepcionEstudiante ( $estudiante );
-		
+		$estudiante = $miProcesadorExcepcion -> procesarExcepcionEstudiante($estudiante);
+
 		echo 'proceso 1 actualizarEstudiantePrimerCurso...<br>';
-		$this->actualizarEstudiantePrimerCurso ( $estudiante );
+		$this -> actualizarEstudiantePrimerCurso($estudiante);
 		echo 'proceso 2 actualizarMatriculado<br>';
-		$this->actualizarMatriculado ( $estudiante );
-		echo 'FIN<br>';
-		$valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
-		$valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
-			
+		$this -> actualizarMatriculado($estudiante);
+		echo 'FIN<br>';exit;
+		$valorCodificado = "&pagina=" . $this -> miConfigurador -> getVariableConfiguracion('pagina');
+		$valorCodificado = $this -> miConfigurador -> fabricaConexiones -> crypto -> codificar($valorCodificado);
+
 		// Rescatar el parámetro enlace desde los datos de configuraión en la base de datos
-		$variable = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
-		$miEnlace = $this->host . $this->site . '/index.php?' . $variable . '=' . $valorCodificado;
-		echo '<script>window.location.assign("'.$miEnlace.'")</script>';
-		exit ();
+		$variable = $this -> miConfigurador -> getVariableConfiguracion("enlace");
+		$miEnlace = $this -> host . $this -> site . '/index.php?' . $variable . '=' . $valorCodificado;
+		echo '<script>window.location.assign("' . $miEnlace . '")</script>';
+		exit();
 	}
-	
+
 	/**
 	 *
 	 * Función que actualiza o registra los datos de la tabla ESTUDIANTE_PROGRAMA DEL SNIES (Se refiere a estudiantes de primer semestre):
 	 * Si no existe el registro en la tabla lo registra
 	 * Si existe el registo lo actualiza
 	 *
-	 * @param array $estudiante        	
+	 * @param array $estudiante
 	 */
 	function actualizarEstudiantePrimerCurso($estudiante) {
-		
+
 		// registrar los estudiantes de la cohorte seleccionada, año y período
-		foreach ( $estudiante as $unEstudiante ) {
-					
-			if ($unEstudiante ['ANIO'] == $this->annio and $unEstudiante ['SEMESTRE'] == $this->semestre) {				 
-				$this->miComponente->registrarEstudiantePrimerCurso ( $unEstudiante );			
-			}			
-		}exit;
+		foreach ($estudiante as $unEstudiante) {
+
+			if ($unEstudiante['ANIO'] == $this -> annio and $unEstudiante['SEMESTRE'] == $this -> semestre) {
+
+				$estudiantePrimerCurso = $this -> miComponente -> consultarEstudiantePrimerCurso($unEstudiante);
+
+				//si existe el registro en la tabla primer_curso lo actualiza si no lo registra
+				if (isset($estudiantePrimerCurso[0]['num_documento'])) {
+					$this -> miComponente -> actualizarEstudiantePrimerCurso($unEstudiante);
+				} else {
+					$this -> miComponente -> registrarEstudiantePrimerCurso($unEstudiante);
+				}
+
+			}
+		}
 	}
-	
+
 	/**
 	 *
 	 * Función que actualiza o registra los datos de la tabla ESTUDIANTE_PROGRAMA DEL SNIES (Se refiere a estudiantes de primer semestre):
 	 * Si no existe el registro en la tabla lo registra
 	 * Si existe el registo lo actualiza
 	 *
-	 * @param array $estudiante        	
+	 * @param array $estudiante
 	 */
 	function actualizarMatriculado($estudiante) {
-		
-		// borrar todos los registros de la tabla MATRICULADO para el periodo seleccionado
-		$this->miComponente->borrarMatriculadoPeriodoTodos ( $this->annio, $this->semestre );
-		
-		// registrar los matriculados de un semestre año y período
-		foreach ( $estudiante as $unEstudiante ) {
-			
-			// Registrar todos los registros de la consulta (que son de un período y semestre determinado) en la tabla MATRICULADO
-			//
-			$this->miComponente->registrarMatriculado ( $unEstudiante, $this->annio, $this->semestre );
+
+		// registrar los estudiantes matriculados en un año y período determinados
+		foreach ($estudiante as $unEstudiante) {
+						
+			$matriculado = $this -> miComponente -> consultarMatriculado($unEstudiante, $this -> annio, $this -> semestre);
+
+			//si existe el registro en la tabla matriculado para el año y período dados lo actualiza si no lo registra
+			if (isset($matriculado[0]['codigo_estudiante'])) {				
+				$this -> miComponente -> actualizarMatriculado($unEstudiante , $this -> annio, $this -> semestre);
+			} else {				
+				$this -> miComponente -> registrarMatriculado($unEstudiante, $this -> annio, $this -> semestre);
+			}
 		}
+
 	}
+
 }
 
-$miProcesador = new FormProcessor ( $this->lenguaje, $this->sql );
+$miProcesador = new FormProcessor($this -> lenguaje, $this -> sql);
 
-$resultado = $miProcesador->procesarFormulario ();
-
+$resultado = $miProcesador -> procesarFormulario();
