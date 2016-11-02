@@ -85,6 +85,18 @@ class estudiante implements IGestorEstudiante {
 		
 		return $resultado;
 	}
+	
+	function consultarParticipanteTodos() {
+		$conexion = "sniesLocal";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		$cadenaSql = $this->miSql->cadena_sql ( 'consultarParticipanteTodos', '' );
+		
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+		
+		return $resultado;
+	}
+		
 	/**
 	 * (non-PHPdoc)
 	 *
@@ -248,15 +260,15 @@ class estudiante implements IGestorEstudiante {
 		
 		return $resultado;
 	}
-	function borrarEstudiantePrimerCursoPeriodoTodos($annio, $semestre) {
+	function consultarPrimerCursoTodos($annio, $semestre) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		$variable ['ANNIO'] = $annio;
 		$variable ['SEMESTRE'] = $semestre;
-		$cadenaSql = $this->miSql->cadena_sql ( 'borrarEstudiantePrimerCursoPeriodoTodos', $variable );
+		$cadenaSql = $this->miSql->cadena_sql ( 'consultarPrimerCursoTodos', $variable );
 		
-		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
 		if ($resultado == FALSE) {
 			$error = $esteRecursoDB->obtener_error ();
 			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';
@@ -337,6 +349,29 @@ class estudiante implements IGestorEstudiante {
 		
 		return $resultado;
 	}
+	
+	function consultarMatriculadoTodos($annio, $semestre) {
+		$conexion = "sniesLocal";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		// pasar los valores de annio y semestre de la matrícula del período que se va a reportar
+		
+		$estudiante ['ANNIO_MATRICULA'] = $annio;
+		$estudiante ['SEMESTRE_MATRICULA'] = $semestre;
+		$cadenaSql = $this->miSql->cadena_sql ( 'consultarMatriculadoTodos', $estudiante );
+		
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+		if ($resultado == FALSE) {
+			$error = $esteRecursoDB->obtener_error ();
+			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';
+			echo $cadenaSql;
+			var_dump ( $error );
+		}
+		
+		return $resultado;
+	}	
+	
+	
 	
 	function registrarMatriculado($estudiante, $annio, $semestre) {
 		$conexion = "sniesLocal";

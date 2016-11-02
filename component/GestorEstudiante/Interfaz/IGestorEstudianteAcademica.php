@@ -29,6 +29,12 @@ interface IGestorEstudiante {
 	function consultarParticipante($estudiante);
 	
 	/**
+	 * Consulta todos lo participantes
+	 */
+	function consultarParticipanteTodos();
+	
+	
+	/**
 	 * NO actualiza el número ni el tipo de documento
 	 *
 	 * @param unknown $estudiante        	
@@ -62,15 +68,16 @@ interface IGestorEstudiante {
 	function actualizarEstudiantePrimerCurso($estudiante);
 	function consultarEstudiantePrimerCurso($estudiante);
 	function borrarEstudiantePrograma($estudiante);
-	function borrarEstudiantePrimerCursoPeriodoTodos($annio, $semestre);
+	function consultarPrimerCursoTodos($annio, $semestre);
 	function registrarEstudiantePrimerCurso($estudiante);
 	
 	// MATRICULADO
 
 	function consultarMatriculado($estudiante, $annio, $semestre);
 	function registrarMatriculado($estudiante, $annio, $semestre);
-	function actualizarMatriculado($estudiante, $annio, $semestre);	
-	
+	function actualizarMatriculado($estudiante, $annio, $semestre);
+	function consultarMatriculadoTodos($annio, $semestre);	
+		
 	//EGRESADO
 	function borrarEgresado($estudiante);
 	

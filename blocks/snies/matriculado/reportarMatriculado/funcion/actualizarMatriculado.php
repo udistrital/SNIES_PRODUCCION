@@ -38,6 +38,8 @@ class FormProcessor {
 
 		// estudiante de la académica
 		$estudiante = $this -> miComponente -> consultarEstudianteAcademica($this -> annio, $this -> semestre);
+		//var_dump($estudiante);
+		//echo count($estudiante);exit;
 				
 		$miProcesadorExcepcion = new procesadorExcepcion();
 		// FORMATEA LOS VALORES NULOS, CODIFICA EXCEPCIONES
@@ -68,10 +70,10 @@ class FormProcessor {
 	 */
 	function actualizarEstudiantePrimerCurso($estudiante) {
 
-		// registrar los estudiantes de la cohorte seleccionada, año y período
+		// registrar los estudiantes en su cohorte
 		foreach ($estudiante as $unEstudiante) {
 
-			if ($unEstudiante['ANIO'] == $this -> annio and $unEstudiante['SEMESTRE'] == $this -> semestre) {
+			//if ($unEstudiante['ANIO'] == $this -> annio and $unEstudiante['SEMESTRE'] == $this -> semestre) {
 
 				$estudiantePrimerCurso = $this -> miComponente -> consultarEstudiantePrimerCurso($unEstudiante);
 
@@ -82,7 +84,7 @@ class FormProcessor {
 					$this -> miComponente -> registrarEstudiantePrimerCurso($unEstudiante);
 				}
 
-			}
+			//}
 		}
 	}
 

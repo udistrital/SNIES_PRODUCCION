@@ -81,7 +81,8 @@ class registrarForm {
 			<th>Período</th>
 			<!--<th>Total</th>  -->
 			<th>1. Actualizar Participante</th>
-			<th align="center">3. Actualizar Primer curso y Matriculado</th>
+			<th align="center">2. Actualizar Primer curso y Matriculado</th>
+			<th align="center">3. Generar CSV: Participante, Primer_Curso y Matriculado</th>			
 		</tr>
 	</thead>
 
@@ -90,8 +91,10 @@ class registrarForm {
 		foreach ( $periodo as $miPeriodo ) {
 			
 			$enlaceActualizarParticipante = $this->enlaceActializarVariable ( 'actualizarParticipante', $miPeriodo ['annio'], $miPeriodo ['semestre'] );
-			$enlaceActualizarEstudiante = $this->enlaceActializarVariable ( 'actualizarEstudiante', $miPeriodo ['annio'], $miPeriodo ['semestre'] );
+			//$enlaceActualizarEstudiante = $this->enlaceActializarVariable ( 'actualizarEstudiante', $miPeriodo ['annio'], $miPeriodo ['semestre'] );
 			$enlaceActualizarMatriculado = $this->enlaceActializarVariable ( 'actualizarMatriculado', $miPeriodo ['annio'], $miPeriodo ['semestre'] );
+			//Crea CSV de primer_curso y matriculado
+			$enlaceGenerarMatriculadoCsv = $this->enlaceActializarVariable ( 'generarMatriculadoCsv', $miPeriodo ['annio'], $miPeriodo ['semestre'] );
 			?>
 				<tr>
 			<td><?php echo 'Matriculado';?></td>
@@ -103,14 +106,17 @@ class registrarForm {
 					width='30px'></a></td>
 			<td align="center"><a class=miEnlace href="<?php echo $enlaceActualizarMatriculado;?>"><img
 					src='<? echo $this->urlImagenes?>images/actualizar.png'
-					width='30px'></a></td>
+					width='30px'></a>
+			</td>
+			<td align="center"><a class=miEnlace href="<?php echo $enlaceGenerarMatriculadoCsv;?>"><img
+					src='<? echo $this->urlImagenes?>images/actualizar.png'
+					width='30px'></a>
+			</td>
 		</tr>
 				<?php }?>
 			</tbody>
 
 </table>
-
-
 
 <?
 	}
@@ -128,7 +134,8 @@ class registrarForm {
 		$variable = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 		$miEnlace = $this->host . $this->site . '/index.php?' . $variable . '=' . $valorCodificado;
 		return $miEnlace;
-	}
+	}	
+	
 }
 
 $miSeleccionador = new registrarForm ( $this->lenguaje, $this->miFormulario, $this->sql );

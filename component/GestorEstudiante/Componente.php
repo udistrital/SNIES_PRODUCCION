@@ -28,11 +28,13 @@ class Componente extends Component implements IGestorEstudiante {
 	}
 	function consultarEstudianteBpudc($annio, $semestre) {
 		return $this->miEstudiante->consultarEstudianteBpudc ( $annio, $semestre );
-	}
-	
+	}	
 	function consultarMatriculado($estudiante,$annio, $semestre) {
 		return $this->miEstudiante->consultarMatriculado ($estudiante, $annio, $semestre );
-	}	
+	}
+	function consultarMatriculadoTodos($annio, $semestre) {
+		return $this->miEstudiante->consultarMatriculadoTodos ($annio, $semestre );
+	}		
 	function registrarMatriculado($estudiante,$annio, $semestre) {
 		return $this->miEstudiante->registrarMatriculado ($estudiante, $annio, $semestre );
 	}
@@ -44,6 +46,9 @@ class Componente extends Component implements IGestorEstudiante {
 	function consultarParticipante($estudiante) {
 		return $this->miEstudiante->consultarParticipante ( $estudiante );
 	}
+	function consultarParticipanteTodos() {
+		return $this->miEstudiante->consultarParticipanteTodos ();
+	}	
 	function actualizarParticipante($estudiante) {
 		return $this->miEstudiante->actualizarParticipante ( $estudiante );
 	}
@@ -71,7 +76,7 @@ class Componente extends Component implements IGestorEstudiante {
 		return $this->miEstudiante->borrarEstudiante ( $estudiante );
 	}
 	
-	// //ESTUDANTE PRIMER_CURSO SNIES
+	// //PRIMER_CURSO SNIES estudiantes de primer curso
 	
 	function actualizarEstudiantePrimerCurso($estudiante) {
 		return $this->miEstudiante->actualizarEstudiantePrimerCurso ( $estudiante );
@@ -82,14 +87,12 @@ class Componente extends Component implements IGestorEstudiante {
 	function borrarEstudiantePrograma($estudiante) {
 		return $this->miEstudiante->borrarEstudiantePrograma ( $estudiante );
 	}
-	function borrarEstudiantePrimerCursoPeriodoTodos($annio, $semestre) {
-		return $this->miEstudiante->borrarEstudiantePrimerCursoPeriodoTodos ( $annio, $semestre );
+	function consultarPrimerCursoTodos($annio, $semestre) {
+		return $this->miEstudiante->consultarPrimerCursoTodos ( $annio, $semestre );
 	}
 	function registrarEstudiantePrimerCurso($estudiante) {
 		return $this->miEstudiante->registrarEstudiantePrimerCurso ( $estudiante );
 	}
-	
-
 	
 	// EGRESADO SNIES
 	function borrarEgresado($estudiante) {

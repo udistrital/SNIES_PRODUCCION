@@ -102,7 +102,7 @@ class Sql extends \Sql {
 					// el semestre 03 de la universidad es el semestre 02 de SNIES";
 				}
 
-				//$cadenaSql .= " AND est_nro_iden=1052381708";
+				//$cadenaSql .= " AND est_cod=20071005012";
 				//$cadenaSql .= " AND rownum < 10";
 
 				break;
@@ -187,7 +187,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " INNER JOIN acestotr";
 				$cadenaSql .= " ON ACESTOTR.EOT_COD = ACEST.EST_COD";
 				$cadenaSql .= " WHERE EST_COD > 20160000000";
-				// $cadenaSql .= " WHERE EST_COD = '20161025106'";			
+				// $cadenaSql .= " WHERE EST_COD = '20161025106'";
 				// exit;
 
 				break;
@@ -200,6 +200,16 @@ class Sql extends \Sql {
 				$cadenaSql .= " WHERE num_documento='" . $variable['NUM_DOCUMENTO'] . "'";
 
 				break;
+				
+			case "consultarParticipanteTodos" :
+				$cadenaSql = "SELECT id_tipo_documento, num_documento, fecha_expedicion, primer_nombre, 
+       							segundo_nombre, primer_apellido, segundo_apellido, id_sexo_biologico, 
+       							id_estado_civil, fecha_nacimiento, id_pais, id_municipio, telefono_contacto, 
+       							email_personal, email_institucional, direccion_institucional ";
+       			$cadenaSql .= " FROM ";
+				$cadenaSql .= " participante ";				
+
+				break;							
 
 			// actualiza los datos de un participante
 			case "actualizarParticipante" :
@@ -311,6 +321,17 @@ class Sql extends \Sql {
 
 				break;
 
+			case "consultarPrimerCursoTodos" :
+				$cadenaSql = "SELECT ano, semestre, id_tipo_documento, num_documento, pro_consecutivo, 
+       			id_municipio_programa, id_tipo_vinculacion, id_grupo_etnico, 
+       			id_pueblo_indigena, id_comunidad_negra, persona_condicion_discapacidad, 
+       			id_tipo_discapacidad, id_capacidad_excepcional, cod_prueba_saber_11, 
+       			codigo_estudiante FROM";
+				$cadenaSql .= " primer_curso ";
+				$cadenaSql .= " WHERE ano='" . $variable['ANNIO'] . "'";
+				$cadenaSql .= " AND semestre='" . $variable['SEMESTRE'] . "'";
+				break;
+
 			case "registrarEstudiantePrimerCurso" :
 				$cadenaSql = " INSERT";
 				$cadenaSql .= " INTO primer_curso";
@@ -400,6 +421,17 @@ class Sql extends \Sql {
 				$cadenaSql .= " AND semestre ='" . $variable['SEMESTRE_MATRICULA'] . "'";
 
 				break;
+				
+			case "consultarMatriculadoTodos" :
+				$cadenaSql = "SELECT ano, semestre, id_tipo_documento, num_documento, codigo_estudiante, 
+       			pro_consecutivo, id_municipio, fecha_nacimiento, id_pais_nacimiento, 
+       			id_municipio_nacimiento, id_zona_residencia, es_reintegro";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " matriculado ";				
+				$cadenaSql .= " WHERE ano ='" . $variable['ANNIO_MATRICULA'] . "'";
+				$cadenaSql .= " AND semestre ='" . $variable['SEMESTRE_MATRICULA'] . "'";
+
+				break;								
 
 			case "registrarMatriculado" :
 				$cadenaSql = " INSERT";
