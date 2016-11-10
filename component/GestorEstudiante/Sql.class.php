@@ -50,7 +50,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " TO_CHAR(est_nro_iden) num_documento,";
 				$cadenaSql .= " '' fecha_expedicion,";
 				$cadenaSql .= " EST_NOMBRE,";
-				$cadenaSql .= " TO_CHAR(DECODE(est_sexo,'M','1','F','2','01')) id_sexo_biologico,";
+				$cadenaSql .= " TO_CHAR(DECODE(est_sexo,'M','1','F','2','1')) id_sexo_biologico,";
 				$cadenaSql .= " DECODE(eot_estado_civil,1,'1',2,'2',3,'5',4,'3',5,'4', '1') id_estado_civil,";
 				$cadenaSql .= " TO_CHAR(eot_fecha_nac, 'yyyy-mm-dd') fecha_nacimiento,";
 				$cadenaSql .= " 'CO' id_pais_nacimiento,";
@@ -102,7 +102,7 @@ class Sql extends \Sql {
 					// el semestre 03 de la universidad es el semestre 02 de SNIES";
 				}
 
-				//$cadenaSql .= " AND est_cod=20071005012";
+				//$cadenaSql .= " AND est_cod=20152056010";
 				//$cadenaSql .= " AND rownum < 10";
 
 				break;
@@ -228,7 +228,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " id_municipio ='" . $variable['ID_MUNICIPIO_NACIMIENTO'] . "',";
 				$cadenaSql .= " telefono_contacto ='" . $variable['TELEFONO_CONTACTO'] . "',";
 				$cadenaSql .= " email_personal ='" . $variable['EMAIL_PERSONAL'] . "',";
-				$cadenaSql .= " email_institucional ='" . $variable['EMAIL_INSTITUCIONAL'] . "'";
+				$cadenaSql .= " email_institucional ='" . str_replace("'", "", $variable['EMAIL_INSTITUCIONAL']) . "'";//elimina las comillas sencillas que existen en algunos registros
 				//$cadenaSql .= " direccion_institucional ='" . $variable['DIRECCION_INSTITUCIONAL'] . "'";
 				$cadenaSql .= " WHERE NUM_DOCUMENTO='" . $variable['NUM_DOCUMENTO'] . "'";
 
@@ -282,7 +282,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable['ID_MUNICIPIO_NACIMIENTO'] . "', ";
 				$cadenaSql .= "'" . $variable['TELEFONO_CONTACTO'] . "', ";
 				$cadenaSql .= "'" . $variable['EMAIL_PERSONAL'] . "', ";
-				$cadenaSql .= "'" . $variable['EMAIL_INSTITUCIONAL'] . "', ";
+				$cadenaSql .= " email_institucional ='" . str_replace("'", "", $variable['EMAIL_INSTITUCIONAL']) . "',";//elimina las comillas sencillas que existen en algunos registros
 				$cadenaSql .= "NULL";
 				//NO OBLIGATORIO PARA ESTUDIANTES
 				$cadenaSql .= " )";
