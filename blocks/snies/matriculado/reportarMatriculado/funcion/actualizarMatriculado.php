@@ -76,7 +76,7 @@ class FormProcessor {
 			//if ($unEstudiante['ANIO'] == $this -> annio and $unEstudiante['SEMESTRE'] == $this -> semestre) {
 
 				$estudiantePrimerCurso = $this -> miComponente -> consultarEstudiantePrimerCurso($unEstudiante);
-
+								
 				//si existe el registro en la tabla primer_curso lo actualiza si no lo registra
 				if (isset($estudiantePrimerCurso[0]['num_documento'])) {
 					$this -> miComponente -> actualizarEstudiantePrimerCurso($unEstudiante);

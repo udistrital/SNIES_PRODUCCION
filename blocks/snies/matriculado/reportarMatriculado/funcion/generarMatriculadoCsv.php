@@ -36,7 +36,8 @@ class FormProcessor {
 		 * generar archivo matriculado_[ano][perido].csv
 		 * */
 
-		$participante = $this -> miComponente -> consultarParticipanteTodos();		
+		$participante = $this -> miComponente -> consultarParticipanteTodos();
+			
 		$this -> generarParticipanteCsv($participante);
 
 		$primer_curso = $this -> miComponente -> consultarPrimerCursoTodos($this -> annio, $this -> semestre);

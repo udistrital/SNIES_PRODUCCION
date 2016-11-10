@@ -35,18 +35,21 @@ class FormProcessor {
 		 * 3. Dividir nombres
 		 * 4. Actualizar en PARTICIPANTE
 		 */
-
+		
 		// estudiante de la académica
+		echo 'Consultando estudiantes...<br>';
 		$estudiante = $this -> miComponente -> consultarEstudianteAcademica($this -> annio, $this -> semestre);
-
+		
 		$miProcesadorNombre = new procesadorNombre();
-
+		
+		echo 'Eliminando caracteres no válidos...<br>';
 		//Busca y presenta los caracteres inválidos
 		$caracteresInvalidos = $miProcesadorNombre -> buscarCaracteresInvalidos($estudiante, 'EST_NOMBRE');
 
 		// quita acentos del nombre
 		$estudiante = $miProcesadorNombre -> quitarAcento($estudiante, 'EST_NOMBRE');
 
+		echo 'Separando nombres...<br>';
 		// descompone nombre completo en sus partes y las aglega al final de cada registro
 		foreach ($estudiante as $clave => $valor) {
 			// echo $estudiante [$clave] ['NUM_DOCUMENTO'].'<br>';
@@ -57,6 +60,7 @@ class FormProcessor {
 			$estudiante[$clave]['SEGUNDO_NOMBRE'] = $nombreCompleto['segundo_nombre'];
 		}
 
+		echo 'Codificando valores nulos...<br>';
 		$miProcesadorExcepcion = new procesadorExcepcion();
 
 		// FORMATEA LOS VALORES NULOS, CODIFICA EXCEPCIONES
@@ -64,7 +68,7 @@ class FormProcessor {
 		//************************************/// OJO REVISAR LAS EXCEPCIONES
 		$estudiante = $miProcesadorExcepcion -> procesarExcepcionEstudiante($estudiante);
 
-
+		echo 'Actualizando participantes <br>';
 		$this -> actualizarParticipante($estudiante);
 
 		// $valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );

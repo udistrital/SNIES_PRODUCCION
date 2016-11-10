@@ -52,8 +52,8 @@ class Sql extends \Sql {
 				$cadenaSql .= " EST_NOMBRE,";
 				$cadenaSql .= " TO_CHAR(DECODE(est_sexo,'M','1','F','2','1')) id_sexo_biologico,";
 				$cadenaSql .= " DECODE(eot_estado_civil,1,'1',2,'2',3,'5',4,'3',5,'4', '1') id_estado_civil,";
-				$cadenaSql .= " TO_CHAR(eot_fecha_nac, 'yyyy-mm-dd') fecha_nacimiento,";
-				$cadenaSql .= " 'CO' id_pais_nacimiento,";
+				$cadenaSql .= " TO_CHAR(eot_fecha_nac, 'DD-MM-YYYY') fecha_nacimiento,";
+				$cadenaSql .= " '170' id_pais_nacimiento,";
 				$cadenaSql .= " TO_CHAR(DECODE (eot_cod_mun_nac,0,11001,'',11001,NULL, 11001,99999,11001, eot_cod_mun_nac)) id_municipio_nacimiento,";
 				$cadenaSql .= " TO_CHAR(DECODE(est_telefono, NULL, '0', est_telefono)) telefono_contacto,";
 				$cadenaSql .= " eot_email email_personal,";
@@ -102,7 +102,7 @@ class Sql extends \Sql {
 					// el semestre 03 de la universidad es el semestre 02 de SNIES";
 				}
 
-				//$cadenaSql .= " AND est_cod=20152056010";
+				//$cadenaSql .= " AND est_nro_iden=92042258794";
 				//$cadenaSql .= " AND rownum < 10";
 
 				break;
@@ -121,7 +121,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " 'CO' PAIS_NAC,";
 				$cadenaSql .= " '' FEC_ID,";
 				$cadenaSql .= " EOT_SEXO SEXO,";
-				$cadenaSql .= " TO_CHAR(to_date(EOT_FECHA_NAC),'YYYY-MM-DD') FEC_NAC,";
+				$cadenaSql .= " TO_CHAR(to_date(EOT_FECHA_NAC),'DD-MM-YYYY') FEC_NAC,";
 				$cadenaSql .= " EOT_TIPOSANGRE GRU_SANG,";
 				$cadenaSql .= " EOT_RH FACT_RH,";
 				$cadenaSql .= " EOT_GRUPO_ETNICO ETNIA,";
@@ -204,10 +204,10 @@ class Sql extends \Sql {
 			case "consultarParticipanteTodos" :
 				$cadenaSql = "SELECT id_tipo_documento, num_documento, fecha_expedicion, primer_nombre, 
        							segundo_nombre, primer_apellido, segundo_apellido, id_sexo_biologico, 
-       							id_estado_civil, fecha_nacimiento, id_pais, id_municipio, telefono_contacto, 
+       							id_estado_civil, to_char(fecha_nacimiento, 'DD-MM-YYYY') fecha_nacimiento, id_pais, id_municipio, telefono_contacto, 
        							email_personal, email_institucional, direccion_institucional ";
        			$cadenaSql .= " FROM ";
-				$cadenaSql .= " participante ";				
+				$cadenaSql .= " participante ";			
 
 				break;							
 
@@ -282,7 +282,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable['ID_MUNICIPIO_NACIMIENTO'] . "', ";
 				$cadenaSql .= "'" . $variable['TELEFONO_CONTACTO'] . "', ";
 				$cadenaSql .= "'" . $variable['EMAIL_PERSONAL'] . "', ";
-				$cadenaSql .= " email_institucional ='" . str_replace("'", "", $variable['EMAIL_INSTITUCIONAL']) . "',";//elimina las comillas sencillas que existen en algunos registros
+				$cadenaSql .= "'" . str_replace("'", "", $variable['EMAIL_INSTITUCIONAL']) . "',";//elimina las comillas sencillas que existen en algunos registros
 				$cadenaSql .= "NULL";
 				//NO OBLIGATORIO PARA ESTUDIANTES
 				$cadenaSql .= " )";
@@ -424,12 +424,12 @@ class Sql extends \Sql {
 				
 			case "consultarMatriculadoTodos" :
 				$cadenaSql = "SELECT ano, semestre, id_tipo_documento, num_documento, codigo_estudiante, 
-       			pro_consecutivo, id_municipio, fecha_nacimiento, id_pais_nacimiento, 
+       			pro_consecutivo, id_municipio, to_char(fecha_nacimiento,'DD-MM-YYYY') fecha_nacimiento, id_pais_nacimiento, 
        			id_municipio_nacimiento, id_zona_residencia, es_reintegro";
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " matriculado ";				
 				$cadenaSql .= " WHERE ano ='" . $variable['ANNIO_MATRICULA'] . "'";
-				$cadenaSql .= " AND semestre ='" . $variable['SEMESTRE_MATRICULA'] . "'";
+				$cadenaSql .= " AND semestre ='" . $variable['SEMESTRE_MATRICULA'] . "'";				
 
 				break;								
 
@@ -491,7 +491,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " EST_COD CODIGO_ESTUDIANTE,";
 				$cadenaSql .= " TO_CHAR('1301') ies_code,";
 				$cadenaSql .= " EST_NOMBRE,";
-				$cadenaSql .= " TO_CHAR(eot_fecha_nac, 'yyyy-mm-dd') fecha_nacim,";
+				$cadenaSql .= " TO_CHAR(eot_fecha_nac, 'DD-MM-YYYY') fecha_nacim,";
 				$cadenaSql .= " TO_CHAR('CO') pais_ln,";
 				$cadenaSql .= " TO_CHAR(DECODE (mun_dep_cod,0,11,'',11, mun_dep_cod)) departamento_ln,";
 				$cadenaSql .= " TO_CHAR(DECODE (mun_cod,0,11001,'',11001,99999,11001, mun_cod)) municipio_ln,";
