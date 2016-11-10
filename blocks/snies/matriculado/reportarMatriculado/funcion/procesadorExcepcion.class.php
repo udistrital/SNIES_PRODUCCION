@@ -81,7 +81,11 @@ class procesadorExcepcion {
 				// extranjero
 				$resultado = '0001';
 				break;
-
+			
+			case NULL :				
+				$resultado = '11001';
+				break;
+			
 			default :
 				$resultado = $unEstudiante['ID_MUNICIPIO_PROGRAMA'];
 				break;

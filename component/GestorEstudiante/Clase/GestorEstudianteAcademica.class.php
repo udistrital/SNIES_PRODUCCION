@@ -121,6 +121,7 @@ class estudiante implements IGestorEstudiante {
 		return $resultado;
 	}
 	function registrarParticipante($estudiante) {
+		//var_dump($estudiante);
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		

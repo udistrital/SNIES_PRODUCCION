@@ -53,9 +53,9 @@ class Sql extends \Sql {
 				$cadenaSql .= " TO_CHAR(DECODE(est_sexo,'M','1','F','2','01')) id_sexo_biologico,";
 				$cadenaSql .= " DECODE(eot_estado_civil,1,'1',2,'2',3,'5',4,'3',5,'4', '1') id_estado_civil,";
 				$cadenaSql .= " TO_CHAR(eot_fecha_nac, 'yyyy-mm-dd') fecha_nacimiento,";
-				$cadenaSql .= " TO_CHAR('CO') id_pais_nacimiento,";
-				$cadenaSql .= " TO_CHAR(DECODE (eot_cod_mun_nac,0,11001,'',11001,99999,11001, eot_cod_mun_nac)) id_municipio_nacimiento,";
-				$cadenaSql .= " TO_CHAR(est_telefono) telefono_contacto,";
+				$cadenaSql .= " 'CO' id_pais_nacimiento,";
+				$cadenaSql .= " TO_CHAR(DECODE (eot_cod_mun_nac,0,11001,'',11001,NULL, 11001,99999,11001, eot_cod_mun_nac)) id_municipio_nacimiento,";
+				$cadenaSql .= " TO_CHAR(DECODE(est_telefono, NULL, '0', est_telefono)) telefono_contacto,";
 				$cadenaSql .= " eot_email email_personal,";
 				$cadenaSql .= " eot_email_ins email_institucional,";
 				$cadenaSql .= " '' direccion_institucional,";
@@ -216,7 +216,7 @@ class Sql extends \Sql {
 				$cadenaSql = " UPDATE participante";
 				$cadenaSql .= " SET id_tipo_documento ='" . $variable['ID_TIPO_DOCUMENTO'] . "',";
 				$cadenaSql .= " num_documento ='" . $variable['NUM_DOCUMENTO'] . "',";
-				$cadenaSql .= " fecha_expedicion='" . $variable['FECHA_EXPEDICION'] . "',";
+				//$cadenaSql .= " fecha_expedicion='" . $variable['FECHA_EXPEDICION'] . "',";
 				$cadenaSql .= " primer_nombre ='" . $variable['PRIMER_NOMBRE'] . "',";
 				$cadenaSql .= " segundo_nombre ='" . $variable['SEGUNDO_NOMBRE'] . "',";
 				$cadenaSql .= " primer_apellido ='" . $variable['PRIMER_APELLIDO'] . "',";
@@ -224,12 +224,12 @@ class Sql extends \Sql {
 				$cadenaSql .= " id_sexo_biologico ='" . $variable['ID_SEXO_BIOLOGICO'] . "',";
 				$cadenaSql .= " id_estado_civil ='" . $variable['ID_ESTADO_CIVIL'] . "',";
 				$cadenaSql .= " fecha_nacimiento ='" . $variable['FECHA_NACIMIENTO'] . "',";
-				$cadenaSql .= " id_pais ='" . $variable['ID_PAIS'] . "',";
-				$cadenaSql .= " id_municipio ='" . $variable['ID_MUNICIPIO'] . "',";
+				$cadenaSql .= " id_pais ='" . $variable['ID_PAIS_NACIMIENTO'] . "',";
+				$cadenaSql .= " id_municipio ='" . $variable['ID_MUNICIPIO_NACIMIENTO'] . "',";
 				$cadenaSql .= " telefono_contacto ='" . $variable['TELEFONO_CONTACTO'] . "',";
 				$cadenaSql .= " email_personal ='" . $variable['EMAIL_PERSONAL'] . "',";
-				$cadenaSql .= " email_institucional ='" . $variable['EMAIL_INSTITUCIONAL'] . "',";
-				$cadenaSql .= " direccion_institucional ='" . $variable['DIRECCION_INSTITUCIONAL'] . "'";
+				$cadenaSql .= " email_institucional ='" . $variable['EMAIL_INSTITUCIONAL'] . "'";
+				//$cadenaSql .= " direccion_institucional ='" . $variable['DIRECCION_INSTITUCIONAL'] . "'";
 				$cadenaSql .= " WHERE NUM_DOCUMENTO='" . $variable['NUM_DOCUMENTO'] . "'";
 
 				break;
@@ -278,12 +278,12 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable['ID_SEXO_BIOLOGICO'] . "', ";
 				$cadenaSql .= "'" . $variable['ID_ESTADO_CIVIL'] . "', ";
 				$cadenaSql .= "'" . $variable['FECHA_NACIMIENTO'] . "', ";
-				$cadenaSql .= "'" . $variable['ID_PAIS'] . "', ";
-				$cadenaSql .= "'" . $variable['ID_MUNICIPIO'] . "', ";
+				$cadenaSql .= "'" . $variable['ID_PAIS_NACIMIENTO'] . "', ";
+				$cadenaSql .= "'" . $variable['ID_MUNICIPIO_NACIMIENTO'] . "', ";
 				$cadenaSql .= "'" . $variable['TELEFONO_CONTACTO'] . "', ";
 				$cadenaSql .= "'" . $variable['EMAIL_PERSONAL'] . "', ";
 				$cadenaSql .= "'" . $variable['EMAIL_INSTITUCIONAL'] . "', ";
-				$cadenaSql .= "''";
+				$cadenaSql .= "NULL";
 				//NO OBLIGATORIO PARA ESTUDIANTES
 				$cadenaSql .= " )";
 
