@@ -69,6 +69,7 @@ interface IGestorEstudiante {
 	function consultarEstudiantePrimerCurso($estudiante);
 	function borrarEstudiantePrograma($estudiante);
 	function consultarPrimerCursoTodos($annio, $semestre);
+	function consultarPrimerCursoAuditoria($annio, $semestre);	
 	function registrarEstudiantePrimerCurso($estudiante);
 	
 	// MATRICULADO
@@ -76,7 +77,9 @@ interface IGestorEstudiante {
 	function consultarMatriculado($estudiante, $annio, $semestre);
 	function registrarMatriculado($estudiante, $annio, $semestre);
 	function actualizarMatriculado($estudiante, $annio, $semestre);
-	function consultarMatriculadoTodos($annio, $semestre);	
+	function consultarMatriculadoTodos($annio, $semestre);
+	function consultarMatriculadoAuditoria($annio, $semestre);	
+	
 		
 	//EGRESADO
 	function borrarEgresado($estudiante);

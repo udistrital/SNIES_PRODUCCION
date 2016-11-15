@@ -36,15 +36,22 @@ class FormProcessor {
 		 * generar archivo matriculado_[ano][perido].csv
 		 * */
 
-		$participante = $this -> miComponente -> consultarParticipanteTodos();
-			
-		$this -> generarParticipanteCsv($participante);
+		//$participante = $this -> miComponente -> consultarParticipanteTodos();
+		//$this -> generarParticipanteCsv($participante);
 
+		
 		$primer_curso = $this -> miComponente -> consultarPrimerCursoTodos($this -> annio, $this -> semestre);
 		$this->generarPrimerCursoCsv($primer_curso);
-
+		
+		$auditoria_primer_curso = $this -> miComponente -> consultarPrimerCursoAuditoria($this -> annio, $this -> semestre);
+		$this->generarAuditoriaPrimerCursoCsv($auditoria_primer_curso);
+		
 		$matriculado = $this -> miComponente -> consultarMatriculadoTodos($this -> annio, $this -> semestre);
 		$this -> generarMatriculadoCsv($matriculado);
+						
+		$auditoria_matriculado = $this -> miComponente -> consultarMatriculadoAuditoria($this -> annio, $this -> semestre);		
+		$this->generarAuditoriaMatriculadoCsv($auditoria_matriculado);
+		
 		
 		exit ;
 
@@ -114,6 +121,69 @@ class FormProcessor {
 
 	}
 
+
+	/**
+	 * Auditoria de primer_curso
+	 */
+	function generarAuditoriaPrimerCursoCsv($primerCurso) {
+		$raizDocumento = $this -> miConfigurador -> getVariableConfiguracion("raizDocumento");
+		$this -> annio = $_REQUEST['annio'];
+		$this -> semestre = $_REQUEST['semestre'];
+		$file = $raizDocumento . '/document/auditoria_primerCurso_' . $this -> annio . $this -> semestre . '.csv';
+		$fp = fopen($file, 'w');
+		//ENCABEZADO DE LA PLANTILLA PRIMER_CURSO
+		/**$linea1 = array('Herramienta de Cargue Hecca - V 3.4');
+		$linea2 = array('[62] Nombre de la Plantilla: [Estudiantes  de primer curso] Descripcion: [Estudiante de primer semestre de programas tanto pregrado como postgrado, Esta variable se calcula a partir de la información matricula]');
+		$linea3 = array('Licenciado para Ministerio de Educacion Nacional 2016');
+		fwrite($fp, implode(',', $linea1) . "\r\n");
+		//con esto elimina las comillas dobles del encabezado
+		fwrite($fp, implode(',', $linea2) . "\r\n");
+		fwrite($fp, implode(',', $linea3) . "\r\n");
+		fputcsv($fp, array('AÑO', 'SEMESTRE', 'ID_TIPO_DOCUMENTO', 'NUM_DOCUMENTO', 'PRO_CONSECUTIVO', 'ID_MUNICIPIO_PROGRAMA', 'ID_TIPO_VINCULACION', 'ID_GRUPO_ETNICO', 'ID_PUEBLO_INDIGENA', 'ID_COMUNIDAD_NEGRA', 'PERSONA_CONDICION_DISCAPACIDAD', 'ID_TIPO_DISCAPACIDAD', 'ID_CAPACIDAD_EXCEPCIONAL', 'COD_PRUEBA_SABER_11'), ";");
+		*/
+		foreach ($primerCurso as $registro) {		
+			//Se debe redefinir el arrglo para que no presenta las asociaciones numéricas
+			$arreglo['ID'] = '';
+			$arreglo['IES_CODE'] = '1301';
+			$arreglo['IES_NOMBRE'] = 'UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS';
+			$arreglo['NUM_DOCUMENTO'] = $registro['num_documento'];
+			$arreglo['TIPO_DOCUMENTO'] = $registro['id_tipo_documento'];
+			$arreglo['NOMBRE1'] = $registro['primer_nombre'];
+			$arreglo['NOMBRE2'] = $registro['segundo_nombre'];
+			$arreglo['APELLIDO1'] = $registro['primer_apellido'];
+			$arreglo['APELLIDO2'] = $registro['segundo_apellido'];
+			$arreglo['AÑO'] = $registro['ano'];
+			$arreglo['SEMESTRE'] = $registro['semestre'];
+			$arreglo['CODIGO_ACREDITACION_IES'] = '';
+			$arreglo['ACREDITACION_IES'] = '';
+			$arreglo['TIPO_IES'] = '1';
+			$arreglo['CARACTER'] = '4';
+			$arreglo['ORIGEN'] = '01';
+			$arreglo['COD DEPARTAMENTO'] = '11';
+			$arreglo['COD MUNICIPIO'] = '11001';
+			$arreglo['CODIGO_PROGRAMA'] = $registro['pro_consecutivo'];
+			$arreglo['PROG_NOMBRE'] = $registro['nombre'];
+			$arreglo['TIPO_ACREDITACION'] = '';
+			$arreglo['NIVEL'] = $registro['nivel'];
+			$arreglo['MODALIDAD'] = $registro['modalidad'];
+			$arreglo['METODOLOGIA'] = '';
+			$arreglo['AREA'] = '';
+			$arreglo['NBC_PRIM_AREA'] = '';
+			$arreglo['NUCLEO'] = '';
+			$arreglo['NUCLEO_DESC'] = '';
+			$arreglo['ESTADO'] = 'A';					
+
+			fputcsv($fp, $arreglo, ";");
+		}
+
+		fclose($fp);
+
+		echo 'Se ha generado el archivo <b>' . $file . '</b>';
+		echo '<br>';
+
+	}
+
+
 	/**
 	 * Genera el archivo csv de matriculado
 	 */
@@ -158,6 +228,64 @@ class FormProcessor {
 
 	}
 
+/**
+	 * Genera el archivo csv de matriculado
+	 */
+	function generarAuditoriaMatriculadoCsv($matriculado) {
+		$raizDocumento = $this -> miConfigurador -> getVariableConfiguracion("raizDocumento");
+		$this -> annio = $_REQUEST['annio'];
+		$this -> semestre = $_REQUEST['semestre'];
+		$file = $raizDocumento . '/document/auditoria_matriculado_' . $this -> annio . $this -> semestre . '.csv';
+		$fp = fopen($file, 'w');
+		//ENCABEZADO DE LA PLANTILLA MATRICULADO	
+		$secuenciaMatricualado=1;	
+		foreach ($matriculado as $registro) {			
+					
+			//Se debe redefinir el arrglo para que no presenta las asociaciones numéricas
+			$arreglo['ID'] = '';
+			$arreglo['IES_CODE'] = '1301';
+			$arreglo['IES_NOMBRE'] = 'UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS';
+			$arreglo['num_documento'] = $registro['num_documento'];
+			$arreglo['id_tipo_documento'] = $registro['id_tipo_documento'];
+			$arreglo['primer_nombre'] = $registro['primer_nombre'];
+			$arreglo['segundo_nombre'] = $registro['segundo_nombre'];
+			$arreglo['primer_apellido'] = $registro['primer_apellido'];
+			$arreglo['segundo_apellido'] = $registro['segundo_apellido'];
+			$arreglo['ano'] = $registro['ano'];
+			$arreglo['semestre'] = $registro['semestre'];
+			$arreglo['CODIGO_ACREDITACION_IES'] = '';
+			$arreglo['ACREDITACION_IES'] = '';
+			$arreglo['IES_PADRE'] = '1301';
+			$arreglo['TIPO_IES'] = '1';
+			$arreglo['CARACTER'] = '4';
+			$arreglo['ORIGEN'] = '01';
+			$arreglo['COD DEPARTAMENTO'] = '11';
+			$arreglo['COD MUNICIPIO'] = '11001';
+			$arreglo['pro_consecutivo'] = $registro['pro_consecutivo'];
+			$arreglo['PROG_NOMBRE'] = $registro['nombre'];
+			$arreglo['TIPO_ACREDITACION'] = '';
+			$arreglo['TITULO'] = $registro['titulo'];			
+			$arreglo['NIVEL'] = $registro['nivel'];
+			$arreglo['MODALIDAD'] = $registro['modalidad'];
+			$arreglo['METODOLOGIA'] = '';
+			$arreglo['AREA'] = '';
+			$arreglo['NBC_PRIM_AREA'] = '';
+			$arreglo['NUCLEO'] = '';
+			$arreglo['NUCLEO_DESC'] = '';
+			$arreglo['CONS_ESTUD'] = $secuenciaMatricualado;
+			$arreglo['ESTADO'] = 'A';					
+
+			fputcsv($fp, $arreglo, ";");
+			$secuenciaMatricualado=$secuenciaMatricualado+1;
+		}
+
+		fclose($fp);
+
+		echo 'Se ha generado el archivo <b>' . $file . '</b>';
+		echo '<br>';
+
+	}
+
 	/**
 	 * Genera csv de participante
 	 */
@@ -178,7 +306,7 @@ class FormProcessor {
 		fputcsv($fp, array('ID_TIPO_DOCUMENTO', 'NUM_DOCUMENTO', 'FECHA_EXPEDICION', 'PRIMER_NOMBRE', 'SEGUNDO_NOMBRE', 'PRIMER_APELLIDO', 'SEGUNDO_APELLIDO', 'ID_SEXO_BIOLOGICO', 'ID_ESTADO_CIVIL', 'FECHA_NACIMIENTO', 'ID_PAIS', 'ID_MUNICIPIO', 'TELEFONO_CONTACTO', 'EMAIL_PERSONAL', 'EMAIL_INSTITUCIONAL', 'DIRECCION_INSTITUCIONAL'), ";");
 		foreach ($participante as $registro) {
 			//var_dump ( $unInscrito );
-			//Se debe redefinir el arrglo para que no presenta las asociaciones numéricas
+			//Se debe redefinir el arrglo para que no presente las asociaciones numéricas
 			$arreglo['id_tipo_documento'] = $registro['id_tipo_documento'];
 			$arreglo['num_documento'] = $registro['num_documento'];
 			$arreglo['fecha_expedicion'] = $registro['fecha_expedicion'];

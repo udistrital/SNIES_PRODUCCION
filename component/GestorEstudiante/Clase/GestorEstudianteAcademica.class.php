@@ -278,6 +278,24 @@ class estudiante implements IGestorEstudiante {
 		}
 		return $resultado;
 	}
+	
+	function consultarPrimerCursoAuditoria($annio, $semestre) {
+		$conexion = "sniesLocal";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		$variable ['ANNIO'] = $annio;
+		$variable ['SEMESTRE'] = $semestre;
+		$cadenaSql = $this->miSql->cadena_sql ( 'consultarPrimerCursoAuditoria', $variable );
+		
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+		if ($resultado == FALSE) {
+			$error = $esteRecursoDB->obtener_error ();
+			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';
+			echo $cadenaSql;
+			var_dump ( $error );
+		}
+		return $resultado;
+	}
 	function registrarEstudiantePrimerCurso($estudiante) {
 		
 		$conexion = "sniesLocal";
@@ -371,6 +389,29 @@ class estudiante implements IGestorEstudiante {
 		
 		return $resultado;
 	}	
+	
+	
+	function consultarMatriculadoAuditoria($annio, $semestre) {
+		$conexion = "sniesLocal";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		// pasar los valores de annio y semestre de la matrícula del período que se va a reportar
+		
+		$estudiante ['ANNIO_MATRICULA'] = $annio;
+		$estudiante ['SEMESTRE_MATRICULA'] = $semestre;
+		$cadenaSql = $this->miSql->cadena_sql ( 'consultarMatriculadoAuditoria', $estudiante );
+		
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+		if ($resultado == FALSE) {
+			$error = $esteRecursoDB->obtener_error ();
+			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';
+			echo $cadenaSql;
+			var_dump ( $error );
+		}
+		
+		return $resultado;
+	}	
+	
 	
 	
 	

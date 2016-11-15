@@ -29,6 +29,7 @@ class FormProcessor {
 		
 		// estudiante de la académica
 		$graduado = $this->miComponente->consultarGraduadoAcademica ( $this->annio, $this->semestre );
+		var_dump($graduado);exit;
 		
 		$miProcesadorExcepcion = new procesadorExcepcion ();
 		// FORMATEA LOS VALORES NULOS, CODIFICA EXCEPCIONES

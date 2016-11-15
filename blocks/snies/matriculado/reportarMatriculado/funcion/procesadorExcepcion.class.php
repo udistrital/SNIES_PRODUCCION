@@ -51,13 +51,14 @@ class procesadorExcepcion {
 	 * @return Ambigous <string, unknown>
 	 */
 	function excepcionFechaNacim($unEstudiante) {
+
 		if (isset($unEstudiante['FECHA_NACIMIENTO'])) {
 
 			// si la fecha es inferior a 1926 o mayor a 2001 se coloca valor por defecto '1990-01-01'
 			// SNIES valida que la edad esté entre 14 y 90 años
-			$fecha = split('-', $unEstudiante['FECHA_NACIMIENTO']);
-			$ano = $fecha[0];
-			if ($ano < '1926' or $ano > '2001') {
+			$fecha = split('/', $unEstudiante['FECHA_NACIMIENTO']);
+			$ano = $fecha[2];
+			if ($ano < '1926' or $ano > '2003') {
 				$resultado = '1990-01-01';
 			} else {
 				$resultado = $unEstudiante['FECHA_NACIMIENTO'];
@@ -74,18 +75,19 @@ class procesadorExcepcion {
 		switch ($unEstudiante ['ID_MUNICIPIO_PROGRAMA']) {
 			case '11850' :
 				// Usme
-				$resultado = '11001'; ;
+				$resultado = '11001';
+				;
 				break;
 
 			case '1' :
 				// extranjero
 				$resultado = '0001';
 				break;
-			
-			case NULL :				
+
+			case NULL :
 				$resultado = '11001';
 				break;
-			
+
 			default :
 				$resultado = $unEstudiante['ID_MUNICIPIO_PROGRAMA'];
 				break;
@@ -98,7 +100,8 @@ class procesadorExcepcion {
 		switch ($unEstudiante ['ID_MUNICIPIO_NACIMIENTO']) {
 			case '11850' :
 				// Usme
-				$resultado = '11001'; ;
+				$resultado = '11001';
+				;
 				break;
 
 			case '1' :
@@ -123,7 +126,8 @@ class procesadorExcepcion {
 		switch ($unEstudiante ['DEPARTAMENTO_LN']) {
 			case '30' :
 				// extranjero
-				$resultado = '0'; ;
+				$resultado = '0';
+				;
 				break;
 
 			default :
@@ -241,7 +245,12 @@ class procesadorExcepcion {
 	 */
 	function excepcionNumeroTel($unEstudiante) {
 		if (isset($unEstudiante['TELEFONO_CONTACTO'])) {
-			$resultado = $unEstudiante['TELEFONO_CONTACTO'];
+			if ($unEstudiante['TELEFONO_CONTACTO'] == 0) {
+				$resultado = '';
+			} else {
+				$resultado = $unEstudiante['TELEFONO_CONTACTO'];
+			}
+
 		} else {
 			$resultado = '';
 			// para distinguir los que tiene valor nulo

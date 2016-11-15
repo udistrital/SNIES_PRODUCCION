@@ -47,7 +47,7 @@ class FormProcessor {
 		$caracteresInvalidos = $miProcesadorNombre -> buscarCaracteresInvalidos($estudiante, 'EST_NOMBRE');
 
 		// quita acentos del nombre
-		$estudiante = $miProcesadorNombre -> quitarAcento($estudiante, 'EST_NOMBRE');
+		$estudiante = $miProcesadorNombre -> quitarAcento($estudiante, 'EST_NOMBRE');		
 
 		echo 'Separando nombres...<br>';
 		// descompone nombre completo en sus partes y las aglega al final de cada registro
@@ -94,7 +94,7 @@ class FormProcessor {
 	 */
 	function actualizarParticipante($estudiante) {
 		foreach ($estudiante as $unEstudiante) {
-			echo 'CODIGO: ' . $unEstudiante['NUM_DOCUMENTO'] . '<br>';
+			echo 'N. DOCUMENTO: ' . $unEstudiante['NUM_DOCUMENTO'] . '<br>';
 			// consulta en la tabla participante y cuenta el número de registros retornados
 			$participante = $this -> miComponente -> consultarParticipante($unEstudiante);			
 			// si no existe insertar el nuevo registro

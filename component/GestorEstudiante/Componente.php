@@ -34,6 +34,9 @@ class Componente extends Component implements IGestorEstudiante {
 	}
 	function consultarMatriculadoTodos($annio, $semestre) {
 		return $this->miEstudiante->consultarMatriculadoTodos ($annio, $semestre );
+	}
+	function consultarMatriculadoAuditoria($annio, $semestre) {
+		return $this->miEstudiante->consultarMatriculadoAuditoria ($annio, $semestre );
 	}		
 	function registrarMatriculado($estudiante,$annio, $semestre) {
 		return $this->miEstudiante->registrarMatriculado ($estudiante, $annio, $semestre );
@@ -90,6 +93,9 @@ class Componente extends Component implements IGestorEstudiante {
 	function consultarPrimerCursoTodos($annio, $semestre) {
 		return $this->miEstudiante->consultarPrimerCursoTodos ( $annio, $semestre );
 	}
+	function consultarPrimerCursoAuditoria($annio, $semestre) {
+		return $this->miEstudiante->consultarPrimerCursoAuditoria ( $annio, $semestre );
+	}	
 	function registrarEstudiantePrimerCurso($estudiante) {
 		return $this->miEstudiante->registrarEstudiantePrimerCurso ( $estudiante );
 	}
