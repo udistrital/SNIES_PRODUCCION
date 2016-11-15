@@ -68,7 +68,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " WHERE car_ape_ano='" . $variable ['annio'] . "'";
 				$cadenaSql .= " AND car_ape_per='" . $variable ['semestre'] . "'";
 				$cadenaSql .= " AND car_estado='A'";
-				$cadenaSql .= " )";
+				$cadenaSql .= " )";				
 				// $cadenaSql .= " AND doc_nro_iden=3182871";
 				// $cadenaSql .= " AND doc_nro_iden=79708124";
 				

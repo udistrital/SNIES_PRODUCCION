@@ -1,5 +1,7 @@
 <?php
 include_once ('component/GestorDocente/Componente.php');
+include_once ('blocks/snies/funcion/procesadorNombre.class.php');
+include_once ('blocks/snies/funcion/procesadorExcepcion.class.php');
 use sniesDocente\Componente;
 use bloqueSnies\procesadorExcepcion;
 use bloqueSnies\procesadorNombre;
@@ -24,9 +26,10 @@ class FormProcessor {
 	function procesarFormulario() {
 		$this->annio = $_REQUEST ['annio'];
 		$this->semestre = $_REQUEST ['semestre'];
-		
+				
 		// docente de la académica
 		$docente = $this->miComponente->consultarDocenteAcademica ( $this->annio, $this->semestre );
+				
 		// consulta todas las vinculaciones de todos los decentes para un año y período
 		$vinculacionDocente = $this->miComponente->consultarVinculacionDocente ( $this->annio, $this->semestre );
 		
@@ -113,55 +116,57 @@ class FormProcessor {
 		
 		$miProcesadorExcepcion = new procesadorExcepcion ();
 		// FORMATEA LOS VALORES NULOS, CODIFICA EXCEPCIONES
-		$docente = $miProcesadorExcepcion->procesarExcepcionEstudiante ( $docente );
+		$docente = $miProcesadorExcepcion->procesarExcepcionEstudiante ( $docente );		
 		
 		$this->generarListadoDocentes ( $docente );
-		$raizDocumento = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" );
-		echo 'Se ha generado el archivo: ' . $raizDocumento . '/document/docente' . $this->annio . $this->semestre . '.csv';
+		$raizDocumento = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" );		
 		echo '<br>';
 	}
 	function generarListadoDocentes($docente) {
 		$raizDocumento = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" );
-		$fp = fopen ( $raizDocumento . '/document/docente_' . $this->annio . $this->semestre . '.csv', 'w' );
-		fputcsv ( $fp, array (
-				'IDPROGRAMACION',
-				'IES_CODE',
-				'ANNIO',
-				'SEMESTRE',
-				'TIPO_DOCUMENTO',
-				'NUM_DOCUMENTO',
-				'PRIMER_NOMBRE',
-				'SEGUNDO_NOMBRE',
-				'PRIMER_APELLIDO',
-				'SEGUNDO_APELLIDO',
-				'GENERO',
-				'NIVEL_EST_CODE',
-				'DEDICACION',
-				'TIPO_CONTRATO',
-				'FECHA_INGRESO' 
-		) );
+		$file=$raizDocumento . '/document/auditoria_docente_' . $this->annio . $this->semestre . '.csv';
+		$fp = fopen ( $file, 'w' );
+		$consecutivoDocente=1;
 		foreach ( $docente as $unDocente ) {
 			
-			$arregloDocente ['CODIGO'] = $unDocente ['CODIGO_UNICO'];
+			$arregloDocente ['ID'] = '';
 			$arregloDocente ['IES_CODE'] = '1301';
-			$arregloDocente ['ANIO'] = $this->annio;
-			$arregloDocente ['SEMESTRE'] = $this->semestre;
-			$arregloDocente ['TIPO_DOC_UNICO'] = $unDocente ['TIPO_DOC_UNICO'];
-			$arregloDocente ['CODIGO_UNICO'] = $unDocente ['CODIGO_UNICO'];
-			$arregloDocente ['PRIMER_NOMBRE'] = $unDocente ['PRIMER_NOMBRE'];
-			$arregloDocente ['SEGUNDO_NOMBRE'] = $unDocente ['SEGUNDO_NOMBRE'];
-			$arregloDocente ['PRIMER_APELLIDO'] = $unDocente ['PRIMER_APELLIDO'];
-			$arregloDocente ['SEGUNDO_APELLIDO'] = $unDocente ['SEGUNDO_APELLIDO'];
-			$arregloDocente ['GENERO'] = $unDocente ['GENERO_CODE'];
-			$arregloDocente ['NIVEL_EST_CODE'] = $unDocente ['NIVEL_EST_CODE'];
+			$arregloDocente ['IES_PADRE'] = '1301';
+			$arregloDocente ['TIPO_IES'] = '1';
+			$arregloDocente ['IES_NOMBRE'] = 'UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS';
+			$arregloDocente ['TIPO_ACREDITACION'] = '';
+			$arregloDocente ['CARACTER'] = '4';			
+			$arregloDocente ['ORIGEN'] = '01';
+			$arregloDocente ['COD DEPARTAMENTO'] = '11';
+			$arregloDocente ['COD MUNICIPIO'] = '11001';
+			$arregloDocente ['TIPO_DOCUMENTO'] = $unDocente ['TIPO_DOC_UNICO'];
+			$arregloDocente ['NUM_DOCUMENTO'] = $unDocente ['CODIGO_UNICO'];
+			$arregloDocente ['NOMBRE1'] = $unDocente ['PRIMER_NOMBRE'];
+			$arregloDocente ['NOMBRE2'] = $unDocente ['SEGUNDO_NOMBRE'];
+			$arregloDocente ['APELLIDO1'] = $unDocente ['PRIMER_APELLIDO'];
+			$arregloDocente ['APELLIDO2'] = $unDocente ['SEGUNDO_APELLIDO'];			
+			$arregloDocente ['GENERO'] = $unDocente ['GENERO_CODE'];			
+			$arregloDocente ['UNIDAD_ORGANIZACIONAL'] = '';
+			$arregloDocente ['NOMBRE_UNIDAD'] = '';
+			$arregloDocente ['NIVEL_EST_CODE'] = $unDocente ['NIVEL_EST_CODE'];		
 			$arregloDocente ['DEDICACION'] = $unDocente ['DEDICACION'];
 			$arregloDocente ['TIPO_CONTRATO'] = $unDocente ['TIPO_CONTRATO'];
+			$arregloDocente ['FECHA_NACIMIENTO'] = $unDocente ['FECHA_NACIM'];
 			$arregloDocente ['FECHA_INGRESO'] = $unDocente ['FECHA_INGRESO'];
-			
+			$arregloDocente ['ANO'] = $this->annio;
+			$arregloDocente ['SEMESTRE'] = $this->semestre;
+			$arregloDocente ['SEMESTRE'] = $this->semestre;
+			$arregloDocente ['CONS_DOC'] = $consecutivoDocente;
+			$arregloDocente ['ESTADO'] = 'A';
+						
 			fputcsv ( $fp, $arregloDocente );
+			
+			$consecutivoDocente=$consecutivoDocente+1;
+		
 		}
 		
 		fclose ( $fp );
+		echo 'Se ha generado el archivo: <b>' . $file.'</b>';
 	}
 }
 

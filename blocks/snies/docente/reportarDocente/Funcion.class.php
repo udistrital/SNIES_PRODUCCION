@@ -48,6 +48,12 @@ class Funcion {
 	function actualizarDocente() {
 		include_once ($this->ruta . "/funcion/actualizarDocente.php");
 	}
+	
+	function generarCsvDocente() {
+		include_once ($this->ruta . "/funcion/generarCsvDocente.php");
+	}	
+	
+	
 	function action() {
 		if (isset ( $_REQUEST ['procesarAjax'] )) {
 			$this->procesarAjax ();
