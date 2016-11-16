@@ -85,7 +85,7 @@ class FormProcessor {
 		
 		$consecutivoGraduado=1;
 		foreach ( $estudiante as $unEstudiante ) {
-			var_dump ( $unEstudiante );
+			
 			$matriculado ['CODIGO'] = $unEstudiante ['CODIGO_ESTUDIANTE'];
 			$matriculado ['IES_CODE'] = '1301';
 			$matriculado ['IES_NOMBRE'] = 'UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS';
@@ -109,19 +109,19 @@ class FormProcessor {
 			$matriculado ['PROG_NOMBRE'] = $unEstudiante ['PROG_NOMBRE'];
 			$matriculado ['TIPO_ACREDITACION'] = '';
 			$matriculado ['TITULO'] = $unEstudiante ['TITULO'];
-			$matriculado ['NIVEL'] = 'nivel';//BUSCAR
-			$matriculado ['MODALIDAD'] = 'modalidad';//BUSCAR
+			$matriculado ['NIVEL'] = $unEstudiante ['NIVEL'];
+			$matriculado ['MODALIDAD'] = $unEstudiante ['MODALIDAD'];
 			$matriculado ['METODOLOGIA'] = '';
 			$matriculado ['AREA'] = '';
 			$matriculado ['NBC_PRIM_AREA'] = '';
 			$matriculado ['NUCLEO'] = '';
 			$matriculado ['NUCLEO_DESC'] = '';
-			$matriculado ['FECHA_GRADO'] = 'FECHA_GRADO';
-			$matriculado ['FECHA_REPORTE'] = 'FECHA_GRADO';
-			$matriculado ['ACTA'] = 'ACTA';
-			$matriculado ['FOLIO'] = 'FOLIO';
+			$matriculado ['FECHA_GRADO'] = $unEstudiante ['FECHA_GRADO'];
+			$matriculado ['FECHA_REPORTE'] = $unEstudiante ['FECHA_GRADO'];
+			$matriculado ['ACTA'] = $unEstudiante ['ACTA'];
+			$matriculado ['FOLIO'] = $unEstudiante ['FOLIO'];
 			$matriculado ['CONS_GRAD'] = $consecutivoGraduado;
-												
+															
 			fputcsv ( $fp, $matriculado );
 			$consecutivoGraduado=$consecutivoGraduado+1;
 		}
@@ -155,7 +155,7 @@ class FormProcessor {
 		foreach ( $estudiante as $unEstudiante ) {
 			
 			if ($unEstudiante ['ANIO'] == $this->annio and $unEstudiante ['SEMESTRE'] == $this->semestre) {
-				// var_dump ( $unEstudiante );
+				
 				$matriculadoPrimerCurso ['CODIGO'] = $unEstudiante ['CODIGO_UNICO'];
 				$matriculadoPrimerCurso ['ANIO'] = $this->annio;
 				$matriculadoPrimerCurso ['SEMESTRE'] = $this->semestre;

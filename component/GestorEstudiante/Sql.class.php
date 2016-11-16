@@ -552,7 +552,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " '02' es_transferencia,";
 				$cadenaSql .= " DECODE(CRA_JORNADA, 'DIURNA', '01', 'NOCTURNA', '02', '01' ) HORARIO_CODE,";
 				$cadenaSql .= " '01' PAGO,";
-				$cadenaSql .= " egr_fecha_grado FECHA_GRADO,";				
+				$cadenaSql .= " to_char(egr_fecha_grado, 'DD/MM/YYYY') FECHA_GRADO,";				
 				$cadenaSql .= " 'no' ECAES_OBSERVACIONES,";
 				$cadenaSql .= " '0' ECAES_RESULTADOS,";
 				// Donde se gradúa
