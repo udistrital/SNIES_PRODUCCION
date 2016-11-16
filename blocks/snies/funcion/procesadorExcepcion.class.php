@@ -39,6 +39,22 @@ class procesadorExcepcion {
 		return $docente;
 	}
 	
+		function procesarExcepcionGraduado($docente) {
+		foreach ( $docente as $clave => $valor ) {
+			
+			$docente [$clave] ['FECHA_NACIM'] = $this->excepcionFechaNacim ( $docente [$clave] );
+			$docente [$clave] ['MUNICIPIO_LN'] = $this->excepcionMunicipio ( $docente [$clave] );
+			$docente [$clave] ['EMAIL'] = $this->excepcionEmail ( $docente [$clave] );
+			$docente [$clave] ['TIPO_DOC_UNICO'] = $this->excepcionTipoDocUnico ( $docente [$clave] );
+			$docente [$clave] ['CODIGO_ID_ANT'] = $this->excepcionCodigoIdAnt ( $docente [$clave] );
+			$docente [$clave] ['TIPO_ID_ANT'] = $this->excepcionTipoIdAnt ( $docente [$clave] );
+			$docente [$clave] ['NUMERO_TEL'] = $this->excepcionNumeroTel ( $docente [$clave] );
+		}
+		
+		return $docente;
+	}
+	
+	
 	/**
 	 * si no existe la fecha de nacimiento se coloca '1900-01-01'
 	 *

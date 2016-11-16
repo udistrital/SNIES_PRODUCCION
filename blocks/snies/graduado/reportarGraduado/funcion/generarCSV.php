@@ -99,22 +99,41 @@ class FormProcessor {
 			$matriculado ['CODIGO'] = $unEstudiante ['CODIGO_UNICO'];
 			$matriculado ['ANIO'] = $this->annio;
 			$matriculado ['SEMESTRE'] = $this->semestre;
-			$matriculado ['IES_CODE'] = '1301';
-			$matriculado ['PRO_CONSECUTIVO'] = $unEstudiante ['PRO_CONSECUTIVO'];
-			$matriculado ['DEPATAMENTO'] = '11';
-			$matriculado ['MUNICIPIO'] = '11001';
-			$matriculado ['CERES'] = '1301';
-			$matriculado ['TIPO_DOC_UNICO'] = $unEstudiante ['TIPO_DOC_UNICO'];
-			$matriculado ['CODIGO_UNICO'] = $unEstudiante ['CODIGO_UNICO'];
+			$matriculado ['NUM_DOCUMENTO'] = $unEstudiante ['CODIGO_UNICO'];
+			$matriculado ['TIPO_DOCUMENTO'] = $unEstudiante ['TIPO_DOC_UNICO'];
 			$matriculado ['PRIMER_NOMBRE'] = $unEstudiante ['PRIMER_NOMBRE'];
 			$matriculado ['SEGUNDO_NOMBRE'] = $unEstudiante ['SEGUNDO_NOMBRE'];
 			$matriculado ['PRIMER_APELLIDO'] = $unEstudiante ['PRIMER_APELLIDO'];
 			$matriculado ['SEGUNDO_APELLIDO'] = $unEstudiante ['SEGUNDO_APELLIDO'];
-			$matriculado ['GENERO'] = $unEstudiante ['GENERO_CODE'];
-			$matriculado ['ES_TRANSFERENCIA'] = $unEstudiante ['ES_TRANSFERENCIA'];
-			$matriculado ['ESTUDIANTE_ARTICULACION'] = '02';
-			$matriculado ['GRADO_QUE_CURSA'] = '0';
-			
+			$matriculado ['ANO'] = $this->annio;
+			$matriculado ['SEMESTRE'] = $this->semestre;
+			$matriculado ['CODIGO_ACREDITACION_IES'] = '';
+			$matriculado ['ACREDITACION_IES'] = '';
+			$matriculado ['IES_PADRE'] = '1301';
+			$matriculado ['TIPO_IES'] = '1';
+			$matriculado ['CARACTER'] = '4';
+			$matriculado ['ORIGEN'] = '01';
+			$matriculado ['COD DEPARTAMENTO'] = '11';
+			$matriculado ['COD MUNICIPIO'] = '11001';
+			$matriculado ['CODIGO_PROGRAMA'] = $unEstudiante ['PRO_CONSECUTIVO'];
+			$matriculado ['PROG_NOMBRE'] = '';//buscar
+			$matriculado ['TIPO_ACREDITACION'] = '';
+			$matriculado ['TITULO'] = '';
+			$matriculado ['NIVEL'] = '';
+			$matriculado ['MODALIDAD'] = '';
+			$matriculado ['METODOLOGIA'] = '';
+			$matriculado ['AREA'] = '';
+			$matriculado ['NBC_PRIM_AREA'] = '';
+			$matriculado ['NUCLEO'] = '';
+			$matriculado ['NUCLEO_DESC'] = '';
+			$matriculado ['FECHA_GRADO'] = '';
+			$matriculado ['FECHA_REPORTE'] = '';
+			$matriculado ['ACTA'] = '';
+			$matriculado ['FOLIO'] = '';
+			$matriculado [''] = '';
+			$matriculado [''] = '';
+			echo 'hola';exit;
+			var_dump($matriculado);exit;
 			fputcsv ( $fp, $matriculado );
 		}
 		

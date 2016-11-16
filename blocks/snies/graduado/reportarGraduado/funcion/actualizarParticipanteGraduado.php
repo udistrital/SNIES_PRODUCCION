@@ -61,7 +61,7 @@ class FormProcessor {
 		
 		$miProcesadorExcepcion = new procesadorExcepcion ();
 		// FORMATEA LOS VALORES NULOS, CODIFICA EXCEPCIONES
-		$graduado = $miProcesadorExcepcion->procesarExcepcionEstudiante ( $graduado );
+		$graduado = $miProcesadorExcepcion->procesarExcepcionGraduado ( $graduado );
 		
 		$this->actualizarParticipante ( $graduado );
 		
