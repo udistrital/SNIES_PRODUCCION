@@ -28,12 +28,15 @@ class Componente extends Component implements IGestorInscrito, IGestorAdmitido {
 	function consultarInscritoPostgradoAcademica($annio, $semestre) {
 		return $this->miGestorInscrito->consultarInscritoPostgradoAcademica ( $annio, $semestre );
 	}
-	function consultarInscritoSnies() {
-		return $this->miGestorInscrito->consultarInscritoSnies ( $periodo );
+	function consultarInscritoSnies( $annio, $semestre ) {
+		return $this->miGestorInscrito->consultarInscritoSnies (  $annio, $semestre  );
 	}
 	function insertarInscritoSnies($inscrito) {
 		return $this->miGestorInscrito->insertarInscritoSnies ( $inscrito );
 	}	
+	function consultarInscritoProgramaSnies($annio, $semestre) {
+		return $this->miGestorInscrito->consultarInscritoProgramaSnies ( $annio, $semestre );
+	}
 	function insertarInscritoProgramaSnies($inscrito) {
 		return $this->miGestorInscrito->insertarInscritoProgramaSnies ( $inscrito );
 	}

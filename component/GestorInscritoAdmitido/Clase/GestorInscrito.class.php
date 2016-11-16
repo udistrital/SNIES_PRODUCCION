@@ -46,8 +46,43 @@ if ($resultado == false) {
 		return $resultado;
 	}
 	
-	function consultarInscritoSnies() {
-	}
+	function consultarInscritoSnies( $annio, $semestre ) {
+		$conexion = "sniesLocal";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		$periodo ['annio'] = $annio;
+		$periodo ['semestre'] = $semestre;
+		$cadenaSql = $this->miSql->cadena_sql ( 'consultarInscritoSnies', $periodo );
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+
+		if ($resultado == FALSE) {
+			$error = $esteRecursoDB->obtener_error ();
+			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';
+			echo $cadenaSql;
+			var_dump ( $error );
+		}
+
+		return $resultado;
+		
+	}	
+	
+	function consultarInscritoProgramaSnies( $annio, $semestre ) {
+		$conexion = "sniesLocal";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		$periodo ['annio'] = $annio;
+		$periodo ['semestre'] = $semestre;
+		$cadenaSql = $this->miSql->cadena_sql ( 'consultarInscritoProgramaSnies', $periodo );
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+
+		if ($resultado == FALSE) {
+			$error = $esteRecursoDB->obtener_error ();
+			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';
+			echo $cadenaSql;
+			var_dump ( $error );
+		}
+
+		return $resultado;
+		
+	}	
 	
 	function insertarInscritoSnies($inscrito) {
 		$conexion = "sniesLocal";

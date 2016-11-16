@@ -120,7 +120,31 @@ class Sql extends \Sql {
 				$cadenaSql .= " AND ins_semestre='" . $variable['semestre'] . "'";
 
 				break;
+				
+			//consulta todos los inscritos de la tabla poblacion.inscrito				
+			case "consultarInscritoSnies" :
+				$cadenaSql = " SELECT";
+				$cadenaSql .= " ano, semestre, id_tipo_documento, num_documento, primer_nombre, 
+      						 segundo_nombre, primer_apellido, segundo_apellido, id_sexo_biologico";
+				$cadenaSql .= " FROM";
+				$cadenaSql .= " inscritos ";
+				$cadenaSql .= " WHERE ano='" . $variable['annio']."'";
+				$cadenaSql .= " AND semestre='" . $variable['semestre']."'";
+					
+				break;				
 
+				
+			//consulta todos los inscritos de la tabla poblacion.inscrito_programa			
+			case "consultarInscritoProgramaSnies" :
+				$cadenaSql = " SELECT";
+				$cadenaSql .= " ano, semestre, id_tipo_documento, num_documento, pro_consecutivo, id_municipio";       
+				$cadenaSql .= " FROM";
+				$cadenaSql .= " inscrito_programa ";
+				$cadenaSql .= " WHERE ano='" . $variable['annio']."'";
+				$cadenaSql .= " AND semestre='" . $variable['semestre']."'";				
+					
+				break;					
+				
 			//Borra inscritos de un año y semestre especifico
 			case "borrarInscritoSnies" :
 				$cadenaSql = "DELETE FROM";

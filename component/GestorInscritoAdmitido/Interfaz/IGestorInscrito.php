@@ -5,7 +5,8 @@ namespace sniesInscritoAdmitido;
 interface IGestorInscrito {
 	function consultarInscritoPregadoAcademica($annio, $semestre);
 	function consultarInscritoPostgradoAcademica($annio, $semestre);	
-	function consultarInscritoSnies(); // No se implementa en esta fase
+	function consultarInscritoSnies($annio, $semestre);
+	function consultarInscritoProgramaSnies($annio, $semestre);
 	function insertarInscritoSnies($inscrito);
 	function insertarInscritoProgramaSnies($inscrito);
 	function actualizarInscritoSnies(); // No se implementa en esta fase
