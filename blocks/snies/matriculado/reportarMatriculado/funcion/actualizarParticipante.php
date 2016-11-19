@@ -38,7 +38,7 @@ class FormProcessor {
 		
 		// estudiante de la académica
 		echo 'Consultando estudiantes...<br>';
-		$estudiante = $this -> miComponente -> consultarEstudianteAcademica($this -> annio, $this -> semestre);		
+		$estudiante = $this -> miComponente -> consultarEstudianteAcademica($this -> annio, $this -> semestre);
 		
 		$miProcesadorNombre = new procesadorNombre();
 		
@@ -67,7 +67,7 @@ class FormProcessor {
 
 		//************************************/// OJO REVISAR LAS EXCEPCIONES
 		$estudiante = $miProcesadorExcepcion -> procesarExcepcionEstudiante($estudiante);
-
+		var_dump($estudiante);
 		echo 'Actualizando participantes <br>';
 		$this -> actualizarParticipante($estudiante);
 
@@ -96,22 +96,25 @@ class FormProcessor {
 		foreach ($estudiante as $unEstudiante) {
 			echo 'N. DOCUMENTO: ' . $unEstudiante['NUM_DOCUMENTO'] . '<br>';
 			// consulta en la tabla participante y cuenta el número de registros retornados
-			$participante = $this -> miComponente -> consultarParticipante($unEstudiante);			
+			$participante = $this -> miComponente -> consultarParticipante($unEstudiante);
+			echo 'Participante en SNIES';
+			var_dump($participante);			
 			// si no existe insertar el nuevo registro
 			if ($participante == false) {
 				$this -> miComponente -> registrarParticipante($unEstudiante);
 				echo $unEstudiante['NUM_DOCUMENTO'] . ' Nuevo<br>';
 			} else {
 				// Si existe y es igual el tipo actualizar si no es igual borrar
+				echo 'Al ajustar la base de datos para que borre y actualice en CASCADA solo re requiere actualizar el registro en el código funente';exit;
 				foreach ($participante as $unParticipante) {
 					if ($unParticipante['id_tipo_documento'] == $unEstudiante['ID_TIPO_DOCUMENTO']) {
 						$this -> miComponente -> actualizarParticipante($unEstudiante);
-						// echo $unEstudiante ['NUM_DOCUMENTO'] . ' actualizado<br>';
+						//echo $unEstudiante ['NUM_DOCUMENTO'] . ' actualizado<br>';exit;
 					} else {
 						// Borra los registros
-						// El filtro es codigo y tipo de documento que aparece en la tabla participante
+						// El filtro es número y tipo de documento que aparece en la tabla participante
 						// OJO, NO es el obtenido de la DB académica
-						$estudianteError['NUM_DOCUMENTO'] = $unParticipante['NUM_DOCUMENTO'];
+						$estudianteError['NUM_DOCUMENTO'] = $unParticipante['num_documento'];
 						$estudianteError['ID_TIPO_DOCUMENTO'] = $unParticipante['id_tipo_documento'];
 
 						$this -> miComponente -> borrarParticipante($estudianteError);

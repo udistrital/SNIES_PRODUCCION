@@ -176,8 +176,10 @@ class procesadorExcepcion {
 	 * @param array $unEstudiante
 	 */
 	function excepcionTipoDocUnico($unEstudiante) {
+		//si el tipo de documento exist y es CC o TI o PS
 		if (isset($unEstudiante['ID_TIPO_DOCUMENTO']) and ($unEstudiante['ID_TIPO_DOCUMENTO'] == 'CC' or $unEstudiante['ID_TIPO_DOCUMENTO'] == 'TI' or $unEstudiante['ID_TIPO_DOCUMENTO'] == 'PS')) {
 			$longitudDocumento = strlen($unEstudiante['NUM_DOCUMENTO']);
+			//Si es de longitud 11 => TI sino es el que tiene
 			if ($longitudDocumento == 11) {
 				$resultado = 'TI';
 			} else {

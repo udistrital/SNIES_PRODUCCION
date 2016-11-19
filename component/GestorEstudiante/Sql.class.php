@@ -46,7 +46,7 @@ class Sql extends \Sql {
 			case "consultarEstudianteAcademica" :
 				$cadenaSql = " SELECT ";
 				$cadenaSql .= " EST_COD CODIGO_ESTUDIANTE,";
-				$cadenaSql .= " TO_CHAR(DECODE(est_tipo_iden_ant,'C', 'CC', 'T', 'TI', 'E', 'CE', 'P', 'PS')) id_tipo_documento,";
+				$cadenaSql .= " TO_CHAR(DECODE(est_tipo_iden,'C', 'CC', 'T', 'TI', 'E', 'CE', 'P', 'PS')) id_tipo_documento,";
 				$cadenaSql .= " TO_CHAR(est_nro_iden) num_documento,";
 				$cadenaSql .= " '' fecha_expedicion,";
 				$cadenaSql .= " EST_NOMBRE,";
@@ -103,7 +103,7 @@ class Sql extends \Sql {
 				}
 
 				//$cadenaSql .= " AND est_cod=20021001083";
-				//$cadenaSql .= " AND est_nro_iden=52813483";				
+				$cadenaSql .= " AND est_nro_iden=80735722";				
 				//$cadenaSql .= " AND rownum < 10";
 
 				break;
