@@ -20,7 +20,7 @@ class procesadorExcepcion {
 			$estudiante[$clave]['EMAIL_INSTITUCIONAL'] = $this -> excepcionEmailInstitucional($estudiante[$clave]);
 			$estudiante[$clave]['ID_TIPO_DOCUMENTO'] = $this -> excepcionTipoDocUnico($estudiante[$clave]);
 			$estudiante[$clave]['COD_PRUEBA_SABER_11'] = $this -> cod_prueba_saber_11($estudiante[$clave]);
-			//$estudiante [$clave] ['TELEFONO_CONTACTO'] = $this->excepcionNumeroTel ( $estudiante [$clave] );
+			$estudiante[$clave]['TELEFONO_CONTACTO'] = $this -> excepcionNumeroTel($estudiante[$clave]);
 			//$estudiante [$clave] ['CODIGO_ID_ANT'] = $this->excepcionCodigoIdAnt ( $estudiante [$clave] );
 			//$estudiante [$clave] ['TIPO_ID_ANT'] = $this->excepcionTipoIdAnt ( $estudiante [$clave] );
 
@@ -75,8 +75,7 @@ class procesadorExcepcion {
 		switch ($unEstudiante ['ID_MUNICIPIO_PROGRAMA']) {
 			case '11850' :
 				// Usme
-				$resultado = '11001';
-				;
+				$resultado = '11001'; ;
 				break;
 
 			case '1' :
@@ -100,8 +99,7 @@ class procesadorExcepcion {
 		switch ($unEstudiante ['ID_MUNICIPIO_NACIMIENTO']) {
 			case '11850' :
 				// Usme
-				$resultado = '11001';
-				;
+				$resultado = '11001'; ;
 				break;
 
 			case '1' :
@@ -126,8 +124,7 @@ class procesadorExcepcion {
 		switch ($unEstudiante ['DEPARTAMENTO_LN']) {
 			case '30' :
 				// extranjero
-				$resultado = '0';
-				;
+				$resultado = '0'; ;
 				break;
 
 			default :
@@ -244,16 +241,10 @@ class procesadorExcepcion {
 	 * @return Ambigous <string, unknown>
 	 */
 	function excepcionNumeroTel($unEstudiante) {
-		if (isset($unEstudiante['TELEFONO_CONTACTO'])) {
-			if ($unEstudiante['TELEFONO_CONTACTO'] == 0) {
-				$resultado = '';
-			} else {
-				$resultado = $unEstudiante['TELEFONO_CONTACTO'];
-			}
-
+		if (!isset($unEstudiante['TELEFONO_CONTACTO'])) {
+			$resultado = '3239300';
 		} else {
-			$resultado = '';
-			// para distinguir los que tiene valor nulo
+			$resultado = $unEstudiante['TELEFONO_CONTACTO'];
 		}
 
 		return $resultado;

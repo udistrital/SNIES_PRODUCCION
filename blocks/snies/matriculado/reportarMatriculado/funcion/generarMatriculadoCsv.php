@@ -27,18 +27,14 @@ class FormProcessor {
 	function procesarFormulario() {
 		$this -> annio = $_REQUEST['annio'];
 		$this -> semestre = $_REQUEST['semestre'];
-
+		
 		/**
-		 * Proceso
-		 * Consultar la tabla primer_curso
-		 * generar archivo pimer_curso_[ano][perido].csv
-		 * Consultar la tabla matriculado
-		 * generar archivo matriculado_[ano][perido].csv
-		 * */
+		 *Genera archivos csv de participante, primer curso y auditoria
+		 * 
+		 */
 
-		//$participante = $this -> miComponente -> consultarParticipanteTodos();
-		//$this -> generarParticipanteCsv($participante);
-
+		$participante = $this -> miComponente -> consultarParticipanteTodos();
+		$this -> generarParticipanteCsv($participante);
 		
 		$primer_curso = $this -> miComponente -> consultarPrimerCursoTodos($this -> annio, $this -> semestre);
 		$this->generarPrimerCursoCsv($primer_curso);

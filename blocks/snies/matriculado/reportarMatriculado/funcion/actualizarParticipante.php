@@ -38,7 +38,7 @@ class FormProcessor {
 		
 		// estudiante de la académica
 		echo 'Consultando estudiantes...<br>';
-		$estudiante = $this -> miComponente -> consultarEstudianteAcademica($this -> annio, $this -> semestre);
+		$estudiante = $this -> miComponente -> consultarEstudianteAcademica($this -> annio, $this -> semestre);		
 		
 		$miProcesadorNombre = new procesadorNombre();
 		
