@@ -137,9 +137,11 @@ class FormProcessor {
 		fwrite($fp, implode(',', $linea3) . "\r\n");
 		fputcsv($fp, array('AÑO', 'SEMESTRE', 'ID_TIPO_DOCUMENTO', 'NUM_DOCUMENTO', 'PRO_CONSECUTIVO', 'ID_MUNICIPIO_PROGRAMA', 'ID_TIPO_VINCULACION', 'ID_GRUPO_ETNICO', 'ID_PUEBLO_INDIGENA', 'ID_COMUNIDAD_NEGRA', 'PERSONA_CONDICION_DISCAPACIDAD', 'ID_TIPO_DISCAPACIDAD', 'ID_CAPACIDAD_EXCEPCIONAL', 'COD_PRUEBA_SABER_11'), ";");
 		*/
+		
+		$consecutivo=1;
 		foreach ($primerCurso as $registro) {		
 			//Se debe redefinir el arrglo para que no presenta las asociaciones numéricas
-			$arreglo['ID'] = '';
+			$arreglo['ID'] = $consecutivo;
 			$arreglo['IES_CODE'] = '1301';
 			$arreglo['IES_NOMBRE'] = 'UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS';
 			$arreglo['NUM_DOCUMENTO'] = $registro['num_documento'];
@@ -170,6 +172,7 @@ class FormProcessor {
 			$arreglo['ESTADO'] = 'A';					
 
 			fputcsv($fp, $arreglo, ";");
+			$consecutivo=$consecutivo+1;
 		}
 
 		fclose($fp);

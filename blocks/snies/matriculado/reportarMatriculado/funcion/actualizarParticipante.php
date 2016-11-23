@@ -67,7 +67,7 @@ class FormProcessor {
 
 		//************************************/// OJO REVISAR LAS EXCEPCIONES
 		$estudiante = $miProcesadorExcepcion -> procesarExcepcionEstudiante($estudiante);
-		var_dump($estudiante);
+		//var_dump($estudiante);
 		echo 'Actualizando participantes <br>';
 		$this -> actualizarParticipante($estudiante);
 
@@ -97,17 +97,18 @@ class FormProcessor {
 			echo 'N. DOCUMENTO: ' . $unEstudiante['NUM_DOCUMENTO'] . '<br>';
 			// consulta en la tabla participante y cuenta el número de registros retornados
 			$participante = $this -> miComponente -> consultarParticipante($unEstudiante);
-			echo 'Participante en SNIES';
-			var_dump($participante);			
+			//echo 'Participante en SNIES';
+			//var_dump($participante);			
 			// si no existe insertar el nuevo registro
 			if ($participante == false) {
 				$this -> miComponente -> registrarParticipante($unEstudiante);
 				echo $unEstudiante['NUM_DOCUMENTO'] . ' Nuevo<br>';
 			} else {
 				// Si existe y es igual el tipo actualizar si no es igual borrar
-				echo 'Al ajustar la base de datos para que borre y actualice en CASCADA solo re requiere actualizar el registro en el código funente';exit;
 				foreach ($participante as $unParticipante) {
 					if ($unParticipante['id_tipo_documento'] == $unEstudiante['ID_TIPO_DOCUMENTO']) {
+						//Mejoras de rendimiento: se debe verificar por software las diferencias entre los dos registros 
+						// si hay diferencias hacer la actializacion si no hay, no hacerlo.
 						$this -> miComponente -> actualizarParticipante($unEstudiante);
 						//echo $unEstudiante ['NUM_DOCUMENTO'] . ' actualizado<br>';exit;
 					} else {
