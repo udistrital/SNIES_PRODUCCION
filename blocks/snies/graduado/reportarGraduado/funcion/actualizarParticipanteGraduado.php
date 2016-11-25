@@ -38,7 +38,7 @@ class FormProcessor {
 		
 		// estudiante de la académica
 		
-		$graduado = $this->miComponente->consultarGraduadoAcademica ( $this->annio, $this->semestre );
+		$graduado = $this->miComponente->consultarGraduadoAcademica ( $this->annio, $this->semestre );		
 		
 		$miProcesadorNombre = new procesadorNombre ();
 		
@@ -61,7 +61,7 @@ class FormProcessor {
 		
 		$miProcesadorExcepcion = new procesadorExcepcion ();
 		// FORMATEA LOS VALORES NULOS, CODIFICA EXCEPCIONES
-		$graduado = $miProcesadorExcepcion->procesarExcepcionGraduado ( $graduado );
+		$graduado = $miProcesadorExcepcion->procesarExcepcionGraduado ( $graduado );		
 		
 		$this->actualizarParticipante ( $graduado );
 		
@@ -90,7 +90,7 @@ class FormProcessor {
 		foreach ( $estudiante as $unEstudiante ) {
 			// echo 'CODIGO: ' . $unEstudiante ['CODIGO_UNICO'] . '<br>';
 			// consulta enla tabla participante y cuenta el número de registros retornados
-			$participante = $this->miComponente->consultarParticipante ( $unEstudiante );
+			$participante = $this->miComponente->consultarParticipante ( $unEstudiante );			
 			
 			// si no existe insertar el nuevo registro
 			if ($participante == false) {
@@ -99,8 +99,9 @@ class FormProcessor {
 			} else {
 				foreach ( $participante as $unParticipante ) {
 					// Si existe y es igual el tipo actualizar si no es igual borrar
-					if ($unParticipante ['tipo_doc_unico'] == $unEstudiante ['TIPO_DOC_UNICO']) {
+					if ($unParticipante ['id_tipo_documento'] == $unEstudiante ['ID_TIPO_DOCUMENTO']) {
 						$this->miComponente->actualizarParticipante ( $unEstudiante );
+						exit;
 						// echo $unEstudiante ['CODIGO_UNICO'] . ' actualizado<br>';
 					} else {
 						// Borra los registros
