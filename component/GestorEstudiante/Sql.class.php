@@ -232,7 +232,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " email_institucional ='" . str_replace("'", "", $variable['EMAIL_INSTITUCIONAL']) . "'";//elimina las comillas sencillas que existen en algunos registros
 				//$cadenaSql .= " direccion_institucional ='" . $variable['DIRECCION_INSTITUCIONAL'] . "'";
 				$cadenaSql .= " WHERE NUM_DOCUMENTO='" . $variable['NUM_DOCUMENTO'] . "'";
-				echo $cadenaSql;exit;				
+				//echo $cadenaSql;exit;				
 
 				break;
 
@@ -573,7 +573,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " WHERE TO_NUMBER(TO_CHAR(egr_fecha_grado,'yyyy'))='" . $variable['annio'] . "'";
 				$cadenaSql .= " AND DECODE(TO_NUMBER(TO_CHAR(egr_fecha_grado,'mm')),1,1,2,1,3,1,4,1,5,1,6,1,7,3,8,3,9,3,10,3,11,3,12,3)='" . $variable['semestre'] . "'";
 				
-				$cadenaSql .= "and est_nro_iden=1026286639";
+				//$cadenaSql .= "and est_nro_iden=1026286639";
 				//echo $cadenaSql;exit;
 
 				break;
