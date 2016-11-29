@@ -162,13 +162,13 @@ class FormProcessor {
 	 *
 	 * @param array $estudiante
 	 */
-	function actualizarGraduado($estudiante) {
+	function actualizarGraduado($graduado) {
 		
 		//Borrar registro del año y período de carga
-		$this -> miComponente -> borrarGraduados($this -> annio, $this -> semestre);
+		$this -> miComponente -> borrarGraduadoPeriodoTodos($this -> annio, $this -> semestre);
 
 		// registrar el graduado para un proyecto específico. Solo se puede graduar una vez de un proyecto
-		foreach ($estudiante as $unEstudiante) {
+		foreach ($graduado as $unGraduado) {
 			var_dump($unEstudiante);exit;
 
 			$matriculado = $this -> miComponente -> consultarGraduado($unEstudiante, $this -> annio, $this -> semestre);

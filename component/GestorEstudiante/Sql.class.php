@@ -572,7 +572,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " ON MUN_COD=DECODE(EOT_COD_MUN_NAC,0,11001,'',11001,EOT_COD_MUN_NAC)";
 				$cadenaSql .= " WHERE TO_NUMBER(TO_CHAR(egr_fecha_grado,'yyyy'))='" . $variable['annio'] . "'";
 				$cadenaSql .= " AND DECODE(TO_NUMBER(TO_CHAR(egr_fecha_grado,'mm')),1,1,2,1,3,1,4,1,5,1,6,1,7,3,8,3,9,3,10,3,11,3,12,3)='" . $variable['semestre'] . "'";
-				
+					
 				//$cadenaSql .= "and est_nro_iden=1026286639";
 				//echo $cadenaSql;exit;
 
@@ -591,8 +591,9 @@ class Sql extends \Sql {
 			case "borrarGraduadoPeriodoTodos" :
 				$cadenaSql = "DELETE FROM";
 				$cadenaSql .= " graduado ";
-				$cadenaSql .= " WHERE grad_annio='" . $variable['ANNIO_GRADO'] . "'";
-				$cadenaSql .= " AND grad_semestre='" . $variable['SEMESTRE_GRADO'] . "'";
+				$cadenaSql .= " WHERE ano='" . $variable['ANNIO_GRADO'] . "'";
+				$cadenaSql .= " AND semestre='" . $variable['SEMESTRE_GRADO'] . "'";
+				echo $cadenaSql;exit;
 
 				break;
 
