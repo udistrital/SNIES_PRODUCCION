@@ -63,8 +63,8 @@ class FormProcessor {
 		// FORMATEA LOS VALORES NULOS, CODIFICA EXCEPCIONES
 		$graduado = $miProcesadorExcepcion -> procesarExcepcionGraduado($graduado);
 
-		//$this -> actualizarParticipante($graduado);
-		//$this -> actualizarPrimerCurso($graduado);
+		$this -> actualizarParticipante($graduado);
+		$this -> actualizarPrimerCurso($graduado);
 		$this->actualizarGraduado($graduado);
 
 		// $valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
@@ -97,13 +97,12 @@ class FormProcessor {
 			// si no existe insertar el nuevo registro
 			if ($participante == false) {
 				$this -> miComponente -> registrarParticipante($unEstudiante);
-				echo $unEstudiante['CODIGO_UNICO'] . ' Nuevo<br>';
+				echo $unEstudiante['NUM_DOCUMENTO'] . ' Nuevo<br>';
 			} else {
 				foreach ($participante as $unParticipante) {
 					// Si existe y es igual el tipo actualizar si no es igual borrar
 					if ($unParticipante['id_tipo_documento'] == $unEstudiante['ID_TIPO_DOCUMENTO']) {
 						$this -> miComponente -> actualizarParticipante($unEstudiante);
-						exit ;
 						// echo $unEstudiante ['CODIGO_UNICO'] . ' actualizado<br>';
 					} else {
 						// Borra los registros
@@ -169,17 +168,12 @@ class FormProcessor {
 
 		// registrar el graduado para un proyecto específico. Solo se puede graduar una vez de un proyecto
 		foreach ($graduado as $unGraduado) {
-			var_dump($unEstudiante);exit;
 
-			$matriculado = $this -> miComponente -> consultarGraduado($unEstudiante, $this -> annio, $this -> semestre);
-
-			//si existe el registro en la tabla matriculado para el año y período dados lo actualiza si no lo registra
-			if (isset($matriculado[0]['codigo_estudiante'])) {
-				$this -> miComponente -> actualizarMatriculado($unEstudiante, $this -> annio, $this -> semestre);
-			} else {
-				$this -> miComponente -> registrarMatriculado($unEstudiante, $this -> annio, $this -> semestre);
-			}
+			$this -> miComponente -> registrarGraduado($unGraduado);
+		
 		}
+		
+		echo 'Registro de graduados terminado';
 
 	}
 
