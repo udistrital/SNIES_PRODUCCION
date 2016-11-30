@@ -86,6 +86,7 @@ interface IGestorEstudiante {
 	
 	// GRADUADO
 	function consultarGraduadoAcademica($annio, $semestre);
+	function consultarGraduadoTodos($annio, $semestre);
 	function borrarGraduadoPeriodoTodos($annio, $semestre);
 	function registrarGraduado($graduado);
 }

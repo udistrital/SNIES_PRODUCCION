@@ -584,6 +584,18 @@ class Sql extends \Sql {
 				//$cadenaSql .= "and est_nro_iden=1026286639";
 
 				break;
+				
+				
+			case "consultarGraduadoTodos" :
+				$cadenaSql = "SELECT ano, semestre, id_tipo_documento, num_documento, pro_consecutivo, 
+       							id_municipio, email_personal, telefono_contacto, snp_saber_pro, 
+       							num_acta_grado, fecha_grado, num_folio";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " graduado ";				
+				$cadenaSql .= " WHERE ano ='" . $variable['ANO'] . "'";
+				$cadenaSql .= " AND semestre ='" . $variable['SEMESTRE'] . "'";				
+
+				break;					
 
 			case "borrarEgresado" :
 				$cadenaSql = "DELETE FROM";

@@ -5,6 +5,11 @@ include_once ('blocks/snies/matriculado/reportarMatriculado/funcion/procesadorEx
 use sniesEstudiante\Componente;
 use bloqueSnies\procesadorExcepcion;
 use bloqueSnies\procesadorNombre;
+
+/**
+ * CON ESTA CLASE SE CREAN LOS ARCHIVO CSV DE GRADUADOS
+ * 
+ */
 class FormProcessor {
 	var $miConfigurador;
 	var $lenguaje;
@@ -26,7 +31,7 @@ class FormProcessor {
 	function procesarFormulario() {
 		$this->annio = $_REQUEST ['annio'];
 		$this->semestre = $_REQUEST ['semestre'];
-		echo 'hola CSV'; exit;
+		
 		
 		/**
 		 * PROCEDIMIENTO
@@ -38,7 +43,10 @@ class FormProcessor {
 		
 		// estudiante de la académica
 		
-		$graduado = $this->miComponente->consultarGraduadoAcademica ( $this->annio, $this->semestre );
+		$graduado = $this->miComponente->consultarGraduadoTodos ( $this->annio, $this->semestre );
+		
+		echo 'Ahora exportar CSV';
+		exit;
 		
 		$miProcesadorNombre = new procesadorNombre ();
 		

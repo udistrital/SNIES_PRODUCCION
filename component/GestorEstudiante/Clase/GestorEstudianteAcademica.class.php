@@ -499,6 +499,28 @@ class estudiante implements IGestorEstudiante {
 
 		return $resultado;
 	}
+	
+	
+	function consultarGraduadoTodos($annio, $semestre) {
+		$conexion = "sniesLocal";
+		$esteRecursoDB = $this -> miConfigurador -> fabricaConexiones -> getRecursoDB($conexion);
+
+		// pasar los valores de annio y semestre de la matrícula del período que se va a reportar
+
+		$variable['ANO'] = $annio;
+		$variable['SEMESTRE'] = $semestre;
+		$cadenaSql = $this -> miSql -> cadena_sql('consultarGraduadoTodos', $variable);
+
+		$resultado = $esteRecursoDB -> ejecutarAcceso($cadenaSql, 'busqueda');
+		if ($resultado == FALSE) {
+			$error = $esteRecursoDB -> obtener_error();
+			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';
+			echo $cadenaSql;
+			var_dump($error);
+		}
+
+		return $resultado;
+	}	
 
 	function borrarGraduadoPeriodoTodos($annio, $semestre) {
 		$conexion = "sniesLocal";
