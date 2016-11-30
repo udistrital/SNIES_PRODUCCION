@@ -26,6 +26,7 @@ class FormProcessor {
 	function procesarFormulario() {
 		$this->annio = $_REQUEST ['annio'];
 		$this->semestre = $_REQUEST ['semestre'];
+		echo 'hola CSV'; exit;
 		
 		/**
 		 * PROCEDIMIENTO

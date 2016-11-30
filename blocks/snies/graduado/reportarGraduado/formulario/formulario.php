@@ -80,11 +80,8 @@ class registrarForm {
 			<th>Año</th>
 			<th>Período</th>
 			<!--<th>Total</th>  -->
-			<th>1. Actualizar Participante</th>
-			<th>2. Actualizar Estudiante</th>
-			<th>3. Actualizar Graduado</th>
-			<th>Errores Participante</th>
-			<th>Última Actualización</th>
+			<th>1. Actualizar Graduado</th>
+			<th>2. Generar CSV</th>
 		</tr>
 	</thead>
 
@@ -100,18 +97,12 @@ class registrarForm {
 			<td><?php echo 'Matriculado';?></td>
 			<td align="center"><?php echo $miPeriodo['annio']?></td>
 			<td align="center"><?php echo $miPeriodo['semestre'];?></td>
-			<!--<td align="right"><?php echo $miPeriodo['total'];?></td>  -->
 			<td align="center"><a class=miEnlace href="<?php echo $enlaceActualizarParticipanteGraduado;?>"><img
-					src='<? echo $this->urlImagenes?>images/actualizar.png'
-					width='30px'></a></td>
-			<td align="center"><a class=miEnlace href="<?php echo $enlaceActualizarEstudianteGraduado;?>"><img
 					src='<? echo $this->urlImagenes?>images/actualizar.png'
 					width='30px'></a></td>
 			<td align="center"><a class=miEnlace href="<?php echo $enlaceActualizarGraduado;?>"><img
 					src='<? echo $this->urlImagenes?>images/actualizar.png'
 					width='30px'></a></td>
-			<td align="center">-</td>
-			<td align="right">-</td>
 		</tr>
 				<?php }?>
 			</tbody>
