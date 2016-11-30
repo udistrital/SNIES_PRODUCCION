@@ -59,6 +59,8 @@ class FormProcessor {
 		$miProcesadorExcepcion = new procesadorExcepcion();
 		// FORMATEA LOS VALORES NULOS, CODIFICA EXCEPCIONES
 		$graduado = $miProcesadorExcepcion -> procesarExcepcionGraduado($graduado);
+		
+		var_dump($graduado);
 
 		$this -> actualizarParticipante($graduado);
 		$this -> actualizarPrimerCurso($graduado);

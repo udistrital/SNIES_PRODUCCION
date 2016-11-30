@@ -103,7 +103,7 @@ class Sql extends \Sql {
 				}
 
 				//$cadenaSql .= " AND est_cod=20021001083";
-				//$cadenaSql .= " AND est_nro_iden=80735722";				
+				$cadenaSql .= " AND est_nro_iden=98031759386";				
 				//$cadenaSql .= " AND rownum < 10";
 
 				break;
@@ -543,8 +543,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " DECODE(tra_nombre,'ESPECIALIZACION', '01', 'MAESTRIA', '02', 'DOCTORADO', '03','TECNOLOGIA', '05', 'INGENIERIA','06',  'ARTES','06', 'ADMINISTRACION', '06', 'LICENCIATURA', '07' ) modalidad,";			
 				$cadenaSql .= " TO_CHAR(eot_fecha_nac, 'DD/MM/YYYY') fecha_nacimiento,";
 				$cadenaSql .= " '170' id_pais_nacimiento,";
-				$cadenaSql .= " TO_CHAR(DECODE (mun_dep_cod,0,11,'',11, mun_dep_cod)) id_municipio_nacimiento,";
-				$cadenaSql .= " TO_CHAR(DECODE (mun_cod,0,11001,'',11001,99999,11001, mun_cod)) municipio_ln,";
+				$cadenaSql .= " TO_CHAR(DECODE (eot_cod_mun_nac,0,11001,'',11001,NULL, 11001,99999,11001, eot_cod_mun_nac)) id_municipio_nacimiento,";				
 				$cadenaSql .= " TO_CHAR(DECODE(est_sexo,'M','1','F','2','1')) id_sexo_biologico,";
 				$cadenaSql .= " eot_email email_personal,";
 				$cadenaSql .= " eot_email_ins email_institucional,";
@@ -580,8 +579,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " ON MUN_COD=DECODE(EOT_COD_MUN_NAC,0,11001,'',11001,EOT_COD_MUN_NAC)";
 				$cadenaSql .= " WHERE TO_NUMBER(TO_CHAR(egr_fecha_grado,'yyyy'))='" . $variable['annio'] . "'";
 				$cadenaSql .= " AND DECODE(TO_NUMBER(TO_CHAR(egr_fecha_grado,'mm')),1,1,2,1,3,1,4,1,5,1,6,1,7,3,8,3,9,3,10,3,11,3,12,3)='" . $variable['semestre'] . "'";
-					
-				//$cadenaSql .= "and est_nro_iden=1026286639";
+				//$cadenaSql .= "and est_nro_iden=1085262556";
 
 				break;
 				

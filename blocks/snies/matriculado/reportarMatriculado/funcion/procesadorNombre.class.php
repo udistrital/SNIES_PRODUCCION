@@ -43,12 +43,22 @@ class procesadorNombre {
 					
 		// estos arreglos se utilizan para quitar los acentos debido a que el SNIES central no acepta caracteres con acento, si acepta la ñ y la Ñ
 		$acento = array (
+				'à',
+				'è',
+				'ì',
+				'ò',
+				'ù',
 				'á',
 				'é',
 				'í',
 				'ó',
 				'ú',
 				'ü',
+				'À',
+				'È',
+				'Ì',
+				'Ò',
+				'Ù',
 				'Á',
 				'É',
 				'Í',
@@ -58,10 +68,16 @@ class procesadorNombre {
 				'Ñ',
 				'?',
 				'¿',
+				'.',
 				'	' 
 		); // ' 'tabulador por espacio
 		
 		$sinAcento = array (
+				'a',
+				'e',
+				'i',
+				'o',
+				'u',
 				'a',
 				'e',
 				'i',
@@ -73,10 +89,16 @@ class procesadorNombre {
 				'I',
 				'O',
 				'U',
+				'A',
+				'E',
+				'I',
+				'O',
+				'U',
 				'U',
 				'N',
 				'N',
 				'N',
+				'',
 				' ' 
 		);
 		

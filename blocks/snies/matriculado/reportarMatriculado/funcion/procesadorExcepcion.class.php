@@ -11,17 +11,18 @@ class procesadorExcepcion {
 	 * @return \bloqueSnies\Ambigous
 	 */
 	function procesarExcepcionEstudiante($estudiante) {
+		
 		foreach ($estudiante as $clave => $valor) {
 
+			$estudiante[$clave]['ID_TIPO_DOCUMENTO'] = $this -> excepcionTipoDocUnico($estudiante[$clave]);
 			$estudiante[$clave]['FECHA_NACIMIENTO'] = $this -> excepcionFechaNacim($estudiante[$clave]);
 			$estudiante[$clave]['ID_MUNICIPIO_PROGRAMA'] = $this -> excepcionMunicipioPrograma($estudiante[$clave]);
 			$estudiante[$clave]['ID_MUNICIPIO_NACIMIENTO'] = $this -> excepcionMunicipioNacimiento($estudiante[$clave]);
 			$estudiante[$clave]['EMAIL_PERSONAL'] = $this -> excepcionEmailPersonal($estudiante[$clave]);
-			$estudiante[$clave]['EMAIL_INSTITUCIONAL'] = $this -> excepcionEmailInstitucional($estudiante[$clave]);
-			$estudiante[$clave]['ID_TIPO_DOCUMENTO'] = $this -> excepcionTipoDocUnico($estudiante[$clave]);
+			$estudiante[$clave]['EMAIL_INSTITUCIONAL'] = $this -> excepcionEmailInstitucional($estudiante[$clave]);			
 			$estudiante[$clave]['COD_PRUEBA_SABER_11'] = $this -> cod_prueba_saber_11($estudiante[$clave]);
 			$estudiante[$clave]['TELEFONO_CONTACTO'] = $this -> excepcionNumeroTel($estudiante[$clave]);
-			//$estudiante [$clave] ['CODIGO_ID_ANT'] = $this->excepcionCodigoIdAnt ( $estudiante [$clave] );
+			//$estudiante [$clave] ['ID_SEXO_BIOLOGICO'] = $this->excepcionSexoBiologico ( $estudiante [$clave] );
 			//$estudiante [$clave] ['TIPO_ID_ANT'] = $this->excepcionTipoIdAnt ( $estudiante [$clave] );
 
 		}
@@ -54,11 +55,11 @@ class procesadorExcepcion {
 
 		if (isset($unEstudiante['FECHA_NACIMIENTO'])) {
 
-			// si la fecha es inferior a 1926 o mayor a 2001 se coloca valor por defecto '1990-01-01'
+			// si la fecha es inferior a 1927 o mayor a 2002 se coloca valor por defecto '1990-01-01'
 			// SNIES valida que la edad esté entre 14 y 90 años
 			$fecha = split('/', $unEstudiante['FECHA_NACIMIENTO']);
 			$ano = $fecha[2];
-			if ($ano < '1926' or $ano > '2003') {
+			if ($ano < '1927' or $ano > '2002') {
 				$resultado = '1990-01-01';
 			} else {
 				$resultado = $unEstudiante['FECHA_NACIMIENTO'];
@@ -66,6 +67,19 @@ class procesadorExcepcion {
 		} else {
 			$resultado = '1990-01-01';
 			// para distinguir los que tiene valor nulo
+		}
+		
+		//si es TI la fecha debe corresponder a los primeros 6 digitos
+		if (strlen($unEstudiante['NUM_DOCUMENTO'])==11 and $unEstudiante['ID_TIPO_DOCUMENTO']='TI') {
+										
+			$fechayymmdd=$fecha[2].$fecha[1].$fecha[0];
+			echo $fechayymmdd;
+			echo '<br>';
+			echo 'si es TI la fecha debe corresponder a los primeros 6 digitos';									
+			echo $unEstudiante['NUM_DOCUMENTO'].'<br>';			
+			echo $unEstudiante['FECHA_NACIMIENTO'].'<br>';
+			
+			
 		}
 
 		return $resultado;
@@ -75,7 +89,8 @@ class procesadorExcepcion {
 		switch ($unEstudiante ['ID_MUNICIPIO_PROGRAMA']) {
 			case '11850' :
 				// Usme
-				$resultado = '11001'; ;
+				$resultado = '11001';
+				;
 				break;
 
 			case '1' :
@@ -99,7 +114,8 @@ class procesadorExcepcion {
 		switch ($unEstudiante ['ID_MUNICIPIO_NACIMIENTO']) {
 			case '11850' :
 				// Usme
-				$resultado = '11001'; ;
+				$resultado = '11001';
+				;
 				break;
 
 			case '1' :
@@ -124,7 +140,8 @@ class procesadorExcepcion {
 		switch ($unEstudiante ['DEPARTAMENTO_LN']) {
 			case '30' :
 				// extranjero
-				$resultado = '0'; ;
+				$resultado = '0';
+				;
 				break;
 
 			default :
@@ -246,7 +263,14 @@ class procesadorExcepcion {
 		if (!isset($unEstudiante['TELEFONO_CONTACTO'])) {
 			$resultado = '3239300';
 		} else {
-			$resultado = $unEstudiante['TELEFONO_CONTACTO'];
+			$longitudNumero = strlen($unEstudiante['TELEFONO_CONTACTO']);
+
+			if ($longitudNumero < 7) {
+				$resultado = '3239300';
+			} else {
+				$resultado = $unEstudiante['TELEFONO_CONTACTO'];
+			}
+
 		}
 
 		return $resultado;
@@ -277,6 +301,16 @@ class procesadorExcepcion {
 		}
 
 		return $resultado;
+	}
+
+	/**
+	 *
+	 * @param unknown
+	 * @return Ambigous <string, unknown>
+	 */
+	function excepcionSexoBiologico($estudiante) {
+
+		echo 'implementar';
 	}
 
 }
