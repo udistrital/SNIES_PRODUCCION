@@ -50,7 +50,7 @@ class FormProcessor {
 		//$graduado = $miProcesadorExcepcion->procesarExcepcionGraduado ( $graduado );						
 		
 		
-		$this->generar_graduado_csv ( $graduado );
+		$this->generar_graduado_csv_hecaa ( $graduado );
 		//$this->generar_csv_auditoria_graduado ( $graduado );
 		
 		exit;
@@ -124,59 +124,52 @@ class FormProcessor {
 		
 	}
 
-	/**
-	 * GENERA EL ARCHIVO GRADUADO.CSV DEL HECAA
+/**
+	 * Genera el archivo csv de primer_curso
 	 */
-	function generar_graduado_csv($estudiante) {
+	function generar_graduado_csv_hecaa($graduado) {
+		$raizDocumento = $this -> miConfigurador -> getVariableConfiguracion("raizDocumento");
+		$this -> annio = $_REQUEST['annio'];
+		$this -> semestre = $_REQUEST['semestre'];
+		$file = $raizDocumento . '/document/graduado_' . $this -> annio . $this -> semestre . '.csv';
+		$fp = fopen($file, 'w');
+		//ENCABEZADO DE LA PLANTILLA GRADUADO
+		$linea1 = array('Herramienta de Cargue Hecca - V 3.4');
+		$linea2 = array('[60] Nombre de la Plantilla: [Graduados] Descripcion: [Persona natural que, previa culminación del programa académico y cumplimiento de los requisitos de ley y los exigidos por la respectiva institución de educación superior, recibe el título académico.]');
+		$linea3 = array('Licenciado para Ministerio de Educacion Nacional 2016');
+		fwrite($fp, implode(',', $linea1) . "\r\n");
+		//con esto elimina las comillas dobles del encabezado
+		fwrite($fp, implode(',', $linea2) . "\r\n");
+		fwrite($fp, implode(',', $linea3) . "\r\n");
+		fputcsv($fp, array('AÑO','SEMESTRE','ID_TIPO_DOCUMENTO','NUM_DOCUMENTO',
+		'PRO_CONSECUTIVO','ID_MUNICIPIO','EMAIL_PERSONAL','TELEFONO_CONTACTO',
+		'SNP_SABER_PRO','NUM_ACTA_GRADO','FECHA_GRADO','NUM_FOLIO'), ";");
 		
-		echo "inicia la generacion"; exit;
-		$raizDocumento = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" );
-		$archivoMatriculadoPrimerCurso = fopen ( $raizDocumento . '/document/matriculadoPrimerCurso_' . $this->annio . $this->semestre . '.csv', 'w' );
-		fputcsv ( $archivoMatriculadoPrimerCurso, array (
-				'IDPROGRAMACION',
-				'ANNIO',
-				'SEMESTRE',
-				'IES_CODE',
-				'PRO_CONSECUTIVO',
-				'DEPARTAMENTO',
-				'MUNICIPIO',
-				'CERES',
-				'TIPO_DOCUMENTO',
-				'NUM_DOCUMENTO',
-				'PRIMER_NOMBRE',
-				'SEGUNDO_NOMBRE',
-				'PRIMER_APELLIDO',
-				'SEGUNDO_APELLIDO',
-				'GENERO' 
-		) );
-		foreach ( $estudiante as $unEstudiante ) {
-			
-			if ($unEstudiante ['ANIO'] == $this->annio and $unEstudiante ['SEMESTRE'] == $this->semestre) {
-				
-				$matriculadoPrimerCurso ['CODIGO'] = $unEstudiante ['CODIGO_UNICO'];
-				$matriculadoPrimerCurso ['ANIO'] = $this->annio;
-				$matriculadoPrimerCurso ['SEMESTRE'] = $this->semestre;
-				$matriculadoPrimerCurso ['IES_CODE'] = '1301';
-				$matriculadoPrimerCurso ['PRO_CONSECUTIVO'] = $unEstudiante ['PRO_CONSECUTIVO'];
-				$matriculadoPrimerCurso ['DEPATAMENTO'] = '11';
-				$matriculadoPrimerCurso ['MUNICIPIO'] = '11001';
-				$matriculadoPrimerCurso ['CERES'] = '1301';
-				$matriculadoPrimerCurso ['TIPO_DOC_UNICO'] = $unEstudiante ['TIPO_DOC_UNICO'];
-				$matriculadoPrimerCurso ['CODIGO_UNICO'] = $unEstudiante ['CODIGO_UNICO'];
-				$matriculadoPrimerCurso ['PRIMER_NOMBRE'] = $unEstudiante ['PRIMER_NOMBRE'];
-				$matriculadoPrimerCurso ['SEGUNDO_NOMBRE'] = $unEstudiante ['SEGUNDO_NOMBRE'];
-				$matriculadoPrimerCurso ['PRIMER_APELLIDO'] = $unEstudiante ['PRIMER_APELLIDO'];
-				$matriculadoPrimerCurso ['SEGUNDO_APELLIDO'] = $unEstudiante ['SEGUNDO_APELLIDO'];
-				$matriculadoPrimerCurso ['GENERO'] = $unEstudiante ['GENERO_CODE'];
-				
-				fputcsv ( $archivoMatriculadoPrimerCurso, $matriculadoPrimerCurso );
-			}
-		}
-		
-		fclose ( $archivoMatriculadoPrimerCurso );
-	}
-}
+		foreach ($graduado as $registro) {
+			//var_dump ( $registro );exit;
+			//Se debe redefinir el arrglo para que no presenta las asociaciones numéricas
+			$arreglo['ano'] = $registro['ano'];
+			$arreglo['semestre'] = $registro['semestre'];
+			$arreglo['id_tipo_documento'] = $registro['id_tipo_documento'];
+			$arreglo['num_documento'] = $registro['num_documento'];
+			$arreglo['pro_consecutivo'] = $registro['pro_consecutivo'];
+			$arreglo['id_municipio_programa'] = $registro['id_municipio'];
+			$arreglo['email_personal'] = $registro['email_personal'];
+			$arreglo['telefono_contacto'] = $registro['telefono_contacto'];
+			$arreglo['snp_saber_pro'] = $registro['snp_saber_pro'];
+			$arreglo['num_acta_grado'] = $registro['num_acta_grado'];
+			$arreglo['fecha_grado'] = $registro['fecha_grado'];
+			$arreglo['num_folio'] = $registro['num_folio'];
 
+			fputcsv($fp, $arreglo, ";");
+		}
+
+		fclose($fp);
+
+		echo 'Se ha generado el archivo <b>' . $file . '</b>';
+		echo '<br>';
+
+}}
 $miProcesador = new FormProcessor ( $this->lenguaje, $this->sql );
 
 $resultado = $miProcesador->procesarFormulario ();
