@@ -45,33 +45,13 @@ class FormProcessor {
 		
 		$graduado = $this->miComponente->consultarGraduadoTodos ( $this->annio, $this->semestre );
 		
-		echo 'Ahora exportar CSV';
-		exit;
-		
-		$miProcesadorNombre = new procesadorNombre ();
-		
-		//Busca y presenta los caracteres inválidos
-		$caracteresInvalidos = $miProcesadorNombre->buscarCaracteresInvalidos ( $graduado, 'EST_NOMBRE' );
-		
-		
-		// quita acentos del nombre
-		$graduado = $miProcesadorNombre->quitarAcento ( $graduado, 'EST_NOMBRE' );
-		
-		// descompone nombre completo en sus partes y las aglega al final de cada registro
-		foreach ( $graduado as $clave => $valor ) {
-			// echo $estudiante [$clave] ['CODIGO_UNICO'].'<br>';
-			$nombreCompleto = $miProcesadorNombre->dividirNombreCompleto ( $graduado [$clave] ['EST_NOMBRE'] );
-			$graduado [$clave] ['PRIMER_APELLIDO'] = $nombreCompleto ['primer_apellido'];
-			$graduado [$clave] ['SEGUNDO_APELLIDO'] = $nombreCompleto ['segundo_apellido'];
-			$graduado [$clave] ['PRIMER_NOMBRE'] = $nombreCompleto ['primer_nombre'];
-			$graduado [$clave] ['SEGUNDO_NOMBRE'] = $nombreCompleto ['segundo_nombre'];
-		}
-		
-		$miProcesadorExcepcion = new procesadorExcepcion ();
+		//$miProcesadorExcepcion = new procesadorExcepcion ();
 		// FORMATEA LOS VALORES NULOS, CODIFICA EXCEPCIONES
-		$graduado = $miProcesadorExcepcion->procesarExcepcionGraduado ( $graduado );						
+		//$graduado = $miProcesadorExcepcion->procesarExcepcionGraduado ( $graduado );						
 		
-		$this->generar_csv_auditoria_graduado ( $graduado );
+		
+		$this->generar_graduado_csv ( $graduado );
+		//$this->generar_csv_auditoria_graduado ( $graduado );
 		
 		exit;
 	/**
@@ -87,6 +67,8 @@ class FormProcessor {
 	 * header( "Location:$miEnlace" );
 	 */
 	}
+
+	//GENERA EL ARCHIVO DE AUDITORIA T&T
 	function generar_csv_auditoria_graduado($estudiante) {
 		$raizDocumento = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" );
 		$file=$raizDocumento . '/document/auditoria_graduado_' . $this->annio . $this->semestre . '.csv';
@@ -141,7 +123,13 @@ class FormProcessor {
 		echo '<br>';
 		
 	}
-	function generarListadoEstudiantePrograma($estudiante) {
+
+	/**
+	 * GENERA EL ARCHIVO GRADUADO.CSV DEL HECAA
+	 */
+	function generar_graduado_csv($estudiante) {
+		
+		echo "inicia la generacion"; exit;
 		$raizDocumento = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" );
 		$archivoMatriculadoPrimerCurso = fopen ( $raizDocumento . '/document/matriculadoPrimerCurso_' . $this->annio . $this->semestre . '.csv', 'w' );
 		fputcsv ( $archivoMatriculadoPrimerCurso, array (
