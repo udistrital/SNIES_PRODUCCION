@@ -55,7 +55,7 @@ class FormProcessor {
 		fputcsv ( $fp, array ('requisitos de ley, es aceptado para iniciar el proceso de formalización como estudiante en el programa al que se inscribió.]'));
 		fputcsv ( $fp, array ('Licenciado para Ministerio de Educacion Nacional 2014'));
 		fputcsv ( $fp, array (
-				'AÑO',
+				utf8_decode ('AÑO'),
 				'SEMESTRE',
 				'ID_TIPO_DOCUMENTO',
 				'NUM_DOCUMENTO',
@@ -64,7 +64,7 @@ class FormProcessor {
 		) , ";");
 		foreach ( $admitido as $unadmitido ) {
 			 //var_dump ( $unadmitido );exit;
-			$Relacionadmitido ['AÑO'] = $unadmitido ['ANNIO'];
+			$Relacionadmitido ['ANO'] = $unadmitido ['ANNIO'];
 			$Relacionadmitido ['SEMESTRE'] = $unadmitido ['SEMESTRE'];
 			$Relacionadmitido ['ID_TIPO_DOCUMENTO'] = $unadmitido ['ID_TIPO_DOCUMENTO'];
 			$Relacionadmitido ['NUM_DOCUMENTO'] = $unadmitido ['NUM_DOCUMENTO'];

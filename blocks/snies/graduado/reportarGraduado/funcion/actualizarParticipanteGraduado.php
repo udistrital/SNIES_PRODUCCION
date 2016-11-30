@@ -24,20 +24,17 @@ class FormProcessor {
 		$this -> esteBloque = $this -> miConfigurador -> getVariableConfiguracion("esteBloque");
 	}
 
+	/**
+	 * ESTO ACTUALIZA LAS TABLAS PARTICIPANTE, PRIMER_CURSO Y GRADUADO
+	 */
 	function procesarFormulario() {
 
 		$this -> annio = $_REQUEST['annio'];
 		$this -> semestre = $_REQUEST['semestre'];
 
-		/**
-		 * PROCEDIMIENTO
-		 * 1. Consultar los datos de los estudiantes para un período
-		 * 2. Quitar acentos
-		 * 3. Dividir nombres
-		 * 4. Actualizar en PARTICIPANTE
-		 */
 
-		// estudiante de la académica
+
+		// graduado de la académica
 
 		$graduado = $this -> miComponente -> consultarGraduadoAcademica($this -> annio, $this -> semestre);
 

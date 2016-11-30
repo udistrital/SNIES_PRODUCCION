@@ -88,7 +88,7 @@ class FormProcessor {
 		//con esto elimina las comillas dobles del encabezado
 		fwrite($fp, implode(',', $linea2) . "\r\n");
 		fwrite($fp, implode(',', $linea3) . "\r\n");
-		fputcsv($fp, array('AÑO', 'SEMESTRE', 'ID_TIPO_DOCUMENTO', 'NUM_DOCUMENTO', 'PRO_CONSECUTIVO', 'ID_MUNICIPIO_PROGRAMA', 'ID_TIPO_VINCULACION', 'ID_GRUPO_ETNICO', 'ID_PUEBLO_INDIGENA', 'ID_COMUNIDAD_NEGRA', 'PERSONA_CONDICION_DISCAPACIDAD', 'ID_TIPO_DISCAPACIDAD', 'ID_CAPACIDAD_EXCEPCIONAL', 'COD_PRUEBA_SABER_11'), ";");
+		fputcsv($fp, array(utf8_decode ('AÑO'), 'SEMESTRE', 'ID_TIPO_DOCUMENTO', 'NUM_DOCUMENTO', 'PRO_CONSECUTIVO', 'ID_MUNICIPIO_PROGRAMA', 'ID_TIPO_VINCULACION', 'ID_GRUPO_ETNICO', 'ID_PUEBLO_INDIGENA', 'ID_COMUNIDAD_NEGRA', 'PERSONA_CONDICION_DISCAPACIDAD', 'ID_TIPO_DISCAPACIDAD', 'ID_CAPACIDAD_EXCEPCIONAL', 'COD_PRUEBA_SABER_11'), ";");
 		foreach ($primerCurso as $registro) {
 			//var_dump ( $unInscrito );
 			//Se debe redefinir el arrglo para que no presenta las asociaciones numéricas
@@ -127,16 +127,7 @@ class FormProcessor {
 		$this -> semestre = $_REQUEST['semestre'];
 		$file = $raizDocumento . '/document/auditoria_primerCurso_' . $this -> annio . $this -> semestre . '.csv';
 		$fp = fopen($file, 'w');
-		//ENCABEZADO DE LA PLANTILLA PRIMER_CURSO
-		/**$linea1 = array('Herramienta de Cargue Hecca - V 3.4');
-		$linea2 = array('[62] Nombre de la Plantilla: [Estudiantes  de primer curso] Descripcion: [Estudiante de primer semestre de programas tanto pregrado como postgrado, Esta variable se calcula a partir de la información matricula]');
-		$linea3 = array('Licenciado para Ministerio de Educacion Nacional 2016');
-		fwrite($fp, implode(',', $linea1) . "\r\n");
-		//con esto elimina las comillas dobles del encabezado
-		fwrite($fp, implode(',', $linea2) . "\r\n");
-		fwrite($fp, implode(',', $linea3) . "\r\n");
-		fputcsv($fp, array('AÑO', 'SEMESTRE', 'ID_TIPO_DOCUMENTO', 'NUM_DOCUMENTO', 'PRO_CONSECUTIVO', 'ID_MUNICIPIO_PROGRAMA', 'ID_TIPO_VINCULACION', 'ID_GRUPO_ETNICO', 'ID_PUEBLO_INDIGENA', 'ID_COMUNIDAD_NEGRA', 'PERSONA_CONDICION_DISCAPACIDAD', 'ID_TIPO_DISCAPACIDAD', 'ID_CAPACIDAD_EXCEPCIONAL', 'COD_PRUEBA_SABER_11'), ";");
-		*/
+
 		
 		$consecutivo=1;
 		foreach ($primerCurso as $registro) {		
@@ -150,7 +141,7 @@ class FormProcessor {
 			$arreglo['NOMBRE2'] = $registro['segundo_nombre'];
 			$arreglo['APELLIDO1'] = $registro['primer_apellido'];
 			$arreglo['APELLIDO2'] = $registro['segundo_apellido'];
-			$arreglo['AÑO'] = $registro['ano'];
+			$arreglo['ANO'] = $registro['ano'];
 			$arreglo['SEMESTRE'] = $registro['semestre'];
 			$arreglo['CODIGO_ACREDITACION_IES'] = '';
 			$arreglo['ACREDITACION_IES'] = '';
@@ -200,7 +191,7 @@ class FormProcessor {
 		//con esto elimina las comillas dobles del encabezado
 		fwrite($fp, implode(',', $linea2) . "\r\n");
 		fwrite($fp, implode(',', $linea3) . "\r\n");
-		fputcsv($fp, array('AÑO', 'SEMESTRE', 'ID_TIPO_DOCUMENTO', 'NUM_DOCUMENTO', 'CODIGO_ESTUDIANTE', 'PRO_CONSECUTIVO', 'ID_MUNICIPIO', 'FECHA_NACIMIENTO', 'ID_PAIS_NACIMIENTO', 'ID_MUNICIPIO_NACIMIENTO', 'ID_ZONA_RESIDENCIA', 'ES_REINTEGRO'), ";");
+		fputcsv($fp, array(utf8_decode ('AÑO'), 'SEMESTRE', 'ID_TIPO_DOCUMENTO', 'NUM_DOCUMENTO', 'CODIGO_ESTUDIANTE', 'PRO_CONSECUTIVO', 'ID_MUNICIPIO', 'FECHA_NACIMIENTO', 'ID_PAIS_NACIMIENTO', 'ID_MUNICIPIO_NACIMIENTO', 'ID_ZONA_RESIDENCIA', 'ES_REINTEGRO'), ";");
 		foreach ($matriculado as $registro) {
 			//var_dump ( $unInscrito );
 			//Se debe redefinir el arrglo para que no presenta las asociaciones numéricas

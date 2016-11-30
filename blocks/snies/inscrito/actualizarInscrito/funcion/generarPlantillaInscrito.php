@@ -62,7 +62,7 @@ class FormProcessor {
 		fwrite($fp, implode(',',$linea2 ) . "\r\n");
 		fwrite($fp, implode(',',$linea3 ) . "\r\n");
 		fputcsv ( $fp, array (
-				'AÑO',
+				utf8_decode('AÑO'),
 				'SEMESTRE',
 				'ID_TIPO_DOCUMENTO',
 				'NUM_DOCUMENTO',
@@ -107,7 +107,7 @@ class FormProcessor {
 		fwrite($fp, implode(',',$linea2 ) . "\r\n");
 		fwrite($fp, implode(',',$linea3 ) . "\r\n");
 		fputcsv ( $fp, array (
-				'AÑO',
+				utf8_decode('AÑO'),
 				'SEMESTRE',
 				'ID_TIPO_DOCUMENTO',
 				'NUM_DOCUMENTO',
@@ -116,7 +116,7 @@ class FormProcessor {
 		) , ";");
 		foreach ( $inscrito as $unInscrito ) {
 			 //var_dump ( $unInscrito );exit;
-			$RelacionInscrito ['AÑO'] = $unInscrito ['ano'];
+			$RelacionInscrito ['ANO'] = $unInscrito ['ano'];
 			$RelacionInscrito ['SEMESTRE'] = $unInscrito ['semestre'];
 			$RelacionInscrito ['ID_TIPO_DOCUMENTO'] = $unInscrito ['id_tipo_documento'];
 			$RelacionInscrito ['NUM_DOCUMENTO'] = $unInscrito ['num_documento'];
