@@ -371,6 +371,7 @@ class estudiante implements IGestorEstudiante {
 		$cadenaSql = $this -> miSql -> cadena_sql('consultarMatriculado', $estudiante);
 
 		$resultado = $esteRecursoDB -> ejecutarAcceso($cadenaSql, 'busqueda');
+		
 		if ($resultado == FALSE) {
 			$error = $esteRecursoDB -> obtener_error();
 			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';

@@ -23,7 +23,7 @@ class procesadorExcepcion {
 			$estudiante[$clave]['COD_PRUEBA_SABER_11'] = $this -> cod_prueba_saber_11($estudiante[$clave]);
 			$estudiante[$clave]['TELEFONO_CONTACTO'] = $this -> excepcionNumeroTel($estudiante[$clave]);
 			//$estudiante [$clave] ['ID_SEXO_BIOLOGICO'] = $this->excepcionSexoBiologico ( $estudiante [$clave] );
-			//$estudiante [$clave] ['TIPO_ID_ANT'] = $this->excepcionTipoIdAnt ( $estudiante [$clave] );			
+			//$estudiante [$clave] ['TIPO_ID_ANT'] = $this->excepcionTipoIdAnt ( $estudiante [$clave] );
 
 		}
 
@@ -51,7 +51,7 @@ class procesadorExcepcion {
 	 * @param unknown $unEstudiante
 	 * @return Ambigous <string, unknown>
 	 */
-	 function excepcionFechaNacim($unEstudiante) {
+	function excepcionFechaNacim($unEstudiante) {
 
 		if (isset($unEstudiante['FECHA_NACIMIENTO'])) {
 
@@ -64,28 +64,29 @@ class procesadorExcepcion {
 			} else {
 				$resultado = $unEstudiante['FECHA_NACIMIENTO'];
 			}
+			//si es TI la fecha debe corresponder a los primeros 6 digitos
+			if (strlen($unEstudiante['NUM_DOCUMENTO']) == 11 and $unEstudiante['ID_TIPO_DOCUMENTO'] = 'TI') {
+
+				//presenta la fecha en formato yyyymmdd
+				$fechayymmdd = $fecha[2] . $fecha[1] . $fecha[0];
+				//Obtiene la tarjeta de identidad son seis digitos precedido del 19. Ej 19850625
+				$tarjetaIdentidadSeisDigitos = '19' . substr($unEstudiante['NUM_DOCUMENTO'], 0, 6);
+
+				//es diferente la fecha se ajusta a los seis primeros digitos de la TI
+				if ($tarjetaIdentidadSeisDigitos != $fechayymmdd) {
+					$resultado = substr($tarjetaIdentidadSeisDigitos, 6) . '/' . substr($tarjetaIdentidadSeisDigitos, 4, 2) . '/' . substr($tarjetaIdentidadSeisDigitos, 0, 4);
+				} else {
+					$resultado = $unEstudiante['FECHA_NACIMIENTO'];
+				}
+
+			}
+
 		} else {
+			
 			$resultado = '1990-01-01';
 			// para distinguir los que tiene valor nulo
 		}
 
-		//si es TI la fecha debe corresponder a los primeros 6 digitos
-		if (strlen($unEstudiante['NUM_DOCUMENTO']) == 11 and $unEstudiante['ID_TIPO_DOCUMENTO'] = 'TI') {
-
-			//presenta la fecha en formato yyyymmdd
-			$fechayymmdd = $fecha[2] . $fecha[1] . $fecha[0];
-			//Obtiene la tarjeta de identidad son seis digitos precedido del 19. Ej 19850625
-			$tarjetaIdentidadSeisDigitos = '19' . substr($unEstudiante['NUM_DOCUMENTO'], 0, 6);
-
-			//es diferente la fecha se ajusta a los seis primeros digitos de la TI
-			if ($tarjetaIdentidadSeisDigitos != $fechayymmdd) {
-				$resultado=substr($tarjetaIdentidadSeisDigitos, 6).'/'.substr($tarjetaIdentidadSeisDigitos, 4,2).'/'.substr($tarjetaIdentidadSeisDigitos, 0,4);
-			} else {
-				$resultado = $unEstudiante['FECHA_NACIMIENTO'];
-			}
-
-		}
-		
 		return $resultado;
 	}
 
@@ -93,7 +94,8 @@ class procesadorExcepcion {
 		switch ($unEstudiante ['ID_MUNICIPIO_PROGRAMA']) {
 			case '11850' :
 				// Usme
-				$resultado = '11001'; ;
+				$resultado = '11001';
+				;
 				break;
 
 			case '1' :
@@ -117,7 +119,8 @@ class procesadorExcepcion {
 		switch ($unEstudiante ['ID_MUNICIPIO_NACIMIENTO']) {
 			case '11850' :
 				// Usme
-				$resultado = '11001'; ;
+				$resultado = '11001';
+				;
 				break;
 
 			case '1' :
@@ -142,7 +145,8 @@ class procesadorExcepcion {
 		switch ($unEstudiante ['DEPARTAMENTO_LN']) {
 			case '30' :
 				// extranjero
-				$resultado = '0'; ;
+				$resultado = '0';
+				;
 				break;
 
 			default :

@@ -38,7 +38,7 @@ class FormProcessor {
 
 		// estudiante de la académica
 		$estudiante = $this -> miComponente -> consultarEstudianteAcademica($this -> annio, $this -> semestre);
-		//var_dump($estudiante);
+		//var_dump($estudiante);exit;
 		//echo count($estudiante);exit;
 				
 		$miProcesadorExcepcion = new procesadorExcepcion();
