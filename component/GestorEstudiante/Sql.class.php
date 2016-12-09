@@ -579,7 +579,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " ON MUN_COD=DECODE(EOT_COD_MUN_NAC,0,11001,'',11001,EOT_COD_MUN_NAC)";
 				$cadenaSql .= " WHERE TO_NUMBER(TO_CHAR(egr_fecha_grado,'yyyy'))='" . $variable['annio'] . "'";
 				$cadenaSql .= " AND DECODE(TO_NUMBER(TO_CHAR(egr_fecha_grado,'mm')),1,1,2,1,3,1,4,1,5,1,6,1,7,3,8,3,9,3,10,3,11,3,12,3)='" . $variable['semestre'] . "'";
-				$cadenaSql .= "and est_nro_iden=1085262556";
+				//$cadenaSql .= "and est_nro_iden=1085262556";
 
 				break;
 				
@@ -587,7 +587,7 @@ class Sql extends \Sql {
 			case "consultarGraduadoTodos" :
 				$cadenaSql = "SELECT ano, semestre, id_tipo_documento, num_documento, pro_consecutivo, 
        							id_municipio, email_personal, telefono_contacto, snp_saber_pro, 
-       							num_acta_grado, to_char(fecha_grado, 'DD/MM/YYYY'), num_folio";
+       							num_acta_grado, to_char(fecha_grado, 'DD/MM/YYYY') fecha_grado, num_folio";
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " graduado ";				
 				$cadenaSql .= " WHERE ano ='" . $variable['ANO'] . "'";
