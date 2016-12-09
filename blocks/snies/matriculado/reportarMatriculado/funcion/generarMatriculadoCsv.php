@@ -185,7 +185,7 @@ class FormProcessor {
 		$fp = fopen($file, 'w');
 		//ENCABEZADO DE LA PLANTILLA MATRICULADO
 		$linea1 = array('Herramienta de Cargue Hecca - V 3.4');
-		$linea2 = array('[61] Nombre de la Plantilla: [Matriculados] Descripcion: [Persona natural que posee matrícula vigente para un programa académico en una Institución de Educación Superior.]');
+		$linea2 = array(utf8_decode ('[61] Nombre de la Plantilla: [Matriculados] Descripcion: [Persona natural que posee matrícula vigente para un programa académico en una Institución de Educación Superior.]'));
 		$linea3 = array('Licenciado para Ministerio de Educacion Nacional 2016');
 		fwrite($fp, implode(',', $linea1) . "\r\n");
 		//con esto elimina las comillas dobles del encabezado

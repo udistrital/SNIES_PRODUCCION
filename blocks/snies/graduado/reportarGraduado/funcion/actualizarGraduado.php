@@ -160,7 +160,7 @@ class FormProcessor {
 			$arreglo['num_acta_grado'] = $registro['num_acta_grado'];
 			$arreglo['fecha_grado'] = $registro['fecha_grado'];
 			$arreglo['num_folio'] = $registro['num_folio'];
-
+			
 			fputcsv($fp, $arreglo, ";");
 		}
 

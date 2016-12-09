@@ -66,7 +66,9 @@ class Sql extends \Sql {
 					$cadenaSql .= " AND asp_ape_per=3";
 				}
 				$cadenaSql .= " AND tra_nivel IN ('PREGRADO') ";
-				//$cadenaSql .= " AND asp_nro_iden = 99070301136 ";///COMENTAR ESTA LINEA inscrito de 2016 2
+				$cadenaSql .= " AND asp_nro_iden = 14777867 ";///COMENTAR ESTA LINEA inscrito de 2016 2
+				echo $cadenaSql;
+				exit;
 
 				break;
 
