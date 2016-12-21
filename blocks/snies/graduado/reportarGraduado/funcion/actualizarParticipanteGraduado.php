@@ -63,7 +63,7 @@ class FormProcessor {
 		var_dump($graduado);
 
 		$this -> actualizarParticipante($graduado);
-		$this -> actualizarPrimerCurso($graduado);
+		//$this -> actualizarPrimerCurso($graduado);// no hacer esto por que actualiza la cohorte de ingreso, que problema!
 		$this->actualizarGraduado($graduado);
 
 		// $valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );

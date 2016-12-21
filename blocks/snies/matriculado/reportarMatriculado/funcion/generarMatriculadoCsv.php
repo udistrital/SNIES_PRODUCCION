@@ -131,7 +131,7 @@ class FormProcessor {
 		
 		$consecutivo=1;
 		foreach ($primerCurso as $registro) {		
-			//Se debe redefinir el arrglo para que no presenta las asociaciones numéricas
+			//Se redefine el arreglo para que no presenta las asociaciones numéricas
 			$arreglo['ID'] = $consecutivo;
 			$arreglo['IES_CODE'] = '1301';
 			$arreglo['IES_NOMBRE'] = 'UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS';
