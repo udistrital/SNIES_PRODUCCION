@@ -41,17 +41,13 @@ class FormProcessor {
 		 * 4. Actualizar en PARTICIPANTE
 		 */
 		
-		// estudiante de la académica
+		// consulta datos de las tablas participante, graduado y programa de postgres
 		
 		$graduado = $this->miComponente->consultarGraduadoTodos ( $this->annio, $this->semestre );
 		
-		//$miProcesadorExcepcion = new procesadorExcepcion ();
-		// FORMATEA LOS VALORES NULOS, CODIFICA EXCEPCIONES
-		//$graduado = $miProcesadorExcepcion->procesarExcepcionGraduado ( $graduado );						
-		
-		
+				
 		$this->generar_graduado_csv_hecaa ( $graduado );
-		//$this->generar_csv_auditoria_graduado ( $graduado );
+		$this->generar_csv_auditoria_graduado ( $graduado );
 		
 		exit;
 	/**
@@ -68,64 +64,10 @@ class FormProcessor {
 	 */
 	}
 
-	//GENERA EL ARCHIVO DE AUDITORIA T&T
-	function generar_csv_auditoria_graduado($estudiante) {
-		$raizDocumento = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" );
-		$file=$raizDocumento . '/document/auditoria_graduado_' . $this->annio . $this->semestre . '.csv';
-		$fp = fopen ( $file, 'w' );
-		
-		$consecutivoGraduado=1;
-		foreach ( $estudiante as $unEstudiante ) {
-			
-			$matriculado ['CODIGO'] = $unEstudiante ['CODIGO_ESTUDIANTE'];
-			$matriculado ['IES_CODE'] = '1301';
-			$matriculado ['IES_NOMBRE'] = 'UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS';
-			$matriculado ['NUM_DOCUMENTO'] = $unEstudiante ['NUM_DOCUMENTO'];
-			$matriculado ['TIPO_DOCUMENTO'] = $unEstudiante ['ID_TIPO_DOCUMENTO'];
-			$matriculado ['PRIMER_NOMBRE'] = $unEstudiante ['PRIMER_NOMBRE'];
-			$matriculado ['SEGUNDO_NOMBRE'] = $unEstudiante ['SEGUNDO_NOMBRE'];
-			$matriculado ['PRIMER_APELLIDO'] = $unEstudiante ['PRIMER_APELLIDO'];
-			$matriculado ['SEGUNDO_APELLIDO'] = $unEstudiante ['SEGUNDO_APELLIDO'];
-			$matriculado ['ANO'] = $this->annio;
-			$matriculado ['SEMESTRE'] = $this->semestre;
-			$matriculado ['CODIGO_ACREDITACION_IES'] = '';
-			$matriculado ['ACREDITACION_IES'] = '';
-			$matriculado ['IES_PADRE'] = '1301';
-			$matriculado ['TIPO_IES'] = '1';
-			$matriculado ['CARACTER'] = '4';
-			$matriculado ['ORIGEN'] = '01';
-			$matriculado ['COD DEPARTAMENTO'] = '11';
-			$matriculado ['COD MUNICIPIO'] = '11001';
-			$matriculado ['CODIGO_PROGRAMA'] = $unEstudiante ['PRO_CONSECUTIVO'];
-			$matriculado ['PROG_NOMBRE'] = $unEstudiante ['PROG_NOMBRE'];
-			$matriculado ['TIPO_ACREDITACION'] = '';
-			$matriculado ['TITULO'] = $unEstudiante ['TITULO'];
-			$matriculado ['NIVEL'] = $unEstudiante ['NIVEL'];
-			$matriculado ['MODALIDAD'] = $unEstudiante ['MODALIDAD'];
-			$matriculado ['METODOLOGIA'] = '';
-			$matriculado ['AREA'] = '';
-			$matriculado ['NBC_PRIM_AREA'] = '';
-			$matriculado ['NUCLEO'] = '';
-			$matriculado ['NUCLEO_DESC'] = '';
-			$matriculado ['FECHA_GRADO'] = $unEstudiante ['FECHA_GRADO'];
-			$matriculado ['FECHA_REPORTE'] = $unEstudiante ['FECHA_GRADO'];
-			$matriculado ['ACTA'] = $unEstudiante ['ACTA'];
-			$matriculado ['FOLIO'] = $unEstudiante ['FOLIO'];
-			$matriculado ['CONS_GRAD'] = $consecutivoGraduado;
-															
-			fputcsv ( $fp, $matriculado );
-			$consecutivoGraduado=$consecutivoGraduado+1;
-		}
-		
-		fclose ( $fp );
-		
-		echo 'Se ha generado el archivo <b>' . $file . '</b>';
-		echo '<br>';
-		
-	}
+	
 
 /**
-	 * Genera el archivo csv de primer_curso
+	 * Genera el archivo csv de graduado
 	 */
 	function generar_graduado_csv_hecaa($graduado) {
 		$raizDocumento = $this -> miConfigurador -> getVariableConfiguracion("raizDocumento");
@@ -169,7 +111,66 @@ class FormProcessor {
 		echo 'Se ha generado el archivo <b>' . $file . '</b>';
 		echo '<br>';
 
-}}
+}
+
+//GENERA EL ARCHIVO DE AUDITORIA T&T
+	function generar_csv_auditoria_graduado($estudiante) {
+		$raizDocumento = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" );
+		$file=$raizDocumento . '/document/auditoria_graduado_' . $this->annio . $this->semestre . '.csv';
+		$fp = fopen ( $file, 'w' );
+		
+		$consecutivoGraduado=1;
+		foreach ( $estudiante as $unEstudiante ) {
+				
+			
+			$matriculado ['CONSECUTIVO'] = $consecutivoGraduado;
+			$matriculado ['IES_CODE'] = '1301';
+			$matriculado ['IES_NOMBRE'] = 'UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS';
+			$matriculado ['NUM_DOCUMENTO'] = $unEstudiante ['num_documento'];
+			$matriculado ['TIPO_DOCUMENTO'] = $unEstudiante ['id_tipo_documento'];
+			$matriculado ['PRIMER_NOMBRE'] = $unEstudiante ['primer_nombre'];
+			$matriculado ['SEGUNDO_NOMBRE'] = $unEstudiante ['segundo_nombre'];
+			$matriculado ['PRIMER_APELLIDO'] = $unEstudiante ['primer_apellido'];
+			$matriculado ['SEGUNDO_APELLIDO'] = $unEstudiante ['segundo_apellido'];
+			$matriculado ['ANO'] = $this->annio;
+			$matriculado ['SEMESTRE'] = $this->semestre;
+			$matriculado ['CODIGO_ACREDITACION_IES'] = '';
+			$matriculado ['ACREDITACION_IES'] = '';
+			$matriculado ['IES_PADRE'] = '1301';
+			$matriculado ['TIPO_IES'] = '1';
+			$matriculado ['CARACTER'] = '4';
+			$matriculado ['ORIGEN'] = '01';
+			$matriculado ['COD DEPARTAMENTO'] = '11';
+			$matriculado ['COD MUNICIPIO'] = '11001';
+			$matriculado ['CODIGO_PROGRAMA'] = $unEstudiante ['pro_consecutivo'];
+			$matriculado ['PROG_NOMBRE'] = $unEstudiante ['prog_nombre'];
+			$matriculado ['TIPO_ACREDITACION'] = '';
+			$matriculado ['TITULO'] = $unEstudiante ['titulo'];
+			$matriculado ['NIVEL'] = $unEstudiante ['nivel'];
+			$matriculado ['MODALIDAD'] = $unEstudiante ['modalidad'];
+			$matriculado ['METODOLOGIA'] = '';
+			$matriculado ['AREA'] = '';
+			$matriculado ['NBC_PRIM_AREA'] = '';
+			$matriculado ['NUCLEO'] = '';
+			$matriculado ['NUCLEO_DESC'] = '';
+			$matriculado ['FECHA_GRADO'] = $unEstudiante ['fecha_grado'];
+			$matriculado ['FECHA_REPORTE'] = $unEstudiante ['fecha_grado'];
+			$matriculado ['ACTA'] = $unEstudiante ['num_acta_grado'];
+			$matriculado ['FOLIO'] = $unEstudiante ['num_folio'];
+			$matriculado ['CONS_GRAD'] = $consecutivoGraduado;
+															
+			fputcsv ( $fp, $matriculado );
+			$consecutivoGraduado=$consecutivoGraduado+1;
+			
+		}
+		
+		fclose ( $fp );
+		
+		echo 'Se ha generado el archivo <b>' . $file . '</b>';
+		echo '<br>';
+		
+	}
+}
 $miProcesador = new FormProcessor ( $this->lenguaje, $this->sql );
 
 $resultado = $miProcesador->procesarFormulario ();

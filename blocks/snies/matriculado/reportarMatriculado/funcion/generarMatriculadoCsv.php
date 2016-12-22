@@ -232,7 +232,7 @@ class FormProcessor {
 		foreach ($matriculado as $registro) {			
 					
 			//Se debe redefinir el arrglo para que no presenta las asociaciones numéricas
-			$arreglo['ID'] = '';
+			$arreglo['ID'] = $secuenciaMatricualado;
 			$arreglo['IES_CODE'] = '1301';
 			$arreglo['IES_NOMBRE'] = 'UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS';
 			$arreglo['num_documento'] = $registro['num_documento'];

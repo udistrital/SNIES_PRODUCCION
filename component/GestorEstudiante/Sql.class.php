@@ -585,11 +585,15 @@ class Sql extends \Sql {
 				
 				
 			case "consultarGraduadoTodos" :
-				$cadenaSql = "SELECT ano, semestre, id_tipo_documento, num_documento, pro_consecutivo, 
-       							id_municipio, email_personal, telefono_contacto, snp_saber_pro, 
+				$cadenaSql = "SELECT ano, semestre, g.id_tipo_documento, g.num_documento, 
+								g.pro_consecutivo, programa.nombre prog_nombre, programa.titulo titulo,	nivel, modalidad,
+								primer_nombre, segundo_nombre, primer_apellido, segundo_apellido,						
+       							g.id_municipio, g.email_personal, g.telefono_contacto, g.snp_saber_pro, 
        							num_acta_grado, to_char(fecha_grado, 'DD/MM/YYYY') fecha_grado, num_folio";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " graduado ";				
+				$cadenaSql .= " graduado g";
+				$cadenaSql .= " inner join participante p on p.id_tipo_documento=g.id_tipo_documento and p.num_documento=g.num_documento ";
+				$cadenaSql .= " inner join programa on programa.pro_consecutivo=g.pro_consecutivo ";		
 				$cadenaSql .= " WHERE ano ='" . $variable['ANO'] . "'";
 				$cadenaSql .= " AND semestre ='" . $variable['SEMESTRE'] . "'";				
 
