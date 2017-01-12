@@ -87,8 +87,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " INNER JOIN actipvin";
 				$cadenaSql .= " ON tvi_cod = dtv_tvi_cod";
 				$cadenaSql .= " WHERE dtv_ape_ano='" . $variable ['annio'] . "'";
-				$cadenaSql .= " AND dtv_ape_per ='" . $variable ['semestre'] . "'";
-				echo $cadenaSql;exit;
+				$cadenaSql .= " AND dtv_ape_per ='" . $variable ['semestre'] . "'";				
 				
 				break;
 			
@@ -237,41 +236,49 @@ class Sql extends \Sql {
 				
 				break;
 			
-			case "registrarDocente_h" :
-				$cadenaSql = " INSERT";
-				$cadenaSql .= " INTO docente_h";
-				$cadenaSql .= " (";
-				$cadenaSql .= " ies_code,";
-				$cadenaSql .= " annio,";
-				$cadenaSql .= " semestre,";
-				$cadenaSql .= " cod_uni_org,";
-				$cadenaSql .= " codigo_unico,";
-				$cadenaSql .= " dedicacion,";
-				$cadenaSql .= " porcentaje_docencia,";
-				$cadenaSql .= " porcentaje_investigacion,";
-				$cadenaSql .= " porcentaje_administrativa,";
-				$cadenaSql .= " porcentaje_bienestar,";
-				$cadenaSql .= " porcentaje_edu_no_formal_ycont,";
-				$cadenaSql .= " porcentaje_proy_progr_remun,";
-				$cadenaSql .= " porcentaje_proy_no_remun,";
-				$cadenaSql .= " tipo_contrato,";
-				$cadenaSql .= " premios_semestre_nal,";
-				$cadenaSql .= " libros_publ_texto_calificados,";
-				$cadenaSql .= " premios_semestre_internal,";
-				$cadenaSql .= " duracion_en_horas,";
-				$cadenaSql .= " tipo_doc_unico,";
-				$cadenaSql .= " porcentaje_otras_actividades,";
-				$cadenaSql .= " libros_pub_investigacion,";
-				$cadenaSql .= " libros_pub_texto,";
-				$cadenaSql .= " reportes_investigacion,";
-				$cadenaSql .= " patentes_obtenidas_semestre";
-				// $cadenaSql .= " redes_academicas,";
-				// $cadenaSql .= " docente_ceres,";No es obligatorio
-				// $cadenaSql .= " certificacion_tic";
-				$cadenaSql .= " )";
+			case "registrarDocenteContrato" :
+				$cadenaSql=" INSERT";
+				$cadenaSql.=" INTO public.docente_contrato";
+				$cadenaSql.=" (";
+				$cadenaSql.=" ano,";
+				$cadenaSql.=" semestre,";
+				$cadenaSql.=" id_tipo_documento,";
+				$cadenaSql.=" num_documento,";
+				$cadenaSql.=" id_tipo_contrato,";
+				$cadenaSql.=" id_dedicacion,";
+				$cadenaSql.=" id_metodologia,";
+				$cadenaSql.=" id_nivel,";
+				$cadenaSql.=" horas_dedicacion_semestre,";
+				$cadenaSql.=" asignacion_basica_mensual,";
+				$cadenaSql.=" porcentaje_docencia,";
+				$cadenaSql.=" porcentaje_investigacion,";
+				$cadenaSql.=" porcentaje_administrativa,";
+				$cadenaSql.=" porcentaje_extension,";
+				$cadenaSql.=" porcentaje_otras_actividades";
+				$cadenaSql.=" )";
+				$cadenaSql.=" VALUES";
+				$cadenaSql.=" (";
+				$cadenaSql .= "'" . $variable ['ANNIO'] . "', ";
+				$cadenaSql .= "'" . $variable ['SEMESTRE'] . "', ";
+				$cadenaSql .= "'" . $variable ['TIPO_DOC_UNICO'] . "', ";
+				$cadenaSql .= "'" . $variable ['CODIGO_UNICO'] . "', ";
+				$cadenaSql .= "'" . $variable ['TIPO_CONTRATO'] . "', ";
+				$cadenaSql .= "'" . $variable ['DEDICACION'] . "', ";
+				$cadenaSql .= "'1', ";
+				$cadenaSql .= "'3', ";
+				$cadenaSql .= "'0', ";
+				$cadenaSql .= "'0', ";
+				$cadenaSql .= "'0', ";
+				$cadenaSql .= "'0', ";
+				$cadenaSql .= "'0', ";
+				$cadenaSql .= "'0', ";
+				$cadenaSql .= "'0' ";				
+				$cadenaSql.=" );";							
+				
+								
 				$cadenaSql .= " VALUES";
 				$cadenaSql .= " (";
-				$cadenaSql .= "'" . $variable ['IES_CODE'] . "', ";
+				
 				$cadenaSql .= "'" . $variable ['ANNIO'] . "', ";
 				$cadenaSql .= "'" . $variable ['SEMESTRE'] . "', ";
 				$cadenaSql .= "'2',"; // Unidad Organizacional

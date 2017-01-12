@@ -59,8 +59,8 @@ class Componente extends Component implements IGestorDocente {
 	function actualizarDocente_h($docente) {
 		return $this->miDocente->actualizarDocente_h ( $docente );
 	}
-	function registrarDocente_h($docente, $annio, $semestre) {
-		return $this->miDocente->registrarDocente_h ( $docente, $annio, $semestre );
+	function registrarDocenteContrato($docente, $annio, $semestre) {
+		return $this->miDocente->registrarDocenteContrato ( $docente, $annio, $semestre );
 	}
 	function borrarDocente_h($docente) {
 		return $this->miDocente->borrarDocente_h ( $docente );

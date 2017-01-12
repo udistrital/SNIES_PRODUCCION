@@ -136,9 +136,7 @@ class FormProcessor {
 		echo 'Actualizando docentes_contrato...<br>';
 		// Borrar todos los registros para un perído definido
 		$this->miComponente->borrarDocenteContrato ( $this->annio, $this->semestre );
-		$vinculacionDocente = $this->miComponente->consultarVinculacionDocente ( $this->annio, $this->semestre );
-		var_dump($vinculacionDocente);
-		exit;
+		$vinculacionDocente = $this->miComponente->consultarVinculacionDocente ( $this->annio, $this->semestre );		
 		
 		// codificar vinculacion docente
 		foreach ( $vinculacionDocente as $clave => $valor ) {
@@ -183,8 +181,8 @@ class FormProcessor {
 		}
 		
 		foreach ( $docente as $key => $value ) {
-			$docente [$key] ['DEDICACION'] = '04';
-			$docente [$key] ['TIPO_CONTRATO'] = '03';
+			$docente [$key] ['DEDICACION'] = '3';
+			$docente [$key] ['TIPO_CONTRATO'] = '3';
 			foreach ( $vinculacionDocente as $unaVinculacion ) {
 				if ($docente [$key] ['CODIGO_UNICO'] == $unaVinculacion ['DOCUMENTO']) {
 					if ($docente [$key] ['DEDICACION'] > $unaVinculacion ['DEDICACION']) {
@@ -196,9 +194,10 @@ class FormProcessor {
 				}
 			}
 		}
+				
 		
 		foreach ($docente as $unDocente) {
-			$this->miComponente->registrarDocente_h ( $unDocente, $this->annio, $this->semestre );
+			$this->miComponente->registrarDocenteContrato ( $unDocente, $this->annio, $this->semestre );
 		}
 		
 

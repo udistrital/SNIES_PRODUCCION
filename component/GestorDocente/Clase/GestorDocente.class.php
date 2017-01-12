@@ -219,14 +219,14 @@ class Docente implements IGestorDocente {
 		
 		return $resultado;
 	}
-	function registrarDocente_h($docente, $annio, $semestre) {
+	function registrarDocenteContrato($docente, $annio, $semestre) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		$docente ['ANNIO'] = $annio;
 		$docente ['SEMESTRE'] = $semestre;
 		
-		$cadenaSql = $this->miSql->cadena_sql ( 'registrarDocente_h', $docente );
+		$cadenaSql = $this->miSql->cadena_sql ( 'registrarDocenteContrato', $docente );
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
 		
