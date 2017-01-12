@@ -198,7 +198,7 @@ class procesadorExcepcion {
 	 */
 	function excepcionNumeroTel($persona) {
 		if (isset ( $persona ['NUMERO_TEL'] )) {
-			$resultado = $persona ['NUMERO_TEL'];
+			$resultado = preg_replace("/[^0-9,.]/", "", $persona ['NUMERO_TEL']);
 		} else {
 			$resultado = ''; // para distinguir los que tiene valor nulo
 		}
