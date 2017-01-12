@@ -28,7 +28,7 @@ class FormProcessor {
 		$this->semestre = $_REQUEST ['semestre'];
 		
 		// docente de la académica
-		$docente = $this->miComponente->consultarDocenteAcademica ( $this->annio, $this->semestre );
+		$docente = $this->miComponente->consultarDocenteAcademica ( $this->annio, $this->semestre );	
 		
 		$miProcesadorNombre = new procesadorNombre ();
 		
@@ -83,13 +83,14 @@ class FormProcessor {
 	function actualizarParticipante($docente) {
 		foreach ( $docente as $unDocente ) {
 			// echo 'CODIGO: ' . $unDocente ['CODIGO_UNICO'] . '<br>';
-			// consulta enla tabla participante y cuenta el número de registros retornados
+			// consulta enla tabla participante y cuenta el número de registros retornados			
 			$participante = $this->miComponente->consultarParticipante ( $unDocente );
-			
+						
 			// si no existe insertar el nuevo registro
 			if ($participante == false) {
 				$this->miComponente->registrarParticipante ( $unDocente );
-				echo $unDocente ['CODIGO_UNICO'] . ' Nuevo<br>';exit;
+				echo $unDocente ['CODIGO_UNICO'] . ' Nuevo<br>';
+				exit;
 			} else {
 				foreach ( $participante as $unParticipante ) {
 					// Si existe y es igual el tipo actualizar si no es igual borrar
