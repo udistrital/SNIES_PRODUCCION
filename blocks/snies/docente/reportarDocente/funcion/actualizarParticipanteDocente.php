@@ -57,7 +57,7 @@ class FormProcessor {
 		$docente = $miProcesadorExcepcion->procesarExcepcionDocente ( $docente );
 		
 		
-		//$this->actualizarParticipante ( $docente );
+		$this->actualizarParticipante ( $docente );
 		$this->actualizarDocenteContrato ( $docente );
 		
 		// $valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
@@ -199,12 +199,9 @@ class FormProcessor {
 		foreach ($docente as $unDocente) {
 			$this->miComponente->registrarDocenteContrato ( $unDocente, $this->annio, $this->semestre );
 		}
-		
-
-		echo 'SE DEBE INCLUIR LA UNIDAD ORGANIACIONAL ES DECIR LA FACULTAD';
-		echo 'Actualización docente_h terminado <br>';
-	
-		exit ();
+				
+		echo 'Actualización docente_contrato terminado <br>';
+			
 	}
 
 }
