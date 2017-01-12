@@ -70,7 +70,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " AND car_ape_per='" . $variable ['semestre'] . "'";
 				$cadenaSql .= " AND car_estado='A'";
 				$cadenaSql .= " )";				
-				$cadenaSql .= " AND doc_nro_iden=253387";
+				//$cadenaSql .= " AND doc_nro_iden=253387";
 				// $cadenaSql .= " AND doc_nro_iden=79708124";
 				
 				break;
@@ -119,8 +119,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " email_personal ='" . $variable['EMAIL'] . "',";
 				$cadenaSql .= " email_institucional ='" . str_replace("'", "", $variable['EMAIL_INS']) . "'";//elimina las comillas sencillas que existen en algunos registros
 				//$cadenaSql .= " direccion_institucional ='" . $variable['DIRECCION_INSTITUCIONAL'] . "'";
-				$cadenaSql .= " WHERE NUM_DOCUMENTO='" . $variable['CODIGO_UNICO'] . "'";
-				exit;				
+				$cadenaSql .= " WHERE NUM_DOCUMENTO='" . $variable['CODIGO_UNICO'] . "'";							
 				
 				break;
 			
@@ -129,7 +128,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " participante ";
 				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
 				$cadenaSql .= " AND tipo_doc_unico='" . $variable ['TIPO_DOC_UNICO'] . "'";
-				echo $cadenaSql;
+				//echo $cadenaSql;
 				
 				break;
 			
@@ -175,7 +174,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "'' ";
 				$cadenaSql.=" );";
 				$cadenaSql.=" ";
-				echo $cadenaSql;
+				//echo $cadenaSql;
 				
 				break;
 			
