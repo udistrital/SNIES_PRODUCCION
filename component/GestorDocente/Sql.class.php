@@ -88,6 +88,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " ON tvi_cod = dtv_tvi_cod";
 				$cadenaSql .= " WHERE dtv_ape_ano='" . $variable ['annio'] . "'";
 				$cadenaSql .= " AND dtv_ape_per ='" . $variable ['semestre'] . "'";
+				echo $cadenaSql;exit;
 				
 				break;
 			
@@ -313,11 +314,11 @@ class Sql extends \Sql {
 				
 				break;
 			
-			case "borrarDocente_hPeriodoTodos" :
+			case "borrarDocenteContrato" :
 				$cadenaSql = "DELETE FROM";
-				$cadenaSql .= " docente_h ";
-				$cadenaSql .= " WHERE annio='" . $variable ['ANNIO'] . "'";
-				$cadenaSql .= " AND semestre='" . $variable ['SEMESTRE'] . "'";
+				$cadenaSql .= " docente_contrato ";
+				$cadenaSql .= " WHERE ano='" . $variable ['ANNIO'] . "'";
+				$cadenaSql .= " AND semestre='" . $variable ['SEMESTRE'] . "'";				
 				
 				break;
 			

@@ -57,7 +57,8 @@ class FormProcessor {
 		$docente = $miProcesadorExcepcion->procesarExcepcionDocente ( $docente );
 		
 		
-		$this->actualizarParticipante ( $docente );
+		//$this->actualizarParticipante ( $docente );
+		$this->actualizarDocenteContrato ( $docente );
 		
 		// $valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 		// $valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
@@ -121,6 +122,92 @@ class FormProcessor {
 		}
 		echo 'terminado';
 	}
+
+	/**
+	 * Pasos
+	 * 1.
+	 * Borrar regitro para el año y semestre dado
+	 * 2. Ajustar dedicación
+	 * 3. Registrar valores
+	 *
+	 * @param unknown $docente        	
+	 */
+	function actualizarDocenteContrato($docente) {
+		echo 'Actualizando docentes_contrato...<br>';
+		// Borrar todos los registros para un perído definido
+		$this->miComponente->borrarDocenteContrato ( $this->annio, $this->semestre );
+		$vinculacionDocente = $this->miComponente->consultarVinculacionDocente ( $this->annio, $this->semestre );
+		var_dump($vinculacionDocente);
+		exit;
+		
+		// codificar vinculacion docente
+		foreach ( $vinculacionDocente as $clave => $valor ) {
+			switch ($vinculacionDocente [$clave] ['VINCULACION']) {
+				case 1 :
+					$vinculacionDocente [$clave] ['TIPO_CONTRATO'] = '1';//DOCENTE PLANTA TIEMPO COMPLETO
+					$vinculacionDocente [$clave] ['DEDICACION'] = '1';
+					break;
+				case 2 :
+					$vinculacionDocente [$clave] ['TIPO_CONTRATO'] = '2';//DOCENTE TIEMPO COMPLETO OCASIONAL (CATEDRA)
+					$vinculacionDocente [$clave] ['DEDICACION'] = '1';
+					break;
+				case 3 :
+					$vinculacionDocente [$clave] ['TIPO_CONTRATO'] = '2';//DOCENTE MEDIO TIEMPO OCASIONAL (CATEDRA)
+					$vinculacionDocente [$clave] ['DEDICACION'] = '2';
+					break;
+				case 4 :
+					$vinculacionDocente [$clave] ['TIPO_CONTRATO'] = '3';//DOCENTE CATEDRA (CONTRATO)
+					$vinculacionDocente [$clave] ['DEDICACION'] = '3';
+					break;
+				case 5 :
+					$vinculacionDocente [$clave] ['TIPO_CONTRATO'] = '3';//DOCENTE CATEDRA (HONORARIO)
+					$vinculacionDocente [$clave] ['DEDICACION'] = '3';
+					break;
+				case 6 :
+					$vinculacionDocente [$clave] ['TIPO_CONTRATO'] = '1';//DOCENTE PLANTA MEDIO TIEMPO
+					$vinculacionDocente [$clave] ['DEDICACION'] = '2';
+					break;
+				case 7 :
+					$vinculacionDocente [$clave] ['TIPO_CONTRATO'] = '3';//
+					$vinculacionDocente [$clave] ['DEDICACION'] = '3';
+					break;
+				case 8 :
+					$vinculacionDocente [$clave] ['TIPO_CONTRATO'] = '1';//DOCENTE PLANTA COMPARTIDO
+					$vinculacionDocente [$clave] ['DEDICACION'] = '1';
+					break;
+				
+				default :
+					echo 'Sin vinculación';
+					break;
+			}
+		}
+		
+		foreach ( $docente as $key => $value ) {
+			$docente [$key] ['DEDICACION'] = '04';
+			$docente [$key] ['TIPO_CONTRATO'] = '03';
+			foreach ( $vinculacionDocente as $unaVinculacion ) {
+				if ($docente [$key] ['CODIGO_UNICO'] == $unaVinculacion ['DOCUMENTO']) {
+					if ($docente [$key] ['DEDICACION'] > $unaVinculacion ['DEDICACION']) {
+						$docente [$key] ['DEDICACION'] = $unaVinculacion ['DEDICACION'];
+					}
+					if ($docente [$key] ['TIPO_CONTRATO'] > $unaVinculacion ['TIPO_CONTRATO']) {
+						$docente [$key] ['TIPO_CONTRATO'] = $unaVinculacion ['TIPO_CONTRATO'];
+					}
+				}
+			}
+		}
+		
+		foreach ($docente as $unDocente) {
+			$this->miComponente->registrarDocente_h ( $unDocente, $this->annio, $this->semestre );
+		}
+		
+
+		echo 'SE DEBE INCLUIR LA UNIDAD ORGANIACIONAL ES DECIR LA FACULTAD';
+		echo 'Actualización docente_h terminado <br>';
+	
+		exit ();
+	}
+
 }
 
 $miProcesador = new FormProcessor ( $this->lenguaje, $this->sql );

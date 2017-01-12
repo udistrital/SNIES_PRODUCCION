@@ -254,13 +254,13 @@ class Docente implements IGestorDocente {
 		}
 		return $resultado;
 	}
-	function borrarDocente_hPeriodoTodos($annio, $semestre) {
+	function borrarDocenteContrato($annio, $semestre) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		$variable ['ANNIO'] = $annio;
 		$variable ['SEMESTRE'] = $semestre;
-		$cadenaSql = $this->miSql->cadena_sql ( 'borrarDocente_hPeriodoTodos', $variable );
+		$cadenaSql = $this->miSql->cadena_sql ( 'borrarDocenteContrato', $variable );
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
 		if ($resultado == FALSE) {

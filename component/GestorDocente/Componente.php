@@ -65,8 +65,8 @@ class Componente extends Component implements IGestorDocente {
 	function borrarDocente_h($docente) {
 		return $this->miDocente->borrarDocente_h ( $docente );
 	}
-	function borrarDocente_hPeriodoTodos($annio, $semestre) {
-		return $this->miDocente->borrarDocente_hPeriodoTodos ( $annio, $semestre );
+	function borrarDocenteContrato($annio, $semestre) {
+		return $this->miDocente->borrarDocenteContrato ( $annio, $semestre );
 	}
 	function consultarDocenteDoctoradoMaestria($annio, $semestre) {
 		return $this->miDocente->consultarDocenteDoctoradoMaestria ( $annio, $semestre );

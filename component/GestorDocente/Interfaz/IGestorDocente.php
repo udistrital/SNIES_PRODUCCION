@@ -23,7 +23,7 @@ interface IGestorDocente {
 	function actualizarDocente_h($docente);
 	function registrarDocente_h($docente, $annio, $semestre);
 	function borrarDocente_h($docente);
-	function borrarDocente_hPeriodoTodos($annio, $semestre);
+	function borrarDocenteContrato($annio, $semestre);
 	function consultarDocenteDoctoradoMaestria($annio, $semestre);
 	function borrarDocenteDoctoradoMaestriaTodos($annio, $semestre);
 	function registrarDocenteDoctoradoMaestria($docente);
