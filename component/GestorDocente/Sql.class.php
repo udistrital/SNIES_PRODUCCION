@@ -103,26 +103,24 @@ class Sql extends \Sql {
 			// actualiza los datos de un participante
 			case "actualizarParticipante" :
 				$cadenaSql = " UPDATE participante";
-				$cadenaSql .= " SET ies_code ='" . $variable ['IES_CODE'] . "',";
-				$cadenaSql .= " primer_apellido ='" . $variable ['PRIMER_APELLIDO'] . "',";
-				$cadenaSql .= " segundo_apellido='" . $variable ['SEGUNDO_APELLIDO'] . "',";
-				$cadenaSql .= " primer_nombre ='" . $variable ['PRIMER_NOMBRE'] . "',";
-				$cadenaSql .= " segundo_nombre ='" . $variable ['SEGUNDO_NOMBRE'] . "',";
-				$cadenaSql .= " fecha_nacim ='" . $variable ['FECHA_NACIM'] . "',";
-				$cadenaSql .= " pais_ln ='" . $variable ['PAIS_LN'] . "',";
-				$cadenaSql .= " departamento_ln ='" . $variable ['DEPARTAMENTO_LN'] . "',";
-				$cadenaSql .= " municipio_ln ='" . $variable ['MUNICIPIO_LN'] . "',";
-				$cadenaSql .= " genero_code ='" . $variable ['GENERO_CODE'] . "',";
-				$cadenaSql .= " email ='" . $variable ['EMAIL'] . "',";
-				$cadenaSql .= " est_civil_code ='" . $variable ['EST_CIVIL_CODE'] . "',";
-				// $cadenaSql .= " tipo_doc_unico ='" . $variable ['TIPO_DOC_UNICO'] . "',";
-				// $cadenaSql .= " codigo_unico ='" . $variable ['CODIGO_UNICO'] . "',";
-				$cadenaSql .= " tipo_id_ant ='" . $variable ['TIPO_ID_ANT'] . "',";
-				$cadenaSql .= " codigo_id_ant ='" . $variable ['CODIGO_ID_ANT'] . "',";
-				$cadenaSql .= " pais_tel ='" . $variable ['PAIS_TEL'] . "',";
-				$cadenaSql .= " area_tel ='" . $variable ['AREA_TEL'] . "',";
-				$cadenaSql .= " numero_tel ='" . $variable ['NUMERO_TEL'] . "'";
-				$cadenaSql .= " WHERE codigo_unico='" . $variable ['CODIGO_UNICO'] . "'";
+				$cadenaSql .= " SET id_tipo_documento ='" . $variable['TIPO_DOC_UNICO'] . "',";
+				$cadenaSql .= " num_documento ='" . $variable['CODIGO_UNICO'] . "',";
+				//$cadenaSql .= " fecha_expedicion='" . $variable['FECHA_EXPEDICION'] . "',";
+				$cadenaSql .= " primer_nombre ='" . $variable['PRIMER_NOMBRE'] . "',";
+				$cadenaSql .= " segundo_nombre ='" . $variable['SEGUNDO_NOMBRE'] . "',";
+				$cadenaSql .= " primer_apellido ='" . $variable['PRIMER_APELLIDO'] . "',";
+				$cadenaSql .= " segundo_apellido ='" . $variable['SEGUNDO_APELLIDO'] . "',";
+				$cadenaSql .= " id_sexo_biologico ='" . $variable['GENERO_CODE'] . "',";
+				$cadenaSql .= " id_estado_civil ='" . $variable['EST_CIVIL_CODE'] . "',";
+				$cadenaSql .= " fecha_nacimiento ='" . $variable['FECHA_NACIM'] . "',";
+				$cadenaSql .= " id_pais ='" . $variable['PAIS_LN'] . "',";
+				$cadenaSql .= " id_municipio ='" . $variable['MUNICIPIO_LN'] . "',";
+				$cadenaSql .= " telefono_contacto ='" . $variable['NUMERO_TEL'] . "',";
+				$cadenaSql .= " email_personal ='" . $variable['EMAIL'] . "',";
+				$cadenaSql .= " email_institucional ='" . str_replace("'", "", $variable['EMAIL_INS']) . "'";//elimina las comillas sencillas que existen en algunos registros
+				//$cadenaSql .= " direccion_institucional ='" . $variable['DIRECCION_INSTITUCIONAL'] . "'";
+				$cadenaSql .= " WHERE NUM_DOCUMENTO='" . $variable['CODIGO_UNICO'] . "'";
+				exit;				
 				
 				break;
 			

@@ -30,6 +30,7 @@ class procesadorExcepcion {
 			$docente [$clave] ['FECHA_NACIM'] = $this->excepcionFechaNacim ( $docente [$clave] );
 			$docente [$clave] ['MUNICIPIO_LN'] = $this->excepcionMunicipio ( $docente [$clave] );
 			$docente [$clave] ['EMAIL'] = $this->excepcionEmail ( $docente [$clave] );
+			$docente [$clave] ['EMAIL_INS'] = $this->excepcionEmailIns ( $docente [$clave] );
 			$docente [$clave] ['TIPO_DOC_UNICO'] = $this->excepcionTipoDocUnico ( $docente [$clave] );
 			$docente [$clave] ['CODIGO_ID_ANT'] = $this->excepcionCodigoIdAnt ( $docente [$clave] );
 			$docente [$clave] ['TIPO_ID_ANT'] = $this->excepcionTipoIdAnt ( $docente [$clave] );
@@ -106,6 +107,23 @@ class procesadorExcepcion {
 	function excepcionEmail($persona) {
 		if (isset ( $persona ['EMAIL'] )) {
 			$resultado = $persona ['EMAIL'];
+		} else {
+			$resultado = ''; // para distinguir los que tiene valor nulo
+		}
+		
+		return $resultado;
+	}
+	
+	
+		/**
+	 * si no existe el Email coloca ''
+	 *
+	 * @param unknown $persona        	
+	 * @return Ambigous <string, unknown>
+	 */
+	function excepcionEmailIns($persona) {
+		if (isset ( $persona ['EMAIL_INS'] )) {
+			$resultado = $persona ['EMAIL_INS'];
 		} else {
 			$resultado = ''; // para distinguir los que tiene valor nulo
 		}

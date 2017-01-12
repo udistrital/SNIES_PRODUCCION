@@ -89,20 +89,20 @@ class FormProcessor {
 			// si no existe insertar el nuevo registro
 			if ($participante == false) {
 				$this->miComponente->registrarParticipante ( $unDocente );
-				echo $unDocente ['CODIGO_UNICO'] . ' Nuevo<br>';
-				exit;
+				echo $unDocente ['CODIGO_UNICO'] . ' Nuevo<br>';				
 			} else {
 				foreach ( $participante as $unParticipante ) {
 					// Si existe y es igual el tipo actualizar si no es igual borrar
-					if ($unParticipante ['tipo_doc_unico'] == $unDocente ['TIPO_DOC_UNICO']) {
+					if ($unParticipante ['id_tipo_documento'] == $unDocente ['TIPO_DOC_UNICO']) {
 						$this->miComponente->actualizarParticipante ( $unDocente );
-						// echo $unDocente ['CODIGO_UNICO'] . ' actualizado<br>';
+						echo $unDocente ['CODIGO_UNICO'] . ' actualizado<br>';	
+						exit;					
 					} else {
 						// Borra los registros
 						// El filtro es codigo y tipo de documento que aparece en la tabla participante
 						// OJO, NO es el obtenido de la DB académica
-						$docenteError ['CODIGO_UNICO'] = $unParticipante ['codigo_unico'];
-						$docenteError ['TIPO_DOC_UNICO'] = $unParticipante ['tipo_doc_unico'];
+						$docenteError ['CODIGO_UNICO'] = $unParticipante ['num_documento'];
+						$docenteError ['TIPO_DOC_UNICO'] = $unParticipante ['id_tipo_documento'];
 						
 						$this->miComponente->borrarParticipante ( $docenteError );
 						
