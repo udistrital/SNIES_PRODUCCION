@@ -105,6 +105,8 @@ class Sql extends \Sql {
 				//$cadenaSql .= " AND est_cod=20021001083";
 				//$cadenaSql .= " AND est_nro_iden=79456456";				
 				//$cadenaSql .= " AND rownum < 10";
+				//$cadenaSql .= " AND as_cra_cod_snies= 907";	
+				//echo $cadenaSql;exit;			
 
 				break;
 

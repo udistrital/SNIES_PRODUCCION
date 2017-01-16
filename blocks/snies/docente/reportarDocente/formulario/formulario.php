@@ -80,7 +80,7 @@ class registrarForm {
 			<th>Año</th>
 			<th>Período</th>
 			<th>1. Actualizar Participante</th>
-			<th>2. Actualizar Docente</th>
+			<th>2. Generar CVS Docente</th>
 		</tr>
 	</thead>
 
@@ -89,7 +89,7 @@ class registrarForm {
 		foreach ( $periodo as $miPeriodo ) {
 			
 			$enlaceActualizarParticipante = $this->enlaceActualizarVariable ( 'actualizarParticipanteDocente', $miPeriodo ['annio'], $miPeriodo ['semestre'] );
-			$enlaceActualizarDocente = $this->enlaceActualizarVariable ( 'actualizarDocente', $miPeriodo ['annio'], $miPeriodo ['semestre'] );
+			$enlaceActualizarDocente = $this->enlaceActualizarVariable ( 'generarCsvDocente', $miPeriodo ['annio'], $miPeriodo ['semestre'] );
 			
 			?>
 				<tr>

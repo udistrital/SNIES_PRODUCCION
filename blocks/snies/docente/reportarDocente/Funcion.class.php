@@ -46,7 +46,7 @@ class Funcion {
 	}
 	
 	function actualizarDocente() {
-		include_once ($this->ruta . "/funcion/actualizarDocente.php");
+		//include_once ($this->ruta . "/funcion/actualizarDocente.php");
 	}
 	
 	function generarCsvDocente() {

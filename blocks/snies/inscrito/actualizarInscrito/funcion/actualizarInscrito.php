@@ -43,8 +43,7 @@ class FormProcessor {
 
 		// CONSULTAS ACADEMICA
 		$inscritosPregrado = $this->miComponente->consultarInscritoPregadoAcademica ( $annio, $semestre );
-		$inscritosPostgrado = $this->miComponente->consultarInscritoPostgradoAcademica ( $annio, $semestre );
-
+		$inscritosPostgrado = $this->miComponente->consultarInscritoPostgradoAcademica ( $annio, $semestre );		
 	
 		// Si no realiza la consulta retorna a la pagina inicial
 		/**if ($inscritosPregrado == false or $inscritosPostgrado == false) {
@@ -86,8 +85,8 @@ class FormProcessor {
 		}
 
 		//La tabla inscrito acepta solo un registro por cada inscrito
-		foreach ($inscritosPregrado as $key => $value) {
-				$inscritosSinDuplicados[$value['DOCUMENTO']]=$value;
+		foreach ($inscritosPregrado as $key => $value) {			
+				$inscritosSinDuplicados[$value['DOCUMENTO']]=$value;							
 			}
 		// Inserta uno a uno los registros sin duplicados de inscritos consultados en la académica
 		foreach ( $inscritosSinDuplicados as $inscrito ) {

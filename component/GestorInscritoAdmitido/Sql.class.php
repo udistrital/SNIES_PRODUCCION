@@ -42,8 +42,8 @@ class Sql extends \Sql {
 				$cadenaSql = "SELECT UNIQUE ";
 				$cadenaSql .= "asp_ape_ano ins_annio, ";
 				$cadenaSql .= "DECODE(asp_ape_per,1,'1',3,'2', asp_ape_per) ins_semestre, ";
-				$cadenaSql .= "DECODE(asp_tip_doc,'',DECODE(length(asp_nro_iden),11,'TI',12,'TI','CC'),'C', 'CC', '1', 'CC', 'c', 'CC', 'T', 'TI', '2', 'TI', 't', 'TI', 'E', 'CE', 'P', 'PS', 'CC') tipo_ident_code, ";
-				$cadenaSql .= "asp_nro_iden documento, ";
+				$cadenaSql .= "decode (asp_tip_doc_act, 1, 'CC', 2, 'TI', 3, 'CE') id_tipo_documento, ";
+				$cadenaSql .= "asp_nro_iden_act documento, ";
 				$cadenaSql .= "asp_apellido apellido, ";
 				// en este campo están los apellidos
 				$cadenaSql .= "asp_nombre nombre, ";
@@ -66,10 +66,10 @@ class Sql extends \Sql {
 					$cadenaSql .= " AND asp_ape_per=3";
 				}
 				$cadenaSql .= " AND tra_nivel IN ('PREGRADO') ";
-				$cadenaSql .= " AND asp_nro_iden = 14777867 ";///COMENTAR ESTA LINEA inscrito de 2016 2
-				echo $cadenaSql;
-				exit;
-
+				$cadenaSql .= " AND asp_nro_iden_act IS NOT NULL";				
+				
+				//$cadenaSql .= " AND asp_nro_iden_act = 99041102990 ";///COMENTAR ESTA LINEA inscrito de 2016 2				
+				
 				break;
 
 			case "consultarInscritoPostgradoAcademica" :
@@ -77,7 +77,7 @@ class Sql extends \Sql {
 				$cadenaSql = "SELECT UNIQUE ";
 				$cadenaSql .= "mat_ano ins_annio, ";
 				$cadenaSql .= "DECODE(mat_per,1,'1',3,'2', mat_per) ins_semestre, ";
-				$cadenaSql .= "DECODE(est_tipo_iden,'',DECODE(length(est_nro_iden),11,'TI',12,'TI','CC'),'C', 'CC', '1', 'CC', 'c', 'CC', 'T', 'TI', '2', 'TI', 't', 'TI', 'E', 'CE', 'P', 'PS', 'CC') tipo_ident_code, ";
+				$cadenaSql .= " TO_CHAR(DECODE(est_tipo_iden,'C', 'CC', 'T', 'TI', 'E', 'CE', 'P', 'PS')) id_tipo_documento,";
 				$cadenaSql .= "est_nro_iden  documento, ";
 				$cadenaSql .= "est_nombre nombre, ";
 				// en este campo estan los nombres y apellidos
@@ -103,7 +103,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "AND SUBSTR(est_cod,0,4)=mat_ano ";
 				$cadenaSql .= "AND SUBSTR(est_cod,5,1)=DECODE(mat_per,1,'1',3,'2',mat_per) ";
 				$cadenaSql .= "AND tra_nivel IN ('DOCTORADO','MAESTRIA','POSGRADO') ";
-				//$cadenaSql .= " AND est_nro_iden = 1023925664 ";///COMENTAR ESTA LINEA inscrito de 2016 2
+				
 
 				break;
 
@@ -182,7 +182,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "(";
 				$cadenaSql .= "'" . $variable['INS_ANNIO'] . "', ";
 				$cadenaSql .= "'" . $variable['INS_SEMESTRE'] . "', ";
-				$cadenaSql .= "'" . $variable['TIPO_IDENT_CODE'] . "', ";
+				$cadenaSql .= "'" . $variable['ID_TIPO_DOCUMENTO'] . "', ";
 				$cadenaSql .= "'" . $variable['DOCUMENTO'] . "', ";
 				$cadenaSql .= "'" . $variable['PRIMER_NOMBRE'] . "', ";
 				$cadenaSql .= "'" . $variable['SEGUNDO_NOMBRE'] . "', ";
@@ -208,7 +208,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "(";
 				$cadenaSql .= "'" . $variable['INS_ANNIO'] . "', ";
 				$cadenaSql .= "'" . $variable['INS_SEMESTRE'] . "', ";
-				$cadenaSql .= "'" . $variable['TIPO_IDENT_CODE'] . "', ";
+				$cadenaSql .= "'" . $variable['ID_TIPO_DOCUMENTO'] . "', ";
 				$cadenaSql .= "'" . $variable['DOCUMENTO'] . "', ";
 				$cadenaSql .= "'" . $variable['PROG_PRIM_OPC'] . "', ";
 				$cadenaSql .= "'" . $variable['MUNICIPIO'] . "' ";
@@ -229,8 +229,8 @@ class Sql extends \Sql {
 				$cadenaSql = " SELECT UNIQUE ";
 				$cadenaSql .= "asp_ape_ano annio, ";
 				$cadenaSql .= "DECODE(asp_ape_per,1,'1',3,'2', asp_ape_per) semestre, ";
-				$cadenaSql .= " DECODE(asp_tip_doc,'',DECODE(length(asp_nro_iden),11,'TI',12,'TI','CC'),'C', 'CC', '1', 'CC', 'c', 'CC', 'T', 'TI', '2', 'TI', 't', 'TI', 'E', 'CE', 'P', 'PS', 'CC') id_tipo_documento, ";
-				$cadenaSql .= " asp_nro_iden num_documento, ";
+				$cadenaSql .= " decode (asp_tip_doc_act, 1, 'CC', 2, 'TI', 3, 'CE') id_tipo_documento, ";
+				$cadenaSql .= " asp_nro_iden_act num_documento, ";
 				$cadenaSql .= " as_cra_cod_snies pro_consecutivo, ";
 				$cadenaSql .= " '11001' id_municipio ";
 				//$cadenaSql .= " asp_apellido apellido, ";
@@ -257,6 +257,7 @@ class Sql extends \Sql {
 				}
 				$cadenaSql .= " AND tra_nivel IN ('PREGRADO') ";
 				//$cadenaSql .= " AND ROWNUM <= 100 ";
+				//echo $cadenaSql;exit;
 
 				break;
 
@@ -265,7 +266,7 @@ class Sql extends \Sql {
 				$cadenaSql = " SELECT UNIQUE ";
 				$cadenaSql .= " mat_ano annio, ";
 				$cadenaSql .= " DECODE(mat_per,1,'1',3,'2', mat_per) semestre, ";
-				$cadenaSql .= " DECODE(est_tipo_iden,'',DECODE(length(est_nro_iden),11,'TI',12,'TI','CC'),'C', 'CC', '1', 'CC', 'c', 'CC', 'T', 'TI', '2', 'TI', 't', 'TI', 'E', 'CE', 'P', 'PS', 'CC') id_tipo_documento, ";
+				$cadenaSql .= " TO_CHAR(DECODE(est_tipo_iden,'C', 'CC', 'T', 'TI', 'E', 'CE', 'P', 'PS')) id_tipo_documento,";
 				$cadenaSql .= " est_nro_iden num_documento, ";
 				$cadenaSql .= " as_cra_cod_snies pro_consecutivo, ";
 				$cadenaSql .= " '11001' id_municipio ";
