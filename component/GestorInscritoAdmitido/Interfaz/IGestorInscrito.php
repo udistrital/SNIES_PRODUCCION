@@ -10,7 +10,7 @@ interface IGestorInscrito {
 	function insertarInscritoSnies($inscrito);
 	function insertarInscritoProgramaSnies($inscrito);
 	function actualizarInscritoSnies(); // No se implementa en esta fase
-	function borrarInscritoSnies($annio, $semestre);
+	function borrarInscritoSnies($inscrito);
 	function borrarInscritoProgramaSnies($annio, $semestre);
 	function contarInscritos($annio, $semestre);
 }

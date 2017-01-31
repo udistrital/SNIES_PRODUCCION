@@ -59,14 +59,12 @@ class Sql extends \Sql {
 				$cadenaSql .= " eot_email email_personal,";
 				$cadenaSql .= " eot_email_ins email_institucional,";
 				$cadenaSql .= " '' direccion_institucional,";
-				//obligatorio para autoridades
 				$cadenaSql .= " as_cra_cod_snies pro_consecutivo,";
 				$cadenaSql .= " '11001' id_municipio_programa,";
 				$cadenaSql .= " DECODE(LENGTH(est_cod),7,(SUBSTR(est_cod,1,2)+1900),11,(SUBSTR(est_cod, 1,4))) anio,";
-				$cadenaSql .= " DECODE(DECODE(LENGTH(est_cod),7,((SUBSTR(est_cod,3,1))),11,(SUBSTR(est_cod, 5,1))), '1','01','02') semestre,";
+				$cadenaSql .= " DECODE(DECODE(LENGTH(est_cod),7,((SUBSTR(est_cod,3,1))),11,(SUBSTR(est_cod, 5,1))), '1','1','2') semestre,";
 				$cadenaSql .= " '1' id_tipo_vinculacion,";
-				$cadenaSql .= " '0' id_grupo_etnico,";
-				//$cadenaSql .= " DECODE (eot_grupo_etnico, '200', '2', '400', '3', NULL, '0', '999', '4', '4') id_grupo_etnico,";
+				$cadenaSql .= " '0' id_grupo_etnico,";				
 				$cadenaSql .= " '0' id_pueblo_indigena,";
 				$cadenaSql .= " '0' id_comunidad_negra,";
 				$cadenaSql .= " '0' persona_condicion_discapacidad,";
@@ -74,13 +72,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " '0' id_capacidad_excepcional,";
 				$cadenaSql .= " eot_nro_snp cod_prueba_saber_11,";
 				$cadenaSql .= " DECODE (eot_arural, 'S', '2', 'N', '1', '1') id_zona_residencia,";
-				// S es rural (2) N es urbano (1), default urbano (1)
 				$cadenaSql .= " 'N' es_reintegro";
-				//$cadenaSql .= " TO_CHAR(DECODE (mun_dep_cod,0,11,'',11, mun_dep_cod)) departamento_ln,";
-				//$cadenaSql .= " '02' es_transferencia,";
-				// $cadenaSql .= " --datos matriculado";
-				//$cadenaSql .= " DECODE(cra_jornada, 'DIURNA', '01', 'NOCTURNA', '02', '01' ) horario_code,";
-				//$cadenaSql .= " '01' pago";
 				$cadenaSql .= " FROM mntac.acest";
 				$cadenaSql .= " INNER JOIN mntac.acestotr";
 				$cadenaSql .= " ON est_cod = eot_cod";
@@ -95,105 +87,22 @@ class Sql extends \Sql {
 				$cadenaSql .= " INNER JOIN actipcra";
 				$cadenaSql .= " ON cra_tip_cra = tra_cod";
 				$cadenaSql .= " WHERE mat_ano ='" . $variable['annio'] . "'";
-				if ($variable['semestre'] == '01') {
+				if ($variable['semestre'] == '1') {
 					$cadenaSql .= " AND mat_per =1 ";
 				} else {
 					$cadenaSql .= " AND mat_per =3 ";
-					// el semestre 03 de la universidad es el semestre 02 de SNIES";
+					// el semestre 3 de la universidad es el semestre 2 de SNIES";
 				}
-
+				//echo $cadenaSql;exit;
+				//$cadenaSql .= " AND est_nro_iden=53161690";
 				//$cadenaSql .= " AND est_cod=20021001083";
-				//$cadenaSql .= " AND est_nro_iden=79456456";				
 				//$cadenaSql .= " AND rownum < 10";
 				//$cadenaSql .= " AND as_cra_cod_snies= 907";	
-				//echo $cadenaSql;exit;			
+			
 
 				break;
 
-			// consulta para la Base Poblacional Unificada del Distrito Capital,
-			// En los casos que el valor es null se coloca el simbolo "|" para que se cree la variable
-			// para procesarla más adelante
-			case "consultarEstudianteBpudc" :
-				$cadenaSql = " SELECT";
-				$cadenaSql .= " EST_COD ID,";
-				$cadenaSql .= " EST_NOMBRE NOMBRE,";
-				// NOMBRE_1, NOMBRE_2, APELLIDO_1, APELLIDO_2
-				$cadenaSql .= " EST_TIPO_IDEN TIP_ID,";
-				$cadenaSql .= " EST_NRO_IDEN NUM_ID,";
-				$cadenaSql .= " EOT_COD_LUG_NAC MUN_NAC,";
-				$cadenaSql .= " 'CO' PAIS_NAC,";
-				$cadenaSql .= " '' FEC_ID,";
-				$cadenaSql .= " EOT_SEXO SEXO,";
-				$cadenaSql .= " TO_CHAR(to_date(EOT_FECHA_NAC),'DD/MM/YYYY') FEC_NAC,";
-				$cadenaSql .= " EOT_TIPOSANGRE GRU_SANG,";
-				$cadenaSql .= " EOT_RH FACT_RH,";
-				$cadenaSql .= " EOT_GRUPO_ETNICO ETNIA,";
-				$cadenaSql .= " '' CUAL_ETNIA,";
-				$cadenaSql .= " '' GENERO,";
-				$cadenaSql .= " '' CUAL_GENERO,";
-				$cadenaSql .= " '' NOM_IDENTITARIO,";
-				$cadenaSql .= " '' ORIENT_SEX,";
-				$cadenaSql .= " '' CUAL_ORIENT_SEX,";
-				$cadenaSql .= " '' OCUPACION,";
-				$cadenaSql .= " '' CUAL_OCUPACION,";
-				$cadenaSql .= " '' COND_HABITACION,";
-				$cadenaSql .= " '' TIPO_ATEN_POB_INFANTIL,";
-				$cadenaSql .= " '' OCUP_ESPECIAL,";
-				$cadenaSql .= " '' COND_ESPECIAL,";
-				$cadenaSql .= " '' CARA_ESPE_PADRES,";
-				$cadenaSql .= " '' COND_ESPE_SALUD,";
-				$cadenaSql .= " '' TRABA_SEXUAL,";
-				$cadenaSql .= " '' PERSONA_TALENTO,";
-				$cadenaSql .= " '' EST_AFI_SGSSS,";
-				$cadenaSql .= " '' LOCALIDAD,";
-				$cadenaSql .= " '' TIPO_ZONA,";
-				$cadenaSql .= " '' TIP_VIA_PRIN,";
-				$cadenaSql .= " '' NUM_VIA_PRIN,";
-				$cadenaSql .= " '' NOM_VIA_PRIN,";
-				$cadenaSql .= " '' NOM_SIN_VIA_PRIN,";
-				$cadenaSql .= " '' LETRA_VIA_PRIN,";
-				$cadenaSql .= " '' BIS,";
-				$cadenaSql .= " '' LETRA_BIS,";
-				$cadenaSql .= " '' CUAD_VIA_PRIN,";
-				$cadenaSql .= " '' NUM_VIA_GEN,";
-				$cadenaSql .= " '' LETRA_VIA_GEN,";
-				$cadenaSql .= " '' NUM_PLACA,";
-				$cadenaSql .= " '' CUAD_VIA_GEN,";
-				$cadenaSql .= " '' COMPLEMENTO,";
-				$cadenaSql .= " EST_DIRECCION DIRECCION_RURAL,";
-				$cadenaSql .= " eot_ESTRATO_SOCIAL ESTRATO,";
-				$cadenaSql .= " est_telefono TEL_FIJO_CONTACTO,";
-				$cadenaSql .= " EOT_TEL_CEL TEL_CELULAR_CONTACTO,";
-				$cadenaSql .= " EOT_EMAIL CORREO_ELECTR,";
-				$cadenaSql .= " '' LOCALIDAD_CONTACTO,";
-				$cadenaSql .= " '' TIPO_ZONA_CONTACTO,";
-				$cadenaSql .= " '' TIP_VIA_PRIN_CONTACTO,";
-				$cadenaSql .= " '' NUM_VIA_PRIN_CONTACTO,";
-				$cadenaSql .= " '' NOM_VIA_PRIN_CONTACTO,";
-				$cadenaSql .= " '' NOM_SIN_VIA_PRIN_CONTACTO,";
-				$cadenaSql .= " '' LETRA_VIA_PRIN_CONTACTO,";
-				$cadenaSql .= " '' BIS_CONTACTO,";
-				$cadenaSql .= " '' LETRA_BIS_CONTACTO,";
-				$cadenaSql .= " '' CUAD_VIA_PRIN_CONTACTO,";
-				$cadenaSql .= " '' NUM_VIA_GEN_CONTACTO,";
-				$cadenaSql .= " '' LETRA_VIA_GEN_CONTACTO,";
-				$cadenaSql .= " '' NUM_PLACA_CONTACTO,";
-				$cadenaSql .= " '' CUAD_VIA_GEN_CONTACTO,";
-				$cadenaSql .= " '' COMPLEMENTO_CONTACTO,";
-				$cadenaSql .= " '' DIRECCION_RURAL_CONTACTO,";
-				$cadenaSql .= " '' ESTRATO_CONTACTO,";
-				$cadenaSql .= " '' TEL_FIJO_CONTACTO_CONTACTO,";
-				$cadenaSql .= " '' TEL_CELULAR_CONTACTO_CONTACTO,";
-				$cadenaSql .= " '' CORREO_ELECTR_CONTACTO,";
-				$cadenaSql .= " '' NOMBRE_CONTACTO";
-				$cadenaSql .= " FROM ACEST";
-				$cadenaSql .= " INNER JOIN acestotr";
-				$cadenaSql .= " ON ACESTOTR.EOT_COD = ACEST.EST_COD";
-				$cadenaSql .= " WHERE EST_COD > 20160000000";
-				// $cadenaSql .= " WHERE EST_COD = '20161025106'";
-				// exit;
-
-				break;
+			
 
 			// //PARTICIPANTE SNIES
 
@@ -718,6 +627,93 @@ class Sql extends \Sql {
 				$cadenaSql .= " estudiante_programa ";
 				$cadenaSql .= " WHERE codigo_unico='" . $variable['CODIGO_UNICO'] . "'";
 				$cadenaSql .= " AND tipo_doc_unico='" . $variable['TIPO_DOC_UNICO'] . "'";
+
+				break;
+				
+				
+				
+				// consulta para la Base Poblacional Unificada del Distrito Capital,
+			// En los casos que el valor es null se coloca el simbolo "|" para que se cree la variable
+			// para procesarla más adelante
+			case "consultarEstudianteBpudc" :
+				$cadenaSql = " SELECT";
+				$cadenaSql .= " EST_COD ID,";
+				$cadenaSql .= " EST_NOMBRE NOMBRE,";
+				// NOMBRE_1, NOMBRE_2, APELLIDO_1, APELLIDO_2
+				$cadenaSql .= " EST_TIPO_IDEN TIP_ID,";
+				$cadenaSql .= " EST_NRO_IDEN NUM_ID,";
+				$cadenaSql .= " EOT_COD_LUG_NAC MUN_NAC,";
+				$cadenaSql .= " 'CO' PAIS_NAC,";
+				$cadenaSql .= " '' FEC_ID,";
+				$cadenaSql .= " EOT_SEXO SEXO,";
+				$cadenaSql .= " TO_CHAR(to_date(EOT_FECHA_NAC),'DD/MM/YYYY') FEC_NAC,";
+				$cadenaSql .= " EOT_TIPOSANGRE GRU_SANG,";
+				$cadenaSql .= " EOT_RH FACT_RH,";
+				$cadenaSql .= " EOT_GRUPO_ETNICO ETNIA,";
+				$cadenaSql .= " '' CUAL_ETNIA,";
+				$cadenaSql .= " '' GENERO,";
+				$cadenaSql .= " '' CUAL_GENERO,";
+				$cadenaSql .= " '' NOM_IDENTITARIO,";
+				$cadenaSql .= " '' ORIENT_SEX,";
+				$cadenaSql .= " '' CUAL_ORIENT_SEX,";
+				$cadenaSql .= " '' OCUPACION,";
+				$cadenaSql .= " '' CUAL_OCUPACION,";
+				$cadenaSql .= " '' COND_HABITACION,";
+				$cadenaSql .= " '' TIPO_ATEN_POB_INFANTIL,";
+				$cadenaSql .= " '' OCUP_ESPECIAL,";
+				$cadenaSql .= " '' COND_ESPECIAL,";
+				$cadenaSql .= " '' CARA_ESPE_PADRES,";
+				$cadenaSql .= " '' COND_ESPE_SALUD,";
+				$cadenaSql .= " '' TRABA_SEXUAL,";
+				$cadenaSql .= " '' PERSONA_TALENTO,";
+				$cadenaSql .= " '' EST_AFI_SGSSS,";
+				$cadenaSql .= " '' LOCALIDAD,";
+				$cadenaSql .= " '' TIPO_ZONA,";
+				$cadenaSql .= " '' TIP_VIA_PRIN,";
+				$cadenaSql .= " '' NUM_VIA_PRIN,";
+				$cadenaSql .= " '' NOM_VIA_PRIN,";
+				$cadenaSql .= " '' NOM_SIN_VIA_PRIN,";
+				$cadenaSql .= " '' LETRA_VIA_PRIN,";
+				$cadenaSql .= " '' BIS,";
+				$cadenaSql .= " '' LETRA_BIS,";
+				$cadenaSql .= " '' CUAD_VIA_PRIN,";
+				$cadenaSql .= " '' NUM_VIA_GEN,";
+				$cadenaSql .= " '' LETRA_VIA_GEN,";
+				$cadenaSql .= " '' NUM_PLACA,";
+				$cadenaSql .= " '' CUAD_VIA_GEN,";
+				$cadenaSql .= " '' COMPLEMENTO,";
+				$cadenaSql .= " EST_DIRECCION DIRECCION_RURAL,";
+				$cadenaSql .= " eot_ESTRATO_SOCIAL ESTRATO,";
+				$cadenaSql .= " est_telefono TEL_FIJO_CONTACTO,";
+				$cadenaSql .= " EOT_TEL_CEL TEL_CELULAR_CONTACTO,";
+				$cadenaSql .= " EOT_EMAIL CORREO_ELECTR,";
+				$cadenaSql .= " '' LOCALIDAD_CONTACTO,";
+				$cadenaSql .= " '' TIPO_ZONA_CONTACTO,";
+				$cadenaSql .= " '' TIP_VIA_PRIN_CONTACTO,";
+				$cadenaSql .= " '' NUM_VIA_PRIN_CONTACTO,";
+				$cadenaSql .= " '' NOM_VIA_PRIN_CONTACTO,";
+				$cadenaSql .= " '' NOM_SIN_VIA_PRIN_CONTACTO,";
+				$cadenaSql .= " '' LETRA_VIA_PRIN_CONTACTO,";
+				$cadenaSql .= " '' BIS_CONTACTO,";
+				$cadenaSql .= " '' LETRA_BIS_CONTACTO,";
+				$cadenaSql .= " '' CUAD_VIA_PRIN_CONTACTO,";
+				$cadenaSql .= " '' NUM_VIA_GEN_CONTACTO,";
+				$cadenaSql .= " '' LETRA_VIA_GEN_CONTACTO,";
+				$cadenaSql .= " '' NUM_PLACA_CONTACTO,";
+				$cadenaSql .= " '' CUAD_VIA_GEN_CONTACTO,";
+				$cadenaSql .= " '' COMPLEMENTO_CONTACTO,";
+				$cadenaSql .= " '' DIRECCION_RURAL_CONTACTO,";
+				$cadenaSql .= " '' ESTRATO_CONTACTO,";
+				$cadenaSql .= " '' TEL_FIJO_CONTACTO_CONTACTO,";
+				$cadenaSql .= " '' TEL_CELULAR_CONTACTO_CONTACTO,";
+				$cadenaSql .= " '' CORREO_ELECTR_CONTACTO,";
+				$cadenaSql .= " '' NOMBRE_CONTACTO";
+				$cadenaSql .= " FROM ACEST";
+				$cadenaSql .= " INNER JOIN acestotr";
+				$cadenaSql .= " ON ACESTOTR.EOT_COD = ACEST.EST_COD";
+				$cadenaSql .= " WHERE EST_COD > 20160000000";
+				// $cadenaSql .= " WHERE EST_COD = '20161025106'";
+				// exit;
 
 				break;
 		}

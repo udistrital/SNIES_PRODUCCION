@@ -44,9 +44,9 @@ class registrarForm {
 		$fecha = getdate ();
 		$annioActual = $fecha ['year'];
 		if ($fecha ['mon'] <= 6) {
-			$semestreActual = '01';
+			$semestreActual = '1';
 		} else {
-			$semestreActual = '02';
+			$semestreActual = '2';
 		}
 		
 		// crea un arreglo con todos los años y semestres desde 2000-1 hasta el presente semestre
@@ -55,14 +55,14 @@ class registrarForm {
 		$anoInicial = $annioActual - 4; // presente solamente los últimos 5 años
 		for($ano = $anoInicial; $ano <= $annioActual; $ano ++) {
 			$periodo [$a] ['annio'] = $ano;
-			$periodo [$a] ['semestre'] = '01';
+			$periodo [$a] ['semestre'] = '1';
 			//$periodo [$a] ['total'] = $this->miComponente->contarMatriculados ( $ano, '01' );
 			$a ++;
 			
 			if ($annioActual == $ano and $semestreActual == 1) {
 			} else {
 				$periodo [$a] ['annio'] = $ano;
-				$periodo [$a] ['semestre'] = '02';
+				$periodo [$a] ['semestre'] = '2';
 				//$periodo [$a] ['total'] = $this->miComponente->contarMatriculados ( $ano, '02' );
 				$a ++;
 			}

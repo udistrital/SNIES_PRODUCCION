@@ -120,15 +120,11 @@ if ($resultado == false) {
 	function actualizarInscritoSnies() {
 	}
 	
-	function borrarInscritoSnies($annio, $semestre) {
+	function borrarInscritoSnies($inscrito) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-		
 
-		$datos ['annio'] = $annio;
-		$datos ['semestre'] = $semestre;
-
-		$cadenaSql = $this->miSql->cadena_sql ( 'borrarInscritoSnies', $datos );
+		$cadenaSql = $this->miSql->cadena_sql ( 'borrarInscritoSnies', $inscrito );
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, '' );
 		
 		if ($resultado == FALSE) {

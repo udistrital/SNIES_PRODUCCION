@@ -75,8 +75,8 @@ class FormProcessor {
 		// registrar los estudiantes en su cohorte
 		foreach ($estudiante as $unEstudiante) {
 
-			//if ($unEstudiante['ANIO'] == $this -> annio and $unEstudiante['SEMESTRE'] == $this -> semestre) {
-
+			if ($unEstudiante['ANIO'] == $this -> annio and $unEstudiante['SEMESTRE'] == $this -> semestre) {
+				
 				$estudiantePrimerCurso = $this -> miComponente -> consultarEstudiantePrimerCurso($unEstudiante);
 								
 				//si existe el registro en la tabla primer_curso lo actualiza si no lo registra
@@ -86,7 +86,7 @@ class FormProcessor {
 					$this -> miComponente -> registrarEstudiantePrimerCurso($unEstudiante);
 				}
 
-			//}
+			}
 		}
 	}
 
