@@ -63,7 +63,7 @@ class Sql extends \Sql {
 					$cadenaSql .= " AND asp_ape_per=3";
 				}
 
-				//$cadenaSql .= " AND est_cod=20162021323";				
+				//$cadenaSql .= " AND est_cod=20162021323";
 				//$cadenaSql .= " AND asp_nro_iden_act=1012370755";
 				//$cadenaSql .= " AND asp_nro_iden_act IS NOT NULL"; hay registros sin informacion en ACASP que si estan en ACEST
 
@@ -99,7 +99,6 @@ class Sql extends \Sql {
 				$cadenaSql .= "AND SUBSTR(est_cod,5,1)=DECODE(mat_per,1,'1',3,'2',mat_per) ";
 				$cadenaSql .= "AND tra_nivel IN ('DOCTORADO','MAESTRIA','POSGRADO') ";
 				//$cadenaSql .= "AND est_cod=20162094001";
-				
 
 				break;
 
@@ -137,8 +136,8 @@ class Sql extends \Sql {
 				$cadenaSql .= " ano, semestre, id_tipo_documento, num_documento, pro_consecutivo, id_municipio";
 				$cadenaSql .= " FROM";
 				$cadenaSql .= " inscrito_programa ";
-				$cadenaSql .= " WHERE ano='" . $variable['annio'] . "'";
-				$cadenaSql .= " AND semestre='" . $variable['semestre'] . "'";
+				$cadenaSql .= " WHERE ano=" . $variable['annio'];
+				$cadenaSql .= " AND semestre=" . $variable['semestre'];
 
 				break;
 
@@ -149,7 +148,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " WHERE ano=" . $variable['ano'];
 				$cadenaSql .= " AND semestre=" . $variable['semestre'];
 				$cadenaSql .= " AND id_tipo_documento='" . $variable['id_tipo_documento'] . "'";
-				$cadenaSql .= " AND num_documento=" . $variable['num_documento'];				
+				$cadenaSql .= " AND num_documento=" . $variable['num_documento'];
 
 				break;
 
@@ -186,7 +185,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable['PRIMER_APELLIDO'] . "', ";
 				$cadenaSql .= "'" . $variable['SEGUNDO_APELLIDO'] . "', ";
 				$cadenaSql .= $variable['GENERO'] . " ";
-				$cadenaSql .= "); ";				
+				$cadenaSql .= "); ";
 
 				break;
 
@@ -203,12 +202,12 @@ class Sql extends \Sql {
 				$cadenaSql .= ") ";
 				$cadenaSql .= "VALUES ";
 				$cadenaSql .= "(";
-				$cadenaSql .= "'" . $variable['INS_ANNIO'] . "', ";
-				$cadenaSql .= "'" . $variable['INS_SEMESTRE'] . "', ";
+				$cadenaSql .= $variable['ANO'] . ", ";
+				$cadenaSql .= $variable['SEMESTRE'] . ", ";
 				$cadenaSql .= "'" . $variable['ID_TIPO_DOCUMENTO'] . "', ";
-				$cadenaSql .= "'" . $variable['DOCUMENTO'] . "', ";
-				$cadenaSql .= "'" . $variable['PROG_PRIM_OPC'] . "', ";
-				$cadenaSql .= "'" . $variable['MUNICIPIO'] . "' ";
+				$cadenaSql .= $variable['DOCUMENTO'] . ", ";
+				$cadenaSql .= $variable['PRO_CONSECUTIVO'] . ", ";
+				$cadenaSql .= $variable['MUNICIPIO'];
 				$cadenaSql .= "); ";
 
 				break;

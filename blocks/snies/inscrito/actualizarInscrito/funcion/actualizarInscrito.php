@@ -35,8 +35,8 @@ class FormProcessor {
 	 * 6.Redireccionar a lista de variables
 	 */
 	function procesarFormulario() {
-		$annio = $_REQUEST['annio'];
-		$semestre = $_REQUEST['semestre'];
+		$this -> annio = $_REQUEST['annio'];
+		$this -> semestre = $_REQUEST['semestre'];
 
 		/**
 		 * Asegure de que todos los programas estén registrados en la tabla accra_snies
@@ -44,55 +44,26 @@ class FormProcessor {
 		 * SELECT * FROM ACCRA WHERE CRA_COD NOT IN (SELECT AS_CRA_COD FROM ACCRA_SNIES  )AND CRA_ESTADO='A'order by cra_cod asc
 		 */
 
-		// CONSULTAS ACADEMICA
-		$inscritosPregradoAcademica = $this -> miComponente -> consultarInscritoPregadoAcademica($annio, $semestre);
-		$inscritosPregradoAcademica = $this -> procesarInscritosPregrado($inscritosPregradoAcademica);
-
-		$inscritosPostgradoAcademica = $this -> miComponente -> consultarInscritoPostgradoAcademica($annio, $semestre);
-		$inscritosPostgradoAcademica = $this -> procesarInscritosPostgrado($inscritosPostgradoAcademica);
-
-		$inscritoSnies = $this -> miComponente -> consultarInscritoSnies($annio, $semestre);
-
-		$this -> registrarNuevosInscritos($inscritosPregradoAcademica, $inscritosPostgradoAcademica, $inscritoSnies);
-
-		//ACTUALIZAR Buscar registros antiguos
-
-		//BORRAR registros que ya no estan
-
-		exit ;
-
-		// LIMPIAR LOS REGISTROS DEL AÑO Y SEMESTRE ESPECIFICADO
-
-		exit ;
-		$borrarInscritoPrograma = $this -> miComponente -> borrarInscritoProgramaSnies($annio, $semestre);
-
-		//La tabla inscrito acepta solo un registro por cada inscrito
-		foreach ($inscritosPregradoAcademica as $key => $value) {
-			$inscritosSinDuplicados[$value['DOCUMENTO']] = $value;
-		}
-		// Inserta uno a uno los registros sin duplicados de inscritos consultados en la académica
-
-		// Inserta uno a uno los registros en la tabla inscrito_programa consultados en la académica
-		foreach ($inscritosPregradoAcademica as $inscrito) {
-			$this -> miComponente -> insertarInscritoProgramaSnies($inscrito);
+		// CONSULTAS ACADEMICA PREGRADO
+		$inscritosPregradoAcademica = $this -> miComponente -> consultarInscritoPregadoAcademica($this -> annio, $this -> semestre);
+		if (is_array($inscritosPregradoAcademica)) {
+			$inscritosPregradoAcademica = $this -> procesarInscritosPregrado($inscritosPregradoAcademica);
 		}
 
-		// PARTE DE INSCRITOS DE POSTGRADO
-		/**
-		 * Esta función realiza las siguientes acciones
-		 * 1.consulta en la académica
-		 * 2.Procesar los datos obtenidos, cambiar acentos.
-		 * 3.Registrar errores de la fuente para reportarlos
-		 * 4.Borrar los registros para el año y periodo seleccionado en SNIES LOCAL
-		 * 5.Insertar los registros en el SNIES LOCAL
-		 * 6.Redireccionar a lista de variables
-		 */
-
-		// Inserta uno a uno los registros de inscritos consultados en la académica
-		foreach ($inscritosPostgrado as $inscrito) {
-			$this -> miComponente -> insertarInscritoSnies($inscrito);
-			$this -> miComponente -> insertarInscritoProgramaSnies($inscrito);
+		// CONSULTAS ACADEMICA POSTGRADO
+		$inscritosPostgradoAcademica = $this -> miComponente -> consultarInscritoPostgradoAcademica($this -> annio, $this -> semestre);
+		if (is_array($inscritosPostgradoAcademica)) {
+			$inscritosPostgradoAcademica = $this -> procesarInscritosPostgrado($inscritosPostgradoAcademica);
 		}
+
+		//UNIFICAR ACADEMICA PREGRADO Y POSTGRADO
+		$inscritosAcademica = $this -> unificarInscritosPregradoPostgradoAcademica($inscritosPregradoAcademica, $inscritosPostgradoAcademica);
+
+		// INSERTAR, ACTUALIZAR Y/O BORRAR EN TABLA INSCRITO DEL SNIES
+		$this -> registrarInscritos($inscritosAcademica);
+
+		// INSERTAR, ACTUALIZAR Y/O BORRAR EN TABLA INSCRITO_PROGAMA
+		$this -> registrarInscritoPrograma($inscritosAcademica);
 
 		echo 'Proceso finalizado';
 
@@ -168,49 +139,109 @@ class FormProcessor {
 
 	}
 
-	//funcion que procesa los registros de inscritos
-	function registrarNuevosInscritos($pregrado, $postgrado, $inscritoSnies) {
-
-		//var_dump($inscritoSnies);exit;
+	/**
+	 * Crea un solo arreglo con pregrado y postgrado de la académica
+	 * Cada array tiene como indice: ano||semestre||id_tipo_documento||documento|| - || pro_consecutivo Ejem: 20162CC78125789-3432
+	 */
+	function unificarInscritosPregradoPostgradoAcademica($pregrado, $postgrado) {
 		//Coloca en el indice de cada arreglo ano||semestre||id_tipo_documento||documento
 		foreach ($pregrado as $key => $value) {
-			$inscritosPregrado[$pregrado[$key]['ANO'] . $pregrado[$key]['SEMESTRE'] . $pregrado[$key]['ID_TIPO_DOCUMENTO'] . $pregrado[$key]['DOCUMENTO']] = $value;
+			$inscritosPregrado[$pregrado[$key]['ANO'] . $pregrado[$key]['SEMESTRE'] . $pregrado[$key]['ID_TIPO_DOCUMENTO'] . $pregrado[$key]['DOCUMENTO'] . "-" . $pregrado[$key]['PRO_CONSECUTIVO']] = $value;
 		}
 
 		//Coloca en el indice de cada arreglo ano||semestre||id_tipo_documento||documento
 		foreach ($postgrado as $key => $value) {
-			$inscritosPostgrado[$postgrado[$key]['ANO'] . $postgrado[$key]['SEMESTRE'] . $postgrado[$key]['ID_TIPO_DOCUMENTO'] . $postgrado[$key]['DOCUMENTO']] = $value;
+			$inscritosPostgrado[$postgrado[$key]['ANO'] . $postgrado[$key]['SEMESTRE'] . $postgrado[$key]['ID_TIPO_DOCUMENTO'] . $postgrado[$key]['DOCUMENTO'] . "-" . $pregrado[$key]['PRO_CONSECUTIVO']] = $value;
 		}
 
 		//arreglo que incluye inscritos de pregrado y postgrado de la academica
-		$inscritosAcademica = array_merge($inscritosPregrado, $inscritosPostgrado);
+		return array_merge($inscritosPregrado, $inscritosPostgrado);
+	}
+
+	/**
+	 * Funcion que inserta, actualiza o borra en la tabla inscritos de SNIES
+	 * Registra si no existe en SNIES
+	 * Actualiza si existe en el SNIES
+	 * Borra si no está en la ACADEMICA
+	 */
+	function registrarInscritos($inscrito) {
+
+		//Obtiene un solo registro por inscrito, sin importar que esté en varios proyectos
+		foreach ($inscrito as $key => $value) {
+			$inscritosSinProyecto[$inscrito[$key]['ANO'] . $inscrito[$key]['SEMESTRE'] . $inscrito[$key]['ID_TIPO_DOCUMENTO'] . $inscrito[$key]['DOCUMENTO']] = $value;
+		}
+
+		// CONSULTA LA TABLA INSCRITO SNIES
+		$inscritoSnies = $this -> miComponente -> consultarInscritoSnies($this -> annio, $this -> semestre);
 
 		//Coloca en el indice de cada arreglo de lo consultado en el SNIES ano||semestre||id_tipo_documento||documento
-
 		if ($inscritoSnies != NULL) {
 			foreach ($inscritoSnies as $key => $value) {
 				$inscritoSniesClave[$inscritoSnies[$key]['ano'] . $inscritoSnies[$key]['semestre'] . $inscritoSnies[$key]['id_tipo_documento'] . $inscritoSnies[$key]['num_documento']] = $value;
-				$inscritoNuevo = array_diff_key($inscritosAcademica, $inscritoSniesClave);
+				$inscritoNuevo = array_diff_key($inscritosSinProyecto, $inscritoSniesClave);
 			}
+			//Estan en académica y no en SNIES, INSERTAR
+			foreach ($inscritoNuevo as $unInscritoNuevo) {
+				$this -> miComponente -> insertarInscritoSnies($unInscritoNuevo);
+			}
+			echo 'Registros nuevos insertados<br>';
+			//Estan en académica y en Snies, ACTUALIZAR
+			$inscritosActualizar = array_intersect_key($inscritosSinProyecto, $inscritoSniesClave);
+			//aqui debería estar la función de actualizacion, por agilizar el tiempo de ejecución no se implementa en esta estapa
+			echo 'Registros existentes actualizados<br>';
+
+			//Estan es Snies y no en Académica, BORRAR
+			$inscritoError = array_diff_key($inscritoSniesClave, $inscritosSinProyecto);
+			foreach ($inscritoError as $unInscritoError) {
+				$this -> miComponente -> borrarInscritoSnies($unInscritoError);
+			}
+			echo 'Registros erroneos borrados<br>';
 		} else {
-			$inscritoNuevo = $inscritosAcademica;
+			$inscritoNuevo = $inscritosSinProyecto;
+			//Estan en académica y no en SNIES, INSERTAR
+			foreach ($inscritoNuevo as $unInscritoNuevo) {
+				$this -> miComponente -> insertarInscritoSnies($unInscritoNuevo);
+			}
+			echo 'Registros nuevos insertados<br>';
 		}
 
-		foreach ($inscritoNuevo as $unInscritoNuevo) {
-			$this -> miComponente -> insertarInscritoSnies($unInscritoNuevo);
+	}
+
+	function registrarInscritoPrograma($inscritoPrograma) {
+
+		$inscritoProgSnies = $this -> miComponente -> consultarInscritoProgramaSnies($this -> annio, $this -> semestre);
+
+		//Coloca en el indice de cada arreglo de lo consultado en el SNIES ano||semestre||id_tipo_documento||documento
+		if ($inscritoProgSnies != NULL) {
+			foreach ($inscritoProgSnies as $key => $value) {
+				$inscritoSniesClave[$inscritoProgSnies[$key]['ano'] . $inscritoProgSnies[$key]['semestre'] . $inscritoProgSnies[$key]['id_tipo_documento'] . $inscritoProgSnies[$key]['num_documento'] . "-" . $inscritoProgSnies[$key]['pro_consecutivo']] = $value;				
+			}
+			$inscritoProgramaNuevo = array_diff_key($inscritoPrograma, $inscritoSniesClave);
+			//Estan en académica y no en SNIES, INSERTAR
+			foreach ($inscritoProgramaNuevo as $unInscritoProgramaNuevo) {				
+				$this -> miComponente -> insertarInscritoProgramaSnies($unInscritoProgramaNuevo);
+			}
+			echo 'Registros nuevos insertados<br>';
+			
+			//Estan en académica y en Snies, ACTUALIZAR
+			$inscritosProgramaActualizar = array_intersect_key($inscritoProgramaNuevo, $inscritoSniesClave);
+			//aqui debería estar la función de actualizacion, por agilizar el tiempo de ejecución no se implementa en esta estapa
+			echo 'Registros existentes actualizados<br>';
+
+			//Estan es Snies y no en Académica, BORRAR
+			$inscritoError = array_diff_key($inscritoSniesClave, $inscritoProgramaNuevo);
+			foreach ($inscritoError as $unInscritoError) {
+				$this -> miComponente -> borrarInscritoSnies($unInscritoError);
+			}
+			echo 'Registros erroneos borrados<br>';
+		} else {
+			
+			//Estan en académica y no en SNIES, INSERTAR
+			foreach ($inscritoPrograma as $unInscritoPrograma) {
+				$this -> miComponente -> insertarInscritoProgramaSnies($unInscritoPrograma);
+			}
+			echo 'Registros nuevos insertados<br>';
 		}
-		echo 'Registros nuevos insertados<br>';
-
-		//Estan en académica y en Snies, deben actualizarse
-		$inscritosActualizar = array_intersect_key($inscritosAcademica, $inscritoSniesClave);
-
-		//Estan es Snies y no en Académica, deben borrarse
-		$inscritoError = array_diff_key($inscritoSniesClave, $inscritosAcademica);
-
-		foreach ($inscritoError as $unInscritoError) {
-			$this -> miComponente -> borrarInscritoSnies($unInscritoError);
-		}
-		echo 'Registros erroneos borrados<br>';
 	}
 
 }
