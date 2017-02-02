@@ -64,7 +64,7 @@ class Sql extends \Sql {
 				}
 
 				//$cadenaSql .= " AND est_cod=20162021323";
-				//$cadenaSql .= " AND asp_nro_iden_act=1012370755";
+				//$cadenaSql .= " AND asp_nro_iden_act=1077033101";
 				//$cadenaSql .= " AND asp_nro_iden_act IS NOT NULL"; hay registros sin informacion en ACASP que si estan en ACEST
 
 				break;
