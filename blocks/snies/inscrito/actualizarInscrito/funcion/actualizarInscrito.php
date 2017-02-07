@@ -46,8 +46,11 @@ class FormProcessor {
 		//UNIFICAR ACADEMICA PREGRADO Y POSTGRADO
 		$inscritosAcademica = $this -> unificarInscritosPregradoPostgradoAcademica($inscritosPregradoAcademica, $inscritosPostgradoAcademica);
 
-		$admitidosPregradoAcadémica = $this -> obtenerAdmitidosPregradoAcademica($inscritosAcademica);
-
+		$admitidosAcadémica = $this -> obtenerAdmitidosAcademica($inscritosAcademica);
+		var_dump($admitidosAcadémica);exit;
+		
+		
+		
 		// INSERTAR, ACTUALIZAR Y/O BORRAR EN TABLA INSCRITO DEL SNIES
 		$this -> registrarInscritos($inscritosAcademica);
 
@@ -236,17 +239,14 @@ class FormProcessor {
 		}
 	}
 
-	function obtenerAdmitidosPregradoAcademica($inscritos) {
-		foreach ($inscritos as $unInscrito) {
-			if ($unInscrito['EAD_ESTADO'] == 'A') {
-				$admitidos[$unInscrito[$key]['ano'] . $unInscrito[$key]['semestre'] . $unInscrito[$key]['id_tipo_documento'] . $unInscrito[$key]['num_documento'] . "-" . $unInscrito[$key]['pro_consecutivo']] = $value;
-			} else {
-
+	function obtenerAdmitidosAcademica($inscritos) {
+		foreach ($inscritos as $key => $value) {
+			if (isset($inscritos[$key]['EAD_ESTADO']) and $inscritos[$key]['EAD_ESTADO'] == 'A') {
+				$admitidos[$inscritos[$key]['ANO'] . $inscritos[$key]['SEMESTRE'] . $inscritos[$key]['ID_TIPO_DOCUMENTO'] . $inscritos[$key]['DOCUMENTO'] . "-" . $inscritos[$key]['PRO_CONSECUTIVO']] = $value;
 			}
 		}
 
-		var_dump($admitidos);
-		exit ;
+		return $admitidos;
 
 	}
 
