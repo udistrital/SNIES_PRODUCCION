@@ -23,26 +23,13 @@ class FormProcessor {
 	}
 
 	/**
-	 * Esta función realiza las siguientes acciones
-	 * 1.consulta en la académica inscritos pregrado
-	 * 2. Ajusta formato de datos de inscritos pregrado
-	 * 3.consulta en la académica inscritos postgrado
-	 * 4. Ajusta los datos de postgrado
-	 * 4.Borrar los registros para el año y periodo seleccionado en SNIES LOCAL tabla inscrito
-	 * 2.Procesar los datos obtenidos, cambiar acentos.
-	 * 3.Registrar errores de la fuente para reportarlos
-	 * 5.Insertar los registros en el SNIES LOCAL
-	 * 6.Redireccionar a lista de variables
+	 * Asegure de que todos los programas estén registrados en la tabla accra_snies
+	 * para buscar los que no están registrados utilice la consulta
+	 * SELECT * FROM ACCRA WHERE CRA_COD NOT IN (SELECT AS_CRA_COD FROM ACCRA_SNIES  )AND CRA_ESTADO='A'order by cra_cod asc
 	 */
 	function procesarFormulario() {
 		$this -> annio = $_REQUEST['annio'];
 		$this -> semestre = $_REQUEST['semestre'];
-
-		/**
-		 * Asegure de que todos los programas estén registrados en la tabla accra_snies
-		 * para buscar los que no están registrados utilice la consulta
-		 * SELECT * FROM ACCRA WHERE CRA_COD NOT IN (SELECT AS_CRA_COD FROM ACCRA_SNIES  )AND CRA_ESTADO='A'order by cra_cod asc
-		 */
 
 		// CONSULTAS ACADEMICA PREGRADO
 		$inscritosPregradoAcademica = $this -> miComponente -> consultarInscritoPregadoAcademica($this -> annio, $this -> semestre);
@@ -59,8 +46,10 @@ class FormProcessor {
 		//UNIFICAR ACADEMICA PREGRADO Y POSTGRADO
 		$inscritosAcademica = $this -> unificarInscritosPregradoPostgradoAcademica($inscritosPregradoAcademica, $inscritosPostgradoAcademica);
 
+		$admitidosPregradoAcadémica = $this -> obtenerAdmitidosPregradoAcademica($inscritosAcademica);
+
 		// INSERTAR, ACTUALIZAR Y/O BORRAR EN TABLA INSCRITO DEL SNIES
-		//$this -> registrarInscritos($inscritosAcademica);
+		$this -> registrarInscritos($inscritosAcademica);
 
 		// INSERTAR, ACTUALIZAR Y/O BORRAR EN TABLA INSCRITO_PROGAMA
 		$this -> registrarInscritoPrograma($inscritosAcademica);
@@ -245,6 +234,20 @@ class FormProcessor {
 			}
 			echo 'Registros nuevos insertados en inscrito_programa<br>';
 		}
+	}
+
+	function obtenerAdmitidosPregradoAcademica($inscritos) {
+		foreach ($inscritos as $unInscrito) {
+			if ($unInscrito['EAD_ESTADO'] == 'A') {
+				$admitidos[$unInscrito[$key]['ano'] . $unInscrito[$key]['semestre'] . $unInscrito[$key]['id_tipo_documento'] . $unInscrito[$key]['num_documento'] . "-" . $unInscrito[$key]['pro_consecutivo']] = $value;
+			} else {
+
+			}
+		}
+
+		var_dump($admitidos);
+		exit ;
+
 	}
 
 }

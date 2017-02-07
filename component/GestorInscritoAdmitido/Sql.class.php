@@ -49,7 +49,8 @@ class Sql extends \Sql {
 				$cadenaSql .= " '11001' municipio,";
 				$cadenaSql .= " TO_CHAR(DECODE(est_tipo_iden,'C', 'CC', 'T', 'TI', 'E', 'CE', 'P', 'PS')) est_tipo_iden,";
 				$cadenaSql .= " est_nro_iden,";
-				$cadenaSql .= " est_cod";
+				$cadenaSql .= " est_cod,";
+				$cadenaSql .= " ead_estado";//cuando esta valor está en 'A' es un admitido
 				$cadenaSql .= " FROM acasp";
 				$cadenaSql .= " left JOIN acestadm ON EAD_ASP_CRED=asp_cred AND ead_asp_ano=asp_ape_ano AND ead_asp_per=asp_ape_per";
 				$cadenaSql .= " left JOIN acest ON est_cod =ead_cod";
@@ -78,27 +79,28 @@ class Sql extends \Sql {
 				$cadenaSql .= "est_nro_iden  documento, ";
 				$cadenaSql .= "est_nombre nombre, ";
 				// en este campo estan los nombres y apellidos
-				$cadenaSql .= "TO_CHAR(DECODE(est_sexo,'M','1','F','2','1')) genero, ";
-				$cadenaSql .= "as_cra_cod_snies pro_consecutivo,  ";
-				$cadenaSql .= "'11001' municipio, ";
-				$cadenaSql .= " est_cod ";
-				$cadenaSql .= "FROM " . $prefijo . "acest ";
-				$cadenaSql .= "INNER JOIN " . $prefijo . "acestotr ON est_cod = eot_cod  ";
-				$cadenaSql .= "INNER JOIN " . $prefijo . "v_tot_matri_ape_per ON est_cod = mat_est_cod ";
-				$cadenaSql .= "INNER JOIN " . $prefijo . "accra ON cra_cod = mat_cra_cod ";
-				$cadenaSql .= "INNER JOIN " . $prefijo . "actipcra ON cra_tip_cra = tra_cod ";
-				$cadenaSql .= "INNER JOIN " . $prefijo . "accra_snies ON as_cra_cod = mat_cra_cod ";
-				$cadenaSql .= "WHERE  ";
-				$cadenaSql .= "mat_ano=" . $variable['annio'];
+				$cadenaSql .= " TO_CHAR(DECODE(est_sexo,'M','1','F','2','1')) genero, ";
+				$cadenaSql .= " as_cra_cod_snies pro_consecutivo,  ";
+				$cadenaSql .= " '11001' municipio, ";
+				$cadenaSql .= " est_cod,";
+				$cadenaSql .= " 'A' ead_estado";//cuando esta valor está en 'A' es un admitido, todos los de postgrado son admitidos
+				$cadenaSql .= " FROM " . $prefijo . "acest ";
+				$cadenaSql .= " INNER JOIN " . $prefijo . "acestotr ON est_cod = eot_cod  ";
+				$cadenaSql .= " INNER JOIN " . $prefijo . "v_tot_matri_ape_per ON est_cod = mat_est_cod ";
+				$cadenaSql .= " INNER JOIN " . $prefijo . "accra ON cra_cod = mat_cra_cod ";
+				$cadenaSql .= " INNER JOIN " . $prefijo . "actipcra ON cra_tip_cra = tra_cod ";
+				$cadenaSql .= " INNER JOIN " . $prefijo . "accra_snies ON as_cra_cod = mat_cra_cod ";
+				$cadenaSql .= " WHERE  ";
+				$cadenaSql .= " mat_ano=" . $variable['annio'];
 				if ($variable['semestre'] == 1) {
 					$cadenaSql .= " AND mat_per='1'";
 				} else {
 					$cadenaSql .= " AND mat_per=3";
 				}
-				$cadenaSql .= "AND SUBSTR(est_cod,0,4)=mat_ano ";
-				$cadenaSql .= "AND SUBSTR(est_cod,5,1)=DECODE(mat_per,1,'1',3,'2',mat_per) ";
-				$cadenaSql .= "AND tra_nivel IN ('DOCTORADO','MAESTRIA','POSGRADO') ";
-				//$cadenaSql .= "AND est_cod=20162094001";
+				$cadenaSql .= " AND SUBSTR(est_cod,0,4)=mat_ano";
+				$cadenaSql .= " AND SUBSTR(est_cod,5,1)=DECODE(mat_per,1,'1',3,'2',mat_per)";
+				$cadenaSql .= " AND tra_nivel IN ('DOCTORADO','MAESTRIA','POSGRADO')";
+				//$cadenaSql .= "AND est_cod=20162103026";
 
 				break;
 
