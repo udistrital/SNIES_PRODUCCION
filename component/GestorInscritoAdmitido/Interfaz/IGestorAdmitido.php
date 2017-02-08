@@ -3,7 +3,7 @@
 namespace sniesInscritoAdmitido;
 
 interface IGestorAdmitido {
-	function contarAdmitidos($periodo);
+	function consultarAdmitidoSnies($annio, $semestre);
 	function consultarAdmitidoPregradoAcademica($annio, $semestre);
 	function consultarAdmitidoPostgradoAcademica($annio, $semestre);
 	function borrarAdmitidoSnies($annio, $semestre);

@@ -50,7 +50,8 @@ class Sql extends \Sql {
 				$cadenaSql .= " TO_CHAR(DECODE(est_tipo_iden,'C', 'CC', 'T', 'TI', 'E', 'CE', 'P', 'PS')) est_tipo_iden,";
 				$cadenaSql .= " est_nro_iden,";
 				$cadenaSql .= " est_cod,";
-				$cadenaSql .= " ead_estado";//cuando esta valor está en 'A' es un admitido
+				$cadenaSql .= " ead_estado";
+				//cuando esta valor está en 'A' es un admitido
 				$cadenaSql .= " FROM acasp";
 				$cadenaSql .= " left JOIN acestadm ON EAD_ASP_CRED=asp_cred AND ead_asp_ano=asp_ape_ano AND ead_asp_per=asp_ape_per";
 				$cadenaSql .= " left JOIN acest ON est_cod =ead_cod";
@@ -83,7 +84,8 @@ class Sql extends \Sql {
 				$cadenaSql .= " as_cra_cod_snies pro_consecutivo,  ";
 				$cadenaSql .= " '11001' municipio, ";
 				$cadenaSql .= " est_cod,";
-				$cadenaSql .= " 'A' ead_estado";//cuando esta valor está en 'A' es un admitido, todos los de postgrado son admitidos
+				$cadenaSql .= " 'A' ead_estado";
+				//cuando esta valor está en 'A' es un admitido, todos los de postgrado son admitidos
 				$cadenaSql .= " FROM " . $prefijo . "acest ";
 				$cadenaSql .= " INNER JOIN " . $prefijo . "acestotr ON est_cod = eot_cod  ";
 				$cadenaSql .= " INNER JOIN " . $prefijo . "v_tot_matri_ape_per ON est_cod = mat_est_cod ";
@@ -306,11 +308,15 @@ class Sql extends \Sql {
 			 * ***************************
 			 */
 
-			case "contarAdmitidos" :
-				$cadenaSql = "SELECT COUNT(documento) FROM";
+			case "consultarAdmitidoSnies" :
+				$cadenaSql = "SELECT ano, semestre, id_tipo_documento, num_documento, pro_consecutivo, 
+       id_municipio ";
+				$cadenaSql .= " FROM ";
 				$cadenaSql .= " admitido ";
-				$cadenaSql .= " WHERE adm_annio=" . $variable['annio'];
-				$cadenaSql .= " AND adm_semestre='" . $variable['semestre'] . "'";
+				$cadenaSql .= " WHERE ano=" . $variable['annio'];
+				$cadenaSql .= " AND semestre=" . $variable['semestre'];
+				echo $cadenaSql;
+				exit ;
 
 				break;
 
