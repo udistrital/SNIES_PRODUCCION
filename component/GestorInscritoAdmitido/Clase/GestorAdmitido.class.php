@@ -18,20 +18,23 @@ class GestorAdmitido implements IGestorAdmitido {
 	}
 
 	function consultarAdmitidoSnies($annio, $semestre) {
-		$this -> miConfigurador = \Configurador::singleton();
-		// configuracion es el nombre de la conexión principal de SARA - se crea de forma automática tomando los
-		// datos de config.inc.php
-		$conexion = "sniesLocal";
 
+		$conexion = "sniesLocal";
 		$esteRecursoDB = $this -> miConfigurador -> fabricaConexiones -> getRecursoDB($conexion);
 
-		$periodo['annio'] = $annio;
+		$periodo['ano'] = $annio;
 		$periodo['semestre'] = $semestre;
 		$cadenaSql = $this -> miSql -> cadena_sql('consultarAdmitidoSnies', $periodo);
-
 		$resultado = $esteRecursoDB -> ejecutarAcceso($cadenaSql, 'busqueda');
 
-		return $resultado[0][0];
+		if ($resultado == FALSE) {
+			$error = $esteRecursoDB -> obtener_error();
+			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';
+			echo $cadenaSql;
+			var_dump($error);
+		}
+
+		return $resultado;
 	}
 
 	function consultarAdmitidoPregradoAcademica($annio, $semestre) {
@@ -40,8 +43,14 @@ class GestorAdmitido implements IGestorAdmitido {
 		$conexion = "academica";
 		$esteRecursoDB = $this -> miConfigurador -> fabricaConexiones -> getRecursoDB($conexion);
 		$cadenaSql = $this -> miSql -> cadena_sql('consultarAdmitidoPregradoAcademica', $periodo);
-
 		$resultado = $esteRecursoDB -> ejecutarAcceso($cadenaSql, 'busqueda');
+
+		if ($resultado == FALSE) {
+			$error = $esteRecursoDB -> obtener_error();
+			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';
+			echo $cadenaSql;
+			var_dump($error);
+		}
 
 		return $resultado;
 	}
@@ -69,16 +78,19 @@ class GestorAdmitido implements IGestorAdmitido {
 		return true;
 	}
 
-	function insertarAdmitido($admitido) {
+	function insertarAdmitidoSnies($admitido) {
 		$conexion = "sniesLocal";
 		$esteRecursoDB = $this -> miConfigurador -> fabricaConexiones -> getRecursoDB($conexion);
-		$cadenaSql = $this -> miSql -> cadena_sql('insertaAdmitidoSnies', $admitido);
+		$cadenaSql = $this -> miSql -> cadena_sql('insertarAdmitidoSnies', $admitido);
 		$resultado = $esteRecursoDB -> ejecutarAcceso($cadenaSql, '');
 
-		if ($resultado == true) {
+		if ($resultado == FALSE) {
+			$error = $esteRecursoDB -> obtener_error();
+			echo '<b>INFORMACION DEL ERROR:</b><br><hr>';
+			echo $cadenaSql;
+			var_dump($error);
+		}else{
 			return true;
-		} else {
-			return false;
 		}
 	}
 

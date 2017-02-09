@@ -37,6 +37,68 @@ class Sql extends \Sql {
 			 * ***************************
 			 */
 
+			case "consultarInscritoAcademica" :
+				$cadenaSql = " SELECT asp_ape_ano ano,";
+				$cadenaSql .= " DECODE(asp_ape_per,1,'1',3,'2', asp_ape_per) semestre,";
+				$cadenaSql .= " DECODE (asp_tip_doc_act, 1, 'CC', 2, 'TI', 3, 'CE') id_tipo_documento,";
+				$cadenaSql .= " asp_nro_iden_act documento,";
+				$cadenaSql .= " asp_apellido apellido,";
+				$cadenaSql .= " asp_nombre nombre,";
+				$cadenaSql .= " TO_CHAR(DECODE(asp_sexo,'M','1','F','2','1')) genero,";
+				$cadenaSql .= " as_cra_cod_snies pro_consecutivo,";
+				$cadenaSql .= " '11001' municipio,";
+				$cadenaSql .= " TO_CHAR(DECODE(est_tipo_iden,'C', 'CC', 'T', 'TI', 'E', 'CE', 'P', 'PS')) est_tipo_iden,";
+				$cadenaSql .= " est_nro_iden,";
+				$cadenaSql .= " est_cod,";
+				$cadenaSql .= " ead_estado,";
+				$cadenaSql .= " 'pregrado' nivel";
+				$cadenaSql .= " FROM acasp";
+				$cadenaSql .= " LEFT JOIN acestadm";
+				$cadenaSql .= " ON EAD_ASP_CRED=asp_cred";
+				$cadenaSql .= " AND ead_asp_ano=asp_ape_ano";
+				$cadenaSql .= " AND ead_asp_per=asp_ape_per";
+				$cadenaSql .= " LEFT JOIN acest";
+				$cadenaSql .= " ON est_cod =ead_cod";
+				$cadenaSql .= " INNER JOIN accra";
+				$cadenaSql .= " ON cra_cod=asp_cra_cod";
+				$cadenaSql .= " INNER JOIN accra_snies";
+				$cadenaSql .= " ON as_cra_cod =asp_cra_cod";
+				$cadenaSql .= " WHERE asp_ape_ano=2016";
+				$cadenaSql .= " AND asp_ape_per =3";
+				$cadenaSql .= " UNION";
+				$cadenaSql .= " SELECT UNIQUE mat_ano ano,";
+				$cadenaSql .= " DECODE(mat_per,1,'1',3,'2', mat_per) semestre,";
+				$cadenaSql .= " TO_CHAR(DECODE(est_tipo_iden,'C', 'CC', 'T', 'TI', 'E', 'CE', 'P', 'PS')) id_tipo_documento,";
+				$cadenaSql .= " est_nro_iden documento,";
+				$cadenaSql .= " '0' apellido,";
+				$cadenaSql .= " est_nombre nombre,";
+				$cadenaSql .= " TO_CHAR(DECODE(est_sexo,'M','1','F','2','1')) genero,";
+				$cadenaSql .= " as_cra_cod_snies pro_consecutivo,";
+				$cadenaSql .= " '11001' municipio,";
+				$cadenaSql .= " TO_CHAR(DECODE(est_tipo_iden,'C', 'CC', 'T', 'TI', 'E', 'CE', 'P', 'PS')) est_tipo_iden,";
+				$cadenaSql .= " est_nro_iden,";
+				$cadenaSql .= " est_cod,";
+				$cadenaSql .= " 'A' ead_estado,";
+				$cadenaSql .= " 'postgrado' nivel";
+				$cadenaSql .= " FROM mntac.acest";
+				$cadenaSql .= " INNER JOIN mntac.acestotr";
+				$cadenaSql .= " ON est_cod = eot_cod";
+				$cadenaSql .= " INNER JOIN mntac.v_tot_matri_ape_per";
+				$cadenaSql .= " ON est_cod = mat_est_cod";
+				$cadenaSql .= " INNER JOIN mntac.accra";
+				$cadenaSql .= " ON cra_cod = mat_cra_cod";
+				$cadenaSql .= " INNER JOIN mntac.actipcra";
+				$cadenaSql .= " ON cra_tip_cra = tra_cod";
+				$cadenaSql .= " INNER JOIN mntac.accra_snies";
+				$cadenaSql .= " ON as_cra_cod = mat_cra_cod";
+				$cadenaSql .= " WHERE mat_ano =2016";
+				$cadenaSql .= " AND mat_per =3";
+				$cadenaSql .= " AND SUBSTR(est_cod,0,4)=mat_ano";
+				$cadenaSql .= " AND SUBSTR(est_cod,5,1)=DECODE(mat_per,1,'1',3,'2',mat_per)";
+				$cadenaSql .= " AND tra_nivel IN ('DOCTORADO','MAESTRIA','POSGRADO')";
+				
+				break;
+
 			case "consultarInscritoPregradoAcademica" :
 				$cadenaSql = " SELECT asp_ape_ano ano,";
 				$cadenaSql .= " DECODE(asp_ape_per,1,'1',3,'2', asp_ape_per) semestre,";
@@ -64,9 +126,10 @@ class Sql extends \Sql {
 				} else {
 					$cadenaSql .= " AND asp_ape_per=3";
 				}
+				echo $cadenaSql . '<br>';
 
 				//$cadenaSql .= " AND est_cod=20162021323";
-				//$cadenaSql .= " AND asp_nro_iden_act=1077033101";
+				//$cadenaSql .= " AND est_nro_iden=1033766067";
 				//$cadenaSql .= " AND asp_nro_iden_act IS NOT NULL"; hay registros sin informacion en ACASP que si estan en ACEST
 
 				break;
@@ -102,7 +165,8 @@ class Sql extends \Sql {
 				$cadenaSql .= " AND SUBSTR(est_cod,0,4)=mat_ano";
 				$cadenaSql .= " AND SUBSTR(est_cod,5,1)=DECODE(mat_per,1,'1',3,'2',mat_per)";
 				$cadenaSql .= " AND tra_nivel IN ('DOCTORADO','MAESTRIA','POSGRADO')";
-				//$cadenaSql .= "AND est_cod=20162103026";
+				echo $cadenaSql;
+				exit ;
 
 				break;
 
@@ -140,7 +204,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " ano, semestre, id_tipo_documento, num_documento, pro_consecutivo, id_municipio";
 				$cadenaSql .= " FROM";
 				$cadenaSql .= " inscrito_programa ";
-				$cadenaSql .= " WHERE ano=" . $variable['annio'];
+				$cadenaSql .= " WHERE ano=" . $variable['ano'];
 				$cadenaSql .= " AND semestre=" . $variable['semestre'];
 
 				break;
@@ -313,10 +377,8 @@ class Sql extends \Sql {
        id_municipio ";
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " admitido ";
-				$cadenaSql .= " WHERE ano=" . $variable['annio'];
+				$cadenaSql .= " WHERE ano=" . $variable['ano'];
 				$cadenaSql .= " AND semestre=" . $variable['semestre'];
-				echo $cadenaSql;
-				exit ;
 
 				break;
 
@@ -325,10 +387,13 @@ class Sql extends \Sql {
 				$cadenaSql .= " admitido ";
 				$cadenaSql .= " WHERE ano=" . $variable['annio'];
 				$cadenaSql .= " AND semestre='" . $variable['semestre'] . "'";
+				echo $cadenaSql;
+				echo 'modificar el registro de un solo admitido';
+				exit ;
 
 				break;
 
-			case "insertaAdmitidoSnies" :
+			case "insertarAdmitidoSnies" :
 				$cadenaSql = " INSERT";
 				$cadenaSql .= " INTO admitido";
 				$cadenaSql .= " (";
@@ -341,10 +406,10 @@ class Sql extends \Sql {
 				$cadenaSql .= " )";
 				$cadenaSql .= " VALUES";
 				$cadenaSql .= " (";
-				$cadenaSql .= "'" . $variable['ANNIO'] . "',";
+				$cadenaSql .= "'" . $variable['ANO'] . "',";
 				$cadenaSql .= "'" . $variable['SEMESTRE'] . "',";
 				$cadenaSql .= "'" . $variable['ID_TIPO_DOCUMENTO'] . "',";
-				$cadenaSql .= "'" . $variable['NUM_DOCUMENTO'] . "',";
+				$cadenaSql .= "'" . $variable['DOCUMENTO'] . "',";
 				$cadenaSql .= "'" . $variable['PRO_CONSECUTIVO'] . "',";
 				$cadenaSql .= " '11001'";
 				$cadenaSql .= " );";

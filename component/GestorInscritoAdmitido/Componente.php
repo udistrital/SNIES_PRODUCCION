@@ -23,6 +23,11 @@ class Componente extends Component implements IGestorInscrito, IGestorAdmitido {
 	}
 
 	// funciones inscritos
+
+	function consultarInscritoAcademica($annio, $semestre) {
+		return $this -> miGestorInscrito -> consultarInscritoAcademica($annio, $semestre);
+	}
+
 	function consultarInscritoPregadoAcademica($annio, $semestre) {
 		return $this -> miGestorInscrito -> consultarInscritoPregadoAcademica($annio, $semestre);
 	}
@@ -80,8 +85,8 @@ class Componente extends Component implements IGestorInscrito, IGestorAdmitido {
 		return $this -> miGestorAdmitido -> borrarAdmitidoSnies($annio, $semestre);
 	}
 
-	function insertarAdmitido($admitido) {
-		return $this -> miGestorAdmitido -> insertarAdmitido($admitido);
+	function insertarAdmitidoSnies($admitido) {
+		return $this -> miGestorAdmitido -> insertarAdmitidoSnies($admitido);
 	}
 
 }
