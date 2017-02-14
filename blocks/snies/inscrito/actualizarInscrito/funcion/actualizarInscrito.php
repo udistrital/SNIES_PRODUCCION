@@ -31,40 +31,23 @@ class FormProcessor {
 		$this -> annio = $_REQUEST['annio'];
 		$this -> semestre = $_REQUEST['semestre'];
 
-
-		// CONSULTAS ACADEMICA PREGRADO
+		// CONSULTAS ACADEMICA - PREGRADO Y POSTGRADO
 		$inscritoAcademica = $this -> miComponente -> consultarInscritoAcademica($this -> annio, $this -> semestre);
-		var_dump($inscritoAcademica);exit;
-		if (is_array($inscritosPregradoAcademica)) {
-			$inscritosPregradoAcademica = $this -> procesarInscritosPregrado($inscritosPregradoAcademica);
+
+		if (is_array($inscritoAcademica)) {
+			$inscritoAcademica = $this -> procesarInscritoAcademica($inscritoAcademica);
 		}
 		
-		// CONSULTAS ACADEMICA PREGRADO
-		$inscritosPregradoAcademica = $this -> miComponente -> consultarInscritoPregadoAcademica($this -> annio, $this -> semestre);
-		if (is_array($inscritosPregradoAcademica)) {
-			$inscritosPregradoAcademica = $this -> procesarInscritosPregrado($inscritosPregradoAcademica);
-		}
-
-		// CONSULTAS ACADEMICA POSTGRADO
-		$inscritosPostgradoAcademica = $this -> miComponente -> consultarInscritoPostgradoAcademica($this -> annio, $this -> semestre);
-		if (is_array($inscritosPostgradoAcademica)) {
-			$inscritosPostgradoAcademica = $this -> procesarInscritosPostgrado($inscritosPostgradoAcademica);
-		}
-		exit;
-
-		//UNIFICAR ACADEMICA PREGRADO Y POSTGRADO
-		$inscritosAcademica = $this -> unificarInscritosPregradoPostgradoAcademica($inscritosPregradoAcademica, $inscritosPostgradoAcademica);
-
 		// INSERTAR, ACTUALIZAR Y/O BORRAR EN TABLA INSCRITO DEL SNIES
-		$this -> registrarInscritos($inscritosAcademica);
-
+		$this -> registrarInscritos($inscritoAcademica);
+		exit;
 		// INSERTAR, ACTUALIZAR Y/O BORRAR EN TABLA INSCRITO_PROGAMA
-		$this -> registrarInscritoPrograma($inscritosAcademica);
-
+		$this -> registrarInscritoPrograma($inscritoAcademica);
+		exit;
 		// INSERTAR, ACTUALIZAR Y/O BORRAR EN TABLA INSCRITO_PROGAMA
-		$admitidosAcademica = $this -> obtenerAdmitidosAcademica($inscritosAcademica);
+		$admitidoAcademica = $this -> obtenerAdmitidosAcademica($inscritoAcademica);
 		//se obtiene a partir del arreglo de inscritos
-		$this -> registrarAdmitido($admitidosAcademica);
+		$this -> registrarAdmitido($admitidoAcademica);
 
 		echo 'Proceso finalizado';
 
@@ -75,86 +58,57 @@ class FormProcessor {
 	 * Separa los nombres en PRIMER_APELLIDO, SEGUNDO_APELLIDO, PRIMER_NOMBRE, SEGUNDO_NOMBRE
 	 * Retorne el arreglo ajustado
 	 */
-	function procesarInscritosPregrado($inscritosPregrado) {
+	function procesarInscritoAcademica($inscrito) {
 
-		foreach ($inscritosPregrado as $clave => $valor) {
-			if (isset($inscritosPregrado[$clave]['EST_TIPO_IDEN'])) {
-				$inscritosPregrado[$clave]['ID_TIPO_DOCUMENTO'] = $inscritosPregrado[$clave]['EST_TIPO_IDEN'];
-				$inscritosPregrado[$clave]['DOCUMENTO'] = $inscritosPregrado[$clave]['EST_NRO_IDEN'];
-				//Quita del arreglo el tipo y numero de documanto del estudiantes pera evitar confusión
-				unset($inscritosPregrado[$clave]['EST_TIPO_IDEN']);
-				unset($inscritosPregrado[$clave]['9']);
-				unset($inscritosPregrado[$clave]['EST_NRO_IDEN']);
-				unset($inscritosPregrado[$clave]['10']);
+		$miProcesadorNombre = new procesadorNombre();
+		$inscrito = $miProcesadorNombre -> quitarAcento($inscrito, 'APELLIDO');
+		$inscrito = $miProcesadorNombre -> quitarAcento($inscrito, 'NOMBRE');
+
+		foreach ($inscrito as $clave => $valor) {
+
+			if ($inscrito[$clave]['NIVEL'] == 'PREGRADO') {
+
+				if (isset($inscrito[$clave]['EST_TIPO_IDEN'])) {
+					$inscrito[$clave]['ID_TIPO_DOCUMENTO'] = $inscrito[$clave]['EST_TIPO_IDEN'];
+					$inscrito[$clave]['DOCUMENTO'] = $inscrito[$clave]['EST_NRO_IDEN'];
+					//Quita del arreglo el tipo y numero de documento del estudiantes pera evitar confusión
+					unset($inscrito[$clave]['EST_TIPO_IDEN']);
+					unset($inscrito[$clave]['9']);
+					unset($inscrito[$clave]['EST_NRO_IDEN']);
+					unset($inscrito[$clave]['10']);
+				} else {
+
+				}
+
+				// descompone nombre y apellidos en sus partes y las agrega al final de cada registro
+				// echo $inscritosPregrado [$clave] ['DOCUMENTO'] . '<br>';
+				// divide los apellidos compuestos en primer apellido y segundo apellido
+				$apellido = $miProcesadorNombre -> dividirApellidos($inscrito[$clave]['APELLIDO']);
+				$inscrito[$clave]['PRIMER_APELLIDO'] = $apellido['primer_apellido'];
+				$inscrito[$clave]['SEGUNDO_APELLIDO'] = $apellido['segundo_apellido'];
+
+				// divide los nombres compuestos en primer nombre y segundo nombre
+				$nombre = $miProcesadorNombre -> dividirNombres($inscrito[$clave]['NOMBRE']);
+
+				$inscrito[$clave]['PRIMER_NOMBRE'] = $nombre['primer_nombre'];
+				$inscrito[$clave]['SEGUNDO_NOMBRE'] = $nombre['segundo_nombre'];
+
 			} else {
 
+				// descompone nombre completo en sus partes y las agrega al final de cada registro
+				// echo $inscritosPostgrado [$clave] ['DOCUMENTO'] . '<br>';
+
+				// divide los apellidos compuestos en primer apellido y segundo apellido
+				$nombreCompleto = $miProcesadorNombre -> dividirNombreCompleto($inscrito[$clave]['NOMBRE']);
+				$inscrito[$clave]['PRIMER_APELLIDO'] = $nombreCompleto['primer_apellido'];
+				$inscrito[$clave]['SEGUNDO_APELLIDO'] = $nombreCompleto['segundo_apellido'];
+				$inscrito[$clave]['PRIMER_NOMBRE'] = $nombreCompleto['primer_nombre'];
+				$inscrito[$clave]['SEGUNDO_NOMBRE'] = $nombreCompleto['segundo_nombre'];
 			}
 
 		}
 
-		$miProcesadorNombre = new procesadorNombre();
-
-		$inscritosPregrado = $miProcesadorNombre -> quitarAcento($inscritosPregrado, 'APELLIDO');
-		$inscritosPregrado = $miProcesadorNombre -> quitarAcento($inscritosPregrado, 'NOMBRE');
-
-		// descompone nombre y apellidos en sus partes y las agrega al final de cada registro
-		foreach ($inscritosPregrado as $clave => $valor) {
-			// echo $inscritosPregrado [$clave] ['DOCUMENTO'] . '<br>';
-
-			// divide los apellidos compuestos en primer apellido y segundo apellido
-			$apellido = $miProcesadorNombre -> dividirApellidos($inscritosPregrado[$clave]['APELLIDO']);
-			$inscritosPregrado[$clave]['PRIMER_APELLIDO'] = $apellido['primer_apellido'];
-			$inscritosPregrado[$clave]['SEGUNDO_APELLIDO'] = $apellido['segundo_apellido'];
-
-			// divide los nombres compuestos en primer nombre y segundo nombre
-			$nombre = $miProcesadorNombre -> dividirNombres($inscritosPregrado[$clave]['NOMBRE']);
-
-			$inscritosPregrado[$clave]['PRIMER_NOMBRE'] = $nombre['primer_nombre'];
-			$inscritosPregrado[$clave]['SEGUNDO_NOMBRE'] = $nombre['segundo_nombre'];
-		}
-
-		return $inscritosPregrado;
-	}
-
-	function procesarInscritosPostgrado($inscritosPostgrado) {
-
-		$miProcesadorNombre = new procesadorNombre();
-
-		$inscritosPostgrado = $miProcesadorNombre -> quitarAcento($inscritosPostgrado, 'NOMBRE');
-
-		// descompone nombre completo en sus partes y las agrega al final de cada registro
-		foreach ($inscritosPostgrado as $clave => $valor) {
-			// echo $inscritosPostgrado [$clave] ['DOCUMENTO'] . '<br>';
-
-			// divide los apellidos compuestos en primer apellido y segundo apellido
-			$nombreCompleto = $miProcesadorNombre -> dividirNombreCompleto($inscritosPostgrado[$clave]['NOMBRE']);
-			$inscritosPostgrado[$clave]['PRIMER_APELLIDO'] = $nombreCompleto['primer_apellido'];
-			$inscritosPostgrado[$clave]['SEGUNDO_APELLIDO'] = $nombreCompleto['segundo_apellido'];
-			$inscritosPostgrado[$clave]['PRIMER_NOMBRE'] = $nombreCompleto['primer_nombre'];
-			$inscritosPostgrado[$clave]['SEGUNDO_NOMBRE'] = $nombreCompleto['segundo_nombre'];
-		}
-
-		return $inscritosPostgrado;
-
-	}
-
-	/**
-	 * Crea un solo arreglo con pregrado y postgrado de la académica
-	 * Cada array tiene como indice: ano||semestre||id_tipo_documento||documento|| - || pro_consecutivo Ejem: 20162CC78125789-3432
-	 */
-	function unificarInscritosPregradoPostgradoAcademica($pregrado, $postgrado) {
-		//Coloca en el indice de cada arreglo ano||semestre||id_tipo_documento||documento
-		foreach ($pregrado as $key => $value) {
-			$inscritosPregrado[$pregrado[$key]['ANO'] . $pregrado[$key]['SEMESTRE'] . $pregrado[$key]['ID_TIPO_DOCUMENTO'] . $pregrado[$key]['DOCUMENTO'] . "-" . $pregrado[$key]['PRO_CONSECUTIVO']] = $value;
-		}
-
-		//Coloca en el indice de cada arreglo ano||semestre||id_tipo_documento||documento
-		foreach ($postgrado as $key => $value) {
-			$inscritosPostgrado[$postgrado[$key]['ANO'] . $postgrado[$key]['SEMESTRE'] . $postgrado[$key]['ID_TIPO_DOCUMENTO'] . $postgrado[$key]['DOCUMENTO'] . "-" . $postgrado[$key]['PRO_CONSECUTIVO']] = $value;
-		}
-
-		//arreglo que incluye inscritos de pregrado y postgrado de la academica
-		return array_merge($inscritosPregrado, $inscritosPostgrado);
+		return $inscrito;
 	}
 
 	/**
@@ -185,13 +139,13 @@ class FormProcessor {
 			foreach ($inscritoNuevo as $unInscritoNuevo) {
 				$this -> miComponente -> insertarInscritoSnies($unInscritoNuevo);
 			}
-			echo 'Registros nuevos insertados en inscrito<br>';
+			echo 'Registros nuevos insertados en inscrito<br>';			
 
 			//ACTUALIZA LOS QUE YA ESTAN EN SNIES
 			$inscritosActualizar = array_intersect_key($inscritoUnicoAcademica, $inscritoSniesClave);
 			//aqui debería estar la función de actualizacion, por agilizar el tiempo de ejecución no se implementa en esta estapa
 			echo 'Registros existentes actualizados en inscrito<br>';
-
+			
 			//BORRA LOS QUE NO DEBERÍAN ESTAR EN SNIES
 			$inscritoError = array_diff_key($inscritoSniesClave, $inscritoUnicoAcademica);
 			foreach ($inscritoError as $unInscritoError) {
@@ -283,6 +237,7 @@ class FormProcessor {
 
 			//BORRA LOS QUE NO DEBERÍAN ESTAR EN INSCRITO_PROGRAMA DEL SNIES - es decir los que no estan en académica
 			$admitidoError = array_diff_key($admitidoSniesClave, $admitidoNuevo);
+			var_dump($admitidoError);exit;
 			foreach ($admitidoError as $unAdmitidoError) {
 				$this -> miComponente -> borrarAdmitidoSnies($unAdmitidoError);
 			}

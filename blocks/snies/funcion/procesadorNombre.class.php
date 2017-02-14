@@ -99,8 +99,7 @@ class procesadorNombre {
 		
 		// se reemplaza en cada registo el caracter de acento por el sencillo ej: á=>a
 		// SNIES ya soporta acentos esta clase solo ajusta los errores
-		foreach ( $arreglo as $key => $value ) {
-			
+		foreach ( $arreglo as $key => $value ) {			
 			$arreglo [$key] [$campo] = str_replace ( $acento, $sinAcento, $arreglo [$key] [$campo] );
 		}
 		
