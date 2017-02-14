@@ -43,7 +43,8 @@ class FormProcessor {
 
 		// INSERTAR, ACTUALIZAR Y/O BORRAR EN TABLA INSCRITO_PROGAMA
 		$this -> registrarInscritoPrograma($inscritoAcademica);
-		exit ;
+		
+		echo 'corregir admitidos, la clav está en las claves';
 		// INSERTAR, ACTUALIZAR Y/O BORRAR EN TABLA INSCRITO_PROGAMA
 		$admitidoAcademica = $this -> obtenerAdmitidosAcademica($inscritoAcademica);
 		//se obtiene a partir del arreglo de inscritos
