@@ -181,7 +181,6 @@ class Pgsql extends ConectorDb {
     }
     // Fin del método desconectar_db
     function ejecutarAcceso($cadena, $tipo = "", $numeroRegistros = 0) {
-    	echo $cadena.'<br>';
 
         if (! is_resource ( $this->enlace ) && $this->enlace == "") {
             error_log ( "NO HAY ACCESO A LA BASE DE DATOS!!!" );

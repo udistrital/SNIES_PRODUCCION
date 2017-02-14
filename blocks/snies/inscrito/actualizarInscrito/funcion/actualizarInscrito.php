@@ -37,13 +37,13 @@ class FormProcessor {
 		if (is_array($inscritoAcademica)) {
 			$inscritoAcademica = $this -> procesarInscritoAcademica($inscritoAcademica);
 		}
-		
+
 		// INSERTAR, ACTUALIZAR Y/O BORRAR EN TABLA INSCRITO DEL SNIES
 		$this -> registrarInscritos($inscritoAcademica);
-		exit;
+
 		// INSERTAR, ACTUALIZAR Y/O BORRAR EN TABLA INSCRITO_PROGAMA
 		$this -> registrarInscritoPrograma($inscritoAcademica);
-		exit;
+		exit ;
 		// INSERTAR, ACTUALIZAR Y/O BORRAR EN TABLA INSCRITO_PROGAMA
 		$admitidoAcademica = $this -> obtenerAdmitidosAcademica($inscritoAcademica);
 		//se obtiene a partir del arreglo de inscritos
@@ -139,13 +139,13 @@ class FormProcessor {
 			foreach ($inscritoNuevo as $unInscritoNuevo) {
 				$this -> miComponente -> insertarInscritoSnies($unInscritoNuevo);
 			}
-			echo 'Registros nuevos insertados en inscrito<br>';			
+			echo 'Registros nuevos insertados en inscrito<br>';
 
 			//ACTUALIZA LOS QUE YA ESTAN EN SNIES
 			$inscritosActualizar = array_intersect_key($inscritoUnicoAcademica, $inscritoSniesClave);
 			//aqui debería estar la función de actualizacion, por agilizar el tiempo de ejecución no se implementa en esta estapa
 			echo 'Registros existentes actualizados en inscrito<br>';
-			
+
 			//BORRA LOS QUE NO DEBERÍAN ESTAR EN SNIES
 			$inscritoError = array_diff_key($inscritoSniesClave, $inscritoUnicoAcademica);
 			foreach ($inscritoError as $unInscritoError) {
@@ -163,7 +163,11 @@ class FormProcessor {
 
 	}
 
-	function registrarInscritoPrograma($inscritoPrograma) {
+	function registrarInscritoPrograma($inscrito) {
+
+		foreach ($inscrito as $key => $value) {
+			$inscritoAcademica[$inscrito[$key]['ANO'] . $inscrito[$key]['SEMESTRE'] . $inscrito[$key]['ID_TIPO_DOCUMENTO'] . $inscrito[$key]['DOCUMENTO'] . "-" . $inscrito[$key]['PRO_CONSECUTIVO']] = $value;
+		}
 
 		$inscritoProgSnies = $this -> miComponente -> consultarInscritoProgramaSnies($this -> annio, $this -> semestre);
 
@@ -173,7 +177,7 @@ class FormProcessor {
 				$inscritoSniesClave[$inscritoProgSnies[$key]['ano'] . $inscritoProgSnies[$key]['semestre'] . $inscritoProgSnies[$key]['id_tipo_documento'] . $inscritoProgSnies[$key]['num_documento'] . "-" . $inscritoProgSnies[$key]['pro_consecutivo']] = $value;
 			}
 			//REGISTRA INSCRITO_PROGRAMA NUEVO EN EL SNIES
-			$inscritoProgramaNuevo = array_diff_key($inscritoPrograma, $inscritoSniesClave);
+			$inscritoProgramaNuevo = array_diff_key($inscritoAcademica, $inscritoSniesClave);
 
 			foreach ($inscritoProgramaNuevo as $unInscritoProgramaNuevo) {
 				$this -> miComponente -> insertarInscritoProgramaSnies($unInscritoProgramaNuevo);
@@ -181,12 +185,12 @@ class FormProcessor {
 			echo 'Registros nuevos insertados en inscrito_programa<br>';
 
 			//ACTUALIZA LOS QUE ESTAN EN INSCRITO_PROGRAMA DEL SNIES
-			$inscritosProgramaActualizar = array_intersect_key($inscritoProgramaNuevo, $inscritoSniesClave);
+			$inscritosProgramaActualizar = array_intersect_key($inscritoAcademica, $inscritoSniesClave);
 			//aqui debería estar la función de actualizacion, por agilizar el tiempo de ejecución no se implementa en esta estapa
 			echo 'Registros existentes actualizados<br>';
 
 			//BORRA LOS QUE NO DEBERÍAN ESTAR EN INSCRITO_PROGRAMA DEL SNIES - es decir los que no estan en académica
-			$inscritoError = array_diff_key($inscritoSniesClave, $inscritoProgramaNuevo);
+			$inscritoError = array_diff_key($inscritoSniesClave, $inscritoAcademica);
 			foreach ($inscritoError as $unInscritoError) {
 				$this -> miComponente -> borrarInscritoSnies($unInscritoError);
 			}
@@ -194,7 +198,7 @@ class FormProcessor {
 		} else {
 
 			//Estan en académica y no en SNIES, INSERTAR
-			foreach ($inscritoPrograma as $unInscritoPrograma) {
+			foreach ($inscrito as $unInscritoPrograma) {
 				$this -> miComponente -> insertarInscritoProgramaSnies($unInscritoPrograma);
 			}
 			echo 'Registros nuevos insertados en inscrito_programa<br>';
@@ -237,7 +241,8 @@ class FormProcessor {
 
 			//BORRA LOS QUE NO DEBERÍAN ESTAR EN INSCRITO_PROGRAMA DEL SNIES - es decir los que no estan en académica
 			$admitidoError = array_diff_key($admitidoSniesClave, $admitidoNuevo);
-			var_dump($admitidoError);exit;
+			var_dump($admitidoError);
+			exit ;
 			foreach ($admitidoError as $unAdmitidoError) {
 				$this -> miComponente -> borrarAdmitidoSnies($unAdmitidoError);
 			}

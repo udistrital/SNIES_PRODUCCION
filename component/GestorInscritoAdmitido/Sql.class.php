@@ -352,6 +352,7 @@ class Sql extends \Sql {
 				break;
 		}
 
+		echo $cadenaSql.'<hr>';
 		return $cadenaSql;
 	}
 
