@@ -44,11 +44,8 @@ class FormProcessor {
 		// INSERTAR, ACTUALIZAR Y/O BORRAR EN TABLA INSCRITO_PROGAMA
 		$this -> registrarInscritoPrograma($inscritoAcademica);
 		
-		echo 'corregir admitidos, la clav está en las claves';
 		// INSERTAR, ACTUALIZAR Y/O BORRAR EN TABLA INSCRITO_PROGAMA
-		$admitidoAcademica = $this -> obtenerAdmitidosAcademica($inscritoAcademica);
-		//se obtiene a partir del arreglo de inscritos
-		$this -> registrarAdmitido($admitidoAcademica);
+		$this -> registrarAdmitido($inscritoAcademica);
 
 		echo 'Proceso finalizado';
 
@@ -119,6 +116,8 @@ class FormProcessor {
 	 * Borra si no está en la ACADEMICA
 	 */
 	function registrarInscritos($inscrito) {
+		
+		echo '<b>INSCRITO - Inicio del proceso...</b><br>';
 
 		//Obtiene un solo registro por inscrito, sin importar que esté en varios proyectos
 		foreach ($inscrito as $key => $value) {
@@ -165,6 +164,7 @@ class FormProcessor {
 	}
 
 	function registrarInscritoPrograma($inscrito) {
+		echo '<b>INSCRITO PROGRAMA - Inicio del proceso...</b><br>';
 
 		foreach ($inscrito as $key => $value) {
 			$inscritoAcademica[$inscrito[$key]['ANO'] . $inscrito[$key]['SEMESTRE'] . $inscrito[$key]['ID_TIPO_DOCUMENTO'] . $inscrito[$key]['DOCUMENTO'] . "-" . $inscrito[$key]['PRO_CONSECUTIVO']] = $value;
@@ -206,18 +206,14 @@ class FormProcessor {
 		}
 	}
 
-	function obtenerAdmitidosAcademica($inscritos) {
-		foreach ($inscritos as $key => $value) {
-			if (isset($inscritos[$key]['EAD_ESTADO']) and $inscritos[$key]['EAD_ESTADO'] == 'A') {
-				$admitidos[$inscritos[$key]['ANO'] . $inscritos[$key]['SEMESTRE'] . $inscritos[$key]['ID_TIPO_DOCUMENTO'] . $inscritos[$key]['DOCUMENTO'] . "-" . $inscritos[$key]['PRO_CONSECUTIVO']] = $value;
+	function registrarAdmitido($inscrito) {
+		echo '<b>ADMITIDO - Inicio del proceso...</b><br>';
+
+		foreach ($inscrito as $key => $value) {
+			if (isset($inscrito[$key]['EAD_ESTADO']) and $inscrito[$key]['EAD_ESTADO'] == 'A') {
+				$admitidoAcademica[$inscrito[$key]['ANO'] . $inscrito[$key]['SEMESTRE'] . $inscrito[$key]['ID_TIPO_DOCUMENTO'] . $inscrito[$key]['DOCUMENTO'] . "-" . $inscrito[$key]['PRO_CONSECUTIVO']] = $value;
 			}
 		}
-
-		return $admitidos;
-
-	}
-
-	function registrarAdmitido($admitido) {
 
 		$admitidoSnies = $this -> miComponente -> consultarAdmitidoSnies($this -> annio, $this -> semestre);
 
@@ -228,7 +224,8 @@ class FormProcessor {
 			}
 
 			//REGISTRA ADMITIDO NUEVO EN EL SNIES
-			$admitidoNuevo = array_diff_key($admitido, $admitidoSniesClave);
+			$admitidoNuevo = array_diff_key($admitidoAcademica, $admitidoSniesClave);
+
 
 			foreach ($admitidoNuevo as $unAdmitidoNuevo) {
 				$this -> miComponente -> insertarAdmitidoSnies($unAdmitidoNuevo);
@@ -236,14 +233,14 @@ class FormProcessor {
 			echo 'Registros nuevos insertados en admitido<br>';
 
 			//ACTUALIZA LOS QUE ESTAN EN INSCRITO_PROGRAMA DEL SNIES
-			$admitidosActualizar = array_intersect_key($admitidoNuevo, $admitidoSniesClave);
+			$admitidosActualizar = array_intersect_key($admitidoAcademica, $admitidoSniesClave);
+
 			//aqui debería estar la función de actualizacion, por agilizar el tiempo de ejecución no se implementa en esta estapa
 			echo 'Registros existentes actualizados<br>';
 
 			//BORRA LOS QUE NO DEBERÍAN ESTAR EN INSCRITO_PROGRAMA DEL SNIES - es decir los que no estan en académica
-			$admitidoError = array_diff_key($admitidoSniesClave, $admitidoNuevo);
-			var_dump($admitidoError);
-			exit ;
+			$admitidoError = array_diff_key($admitidoSniesClave, $admitidoAcademica);
+
 			foreach ($admitidoError as $unAdmitidoError) {
 				$this -> miComponente -> borrarAdmitidoSnies($unAdmitidoError);
 			}
@@ -251,8 +248,8 @@ class FormProcessor {
 		} else {
 
 			//Estan en académica y no en SNIES, INSERTAR
-			foreach ($admitido as $unAdmitido) {
-				$this -> miComponente -> insertarAdmitidoSnies($unAdmitido);
+			foreach ($admitidoAcademica as $unAdmitidoAcademica) {
+				$this -> miComponente -> insertarAdmitidoSnies($unAdmitidoAcademica);
 			}
 			echo 'Registros nuevos insertados en admitido<br>';
 		}
