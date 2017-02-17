@@ -35,19 +35,19 @@ class FormProcessor {
 		 * 3. Dividir nombres
 		 * 4. Actualizar en PARTICIPANTE
 		 */
-		
+
 		// estudiante de la académica
 		echo 'Consultando estudiantes...<br>';
 		$estudiante = $this -> miComponente -> consultarEstudianteAcademica($this -> annio, $this -> semestre);
-		
+
 		$miProcesadorNombre = new procesadorNombre();
-		
+
 		echo 'Eliminando caracteres no válidos...<br>';
 		//Busca y presenta los caracteres inválidos
 		$caracteresInvalidos = $miProcesadorNombre -> buscarCaracteresInvalidos($estudiante, 'EST_NOMBRE');
 
 		// quita acentos del nombre
-		$estudiante = $miProcesadorNombre -> quitarAcento($estudiante, 'EST_NOMBRE');		
+		$estudiante = $miProcesadorNombre -> quitarAcento($estudiante, 'EST_NOMBRE');
 
 		echo 'Separando nombres...<br>';
 		// descompone nombre completo en sus partes y las aglega al final de cada registro
@@ -69,7 +69,8 @@ class FormProcessor {
 		$estudiante = $miProcesadorExcepcion -> procesarExcepcionEstudiante($estudiante);
 		//var_dump($estudiante);
 		echo 'Actualizando participantes <br>';
-		$this -> actualizarParticipante($estudiante);
+		echo '<b>PARTICIPANTE - Inicio del proceso...</b><br>';
+		$this -> registrarParticipante($estudiante);
 
 		// $valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 		// $valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
@@ -83,57 +84,54 @@ class FormProcessor {
 	}
 
 	/**
-	 * Funcion que decide que hacer con el registro de un participante
-	 * 1.
-	 * Si no existe lo registra
-	 * 2. Si existe y es igual el tipo de documento se actualiza
-	 * 3. Si existe y es diferente el tipo de documento lo borra
-	 *
-	 * @param array $estudiante
-	 *        	datos de estudiante
+	 * Funcion que inserta, actualiza o borra en la tabla inscritos de SNIES
+	 * Registra si no existe en SNIES
+	 * Actualiza si existe en el SNIES
+	 * Borra si no está en la ACADEMICA
 	 */
-	function actualizarParticipante($estudiante) {
-		foreach ($estudiante as $unEstudiante) {
-			echo 'N. DOCUMENTO: ' . $unEstudiante['NUM_DOCUMENTO'] . '<br>';
-			// consulta en la tabla participante y cuenta el número de registros retornados
-			$participante = $this -> miComponente -> consultarParticipante($unEstudiante);
-			//echo 'Participante en SNIES';
-			//var_dump($participante);			
-			// si no existe insertar el nuevo registro
-			if ($participante == false) {
-				$this -> miComponente -> registrarParticipante($unEstudiante);
-				echo $unEstudiante['NUM_DOCUMENTO'] . ' Nuevo<br>';
-			} else {
-				// Si existe y es igual el tipo actualizar si no es igual borrar
-				foreach ($participante as $unParticipante) {
-					if ($unParticipante['id_tipo_documento'] == $unEstudiante['ID_TIPO_DOCUMENTO']) {
-						//Mejoras de rendimiento: se debe verificar por software las diferencias entre los dos registros 
-						// si hay diferencias hacer la actializacion si no hay, no hacerlo.
-						$this -> miComponente -> actualizarParticipante($unEstudiante);
-						//echo $unEstudiante ['NUM_DOCUMENTO'] . ' actualizado<br>';exit;
-					} else {
-						// Borra los registros
-						// El filtro es número y tipo de documento que aparece en la tabla participante
-						// OJO, NO es el obtenido de la DB académica
-						$estudianteError['NUM_DOCUMENTO'] = $unParticipante['num_documento'];
-						$estudianteError['ID_TIPO_DOCUMENTO'] = $unParticipante['id_tipo_documento'];
+	function registrarParticipante($estudiante) {
 
-						$this -> miComponente -> borrarParticipante($estudianteError);
-
-						$participante = $this -> miComponente -> consultarParticipante($unEstudiante);
-
-						// si no existe insertar el nuevo registro
-						if ($participante == false) {
-							$this -> miComponente -> registrarParticipante($unEstudiante);
-							echo $unEstudiante['NUM_DOCUMENTO'] . ' Nuevo<br>';
-						}
-
-						echo $unEstudiante['NUM_DOCUMENTO'] . ' borrado<br>';
-					}
-				}
-			}
+		//definir clave del arreglo como DOCUMENTO_ID_TIPO_DOCUMENTO ejemplo: 1000124545CC
+		foreach ($estudiante as $key => $value) {
+			$participanteAcademica[$estudiante[$key]['NUM_DOCUMENTO'] . $estudiante[$key]['ID_TIPO_DOCUMENTO']] = $value;
 		}
-		echo 'terminado';
+
+		// CONSULTA LA TABLA INSCRITO SNIES
+		$participante = $this -> miComponente -> consultarParticipanteTodos($this -> annio, $this -> semestre);
+
+		//Coloca en el indice de cada arreglo de lo consultado en el SNIES ano||semestre||id_tipo_documento||documento
+		if ($participante != NULL) {
+			foreach ($participante as $key => $value) {
+				$participanteSnies[$participante[$key]['num_documento'] . $participante[$key]['id_tipo_documento']] = $value;
+			}
+
+			//REGISTRA LOS NUEVOS PARTICIPANTES EN SNIES
+			$participanteNuevo = array_diff_key($participanteAcademica, $participanteSnies);			
+			//Estan en académica y no en SNIES, INSERTAR
+			foreach ($participanteNuevo as $unParticipanteNuevo) {
+				$this -> miComponente -> registrarParticipante($participanteNuevo);
+			}
+			echo 'NUEVOS<br>';
+
+			//ACTUALIZA LOS QUE YA ESTAN EN SNIES
+			echo 'ACTUALIZAR<br>';
+			$inscritosActualizar = array_intersect_key($participanteAcademica, $participanteSnies);
+			//aqui debería estar la función de actualizacion, por agilizar el tiempo de ejecución no se implementa en esta estapa
+			//$this -> miComponente -> actualizarParticipante($unEstudiante);
+			echo 'Registros existentes actualizados en inscrito<br>';
+
+			//BORRA LOS QUE NO DEBERÍAN ESTAR EN SNIES, NO SE BORRAN
+			//Los documentos que estén repetidos con diferente tipo se ajustan con la plantilla de correción de participantes de HECAA
+
+		} else {
+
+			//Estan en académica y no en SNIES, INSERTAR
+			foreach ($estudiante as $unEstudiante) {
+				$this -> miComponente -> registrarParticipante($unEstudiante);
+			}
+			echo 'Registros nuevos insertados en inscrito<br>';
+		}
+
 	}
 
 }
