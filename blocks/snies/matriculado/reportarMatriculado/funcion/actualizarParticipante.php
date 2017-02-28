@@ -1,7 +1,7 @@
 <?php
 include_once ('component/GestorEstudiante/Componente.php');
-include_once ('blocks/snies/matriculado/reportarMatriculado/funcion/procesadorNombre.class.php');
-include_once ('blocks/snies/matriculado/reportarMatriculado/funcion/procesadorExcepcion.class.php');
+include_once ('blocks/snies/funcion/procesadorNombre.class.php');
+include_once ('blocks/snies/funcion/procesadorExcepcion.class.php');
 use sniesEstudiante\Componente;
 use bloqueSnies\procesadorExcepcion;
 use bloqueSnies\procesadorNombre;
@@ -60,14 +60,13 @@ class FormProcessor {
 			$estudiante[$clave]['SEGUNDO_NOMBRE'] = $nombreCompleto['segundo_nombre'];
 		}
 
-		echo 'Codificando valores nulos...<br>';
 		$miProcesadorExcepcion = new procesadorExcepcion();
 
 		// FORMATEA LOS VALORES NULOS, CODIFICA EXCEPCIONES
 
 		//************************************/// OJO REVISAR LAS EXCEPCIONES
 		$estudiante = $miProcesadorExcepcion -> procesarExcepcionEstudiante($estudiante);
-		//var_dump($estudiante);
+
 		echo 'Actualizando participantes <br>';
 		echo '<b>PARTICIPANTE - Inicio del proceso...</b><br>';
 		$this -> registrarParticipante($estudiante);
@@ -99,22 +98,23 @@ class FormProcessor {
 		// CONSULTA LA TABLA INSCRITO SNIES
 		$participante = $this -> miComponente -> consultarParticipanteTodos($this -> annio, $this -> semestre);
 
-		//Coloca en el indice de cada arreglo de lo consultado en el SNIES ano||semestre||id_tipo_documento||documento
+		//Coloca en el indice de cada arreglo de lo consultado en el SNIES id_tipo_documento||documento
 		if ($participante != NULL) {
 			foreach ($participante as $key => $value) {
 				$participanteSnies[$participante[$key]['num_documento'] . $participante[$key]['id_tipo_documento']] = $value;
 			}
 
 			//REGISTRA LOS NUEVOS PARTICIPANTES EN SNIES
-			$participanteNuevo = array_diff_key($participanteAcademica, $participanteSnies);			
+			$participanteNuevo = array_diff_key($participanteAcademica, $participanteSnies);
+
 			//Estan en académica y no en SNIES, INSERTAR
 			foreach ($participanteNuevo as $unParticipanteNuevo) {
-				$this -> miComponente -> registrarParticipante($participanteNuevo);
+				$this -> miComponente -> registrarParticipante($unParticipanteNuevo);
 			}
 			echo 'NUEVOS<br>';
 
 			//ACTUALIZA LOS QUE YA ESTAN EN SNIES
-			echo 'ACTUALIZAR<br>';
+			echo '<br>ACTUALIZAR<br>';
 			$inscritosActualizar = array_intersect_key($participanteAcademica, $participanteSnies);
 			//aqui debería estar la función de actualizacion, por agilizar el tiempo de ejecución no se implementa en esta estapa
 			//$this -> miComponente -> actualizarParticipante($unEstudiante);

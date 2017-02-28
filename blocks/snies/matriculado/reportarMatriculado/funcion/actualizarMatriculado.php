@@ -46,12 +46,12 @@ class FormProcessor {
 		$estudiante = $miProcesadorExcepcion -> procesarExcepcionEstudiante($estudiante);
 
 		echo 'proceso 1 actualizarEstudiantePrimerCurso...<br>';
+		echo 'Evaluar para otras variables se ejecutan excepciones y en esta no por esto no coincide';
 		$this -> actualizarEstudiantePrimerCurso($estudiante);		
 		echo 'proceso 2 actualizarMatriculado<br>';
 		$this -> actualizarMatriculado($estudiante);
 		echo 'FIN<br>';exit;
-		
-		
+				
 		$valorCodificado = "&pagina=" . $this -> miConfigurador -> getVariableConfiguracion('pagina');
 		$valorCodificado = $this -> miConfigurador -> fabricaConexiones -> crypto -> codificar($valorCodificado);
 

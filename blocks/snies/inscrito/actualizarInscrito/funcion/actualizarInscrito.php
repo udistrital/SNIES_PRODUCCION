@@ -36,14 +36,14 @@ class FormProcessor {
 
 		if (is_array($inscritoAcademica)) {
 			$inscritoAcademica = $this -> procesarInscritoAcademica($inscritoAcademica);
-		}
+		}		
 
 		// INSERTAR, ACTUALIZAR Y/O BORRAR EN TABLA INSCRITO DEL SNIES
 		$this -> registrarInscritos($inscritoAcademica);
 
 		// INSERTAR, ACTUALIZAR Y/O BORRAR EN TABLA INSCRITO_PROGAMA
 		$this -> registrarInscritoPrograma($inscritoAcademica);
-		
+
 		// INSERTAR, ACTUALIZAR Y/O BORRAR EN TABLA INSCRITO_PROGAMA
 		$this -> registrarAdmitido($inscritoAcademica);
 
@@ -106,6 +106,9 @@ class FormProcessor {
 
 		}
 
+		$miProcesadorExcepcion = new procesadorExcepcion();
+		$inscrito = $miProcesadorExcepcion -> procesarExcepcionInscrito($inscrito);
+
 		return $inscrito;
 	}
 
@@ -116,7 +119,7 @@ class FormProcessor {
 	 * Borra si no está en la ACADEMICA
 	 */
 	function registrarInscritos($inscrito) {
-		
+
 		echo '<b>INSCRITO - Inicio del proceso...</b><br>';
 
 		//Obtiene un solo registro por inscrito, sin importar que esté en varios proyectos
@@ -225,7 +228,6 @@ class FormProcessor {
 
 			//REGISTRA ADMITIDO NUEVO EN EL SNIES
 			$admitidoNuevo = array_diff_key($admitidoAcademica, $admitidoSniesClave);
-
 
 			foreach ($admitidoNuevo as $unAdmitidoNuevo) {
 				$this -> miComponente -> insertarAdmitidoSnies($unAdmitidoNuevo);

@@ -93,9 +93,9 @@ class Sql extends \Sql {
 					$cadenaSql .= " AND mat_per =3 ";
 					// el semestre 3 de la universidad es el semestre 2 de SNIES";
 				}
-				
-				//$cadenaSql .= " AND est_nro_iden=53161690";
-				//$cadenaSql .= " AND est_cod=20021001083";
+
+				//$cadenaSql .= " AND est_nro_iden in (3059527, 99102500039, 1018464114, 1012359962)";
+				//$cadenaSql .= " AND est_cod=20162001083";
 				//$cadenaSql .= " AND rownum < 10";
 				//$cadenaSql .= " AND as_cra_cod_snies= 907";
 
@@ -719,6 +719,7 @@ class Sql extends \Sql {
 				break;
 		}
 
+		//echo $cadenaSql.'<br';
 		return $cadenaSql;
 	}
 
