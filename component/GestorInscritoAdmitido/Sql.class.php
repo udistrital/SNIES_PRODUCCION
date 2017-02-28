@@ -41,7 +41,7 @@ class Sql extends \Sql {
 				$cadenaSql = " SELECT asp_ape_ano ano,";
 				$cadenaSql .= " DECODE(asp_ape_per,1,'1',3,'2', asp_ape_per) semestre,";
 				$cadenaSql .= " DECODE (asp_tip_doc_act, 1, 'CC', 2, 'TI', 3, 'CE') id_tipo_documento,";
-				$cadenaSql .= " asp_nro_iden_act documento,";
+				$cadenaSql .= " asp_nro_iden_act num_documento,";
 				$cadenaSql .= " asp_apellido  apellido,";
 				$cadenaSql .= " asp_nombre  nombre,";
 				$cadenaSql .= " TO_CHAR(DECODE(asp_sexo,'M','1','F','2','1')) genero,";
@@ -72,7 +72,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " SELECT UNIQUE mat_ano ano,";
 				$cadenaSql .= " DECODE(mat_per,1,'1',3,'2', mat_per) semestre,";
 				$cadenaSql .= " TO_CHAR(DECODE(est_tipo_iden,'C', 'CC', 'T', 'TI', 'E', 'CE', 'P', 'PS')) id_tipo_documento,";
-				$cadenaSql .= " est_nro_iden documento,";
+				$cadenaSql .= " est_nro_iden num_documento,";
 				$cadenaSql .= " '0' apellido,";
 				$cadenaSql .= " est_nombre  nombre,";
 				$cadenaSql .= " TO_CHAR(DECODE(est_sexo,'M','1','F','2','1')) genero,";
@@ -182,7 +182,7 @@ class Sql extends \Sql {
 				$cadenaSql .= $variable['ANO'] . ", ";
 				$cadenaSql .= $variable['SEMESTRE'] . ", ";
 				$cadenaSql .= "'" . $variable['ID_TIPO_DOCUMENTO'] . "', ";
-				$cadenaSql .= "'" . $variable['DOCUMENTO'] . "', ";
+				$cadenaSql .= "'" . $variable['NUM_DOCUMENTO'] . "', ";
 				$cadenaSql .= "'" . $variable['PRIMER_NOMBRE'] . "', ";
 				$cadenaSql .= "'" . $variable['SEGUNDO_NOMBRE'] . "', ";
 				$cadenaSql .= "'" . $variable['PRIMER_APELLIDO'] . "', ";
@@ -208,7 +208,7 @@ class Sql extends \Sql {
 				$cadenaSql .= $variable['ANO'] . ", ";
 				$cadenaSql .= $variable['SEMESTRE'] . ", ";
 				$cadenaSql .= "'" . $variable['ID_TIPO_DOCUMENTO'] . "', ";
-				$cadenaSql .= $variable['DOCUMENTO'] . ", ";
+				$cadenaSql .= $variable['NUM_DOCUMENTO'] . ", ";
 				$cadenaSql .= $variable['PRO_CONSECUTIVO'] . ", ";
 				$cadenaSql .= $variable['MUNICIPIO'];
 				$cadenaSql .= "); ";
@@ -270,7 +270,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable['ANO'] . "',";
 				$cadenaSql .= "'" . $variable['SEMESTRE'] . "',";
 				$cadenaSql .= "'" . $variable['ID_TIPO_DOCUMENTO'] . "',";
-				$cadenaSql .= "'" . $variable['DOCUMENTO'] . "',";
+				$cadenaSql .= "'" . $variable['NUM_DOCUMENTO'] . "',";
 				$cadenaSql .= "'" . $variable['PRO_CONSECUTIVO'] . "',";
 				$cadenaSql .= " '11001'";
 				$cadenaSql .= " );";

@@ -14,7 +14,7 @@ class procesadorNombre {
 		foreach ( $arreglo as $key => $value ) {
 			$nombre = $arreglo [$key] [$campo];
 			//$codigo = $arreglo [$key] ['CODIGO_ESTUDIANTE'];
-			$documento = $arreglo [$key] ['CODIGO_UNICO'];
+			$documento = $arreglo [$key] ['NUM_DOCUMENTO'];
 			if (! preg_match ( "/^[a-zA-ZnÑáéíóúüÁÉÍÓÚÜ ]*$/", $nombre )) {
 				// $a++;
 				// echo $a.'<br>';

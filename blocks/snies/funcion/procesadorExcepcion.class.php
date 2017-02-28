@@ -11,15 +11,17 @@ class procesadorExcepcion {
 	 * @return \bloqueSnies\Ambigous
 	 */
 	function procesarExcepcionEstudiante($estudiante) {
+
 		foreach ($estudiante as $clave => $valor) {
 
-			$estudiante[$clave]['FECHA_NACIM'] = $this -> excepcionFechaNacim($estudiante[$clave]);
-			$estudiante[$clave]['MUNICIPIO_LN'] = $this -> excepcionMunicipio($estudiante[$clave]);
-			$estudiante[$clave]['EMAIL'] = $this -> excepcionEmail($estudiante[$clave]);
-			//$estudiante[$clave]['TIPO_DOC_UNICO'] = $this -> excepcionTipoDocUnico($estudiante[$clave]);
+			$estudiante[$clave]['FECHA_NACIMIENTO'] = $this -> excepcionFechaNacim($estudiante[$clave]);
+			$estudiante[$clave]['ID_MUNICIPIO_NACIMIENTO'] = $this -> excepcionMunicipio($estudiante[$clave]);
+			$estudiante[$clave]['EMAIL_PERSONAL'] = $this -> excepcionEmail($estudiante[$clave]);
+			$estudiante[$clave]['EMAIL_INSTITUCIONAL'] = $this -> excepcionEmailIns($estudiante[$clave]);
+			$estudiante[$clave]['ID_TIPO_DOCUMENTO'] = $this -> excepcionTipoDocUnico($estudiante[$clave]);
+			$estudiante[$clave]['TELEFONO_CONTACTO'] = $this -> excepcionNumeroTel($estudiante[$clave]);
 			//$estudiante[$clave]['CODIGO_ID_ANT'] = $this -> excepcionCodigoIdAnt($estudiante[$clave]);
 			//$estudiante[$clave]['TIPO_ID_ANT'] = $this -> excepcionTipoIdAnt($estudiante[$clave]);
-			$estudiante[$clave]['NUMERO_TEL'] = $this -> excepcionNumeroTel($estudiante[$clave]);
 		}
 
 		return $estudiante;
@@ -100,10 +102,10 @@ class procesadorExcepcion {
 	 */
 	function excepcionMunicipio($persona) {
 		// si es de usme es Bogotá (11001)
-		if ($persona['MUNICIPIO_LN'] == '11850') {
+		if ($persona['ID_MUNICIPIO_NACIMIENTO'] == '11850') {
 			$resultado = '11001';
 		} else {
-			$resultado = $persona['MUNICIPIO_LN'];
+			$resultado = $persona['ID_MUNICIPIO_NACIMIENTO'];
 		}
 
 		return $resultado;
@@ -116,8 +118,8 @@ class procesadorExcepcion {
 	 * @return Ambigous <string, unknown>
 	 */
 	function excepcionEmail($persona) {
-		if (isset($persona['EMAIL'])) {
-			$resultado = $persona['EMAIL'];
+		if (isset($persona['EMAIL_PERSONAL'])) {
+			$resultado = $persona['EMAIL_PERSONAL'];
 		} else {
 			$resultado = '';
 			// para distinguir los que tiene valor nulo
@@ -133,8 +135,8 @@ class procesadorExcepcion {
 	 * @return Ambigous <string, unknown>
 	 */
 	function excepcionEmailIns($persona) {
-		if (isset($persona['EMAIL_INS'])) {
-			$resultado = $persona['EMAIL_INS'];
+		if (isset($persona['EMAIL_INSTITUCIONAL'])) {
+			$resultado = $persona['EMAIL_INSTITUCIONAL'];
 		} else {
 			$resultado = '';
 			// para distinguir los que tiene valor nulo
@@ -151,8 +153,8 @@ class procesadorExcepcion {
 	 */
 	function excepcionTipoDocUnico($persona) {
 
-		$longitudDocumento = strlen($persona['DOCUMENTO']);
-		
+		$longitudDocumento = strlen($persona['NUM_DOCUMENTO']);
+
 		//si existe pasar el valor que tiene
 		if (isset($persona['ID_TIPO_DOCUMENTO'])) {
 			$resultado = $persona['ID_TIPO_DOCUMENTO'];
@@ -164,7 +166,7 @@ class procesadorExcepcion {
 		}
 
 		//Los documentos de tipo TI, que no tienen 11 digitos se marcan como CC
-		if ( $persona['ID_TIPO_DOCUMENTO'] == 'TI' and $longitudDocumento != 11) {
+		if ($persona['ID_TIPO_DOCUMENTO'] == 'TI' and $longitudDocumento != 11) {
 			$resultado = 'CC';
 		}
 

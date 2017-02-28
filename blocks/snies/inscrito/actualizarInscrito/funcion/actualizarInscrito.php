@@ -68,7 +68,7 @@ class FormProcessor {
 
 				if (isset($inscrito[$clave]['EST_TIPO_IDEN'])) {
 					$inscrito[$clave]['ID_TIPO_DOCUMENTO'] = $inscrito[$clave]['EST_TIPO_IDEN'];
-					$inscrito[$clave]['DOCUMENTO'] = $inscrito[$clave]['EST_NRO_IDEN'];
+					$inscrito[$clave]['NUM_DOCUMENTO'] = $inscrito[$clave]['EST_NRO_IDEN'];
 					//Quita del arreglo el tipo y numero de documento del estudiantes pera evitar confusión
 					unset($inscrito[$clave]['EST_TIPO_IDEN']);
 					unset($inscrito[$clave]['9']);
@@ -124,7 +124,7 @@ class FormProcessor {
 
 		//Obtiene un solo registro por inscrito, sin importar que esté en varios proyectos
 		foreach ($inscrito as $key => $value) {
-			$inscritoUnicoAcademica[$inscrito[$key]['ANO'] . $inscrito[$key]['SEMESTRE'] . $inscrito[$key]['ID_TIPO_DOCUMENTO'] . $inscrito[$key]['DOCUMENTO']] = $value;
+			$inscritoUnicoAcademica[$inscrito[$key]['ANO'] . $inscrito[$key]['SEMESTRE'] . $inscrito[$key]['ID_TIPO_DOCUMENTO'] . $inscrito[$key]['NUM_DOCUMENTO']] = $value;
 		}
 
 		// CONSULTA LA TABLA INSCRITO SNIES
@@ -170,7 +170,7 @@ class FormProcessor {
 		echo '<b>INSCRITO PROGRAMA - Inicio del proceso...</b><br>';
 
 		foreach ($inscrito as $key => $value) {
-			$inscritoAcademica[$inscrito[$key]['ANO'] . $inscrito[$key]['SEMESTRE'] . $inscrito[$key]['ID_TIPO_DOCUMENTO'] . $inscrito[$key]['DOCUMENTO'] . "-" . $inscrito[$key]['PRO_CONSECUTIVO']] = $value;
+			$inscritoAcademica[$inscrito[$key]['ANO'] . $inscrito[$key]['SEMESTRE'] . $inscrito[$key]['ID_TIPO_DOCUMENTO'] . $inscrito[$key]['NUM_DOCUMENTO'] . "-" . $inscrito[$key]['PRO_CONSECUTIVO']] = $value;
 		}
 
 		$inscritoProgSnies = $this -> miComponente -> consultarInscritoProgramaSnies($this -> annio, $this -> semestre);
@@ -214,7 +214,7 @@ class FormProcessor {
 
 		foreach ($inscrito as $key => $value) {
 			if (isset($inscrito[$key]['EAD_ESTADO']) and $inscrito[$key]['EAD_ESTADO'] == 'A') {
-				$admitidoAcademica[$inscrito[$key]['ANO'] . $inscrito[$key]['SEMESTRE'] . $inscrito[$key]['ID_TIPO_DOCUMENTO'] . $inscrito[$key]['DOCUMENTO'] . "-" . $inscrito[$key]['PRO_CONSECUTIVO']] = $value;
+				$admitidoAcademica[$inscrito[$key]['ANO'] . $inscrito[$key]['SEMESTRE'] . $inscrito[$key]['ID_TIPO_DOCUMENTO'] . $inscrito[$key]['NUM_DOCUMENTO'] . "-" . $inscrito[$key]['PRO_CONSECUTIVO']] = $value;
 			}
 		}
 
