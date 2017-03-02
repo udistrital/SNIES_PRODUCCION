@@ -166,7 +166,7 @@ class procesadorExcepcion {
 		}
 
 		//Los documentos de tipo TI, que no tienen 11 digitos se marcan como CC
-		if ($persona['ID_TIPO_DOCUMENTO'] == 'TI' and $longitudDocumento != 11) {
+		if (isset($persona['ID_TIPO_DOCUMENTO']) and $persona['ID_TIPO_DOCUMENTO'] == 'TI' and $longitudDocumento != 11) {
 			$resultado = 'CC';
 		}
 

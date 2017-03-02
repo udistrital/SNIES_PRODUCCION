@@ -36,8 +36,8 @@ class FormProcessor {
 
 		if (is_array($inscritoAcademica)) {
 			$inscritoAcademica = $this -> procesarInscritoAcademica($inscritoAcademica);
-		}		
-
+		}				
+		
 		// INSERTAR, ACTUALIZAR Y/O BORRAR EN TABLA INSCRITO DEL SNIES
 		$this -> registrarInscritos($inscritoAcademica);
 

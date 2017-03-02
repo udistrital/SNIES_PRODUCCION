@@ -47,7 +47,7 @@ class registrarForm {
 		// crea un arreglo con todos los años y semestres desde 2000-1 hasta el presente semestre
 		// contar la cantidad de registro para cada periodo(año, semestre)
 		$a = 0;
-		$anoInicial = $annioActual - 4; // presente solamente los últimos 5 años
+		$anoInicial = $annioActual - 20; // presente solamente los últimos 5 años
 		for($ano = $anoInicial; $ano <= $annioActual; $ano ++) {
 			$periodo [$a] ['annio'] = $ano;
 			$periodo [$a] ['semestre'] = '1';
