@@ -40,7 +40,7 @@ class procesadorExcepcion {
 	function procesarExcepcionDocente($docente) {
 		foreach ($docente as $clave => $valor) {
 
-			$docente[$clave]['FECHA_NACIM'] = $this -> excepcionFechaNacim($docente[$clave]);
+			$docente[$clave]['FECHA_NACIMIENTO'] = $this -> excepcionFechaNacim($docente[$clave]);
 			$docente[$clave]['MUNICIPIO_LN'] = $this -> excepcionMunicipio($docente[$clave]);
 			$docente[$clave]['EMAIL'] = $this -> excepcionEmail($docente[$clave]);
 			$docente[$clave]['EMAIL_INS'] = $this -> excepcionEmailIns($docente[$clave]);
@@ -56,7 +56,7 @@ class procesadorExcepcion {
 	function procesarExcepcionGraduado($docente) {
 		foreach ($docente as $clave => $valor) {
 
-			$docente[$clave]['FECHA_NACIM'] = $this -> excepcionFechaNacim($docente[$clave]);
+			$docente[$clave]['FECHA_NACIMIENTO'] = $this -> excepcionFechaNacim($docente[$clave]);
 			$docente[$clave]['MUNICIPIO_LN'] = $this -> excepcionMunicipio($docente[$clave]);
 			$docente[$clave]['EMAIL'] = $this -> excepcionEmail($docente[$clave]);
 			$docente[$clave]['TIPO_DOC_UNICO'] = $this -> excepcionTipoDocUnico($docente[$clave]);
@@ -75,16 +75,17 @@ class procesadorExcepcion {
 	 * @return Ambigous <string, unknown>
 	 */
 	function excepcionFechaNacim($persona) {
-		if (isset($persona['FECHA_NACIM'])) {
+		var_dump($persona);
+		if (isset($persona['FECHA_NACIMIENTO'])) {
 
 			// si la fecha es inferior a 1926 o mayor a 2001 se coloca valor por defecto '1990-01-01'
 			// SNIES valida que la edad esté entre 14 y 90 años
-			$fecha = split('-', $persona['FECHA_NACIM']);
+			$fecha = split('-', $persona['FECHA_NACIMIENTO']);
 			$ano = $fecha[0];
 			if ($ano < '1926' or $ano > '2001') {
 				$resultado = '1990-01-01';
 			} else {
-				$resultado = $persona['FECHA_NACIM'];
+				$resultado = $persona['FECHA_NACIMIENTO'];
 			}
 		} else {
 			$resultado = '1990-01-01';

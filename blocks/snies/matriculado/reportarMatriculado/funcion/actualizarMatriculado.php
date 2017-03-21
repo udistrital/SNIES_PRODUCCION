@@ -47,7 +47,6 @@ class FormProcessor {
 
 		echo 'proceso 1 actualizarEstudiantePrimerCurso...<br>';
 		$this -> actualizarEstudiantePrimerCurso($estudiante);
-		exit ;
 		echo 'proceso 2 actualizarMatriculado<br>';
 		$this -> actualizarMatriculado($estudiante);
 		echo 'FIN<br>';

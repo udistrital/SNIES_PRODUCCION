@@ -138,6 +138,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " inscritos ";
 				$cadenaSql .= " WHERE ano=" . $variable['annio'] . "";
 				$cadenaSql .= " AND semestre=" . $variable['semestre'] . "";
+				$cadenaSql .= " AND estado=true";
 
 				break;
 
@@ -149,6 +150,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " inscrito_programa ";
 				$cadenaSql .= " WHERE ano=" . $variable['ano'];
 				$cadenaSql .= " AND semestre=" . $variable['semestre'];
+				$cadenaSql .= " AND estado=true";
 
 				break;
 
@@ -248,6 +250,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " admitido ";
 				$cadenaSql .= " WHERE ano=" . $variable['ano'];
 				$cadenaSql .= " AND semestre=" . $variable['semestre'];
+				$cadenaSql .= " AND estado=true";
 
 				break;
 
