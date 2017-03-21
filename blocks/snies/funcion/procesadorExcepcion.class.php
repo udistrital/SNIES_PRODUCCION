@@ -76,20 +76,25 @@ class procesadorExcepcion {
 	 */
 	function excepcionFechaNacim($persona) {
 		var_dump($persona);
+
 		if (isset($persona['FECHA_NACIMIENTO'])) {
 
-			// si la fecha es inferior a 1926 o mayor a 2001 se coloca valor por defecto '1990-01-01'
+			//el participante no puede tener mas de 90 o menos de 14 años, en el momento de registro: $persona['ANO']
+			$fechaMinima = $persona['ANO'] - 90;
+			$fechaMaxima = $persona['ANO'] + 14;
+
 			// SNIES valida que la edad esté entre 14 y 90 años
-			$fecha = split('-', $persona['FECHA_NACIMIENTO']);
-			$ano = $fecha[0];
-			if ($ano < '1926' or $ano > '2001') {
+			// la fecha debe estar en formato 'DD/MM/YYYY'; $fecha[0]=dia; $fecha[1]=mes;$fecha[2]=ano;
+			$fecha = split('/', $persona['FECHA_NACIMIENTO']);
+			$ano = $fecha[2];
+			if ($ano < $fechaMinima or $ano > $fechaMaxima) {
 				$resultado = '1990-01-01';
 			} else {
 				$resultado = $persona['FECHA_NACIMIENTO'];
 			}
 		} else {
-			$resultado = '1990-01-01';
 			// para distinguir los que tiene valor nulo
+			$resultado = '1990-01-01';
 		}
 
 		return $resultado;

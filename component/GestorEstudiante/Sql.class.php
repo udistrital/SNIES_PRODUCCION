@@ -70,7 +70,8 @@ class Sql extends \Sql {
 				$cadenaSql .= " '0' persona_condicion_discapacidad,";
 				$cadenaSql .= " '0' id_tipo_discapacidad,";
 				$cadenaSql .= " '0' id_capacidad_excepcional,";
-				$cadenaSql .= " DECODE(eot_nro_snp, null, '0', eot_nro_snp) cod_prueba_saber_11,";//si es nulo pasar ''
+				$cadenaSql .= " DECODE(eot_nro_snp, null, '0', eot_nro_snp) cod_prueba_saber_11,";
+				//si es nulo pasar ''
 				$cadenaSql .= " DECODE (eot_arural, 'S', '2', 'N', '1', '1') id_zona_residencia,";
 				$cadenaSql .= " 'N' es_reintegro";
 				$cadenaSql .= " FROM mntac.acest";
@@ -93,14 +94,12 @@ class Sql extends \Sql {
 					$cadenaSql .= " AND mat_per =3 ";
 					// el semestre 3 de la universidad es el semestre 2 de SNIES";
 				}
-				$cadenaSql .= " AND est_nro_iden in (99011102715)";
-				
+				$cadenaSql .= " AND est_nro_iden in (99022102040)";
+
 				//$cadenaSql .= " AND est_nro_iden in (3059527, 99102500039, 1018464114, 1012359962, 79691166, 52841324, 1024496922)";
 				//$cadenaSql .= " AND est_cod=20162118098";
 				//$cadenaSql .= " AND rownum < 10";
 				//$cadenaSql .= " AND as_cra_cod_snies= 907";
-				
-				
 
 				break;
 
