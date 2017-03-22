@@ -1,7 +1,7 @@
 <?php
 include_once ('component/GestorEstudiante/Componente.php');
-include_once ('blocks/snies/matriculado/reportarMatriculado/funcion/procesadorNombre.class.php');
-include_once ('blocks/snies/matriculado/reportarMatriculado/funcion/procesadorExcepcion.class.php');
+include_once ('blocks/snies/funcion/procesadorNombre.class.php');
+include_once ('blocks/snies/funcion/procesadorExcepcion.class.php');
 use sniesEstudiante\Componente;
 use bloqueSnies\procesadorExcepcion;
 use bloqueSnies\procesadorNombre;
