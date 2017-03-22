@@ -39,7 +39,7 @@ class FormProcessor {
 		// estudiante de la académica
 		echo 'Consultando estudiantes...<br>';
 		$estudiante = $this -> miComponente -> consultarEstudianteAcademica($this -> annio, $this -> semestre);
-		
+
 		$miProcesadorNombre = new procesadorNombre();
 
 		echo 'Eliminando caracteres no válidos...<br>';
@@ -106,7 +106,6 @@ class FormProcessor {
 
 			//REGISTRA LOS NUEVOS PARTICIPANTES EN SNIES
 			$participanteNuevo = array_diff_key($participanteAcademica, $participanteSnies);
-			var_dump($participanteNuevo);
 
 			//Estan en académica y no en SNIES, INSERTAR
 			foreach ($participanteNuevo as $unParticipanteNuevo) {
@@ -116,13 +115,13 @@ class FormProcessor {
 
 			//Estan en académica y en SNIES, ACTUALIZAR
 			$participanteActualizar = array_intersect_key($participanteAcademica, $participanteSnies);
+			echo count($participanteActualizar);
 
 			//aqui debería estar la función de actualizacion, por agilizar el tiempo de ejecución no se implementa en esta estapa
 			foreach ($participanteActualizar as $unParticipanteActualizar) {
 				$this -> miComponente -> actualizarParticipante($unParticipanteActualizar);
 			}
 			echo 'ACTUALIZADOS<br>';
-
 
 			//BORRA LOS QUE NO DEBERÍAN ESTAR EN SNIES, NO SE BORRAN
 			//Los documentos que estén repetidos con diferente tipo se ajustan con la plantilla de correción de participantes de HECAA

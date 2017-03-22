@@ -94,7 +94,7 @@ class Sql extends \Sql {
 					$cadenaSql .= " AND mat_per =3 ";
 					// el semestre 3 de la universidad es el semestre 2 de SNIES";
 				}
-				$cadenaSql .= " AND est_nro_iden in (99022102040)";
+				//$cadenaSql .= " AND est_nro_iden in (99022102040)";
 
 				//$cadenaSql .= " AND est_nro_iden in (3059527, 99102500039, 1018464114, 1012359962, 79691166, 52841324, 1024496922)";
 				//$cadenaSql .= " AND est_cod=20162118098";
@@ -145,8 +145,7 @@ class Sql extends \Sql {
 				//elimina las comillas sencillas que existen en algunos registros
 				//$cadenaSql .= " direccion_institucional ='" . $variable['DIRECCION_INSTITUCIONAL'] . "'";
 				$cadenaSql .= " WHERE NUM_DOCUMENTO='" . $variable['NUM_DOCUMENTO'] . "'";
-				echo $cadenaSql;
-
+				
 				break;
 
 			case "borrarParticipante" :

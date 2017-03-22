@@ -75,8 +75,7 @@ class procesadorExcepcion {
 	 * @return Ambigous <string, unknown>
 	 */
 	function excepcionFechaNacim($persona) {
-		var_dump($persona);
-
+		
 		if (isset($persona['FECHA_NACIMIENTO'])) {
 
 			//el participante no puede tener mas de 90 o menos de 14 años, en el momento de registro: $persona['ANO']
