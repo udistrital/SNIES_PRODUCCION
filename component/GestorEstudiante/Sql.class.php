@@ -246,8 +246,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " WHERE ano='" . $variable['ANNIO'] . "'";
 				$cadenaSql .= " AND semestre='" . $variable['SEMESTRE'] . "'";
 				$cadenaSql .= " AND estado='true'";
-				echo $cadenaSql;
-				
+								
 				break;
 
 			case "consultarPrimerCursoAuditoria" :
@@ -369,6 +368,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " matriculado ";
 				$cadenaSql .= " WHERE ano ='" . $variable['ANNIO_MATRICULA'] . "'";
 				$cadenaSql .= " AND semestre ='" . $variable['SEMESTRE_MATRICULA'] . "'";
+				$cadenaSql .= " AND estado='true'";
 
 				break;
 
