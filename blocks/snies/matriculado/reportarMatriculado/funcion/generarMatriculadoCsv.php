@@ -27,28 +27,27 @@ class FormProcessor {
 	function procesarFormulario() {
 		$this -> annio = $_REQUEST['annio'];
 		$this -> semestre = $_REQUEST['semestre'];
-		
+
 		/**
 		 *Genera archivos csv de participante, primer curso y auditoria
-		 * 
+		 *
 		 */
 
 		$participante = $this -> miComponente -> consultarParticipanteTodos();
 		$this -> generarParticipanteCsv($participante);
-		
+
 		$primer_curso = $this -> miComponente -> consultarPrimerCursoTodos($this -> annio, $this -> semestre);
-		$this->generarPrimerCursoCsv($primer_curso);
-		
+		$this -> generarPrimerCursoCsv($primer_curso);
+
 		$auditoria_primer_curso = $this -> miComponente -> consultarPrimerCursoAuditoria($this -> annio, $this -> semestre);
-		$this->generarAuditoriaPrimerCursoCsv($auditoria_primer_curso);
-		
+		$this -> generarAuditoriaPrimerCursoCsv($auditoria_primer_curso);
+
 		$matriculado = $this -> miComponente -> consultarMatriculadoTodos($this -> annio, $this -> semestre);
 		$this -> generarMatriculadoCsv($matriculado);
-						
-		$auditoria_matriculado = $this -> miComponente -> consultarMatriculadoAuditoria($this -> annio, $this -> semestre);		
-		$this->generarAuditoriaMatriculadoCsv($auditoria_matriculado);
-		
-		
+
+		$auditoria_matriculado = $this -> miComponente -> consultarMatriculadoAuditoria($this -> annio, $this -> semestre);
+		$this -> generarAuditoriaMatriculadoCsv($auditoria_matriculado);
+
 		exit ;
 
 		$miProcesadorExcepcion = new procesadorExcepcion();
@@ -88,7 +87,7 @@ class FormProcessor {
 		//con esto elimina las comillas dobles del encabezado
 		fwrite($fp, implode(',', $linea2) . "\r\n");
 		fwrite($fp, implode(',', $linea3) . "\r\n");
-		fputcsv($fp, array(utf8_decode ('AÑO'), 'SEMESTRE', 'ID_TIPO_DOCUMENTO', 'NUM_DOCUMENTO', 'PRO_CONSECUTIVO', 'ID_MUNICIPIO_PROGRAMA', 'ID_TIPO_VINCULACION', 'ID_GRUPO_ETNICO', 'ID_PUEBLO_INDIGENA', 'ID_COMUNIDAD_NEGRA', 'PERSONA_CONDICION_DISCAPACIDAD', 'ID_TIPO_DISCAPACIDAD', 'ID_CAPACIDAD_EXCEPCIONAL', 'COD_PRUEBA_SABER_11'), ";");
+		fputcsv($fp, array(utf8_decode('AÑO'), 'SEMESTRE', 'ID_TIPO_DOCUMENTO', 'NUM_DOCUMENTO', 'PRO_CONSECUTIVO', 'ID_MUNICIPIO_PROGRAMA', 'ID_TIPO_VINCULACION', 'ID_GRUPO_ETNICO', 'ID_PUEBLO_INDIGENA', 'ID_COMUNIDAD_NEGRA', 'PERSONA_CONDICION_DISCAPACIDAD', 'ID_TIPO_DISCAPACIDAD', 'ID_CAPACIDAD_EXCEPCIONAL', 'COD_PRUEBA_SABER_11'), ";");
 		foreach ($primerCurso as $registro) {
 			//var_dump ( $unInscrito );
 			//Se debe redefinir el arrglo para que no presenta las asociaciones numéricas
@@ -117,7 +116,6 @@ class FormProcessor {
 
 	}
 
-
 	/**
 	 * Auditoria de primer_curso
 	 */
@@ -128,9 +126,8 @@ class FormProcessor {
 		$file = $raizDocumento . '/document/auditoria_primerCurso_' . $this -> annio . $this -> semestre . '.csv';
 		$fp = fopen($file, 'w');
 
-		
-		$consecutivo=1;
-		foreach ($primerCurso as $registro) {		
+		$consecutivo = 1;
+		foreach ($primerCurso as $registro) {
 			//Se redefine el arreglo para que no presenta las asociaciones numéricas
 			$arreglo['ID'] = $consecutivo;
 			$arreglo['IES_CODE'] = '1301';
@@ -160,10 +157,10 @@ class FormProcessor {
 			$arreglo['NBC_PRIM_AREA'] = '';
 			$arreglo['NUCLEO'] = '';
 			$arreglo['NUCLEO_DESC'] = '';
-			$arreglo['ESTADO'] = 'A';					
+			$arreglo['ESTADO'] = 'A';
 
 			fputcsv($fp, $arreglo, ";");
-			$consecutivo=$consecutivo+1;
+			$consecutivo = $consecutivo + 1;
 		}
 
 		fclose($fp);
@@ -172,7 +169,6 @@ class FormProcessor {
 		echo '<br>';
 
 	}
-
 
 	/**
 	 * Genera el archivo csv de matriculado
@@ -185,13 +181,13 @@ class FormProcessor {
 		$fp = fopen($file, 'w');
 		//ENCABEZADO DE LA PLANTILLA MATRICULADO
 		$linea1 = array('Herramienta de Cargue Hecca - V 3.4');
-		$linea2 = array(utf8_decode ('[61] Nombre de la Plantilla: [Matriculados] Descripcion: [Persona natural que posee matrícula vigente para un programa académico en una Institución de Educación Superior.]'));
+		$linea2 = array(utf8_decode('[61] Nombre de la Plantilla: [Matriculados] Descripcion: [Persona natural que posee matrícula vigente para un programa académico en una Institución de Educación Superior.]'));
 		$linea3 = array('Licenciado para Ministerio de Educacion Nacional 2016');
 		fwrite($fp, implode(',', $linea1) . "\r\n");
 		//con esto elimina las comillas dobles del encabezado
 		fwrite($fp, implode(',', $linea2) . "\r\n");
 		fwrite($fp, implode(',', $linea3) . "\r\n");
-		fputcsv($fp, array(utf8_decode ('AÑO'), 'SEMESTRE', 'ID_TIPO_DOCUMENTO', 'NUM_DOCUMENTO', 'CODIGO_ESTUDIANTE', 'PRO_CONSECUTIVO', 'ID_MUNICIPIO', 'FECHA_NACIMIENTO', 'ID_PAIS_NACIMIENTO', 'ID_MUNICIPIO_NACIMIENTO', 'ID_ZONA_RESIDENCIA', 'ES_REINTEGRO'), ";");
+		fputcsv($fp, array(utf8_decode('AÑO'), 'SEMESTRE', 'ID_TIPO_DOCUMENTO', 'NUM_DOCUMENTO', 'CODIGO_ESTUDIANTE', 'PRO_CONSECUTIVO', 'ID_MUNICIPIO', 'FECHA_NACIMIENTO', 'ID_PAIS_NACIMIENTO', 'ID_MUNICIPIO_NACIMIENTO', 'ID_ZONA_RESIDENCIA', 'ES_REINTEGRO'), ";");
 		foreach ($matriculado as $registro) {
 			//var_dump ( $unInscrito );
 			//Se debe redefinir el arrglo para que no presenta las asociaciones numéricas
@@ -218,7 +214,7 @@ class FormProcessor {
 
 	}
 
-/**
+	/**
 	 * Genera el archivo csv de matriculado
 	 */
 	function generarAuditoriaMatriculadoCsv($matriculado) {
@@ -227,10 +223,10 @@ class FormProcessor {
 		$this -> semestre = $_REQUEST['semestre'];
 		$file = $raizDocumento . '/document/auditoria_matriculado_' . $this -> annio . $this -> semestre . '.csv';
 		$fp = fopen($file, 'w');
-		//ENCABEZADO DE LA PLANTILLA MATRICULADO	
-		$secuenciaMatricualado=1;	
-		foreach ($matriculado as $registro) {			
-					
+		//ENCABEZADO DE LA PLANTILLA MATRICULADO
+		$secuenciaMatricualado = 1;
+		foreach ($matriculado as $registro) {
+
 			//Se debe redefinir el arrglo para que no presenta las asociaciones numéricas
 			$arreglo['ID'] = $secuenciaMatricualado;
 			$arreglo['IES_CODE'] = '1301';
@@ -254,7 +250,7 @@ class FormProcessor {
 			$arreglo['pro_consecutivo'] = $registro['pro_consecutivo'];
 			$arreglo['PROG_NOMBRE'] = $registro['nombre'];
 			$arreglo['TIPO_ACREDITACION'] = '';
-			$arreglo['TITULO'] = $registro['titulo'];			
+			$arreglo['TITULO'] = $registro['titulo'];
 			$arreglo['NIVEL'] = $registro['nivel'];
 			$arreglo['MODALIDAD'] = $registro['modalidad'];
 			$arreglo['METODOLOGIA'] = '';
@@ -263,10 +259,10 @@ class FormProcessor {
 			$arreglo['NUCLEO'] = '';
 			$arreglo['NUCLEO_DESC'] = '';
 			$arreglo['CONS_ESTUD'] = $secuenciaMatricualado;
-			$arreglo['ESTADO'] = 'A';					
+			$arreglo['ESTADO'] = 'A';
 
 			fputcsv($fp, $arreglo, ";");
-			$secuenciaMatricualado=$secuenciaMatricualado+1;
+			$secuenciaMatricualado = $secuenciaMatricualado + 1;
 		}
 
 		fclose($fp);
@@ -295,26 +291,74 @@ class FormProcessor {
 		fwrite($fp, implode(',', $linea3) . "\r\n");
 		fputcsv($fp, array('ID_TIPO_DOCUMENTO', 'NUM_DOCUMENTO', 'FECHA_EXPEDICION', 'PRIMER_NOMBRE', 'SEGUNDO_NOMBRE', 'PRIMER_APELLIDO', 'SEGUNDO_APELLIDO', 'ID_SEXO_BIOLOGICO', 'ID_ESTADO_CIVIL', 'FECHA_NACIMIENTO', 'ID_PAIS', 'ID_MUNICIPIO', 'TELEFONO_CONTACTO', 'EMAIL_PERSONAL', 'EMAIL_INSTITUCIONAL', 'DIRECCION_INSTITUCIONAL'), ";");
 		foreach ($participante as $registro) {
-			//var_dump ( $unInscrito );
-			//Se debe redefinir el arrglo para que no presente las asociaciones numéricas
-			$arreglo['id_tipo_documento'] = $registro['id_tipo_documento'];
-			$arreglo['num_documento'] = $registro['num_documento'];
-			$arreglo['fecha_expedicion'] = $registro['fecha_expedicion'];
-			$arreglo['primer_nombre'] = $registro['primer_nombre'];
-			$arreglo['segundo_nombre'] = $registro['segundo_nombre'];
-			$arreglo['primer_apellido'] = $registro['primer_apellido'];
-			$arreglo['segundo_apellido'] = $registro['segundo_apellido'];
-			$arreglo['id_sexo_biologico'] = $registro['id_sexo_biologico'];
-			$arreglo['id_estado_civil'] = $registro['id_estado_civil'];
-			$arreglo['fecha_nacimiento'] = $registro['fecha_nacimiento'];
-			$arreglo['id_pais'] = $registro['id_pais'];
-			$arreglo['id_municipio'] = $registro['id_municipio'];
-			$arreglo['telefono_contacto'] = $registro['telefono_contacto'];
-			$arreglo['email_personal'] = $registro['email_personal'];
-			$arreglo['email_institucional'] = $registro['email_institucional'];
-			$arreglo['direccion_institucional'] = $registro['direccion_institucional'];			
+			if ($registro['estado'] == 't') {
+				//var_dump ( $unInscrito );
+				//Se debe redefinir el arrglo para que no presente las asociaciones numéricas
+				$arreglo['id_tipo_documento'] = $registro['id_tipo_documento'];
+				$arreglo['num_documento'] = $registro['num_documento'];
+				$arreglo['fecha_expedicion'] = $registro['fecha_expedicion'];
+				$arreglo['primer_nombre'] = $registro['primer_nombre'];
+				$arreglo['segundo_nombre'] = $registro['segundo_nombre'];
+				$arreglo['primer_apellido'] = $registro['primer_apellido'];
+				$arreglo['segundo_apellido'] = $registro['segundo_apellido'];
+				$arreglo['id_sexo_biologico'] = $registro['id_sexo_biologico'];
+				$arreglo['id_estado_civil'] = $registro['id_estado_civil'];
+				$arreglo['fecha_nacimiento'] = $registro['fecha_nacimiento'];
+				$arreglo['id_pais'] = $registro['id_pais'];
+				$arreglo['id_municipio'] = $registro['id_municipio'];
+				$arreglo['telefono_contacto'] = $registro['telefono_contacto'];
+				$arreglo['email_personal'] = $registro['email_personal'];
+				$arreglo['email_institucional'] = $registro['email_institucional'];
+				$arreglo['direccion_institucional'] = $registro['direccion_institucional'];
 
-			fputcsv($fp, $arreglo, ";");
+				fputcsv($fp, $arreglo, ";");
+
+			}
+
+		}
+
+		fclose($fp);
+
+		echo 'Se ha generado el archivo <b>' . $file . '</b>';
+		echo '<br>';
+		
+		//SE CREA EL ARCHIVO DE LOS PARTICIPANTES QUE NO HAN SIDO CARGADOS ESTADO FALSE
+		$file = $raizDocumento . '/document/participante_nochargue.csv';
+		$fp = fopen($file, 'w');
+		//ENCABEZADO DE LA PLANTILLA PARTICIPANTE
+		$linea1 = array('Herramienta de Cargue Hecca - V 3.4');
+		$linea2 = array('[55] Nombre de la Plantilla: [Participante] Descripcion: [Participante]');
+		$linea3 = array('Licenciado para Ministerio de Educacion Nacional 2016');
+		fwrite($fp, implode(',', $linea1) . "\r\n");
+		//con esto elimina las comillas dobles del encabezado
+		fwrite($fp, implode(',', $linea2) . "\r\n");
+		fwrite($fp, implode(',', $linea3) . "\r\n");
+		fputcsv($fp, array('ID_TIPO_DOCUMENTO', 'NUM_DOCUMENTO', 'FECHA_EXPEDICION', 'PRIMER_NOMBRE', 'SEGUNDO_NOMBRE', 'PRIMER_APELLIDO', 'SEGUNDO_APELLIDO', 'ID_SEXO_BIOLOGICO', 'ID_ESTADO_CIVIL', 'FECHA_NACIMIENTO', 'ID_PAIS', 'ID_MUNICIPIO', 'TELEFONO_CONTACTO', 'EMAIL_PERSONAL', 'EMAIL_INSTITUCIONAL', 'DIRECCION_INSTITUCIONAL'), ";");
+		foreach ($participante as $registro) {
+			if ($registro['estado'] == 'f' and $registro['id_tipo_documento']=='CE') {
+				//var_dump ( $unInscrito );
+				//Se debe redefinir el arrglo para que no presente las asociaciones numéricas
+				$arreglo['id_tipo_documento'] = $registro['id_tipo_documento'];
+				$arreglo['num_documento'] = $registro['num_documento'];
+				$arreglo['fecha_expedicion'] = $registro['fecha_expedicion'];
+				$arreglo['primer_nombre'] = $registro['primer_nombre'];
+				$arreglo['segundo_nombre'] = $registro['segundo_nombre'];
+				$arreglo['primer_apellido'] = $registro['primer_apellido'];
+				$arreglo['segundo_apellido'] = $registro['segundo_apellido'];
+				$arreglo['id_sexo_biologico'] = $registro['id_sexo_biologico'];
+				$arreglo['id_estado_civil'] = $registro['id_estado_civil'];
+				$arreglo['fecha_nacimiento'] = $registro['fecha_nacimiento'];
+				$arreglo['id_pais'] = $registro['id_pais'];
+				$arreglo['id_municipio'] = $registro['id_municipio'];
+				$arreglo['telefono_contacto'] = $registro['telefono_contacto'];
+				$arreglo['email_personal'] = $registro['email_personal'];
+				$arreglo['email_institucional'] = $registro['email_institucional'];
+				$arreglo['direccion_institucional'] = $registro['direccion_institucional'];
+
+				fputcsv($fp, $arreglo, ";");
+
+			}
+
 		}
 
 		fclose($fp);

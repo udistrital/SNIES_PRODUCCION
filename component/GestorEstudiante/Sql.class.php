@@ -116,11 +116,12 @@ class Sql extends \Sql {
 				$cadenaSql = "SELECT id_tipo_documento, num_documento, fecha_expedicion, primer_nombre, 
        							segundo_nombre, primer_apellido, segundo_apellido, id_sexo_biologico, 
        							id_estado_civil, to_char(fecha_nacimiento, 'DD/MM/YYYY') fecha_nacimiento, id_pais, id_municipio, telefono_contacto, 
-       							email_personal, email_institucional, direccion_institucional ";
+       							email_personal, email_institucional, direccion_institucional, estado ";
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " participante ";
-				$cadenaSql .= " WHERE ";
-				$cadenaSql .= " estado=true";
+				//$cadenaSql .= " WHERE ";
+				//$cadenaSql .= " num_documento=169832";			
+				//$cadenaSql .= " estado=true";
 
 				break;
 
