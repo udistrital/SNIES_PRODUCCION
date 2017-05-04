@@ -323,7 +323,7 @@ class FormProcessor {
 		echo '<br>';
 		
 		//SE CREA EL ARCHIVO DE LOS PARTICIPANTES QUE NO HAN SIDO CARGADOS ESTADO FALSE
-		$file = $raizDocumento . '/document/participante_nochargue.csv';
+		$file = $raizDocumento . '/document/participante_revision.csv';
 		$fp = fopen($file, 'w');
 		//ENCABEZADO DE LA PLANTILLA PARTICIPANTE
 		$linea1 = array('Herramienta de Cargue Hecca - V 3.4');
@@ -335,7 +335,7 @@ class FormProcessor {
 		fwrite($fp, implode(',', $linea3) . "\r\n");
 		fputcsv($fp, array('ID_TIPO_DOCUMENTO', 'NUM_DOCUMENTO', 'FECHA_EXPEDICION', 'PRIMER_NOMBRE', 'SEGUNDO_NOMBRE', 'PRIMER_APELLIDO', 'SEGUNDO_APELLIDO', 'ID_SEXO_BIOLOGICO', 'ID_ESTADO_CIVIL', 'FECHA_NACIMIENTO', 'ID_PAIS', 'ID_MUNICIPIO', 'TELEFONO_CONTACTO', 'EMAIL_PERSONAL', 'EMAIL_INSTITUCIONAL', 'DIRECCION_INSTITUCIONAL'), ";");
 		foreach ($participante as $registro) {
-			if ($registro['estado'] == 'f' and $registro['id_tipo_documento']=='CE') {
+			if ($registro['estado'] == '') {
 				//var_dump ( $unInscrito );
 				//Se debe redefinir el arrglo para que no presente las asociaciones numéricas
 				$arreglo['id_tipo_documento'] = $registro['id_tipo_documento'];
@@ -365,6 +365,51 @@ class FormProcessor {
 
 		echo 'Se ha generado el archivo <b>' . $file . '</b>';
 		echo '<br>';
+		
+		//SE CREA EL ARCHIVO DE LOS PARTICIPANTES QUE NO HAN SIDO CARGADOS ESTADO FALSE
+		$file = $raizDocumento . '/document/participante_error.csv';
+		$fp = fopen($file, 'w');
+		//ENCABEZADO DE LA PLANTILLA PARTICIPANTE
+		$linea1 = array('Herramienta de Cargue Hecca - V 3.4');
+		$linea2 = array('[55] Nombre de la Plantilla: [Participante] Descripcion: [Participante]');
+		$linea3 = array('Licenciado para Ministerio de Educacion Nacional 2016');
+		fwrite($fp, implode(',', $linea1) . "\r\n");
+		//con esto elimina las comillas dobles del encabezado
+		fwrite($fp, implode(',', $linea2) . "\r\n");
+		fwrite($fp, implode(',', $linea3) . "\r\n");
+		fputcsv($fp, array('ID_TIPO_DOCUMENTO', 'NUM_DOCUMENTO', 'FECHA_EXPEDICION', 'PRIMER_NOMBRE', 'SEGUNDO_NOMBRE', 'PRIMER_APELLIDO', 'SEGUNDO_APELLIDO', 'ID_SEXO_BIOLOGICO', 'ID_ESTADO_CIVIL', 'FECHA_NACIMIENTO', 'ID_PAIS', 'ID_MUNICIPIO', 'TELEFONO_CONTACTO', 'EMAIL_PERSONAL', 'EMAIL_INSTITUCIONAL', 'DIRECCION_INSTITUCIONAL'), ";");
+		foreach ($participante as $registro) {
+			if ($registro['estado'] == 'f') {
+				//var_dump ( $unInscrito );
+				//Se debe redefinir el arrglo para que no presente las asociaciones numéricas
+				$arreglo['id_tipo_documento'] = $registro['id_tipo_documento'];
+				$arreglo['num_documento'] = $registro['num_documento'];
+				$arreglo['fecha_expedicion'] = $registro['fecha_expedicion'];
+				$arreglo['primer_nombre'] = $registro['primer_nombre'];
+				$arreglo['segundo_nombre'] = $registro['segundo_nombre'];
+				$arreglo['primer_apellido'] = $registro['primer_apellido'];
+				$arreglo['segundo_apellido'] = $registro['segundo_apellido'];
+				$arreglo['id_sexo_biologico'] = $registro['id_sexo_biologico'];
+				$arreglo['id_estado_civil'] = $registro['id_estado_civil'];
+				$arreglo['fecha_nacimiento'] = $registro['fecha_nacimiento'];
+				$arreglo['id_pais'] = $registro['id_pais'];
+				$arreglo['id_municipio'] = $registro['id_municipio'];
+				$arreglo['telefono_contacto'] = $registro['telefono_contacto'];
+				$arreglo['email_personal'] = $registro['email_personal'];
+				$arreglo['email_institucional'] = $registro['email_institucional'];
+				$arreglo['direccion_institucional'] = $registro['direccion_institucional'];
+
+				fputcsv($fp, $arreglo, ";");
+
+			}
+
+		}
+
+		fclose($fp);
+
+		echo 'Se ha generado el archivo <b>' . $file . '</b>';
+		echo '<br>';
+		
 
 	}
 

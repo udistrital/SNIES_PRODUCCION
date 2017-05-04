@@ -119,7 +119,8 @@ class FormProcessor {
 
 			//aqui debería estar la función de actualizacion, por agilizar el tiempo de ejecución no se implementa en esta estapa
 			foreach ($participanteActualizar as $unParticipanteActualizar) {
-				$this -> miComponente -> actualizarParticipante($unParticipanteActualizar);
+				//SE DEBE MODIFICAR PARA QUE SOLO ACTUALICE LOS DE ESTADO FALSE Y NULL	
+				//$this -> miComponente -> actualizarParticipante($unParticipanteActualizar);
 			}
 			echo 'ACTUALIZADOS<br>';
 

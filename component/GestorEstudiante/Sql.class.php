@@ -94,13 +94,14 @@ class Sql extends \Sql {
 					$cadenaSql .= " AND mat_per =3 ";
 					// el semestre 3 de la universidad es el semestre 2 de SNIES";
 				}
-				//$cadenaSql .= " AND est_nro_iden in (98112100326)";
+				//$cadenaSql .= " AND est_nro_iden in (94071302150)";
 
 				//$cadenaSql .= " AND est_nro_iden in (3059527, 99102500039, 1018464114, 1012359962, 79691166, 52841324, 1024496922)";
 				//$cadenaSql .= " AND est_cod=20162118098";
 				//$cadenaSql .= " AND rownum < 10";
 				//$cadenaSql .= " AND as_cra_cod_snies= 907";
 
+				echo $cadenaSql;exit;
 				break;
 
 			// //PARTICIPANTE SNIES
@@ -120,7 +121,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " participante ";
 				//$cadenaSql .= " WHERE ";
-				//$cadenaSql .= " num_documento=169832";			
+				//$cadenaSql .= " num_documento=87010868449";			
 				//$cadenaSql .= " estado=true";
 
 				break;
