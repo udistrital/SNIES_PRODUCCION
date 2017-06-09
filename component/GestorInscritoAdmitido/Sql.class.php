@@ -133,25 +133,23 @@ class Sql extends \Sql {
 			case "consultarInscritoSnies" :
 				$cadenaSql = " SELECT";
 				$cadenaSql .= " ano, semestre, id_tipo_documento, num_documento, primer_nombre, 
-      						 segundo_nombre, primer_apellido, segundo_apellido, id_sexo_biologico";
+      						 segundo_nombre, primer_apellido, segundo_apellido, id_sexo_biologico, estado";
 				$cadenaSql .= " FROM";
 				$cadenaSql .= " inscritos ";
 				$cadenaSql .= " WHERE ano=" . $variable['annio'] . "";
 				$cadenaSql .= " AND semestre=" . $variable['semestre'] . "";
-				$cadenaSql .= " AND estado=true";
-
+				
 				break;
 
 			//consulta todos los inscritos de la tabla poblacion.inscrito_programa
 			case "consultarInscritoProgramaSnies" :
 				$cadenaSql = " SELECT";
-				$cadenaSql .= " ano, semestre, id_tipo_documento, num_documento, pro_consecutivo, id_municipio";
+				$cadenaSql .= " ano, semestre, id_tipo_documento, num_documento, pro_consecutivo, id_municipio. estado";
 				$cadenaSql .= " FROM";
 				$cadenaSql .= " inscrito_programa ";
 				$cadenaSql .= " WHERE ano=" . $variable['ano'];
 				$cadenaSql .= " AND semestre=" . $variable['semestre'];
-				$cadenaSql .= " AND estado=true";
-
+				
 				break;
 
 			//Borra inscritos de un año y semestre especifico
@@ -245,13 +243,12 @@ class Sql extends \Sql {
 
 			case "consultarAdmitidoSnies" :
 				$cadenaSql = "SELECT ano, semestre, id_tipo_documento, num_documento, pro_consecutivo, 
-       id_municipio ";
+       id_municipio, estado ";
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " admitido ";
 				$cadenaSql .= " WHERE ano=" . $variable['ano'];
 				$cadenaSql .= " AND semestre=" . $variable['semestre'];
-				$cadenaSql .= " AND estado=true";
-
+				
 				break;
 
 			case "borrarAdmitidoSnies" :

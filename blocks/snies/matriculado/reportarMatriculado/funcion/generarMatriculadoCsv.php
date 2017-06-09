@@ -385,10 +385,10 @@ class FormProcessor {
 				$arreglo['id_tipo_documento'] = $registro['id_tipo_documento'];
 				$arreglo['num_documento'] = $registro['num_documento'];
 				$arreglo['fecha_expedicion'] = $registro['fecha_expedicion'];
-				$arreglo['primer_nombre'] = $registro['primer_nombre'];
-				$arreglo['segundo_nombre'] = $registro['segundo_nombre'];
-				$arreglo['primer_apellido'] = $registro['primer_apellido'];
-				$arreglo['segundo_apellido'] = $registro['segundo_apellido'];
+				$arreglo['primer_nombre'] = str_replace('.', '', $registro['primer_nombre']);
+				$arreglo['segundo_nombre'] = str_replace('.', '', $registro['segundo_nombre']);
+				$arreglo['primer_apellido'] = str_replace('.', '', $registro['primer_apellido']);
+				$arreglo['segundo_apellido'] = str_replace('.', '', $registro['segundo_apellido']);
 				$arreglo['id_sexo_biologico'] = $registro['id_sexo_biologico'];
 				$arreglo['id_estado_civil'] = $registro['id_estado_civil'];
 				$arreglo['fecha_nacimiento'] = $registro['fecha_nacimiento'];

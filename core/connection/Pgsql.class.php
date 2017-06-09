@@ -133,7 +133,7 @@ class Pgsql extends ConectorDb {
      * @access public
      */
     function conectar_db() {
-
+//echo $this->servidor.$this->puerto.$this->db.$this->usuario.$this->clave;
         $this->enlace = pg_connect ( "host=" . $this->servidor . " port=" . $this->puerto . " dbname=" . $this->db . " user=" . $this->usuario . " password=" . $this->clave );
 
         if ($this->enlace) {

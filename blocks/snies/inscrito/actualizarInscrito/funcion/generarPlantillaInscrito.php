@@ -57,7 +57,7 @@ class FormProcessor {
 		$raizDocumento = $this -> miConfigurador -> getVariableConfiguracion("raizDocumento");
 		$this -> annio = $_REQUEST['annio'];
 		$this -> semestre = $_REQUEST['semestre'];
-		$file = $raizDocumento . '/document/inscritos_relacion_de_inscritos' . $this -> annio . $this -> semestre . '.csv';
+		$file = $raizDocumento . '/document/inscritos_relacion' . $this -> annio . $this -> semestre . '.csv';
 		$fp = fopen($file, 'w');
 		//ENCABEZADO DE LA PLANTILLA INSCRITOS - RELACION DE INSCRITOS
 		$linea1 = array('Herramienta de Cargue Hecca - V 3.4');
@@ -70,18 +70,83 @@ class FormProcessor {
 		//fputcsv($fp, array(utf8_decode('AÑO'), 'SEMESTRE', 'ID_TIPO_DOCUMENTO', 'NUM_DOCUMENTO', 'PRIMER_NOMBRE', 'SEGUNDO_NOMBRE', 'PRIMER_APELLIDO', 'SEGUNDO_APELLIDO', 'ID_SEXO_BIOLOGICO'), ";");
 		fputcsv($fp, array('AÑO', 'SEMESTRE', 'ID_TIPO_DOCUMENTO', 'NUM_DOCUMENTO', 'PRIMER_NOMBRE', 'SEGUNDO_NOMBRE', 'PRIMER_APELLIDO', 'SEGUNDO_APELLIDO', 'ID_SEXO_BIOLOGICO'), ";");
 		foreach ($inscrito as $unInscrito) {
+			if ($unInscrito['estado'] == 't') {
+				$RelacionInscrito['AÑO'] = $unInscrito['ano'];
+				$RelacionInscrito['SEMESTRE'] = $unInscrito['semestre'];
+				$RelacionInscrito['ID_TIPO_DOCUMENTO'] = $unInscrito['id_tipo_documento'];
+				$RelacionInscrito['NUM_DOCUMENTO'] = $unInscrito['num_documento'];
+				$RelacionInscrito['PRIMER_NOMBRE'] = $unInscrito['primer_nombre'];
+				$RelacionInscrito['SEGUNDO_NOMBRE'] = $unInscrito['segundo_nombre'];
+				$RelacionInscrito['PRIMER_APELLIDO'] = $unInscrito['primer_apellido'];
+				$RelacionInscrito['SEGUNDO_APELLIDO'] = $unInscrito['segundo_apellido'];
+				$RelacionInscrito['ID_SEXO_BIOLOGICO'] = $unInscrito['id_sexo_biologico'];
 
-			$RelacionInscrito['AÑO'] = $unInscrito['ano'];
-			$RelacionInscrito['SEMESTRE'] = $unInscrito['semestre'];
-			$RelacionInscrito['ID_TIPO_DOCUMENTO'] = $unInscrito['id_tipo_documento'];
-			$RelacionInscrito['NUM_DOCUMENTO'] = $unInscrito['num_documento'];
-			$RelacionInscrito['PRIMER_NOMBRE'] = $unInscrito['primer_nombre'];
-			$RelacionInscrito['SEGUNDO_NOMBRE'] = $unInscrito['segundo_nombre'];
-			$RelacionInscrito['PRIMER_APELLIDO'] = $unInscrito['primer_apellido'];
-			$RelacionInscrito['SEGUNDO_APELLIDO'] = $unInscrito['segundo_apellido'];
-			$RelacionInscrito['ID_SEXO_BIOLOGICO'] = $unInscrito['id_sexo_biologico'];
+				fputcsv($fp, $RelacionInscrito, ";");
+			}
+		}
 
-			fputcsv($fp, $RelacionInscrito, ";");
+		fclose($fp);
+
+		echo "Se ha generado el archivo: <b>" . $file . "</b><br>";
+
+		$file = $raizDocumento . '/document/inscritos_relacion_revision' . $this -> annio . $this -> semestre . '.csv';
+		$fp = fopen($file, 'w');
+		//ENCABEZADO DE LA PLANTILLA INSCRITOS - RELACION DE INSCRITOS
+		$linea1 = array('Herramienta de Cargue Hecca - V 3.4');
+		$linea2 = array('[143] Nombre de la Plantilla: [Inscritos - Relación de Inscritos] Descripcion: [Persona natural que solicita formalmente el ingreso a un programa académico en calidad de estudiante.]');
+		$linea3 = array('Licenciado para Ministerio de Educacion Nacional 2016');
+		fwrite($fp, implode(',', $linea1) . "\r\n");
+		//con esto elimina las comillas dobles del encabezado
+		fwrite($fp, implode(',', $linea2) . "\r\n");
+		fwrite($fp, implode(',', $linea3) . "\r\n");
+		//fputcsv($fp, array(utf8_decode('AÑO'), 'SEMESTRE', 'ID_TIPO_DOCUMENTO', 'NUM_DOCUMENTO', 'PRIMER_NOMBRE', 'SEGUNDO_NOMBRE', 'PRIMER_APELLIDO', 'SEGUNDO_APELLIDO', 'ID_SEXO_BIOLOGICO'), ";");
+		fputcsv($fp, array('AÑO', 'SEMESTRE', 'ID_TIPO_DOCUMENTO', 'NUM_DOCUMENTO', 'PRIMER_NOMBRE', 'SEGUNDO_NOMBRE', 'PRIMER_APELLIDO', 'SEGUNDO_APELLIDO', 'ID_SEXO_BIOLOGICO'), ";");
+		foreach ($inscrito as $unInscrito) {
+			if ($unInscrito['estado'] == '') {
+				$RelacionInscrito['AÑO'] = $unInscrito['ano'];
+				$RelacionInscrito['SEMESTRE'] = $unInscrito['semestre'];
+				$RelacionInscrito['ID_TIPO_DOCUMENTO'] = $unInscrito['id_tipo_documento'];
+				$RelacionInscrito['NUM_DOCUMENTO'] = $unInscrito['num_documento'];
+				$RelacionInscrito['PRIMER_NOMBRE'] = $unInscrito['primer_nombre'];
+				$RelacionInscrito['SEGUNDO_NOMBRE'] = $unInscrito['segundo_nombre'];
+				$RelacionInscrito['PRIMER_APELLIDO'] = $unInscrito['primer_apellido'];
+				$RelacionInscrito['SEGUNDO_APELLIDO'] = $unInscrito['segundo_apellido'];
+				$RelacionInscrito['ID_SEXO_BIOLOGICO'] = $unInscrito['id_sexo_biologico'];
+
+				fputcsv($fp, $RelacionInscrito, ";");
+			}
+		}
+
+		fclose($fp);
+
+		echo "Se ha generado el archivo: <b>" . $file . "</b><br>";
+
+		$file = $raizDocumento . '/document/inscritos_relacion_error' . $this -> annio . $this -> semestre . '.csv';
+		$fp = fopen($file, 'w');
+		//ENCABEZADO DE LA PLANTILLA INSCRITOS - RELACION DE INSCRITOS
+		$linea1 = array('Herramienta de Cargue Hecca - V 3.4');
+		$linea2 = array('[143] Nombre de la Plantilla: [Inscritos - Relación de Inscritos] Descripcion: [Persona natural que solicita formalmente el ingreso a un programa académico en calidad de estudiante.]');
+		$linea3 = array('Licenciado para Ministerio de Educacion Nacional 2016');
+		fwrite($fp, implode(',', $linea1) . "\r\n");
+		//con esto elimina las comillas dobles del encabezado
+		fwrite($fp, implode(',', $linea2) . "\r\n");
+		fwrite($fp, implode(',', $linea3) . "\r\n");
+		//fputcsv($fp, array(utf8_decode('AÑO'), 'SEMESTRE', 'ID_TIPO_DOCUMENTO', 'NUM_DOCUMENTO', 'PRIMER_NOMBRE', 'SEGUNDO_NOMBRE', 'PRIMER_APELLIDO', 'SEGUNDO_APELLIDO', 'ID_SEXO_BIOLOGICO'), ";");
+		fputcsv($fp, array('AÑO', 'SEMESTRE', 'ID_TIPO_DOCUMENTO', 'NUM_DOCUMENTO', 'PRIMER_NOMBRE', 'SEGUNDO_NOMBRE', 'PRIMER_APELLIDO', 'SEGUNDO_APELLIDO', 'ID_SEXO_BIOLOGICO'), ";");
+		foreach ($inscrito as $unInscrito) {
+			if ($unInscrito['estado'] == 'f') {
+				$RelacionInscrito['AÑO'] = $unInscrito['ano'];
+				$RelacionInscrito['SEMESTRE'] = $unInscrito['semestre'];
+				$RelacionInscrito['ID_TIPO_DOCUMENTO'] = $unInscrito['id_tipo_documento'];
+				$RelacionInscrito['NUM_DOCUMENTO'] = $unInscrito['num_documento'];
+				$RelacionInscrito['PRIMER_NOMBRE'] = $unInscrito['primer_nombre'];
+				$RelacionInscrito['SEGUNDO_NOMBRE'] = $unInscrito['segundo_nombre'];
+				$RelacionInscrito['PRIMER_APELLIDO'] = $unInscrito['primer_apellido'];
+				$RelacionInscrito['SEGUNDO_APELLIDO'] = $unInscrito['segundo_apellido'];
+				$RelacionInscrito['ID_SEXO_BIOLOGICO'] = $unInscrito['id_sexo_biologico'];
+
+				fputcsv($fp, $RelacionInscrito, ";");
+			}
 		}
 
 		fclose($fp);
@@ -139,10 +204,10 @@ class FormProcessor {
 		fwrite($fp, implode(',', $linea1) . "\r\n");
 		fwrite($fp, implode(',', $linea2) . "\r\n");
 		fwrite($fp, implode(',', $linea3) . "\r\n");
-		fwrite($fp, implode(',', $linea4) . "\r\n");		
-		
+		fwrite($fp, implode(',', $linea4) . "\r\n");
+
 		fputcsv($fp, array(utf8_decode('AÑO'), 'SEMESTRE', 'ID_TIPO_DOCUMENTO', 'NUM_DOCUMENTO', 'PRO_CONSECUTIVO', 'ID_MUNICIPIO'), ";");
-				
+
 		foreach ($admitido as $unadmitido) {
 			//var_dump ( $unadmitido );exit;
 			$Relacionadmitido['ANO'] = $unadmitido['ano'];
