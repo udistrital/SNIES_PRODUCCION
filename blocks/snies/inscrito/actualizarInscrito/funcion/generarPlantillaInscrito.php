@@ -70,6 +70,7 @@ class FormProcessor {
 		//fputcsv($fp, array(utf8_decode('AÑO'), 'SEMESTRE', 'ID_TIPO_DOCUMENTO', 'NUM_DOCUMENTO', 'PRIMER_NOMBRE', 'SEGUNDO_NOMBRE', 'PRIMER_APELLIDO', 'SEGUNDO_APELLIDO', 'ID_SEXO_BIOLOGICO'), ";");
 		fputcsv($fp, array('AÑO', 'SEMESTRE', 'ID_TIPO_DOCUMENTO', 'NUM_DOCUMENTO', 'PRIMER_NOMBRE', 'SEGUNDO_NOMBRE', 'PRIMER_APELLIDO', 'SEGUNDO_APELLIDO', 'ID_SEXO_BIOLOGICO'), ";");
 		foreach ($inscrito as $unInscrito) {
+			
 			if ($unInscrito['estado'] == 't') {
 				$RelacionInscrito['AÑO'] = $unInscrito['ano'];
 				$RelacionInscrito['SEMESTRE'] = $unInscrito['semestre'];
@@ -121,7 +122,7 @@ class FormProcessor {
 
 		echo "Se ha generado el archivo: <b>" . $file . "</b><br>";
 
-		$file = $raizDocumento . '/document/inscritos_relacion_error' . $this -> annio . $this -> semestre . '.csv';
+		$file = $raizDocumento . '/document/inscritos_relacion_error_' . $this -> annio . $this -> semestre . '.csv';
 		$fp = fopen($file, 'w');
 		//ENCABEZADO DE LA PLANTILLA INSCRITOS - RELACION DE INSCRITOS
 		$linea1 = array('Herramienta de Cargue Hecca - V 3.4');

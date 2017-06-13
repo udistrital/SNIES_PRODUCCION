@@ -9,8 +9,8 @@ $this->idioma ['cerrarSesion'] = 'Cerrar Sesión';
 $this->idioma ['snies'] = 'SNIES';
 
 //INSCRITO
-$this->idioma ['tituloInscrito'] = 'Inscrito';
-$this->idioma ['actualizarInscrito'] = 'Actualizar Inscrito';
+$this->idioma ['tituloInscrito'] = 'Inscrito y Admitido';
+$this->idioma ['actualizarInscrito'] = 'Actualizar Inscrito y Admitido';
 $this->idioma ['plantillaInscrito'] = 'Generar Plantilla Inscrito';
 $this->idioma ['corregirnombre'] = 'Corrregir Nombres';
 
