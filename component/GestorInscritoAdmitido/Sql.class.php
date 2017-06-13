@@ -144,7 +144,7 @@ class Sql extends \Sql {
 			//consulta todos los inscritos de la tabla poblacion.inscrito_programa
 			case "consultarInscritoProgramaSnies" :
 				$cadenaSql = " SELECT";
-				$cadenaSql .= " ano, semestre, id_tipo_documento, num_documento, pro_consecutivo, id_municipio. estado";
+				$cadenaSql .= " ano, semestre, id_tipo_documento, num_documento, pro_consecutivo, id_municipio, estado";
 				$cadenaSql .= " FROM";
 				$cadenaSql .= " inscrito_programa ";
 				$cadenaSql .= " WHERE ano=" . $variable['ano'];
